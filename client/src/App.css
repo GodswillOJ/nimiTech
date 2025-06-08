@@ -9,10 +9,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(30, 30, 30, 0.55);
-  padding: 0.5rem 1rem;
+  background: rgba(30, 30, 30, 0.2);
+  padding: 2rem 1rem;
   color: white;
-  box-shadow: rgba(103, 2, 2, 0.3) 0px 4px 12px;
+  box-shadow: rgba(17, 0, 0, 0.3) 0px 4px 12px;
 }
 
 .navbar-left {
@@ -22,7 +22,7 @@
 }
 
 .logo {
-  height: 60px; /* adjust size as needed */
+  height: 80px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
@@ -48,21 +48,24 @@
 .contact-btn-container {
   display: flex;
   align-items: center;
+  margin: 0 40px 0 0;
 }
 
 .contact-btn {
-  background-color: #00aaff;
+  background-color: #88199a;
   border: none;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 3px;
+  padding: 1.5rem 2rem;
+  border-radius: 25px;
+  font-size: 16px;
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s;
+  box-shadow: rgba(8, 0, 0, 0.486) 0px 4px 12px;
 }
 
 .contact-btn:hover {
-  background-color: #0088cc;
+  background-color: #cc4b00;
 }
 
 /* Hamburger (hidden on desktop) */
@@ -105,10 +108,10 @@
 /* Mobile nav links (hidden initially and animated) */
 .nav-links {
   position: absolute;
-  top: 56px; /* height of navbar */
+  top: 130px; /* height of navbar */
   left: 0;
   width: 60%;
-  background: rgba(30, 30, 30, 0.75);
+  background: rgba(5, 0, 14, 0.75);
   flex-direction: column;
   padding: 1rem 0;
   margin: 0;
@@ -124,8 +127,9 @@
 
 /* Individual links spacing */
 .nav-links li {
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid white;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid rgb(67, 67, 67);
 }
 
 
@@ -134,15 +138,21 @@
   position: absolute;
   width: 60%;
   left: 0;
-  top: calc(56px + (5 * 55px)); /* below nav-links */
-  background: rgba(30, 30, 30, 0.95);
+  top: calc(303px + (5 * 55px)); /* below nav-links */
+  background: rgba(11, 0, 19, 0.749);
   padding: 1rem;
   box-sizing: border-box;
   text-align: center;
+  justify-content: center;
   transform: translateX(-1000%);
   opacity: 0;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   z-index: 8;
+}
+
+.contact-btn {
+  padding: 0.8rem 2rem;
+  font-size: 14px;
 }
 
 /* Visible slide-in state */
@@ -156,7 +166,7 @@
 /* hero */
 .hero-container {
   max-width: 2200px;
-  height: 300px;
+  height: 600px;
   margin: 0 auto;
   padding: 40px 20px;
   position: relative;
@@ -175,7 +185,7 @@
   width: 100%;
   background-size: cover;
   background-position: center;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 1s ease-in-out;
   z-index: 0;
 }
 
@@ -185,7 +195,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.451);
   z-index: 1;
 }
 

@@ -31,7 +31,7 @@ const Navbar = () => {
 
       {/* Contact button */}
       <div className={`contact-btn-container ${isOpen ? 'mobile-open' : ''}`}>
-        <button className="contact-btn">Welcome to NimiTechIT</button>
+        <button className="contact-btn">Contact support</button>
       </div>
     </nav>
   );
