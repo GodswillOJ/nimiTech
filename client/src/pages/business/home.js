@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useGetBusinessPostsQuery } from '../services/api';
-import BusinessPostItem from '../components/BusinessItem.js';
+import { useGetBusinessPostsQuery } from '../../services/api';
+import BusinessPostItem from '../../components/business/BusinessItem.js';
 
-import img1 from '../assets/ment_wellness.jpg';
-import img2 from '../assets/ment2.jpg';
-import img3 from '../assets/ment3.jpg';
-import img4 from '../assets/ment5.jpg';
+import img1 from '../../assets/ment_wellness.jpg';
+import img2 from '../../assets/ment2.jpg';
+import img3 from '../../assets/ment3.jpg';
+import img4 from '../../assets/ment5.jpg';
 
 const images = [img1, img2, img3, img4];
 
