@@ -1,14 +1,17 @@
 
 /* Navbar */
 .navbar {
+  position: fixed; /* <-- Change this to fixed */
+  top: 0;
+  left: 0;
+  width: 100%; /* ensure it stretches across the top */
+  z-index: 1000; /* keep it above other elements */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(30, 30, 30, 0.95); /* dark with light rgba */
+  background: rgba(30, 30, 30, 0.55);
   padding: 0.5rem 1rem;
   color: white;
-  position: relative;
-  z-index: 10;
   box-shadow: rgba(103, 2, 2, 0.3) 0px 4px 12px;
 }
 
@@ -19,8 +22,10 @@
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 1.5rem;
+  height: 60px; /* adjust size as needed */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
 }
 
 .nav-links {

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import logo from '../assets/NimiTechLogo.png'; // Adjust the path as
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +10,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <div className="logo">NimiTech</div>
+        <div className="logo">
+          <img src={logo} alt="NimiTechIT Logo" className='logo' />
+        </div>
 
         {/* Hamburger for mobile */}
         <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
@@ -21,7 +25,7 @@ const Navbar = () => {
           <li><a href="#about" onClick={() => setIsOpen(false)}>About</a></li>
           <li><a href="#services" onClick={() => setIsOpen(false)}>Services</a></li>
           <li><a href="#blogs" onClick={() => setIsOpen(false)}>Blogs</a></li>
-          <li><a href="#care" onClick={() => setIsOpen(false)}>Care</a></li>
+          <li><a href="#care" onClick={() => setIsOpen(false)}>Online training</a></li>
         </ul>
       </div>
 
