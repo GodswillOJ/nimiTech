@@ -166,15 +166,14 @@
 /* hero */
 .hero-container {
   max-width: 2200px;
-  height: 600px;
+  height: 720px;
   margin: 0 auto;
   padding: 40px 20px;
   position: relative;
   overflow: hidden;
-  border-radius: 0 0 8px 8px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
   color: white;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .hero-bg {
@@ -202,7 +201,9 @@
 .hero-text {
   position: relative;
   z-index: 2;
+  max-width: 600px; /* Optional */
   padding-top: 100px;
+  padding-left: 40px;
 }
 
 
@@ -253,3 +254,22 @@
 .eye-icon {
   margin-left: 8px;
 }
+
+@media(max-width: 768px) {
+  .hero-container {
+    height: 600px; /* Adjust height for smaller screens */
+    padding: 20px;
+  }
+
+  .hero-text {
+    padding-top: 150px; /* Adjust padding for smaller screens */
+    padding-left: 20px;
+  }
+
+  .blog-item {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+
+}
+
+/* medium screens */
