@@ -40,7 +40,7 @@ const HomePage = () => {
   return (
     <div className="home-page-business"
       style={{
-            backgroundImage: `url(${businessImages.heroBackImage1})`,
+            backgroundImage: `url(${businessImages.heroBackImage2})`,
             backgroundSize: 'cover',
       }}
     >
