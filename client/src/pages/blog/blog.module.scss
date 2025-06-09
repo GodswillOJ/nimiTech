@@ -1,0 +1,217 @@
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+.blogContainer {
+    max-width: 100%;
+    margin: 120px auto 0px auto;
+    padding: 1rem;
+
+    @media (min-width: $breakpoint-lg) {
+        max-width: 1200px;
+        padding: 2rem;
+    }
+}
+
+.featuredPost {
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    min-height: 300px;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+        z-index: 1;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    @media (min-width: $breakpoint-md) {
+        min-height: 400px;
+    }
+
+    .featuredContent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        color: white;
+        z-index: 2;
+
+        .category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            
+            @media (min-width: $breakpoint-md) {
+                font-size: 2.5rem;
+            }
+        }
+
+        p {
+            font-size: 1rem;
+            max-width: 600px;
+            display: none;
+
+            @media (min-width: $breakpoint-md) {
+                display: block;
+            }
+        }
+    }
+}
+
+.recentPosts {
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.postsGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+
+    @media (min-width: $breakpoint-sm) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.blogCard {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background: white;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .imageContainer {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .contentContainer {
+        padding: 1rem;
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+}
+
+.metaInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+
+    .authorAvatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.loadMore {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 2rem auto;
+    padding: 0.75rem 1.5rem;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        background: #e0e0e0;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    &.loading {
+        background: #e0e0e0;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: #333;
+            border-left-color: #333;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

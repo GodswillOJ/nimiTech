@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/NimiTechLogo.png'; // Adjust the path as
 
 
@@ -11,7 +12,9 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <div className="logo">
-          <img src={logo} alt="NimiTechIT Logo" className='logo' />
+          <Link to="/">
+            <img src={logo} alt="NimiTechIT Logo" className='logo' />
+          </Link>
         </div>
 
         {/* Hamburger for mobile */}
@@ -22,10 +25,10 @@ const Navbar = () => {
         </button>
 
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <li><a href="#about" onClick={() => setIsOpen(false)}>About</a></li>
-          <li><a href="#services" onClick={() => setIsOpen(false)}>Services</a></li>
-          <li><a href="#blogs" onClick={() => setIsOpen(false)}>Blogs</a></li>
-          <li><a href="#care" onClick={() => setIsOpen(false)}>Online training</a></li>
+          <li><Link to="/#about" onClick={() => setIsOpen(false)}>About</Link></li>
+          <li><Link to="/#services" onClick={() => setIsOpen(false)}>Services</Link></li>
+          <li><Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link></li>
+          <li><Link to="/#care" onClick={() => setIsOpen(false)}>Online training</Link></li>
         </ul>
       </div>
 

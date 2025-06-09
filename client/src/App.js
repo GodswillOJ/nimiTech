@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/business/home.js';
-import Navbar from './components/navbar.jsx';
+import HomePage from './pages/business/home';
+import Blog from './pages/blog';
+import BlogDetails from './pages/blog/BlogDetailsPage/BlogDetails/BlogDetails';
+import Navbar from './components/navbar';
 import './App.css';
 
 function App() {
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         {/* all page routes */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
       </Routes>
     </Router>
   );
