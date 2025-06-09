@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useGetBusinessPostsQuery } from '../../services/api';
 import BusinessPostItem from '../../components/business/BusinessItem.js';
+import { businessImages } from '../../assets/images.js';
 
-import img1 from '../../assets/ment_wellness.jpg';
-import img2 from '../../assets/ment2.jpg';
-import img3 from '../../assets/ment3.jpg';
-import img4 from '../../assets/ment5.jpg';
-
-const images = [img1, img2, img3, img4];
+const images = [businessImages.hero1, businessImages.hero2, businessImages.hero3, businessImages.hero4];
 
 const dummyBusinessPosts = [
   {
@@ -42,7 +38,12 @@ const HomePage = () => {
   const postsToShow = !isError && businessPosts.length > 0 ? businessPosts : dummyBusinessPosts;
 
   return (
-    <div>
+    <div className="home-page-business"
+      style={{
+            backgroundImage: `url(${businessImages.heroBackImage1})`,
+            backgroundSize: 'cover',
+      }}
+    >
       <div className="hero-container">
         <div
           className="hero-bg"
@@ -50,7 +51,7 @@ const HomePage = () => {
             backgroundImage: `url(${images[currentImage]})`,
             opacity: fade ? 1 : 0,
             transition: 'opacity 1s ease-in-out',
-            height: '300px',
+            height: '800px',
             backgroundSize: 'cover',
           }}
         />
