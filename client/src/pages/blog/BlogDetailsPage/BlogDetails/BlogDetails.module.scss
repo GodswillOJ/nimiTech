@@ -1,11 +1,11 @@
-.blog-view {
-  margin-top: 100px;
+.blog_view {
+  margin-top: 150px;
   min-height: 100vh;
   background-color: #ffffff;
 
   &__header {
     position: sticky;
-    top: 100px;
+    top: 10px;
     max-width: fit-content;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -14,7 +14,7 @@
     z-index: 10;
   }
 
-  &__back-link {
+  &__back_link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -29,7 +29,7 @@
     }
   }
 
-  &__back-icon {
+  &__back_icon {
     width: 16px;
     height: 16px;
   }
@@ -37,6 +37,15 @@
   &__main {
     padding: 0 16px 40px;
     max-width: 100%;
+  }
+
+  &__contentContainer {
+    text-decoration: none;
+    color: inherit;
+
+    a {
+      text-decoration: none;
+    }
   }
 }
 
@@ -91,9 +100,9 @@
     margin-bottom: 0;
   }
 
-  &__featured-image {
+  &__featured_image {
     margin: 32px -16px 32px;
-    
+
     img {
       width: 100%;
       height: 240px;
@@ -157,7 +166,7 @@
     }
   }
 
-  &__author-card {
+  &__author_card {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -167,7 +176,7 @@
     margin: 40px 0;
     color: white;
 
-    &-avatar {
+    &_avatar {
       img {
         border-radius: 50%;
         object-fit: cover;
@@ -175,14 +184,14 @@
       }
     }
 
-    &-name {
+    &_name {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 4px;
       color: white;
     }
 
-    &-bio {
+    &_bio {
       font-size: 14px;
       line-height: 1.4;
       color: rgba(255, 255, 255, 0.9);
@@ -215,7 +224,7 @@
     gap: 8px;
   }
 
-  &__nav-btn {
+  &__nav_btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -271,13 +280,13 @@
       box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
     }
 
-    &-link {
+    &_link {
       display: block;
       text-decoration: none;
       color: inherit;
     }
 
-    &-image {
+    &_image {
       position: relative;
       overflow: hidden;
 
@@ -289,28 +298,29 @@
       }
     }
 
-    &:hover &-image img {
+    &:hover &_image img {
       transform: scale(1.05);
     }
 
-    &-content {
+    &_content {
       padding: 20px;
     }
 
-    &-meta {
+    &_meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
     }
 
-    &-date, &-read-time {
+    &_date,
+    &_read_time {
       font-size: 12px;
       color: #6b7280;
       font-weight: 500;
     }
 
-    &-title {
+    &_title {
       font-size: 16px;
       font-weight: 600;
       line-height: 1.3;
@@ -321,7 +331,7 @@
       overflow: hidden;
     }
 
-    &-description {
+    &_description {
       font-size: 14px;
       line-height: 1.4;
       color: #6b7280;
@@ -331,7 +341,7 @@
       overflow: hidden;
     }
 
-    &-author {
+    &_author {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -341,7 +351,7 @@
         object-fit: cover;
       }
 
-      &-name {
+      &_name {
         font-size: 12px;
         font-weight: 500;
         color: #374151;
@@ -355,7 +365,7 @@
     gap: 8px;
     margin-top: 24px;
 
-    &-dot {
+    &_dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
@@ -364,15 +374,14 @@
       cursor: pointer;
       transition: background-color 0.2s ease;
 
-      &--active {
+      &__active {
         background: #6366f1;
       }
     }
   }
 }
 
-
-.not-found {
+.not_found {
   text-align: center;
   padding: 60px 20px;
 
@@ -399,16 +408,16 @@
 }
 
 @media (min-width: 768px) {
-  .blog-view {
+  .blog_view {
     &__main {
       padding: 0 32px 40px;
     }
   }
 
   .article {
-    &__featured-image {
+    &__featured_image {
       margin: 40px -32px 40px;
-      
+
       img {
         height: 320px;
         border-radius: 12px;
@@ -425,7 +434,7 @@
       align-items: center;
     }
 
-    &__author-card {
+    &__author_card {
       padding: 32px;
     }
   }
@@ -443,7 +452,7 @@
 
 // Desktop styles (1024px and up)
 @media (min-width: 1024px) {
-  .blog-view {
+  .blog_view {
     &__main {
       max-width: 800px;
       margin: 0 auto;
@@ -452,9 +461,9 @@
   }
 
   .article {
-    &__featured-image {
+    &__featured_image {
       margin: 48px 0;
-      
+
       img {
         height: 400px;
       }
@@ -497,7 +506,7 @@
 
 // Large desktop styles (1280px and up)
 @media (min-width: 1280px) {
-  .blog-view {
+  .blog_view {
     &__main {
       max-width: 900px;
     }

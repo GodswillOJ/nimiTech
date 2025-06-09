@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import styles from './BlogView.module.scss';
 import { blogPosts } from '../../_partials/BlogPost.data';
-import { BackIcon } from '../../../../assets/icons/BackIcon';
-import { NextIcon } from '../../../../assets/icons/NextIcon';
+import { BackIcon } from '../../../../assets/blog/icons/BackIcon';
+import { NextIcon } from '../../../../assets/blog/icons/NextIcon';
 import { Highlights } from '../../../../components/blog/Highlights/Highlights';
+import { VideoEmbed } from '../../../../components/blog/VideoEmbed/VideoEmbed';
+import styles from './BlogDetails.module.scss';
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -48,14 +49,13 @@ const BlogDetails = () => {
   return (
     <div className={styles.blog_view}>
       {/* Backlink to blog list */}
-      <header className={styles.blog_view__header}>
-        <Link to="/blogs" className={styles.blog_view__back_link}>
-          <BackIcon className={styles.blog_view__back_icon} />
-          Prev
-        </Link>
-      </header>
-
-          Blog Header
+       <header className={styles.blog_view__header}>
+            <Link to="/blogs" className={styles.blog_view__back_link}>
+            <BackIcon className={styles.blog_view__back_icon} />
+            Prev
+            </Link>
+        </header>
+          
       <main className={styles.blog_view__main}>
         <article className={styles.article}>
           <header className={styles.article__header}>
@@ -132,12 +132,9 @@ const BlogDetails = () => {
         </article>
             {currentPost.youtubeUrl && (
               <div className={styles.article__video_card}>
-                <iframe
-                  width="100%"
-                  height="315"
-                  src={`https://www.youtube.com/embed/${getYoutubeVideoId(currentPost.youtubeUrl)}`}
+                <VideoEmbed 
+                  videoId={getYoutubeVideoId(currentPost.youtubeUrl)}
                   title={currentPost.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen
                 />
               </div>
             )}

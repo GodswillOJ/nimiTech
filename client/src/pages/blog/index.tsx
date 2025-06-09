@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './blog.module.scss';
 import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
-import authorAvatar from '../../assets/ment5.jpg';
+import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
 
 const Blog = () => {
     const [posts, setPosts] = useState<IBlogPost[]>([]);
@@ -46,7 +46,7 @@ const Blog = () => {
                 <div className={styles.postsGrid}>
                     {posts.map((post) => (
                         <article key={post.id} className={styles.blogCard}>
-                            <Link to={`/blogs/${post.id}`}>
+                            <Link to={`/blogs/${post.id}`} className={styles.blogCardLink}>
                                 <div className={styles.imageContainer}>
                                     <img src={post.image} alt={post.title} />
                                 </div>
