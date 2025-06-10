@@ -7,7 +7,7 @@ interface VideoEmbedProps {
 }
 
 export const VideoEmbed = ({ videoId, title }: VideoEmbedProps) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [shouldLoad, setShouldLoad] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

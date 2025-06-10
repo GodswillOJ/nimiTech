@@ -6,6 +6,5 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     // other reducers here
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

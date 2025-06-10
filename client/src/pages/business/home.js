@@ -3,7 +3,12 @@ import { useGetBusinessPostsQuery } from '../../services/api';
 import BusinessPostItem from '../../components/business/BusinessItem.js';
 import { businessImages } from '../../assets/images.js';
 
-const images = [businessImages.hero1, businessImages.hero2, businessImages.hero3, businessImages.hero4];
+const images = [
+  businessImages.hero1,
+  businessImages.hero2,
+  businessImages.hero3,
+  businessImages.hero4,
+];
 
 const dummyBusinessPosts = [
   {
@@ -38,10 +43,11 @@ const HomePage = () => {
   const postsToShow = !isError && businessPosts.length > 0 ? businessPosts : dummyBusinessPosts;
 
   return (
-    <div className="home-page-business"
+    <div
+      className="home-page-business"
       style={{
-            backgroundImage: `url(${businessImages.heroBackImage1})`,
-            backgroundSize: 'cover',
+        backgroundImage: `url(${businessImages.heroBackImage1})`,
+        backgroundSize: 'cover',
       }}
     >
       <div className="hero-container">
