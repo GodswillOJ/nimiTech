@@ -68,16 +68,18 @@ body, html, #root {
 
 /* Navbar */
 .navbar {
-  position: fixed; /* <-- Change this to fixed */
+  position: fixed;
   top: 0;
+  height: 50px;
   left: 0;
-  width: 100%; /* ensure it stretches across the top */
-  z-index: 1000; /* keep it above other elements */
+  width: 100%;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(30, 30, 30, 0.2);
-  padding: 2rem 1rem;
+  background: white;
+  /* background: rgba(30, 30, 30, 0.2); */
+  padding: 0.7rem 1rem;
   color: white;
   box-shadow: rgba(17, 0, 0, 0.3) 0px 4px 12px;
 }
@@ -102,7 +104,7 @@ body, html, #root {
 }
 
 .nav-links li a {
-  color: white;
+  /* color: white; */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
