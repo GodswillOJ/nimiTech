@@ -19,5 +19,5 @@ export const businessImages = {
   heroBackImage2,
   heroBackImage1,
   heroBackImage3,
-  logo
+  logo,
 };

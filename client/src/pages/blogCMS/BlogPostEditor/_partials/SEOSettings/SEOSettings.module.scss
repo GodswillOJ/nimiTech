@@ -1,0 +1,31 @@
+.seo {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+
+  input,
+  textarea {
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: -8px;
+    margin-bottom: 16px;
+  }
+
+  &__error {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}

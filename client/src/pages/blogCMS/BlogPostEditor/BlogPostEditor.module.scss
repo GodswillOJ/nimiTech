@@ -1,0 +1,141 @@
+// Breakpoints
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$max-width: 1200px;
+
+.editor {
+  &__container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    margin-top: 150px;
+  }
+
+  &__header {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    @media (min-width: $breakpoint-tablet) {
+      padding: 16px 0;
+    }
+  }
+
+  &__header_content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+
+    @media (min-width: $breakpoint-tablet) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      max-width: $max-width;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+
+    @media (min-width: $breakpoint-tablet) {
+      font-size: 24px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    justify-content: flex-end;
+
+    @media (min-width: $breakpoint-tablet) {
+      width: auto;
+      gap: 12px;
+    }
+  }
+
+  &__main {
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    // max-width: 700px;
+
+    @media (min-width: $breakpoint-tablet) {
+      padding: 24px;
+      gap: 28px;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+      max-width: $max-width;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: $breakpoint-tablet) {
+      gap: 24px;
+    }
+  }
+
+  &__card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: $breakpoint-tablet) {
+      border-radius: 12px;
+      padding: 24px;
+    }
+  }
+
+  &__title_input {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+
+    @media (min-width: $breakpoint-tablet) {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+      font-size: 28px;
+    }
+  }
+
+  &__content_input {
+    font-family: ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: $breakpoint-tablet) {
+      gap: 24px;
+    }
+  }
+}
+

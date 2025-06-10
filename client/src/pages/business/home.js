@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { useGetBusinessPostsQuery } from '../../services/api';
-import { BusinessPostItem, SocialLinks, PartnerWithUs } from '../../components/business/landing_page/BusinessItem';
+import {
+  BusinessPostItem,
+  SocialLinks,
+  PartnerWithUs,
+} from '../../components/business/landing_page/BusinessItem';
 import ManagerMessage from '../../components/business/landing_page/ManagerMessage';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import { businessImages } from '../../assets/images.js';
@@ -9,9 +13,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
 import Footer from '../../components/footer';
 
-
-const images = [businessImages.hero1, businessImages.hero2, businessImages.hero3, businessImages.hero4];
-
+const images = [
+  businessImages.hero1,
+  businessImages.hero2,
+  businessImages.hero3,
+  businessImages.hero4,
+];
 
 const dummyBusinessPosts = [
   {
@@ -66,8 +73,6 @@ const courses = [
 const introTitle = 'From the manager",';
 const introSubtitle = 'We offer a wide range of services best fit for your business projects.';
 const introText = `Our team is dedicated to empowering your business with top-tier digital solutions. From online presence to backend operations, we provide scalable and tailored services designed to meet modern business needs. Whether you're a startup, SME, or enterprise, our goal is to help you grow, innovate, and lead in your industry.`;
-
-
 
 const HomePage = () => {
   const { data: businessPosts = [], isLoading, isError } = useGetBusinessPostsQuery();
@@ -128,7 +133,7 @@ const HomePage = () => {
           >
             We believe in harnessing technology to drive business success.
           </h1>
-          
+
           <p
             style={{
               color: 'white',
@@ -138,44 +143,44 @@ const HomePage = () => {
               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
             }}
           >
-            Our aim is to deliver innovative, efficient, and scalable solutions that empower our clients to thrive in an ever-evolving digital landscape
+            Our aim is to deliver innovative, efficient, and scalable solutions that empower our
+            clients to thrive in an ever-evolving digital landscape
           </p>
 
-        <button
-          className="hover-button"
-          style={{
-            position: 'absolute',
-            padding: isSmallScreen ? '2px 5px' : isMediumScreen ? '10px 10px' : '10px 20px',
-            background: '#da2721',
-            color: 'white',
-            border: 'none',
-            top: isSmallScreen ? '460px' : isMediumScreen ? '450px' : '590px',
-            borderRadius: '30px',
-            cursor: 'pointer',
-            fontSize: isSmallScreen ? '0.8rem' : isMediumScreen ? '1rem' : '1.2rem',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            transition: 'transform 0.4s ease, box-shadow 0.4s ease', // fallback if no external CSS
-          }}
-        >
-          <a
-            href="/blogs"
+          <button
+            className="hover-button"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '20px 30px',
+              position: 'absolute',
+              padding: isSmallScreen ? '2px 5px' : isMediumScreen ? '10px 10px' : '10px 20px',
+              background: '#da2721',
               color: 'white',
+              border: 'none',
+              top: isSmallScreen ? '460px' : isMediumScreen ? '450px' : '590px',
               borderRadius: '30px',
-              fontWeight: 'bold',
-              fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
-              textDecoration: 'none',
+              cursor: 'pointer',
+              fontSize: isSmallScreen ? '0.8rem' : isMediumScreen ? '1rem' : '1.2rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.4s ease, box-shadow 0.4s ease', // fallback if no external CSS
             }}
           >
-            Find Out More
-            <ArrowBackIcon />
-          </a>
-        </button>
-
+            <a
+              href="/blogs"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '20px 30px',
+                color: 'white',
+                borderRadius: '30px',
+                fontWeight: 'bold',
+                fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
+                textDecoration: 'none',
+              }}
+            >
+              Find Out More
+              <ArrowBackIcon />
+            </a>
+          </button>
         </div>
       </div>
 
@@ -183,7 +188,7 @@ const HomePage = () => {
       <div
         style={{
           display: 'flex',
-          flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'row' : 'row', 
+          flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'row' : 'row',
           alignItems: 'center',
           background: '#ffffffcc', // semi-transparent white
           padding: '20px',
@@ -228,7 +233,7 @@ const HomePage = () => {
           <ServiceUpdateTicker posts={postsToShow} />
         </div>
       </div>
-      
+
       {/* Youtube Channel Section */}
       <div
         style={{
@@ -264,7 +269,14 @@ const HomePage = () => {
         </div>
 
         <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
-          <h3 style={{ marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0', marginBottom: '10px' }}>Follow us on</h3>
+          <h3
+            style={{
+              marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+              marginBottom: '10px',
+            }}
+          >
+            Follow us on
+          </h3>
           <SocialLinks />
         </div>
       </div>
@@ -343,7 +355,6 @@ const HomePage = () => {
               }}
             />
           </div>
-
         </div>
       </div>
 
@@ -356,57 +367,59 @@ const HomePage = () => {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        
-        <div className="business-posts-container" style={{ 
-            display: 'flex', 
-            flexDirection: isBelow1100 ? 'column' : 'row', 
-            gap: '20px', 
-            padding: '20px'
-           }}>
-          
-            <ManagerMessage
-              isSmallScreen={isSmallScreen}
-              services={services}
-              courses={courses}
-              introTitle={introTitle}
-              introSubtitle={introSubtitle}
-              introText={introText}
-            />
+        <div
+          className="business-posts-container"
+          style={{
+            display: 'flex',
+            flexDirection: isBelow1100 ? 'column' : 'row',
+            gap: '20px',
+            padding: '20px',
+          }}
+        >
+          <ManagerMessage
+            isSmallScreen={isSmallScreen}
+            services={services}
+            courses={courses}
+            introTitle={introTitle}
+            introSubtitle={introSubtitle}
+            introText={introText}
+          />
 
           <div
             className="business-posts-container"
             style={{
               display: 'grid',
               // flexDirection: isSmallScreen ? 'column' : 'row',
-              gridTemplateColumns: isSmallScreen ? '1fr' : isMediumScreen ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+              gridTemplateColumns: isSmallScreen
+                ? '1fr'
+                : isMediumScreen
+                  ? 'repeat(2, 1fr)'
+                  : 'repeat(2, 1fr)',
               //flexWrap: 'wrap', // allow wrapping
               gap: '20px',
               padding: '20px',
             }}
           >
-
-              {postsToShow.map((post) => (
-                <BusinessPostItem
-                  key={post.id}
-                  title={post.title}
-                  content={post.content}
-                  image={post.image}
-                />
-              ))}
-            </div>
-
+            {postsToShow.map((post) => (
+              <BusinessPostItem
+                key={post.id}
+                title={post.title}
+                content={post.content}
+                image={post.image}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       {/* partner with us */}
 
-        <div>
-          {/* Partner With Us Section */}
-          <PartnerWithUs services={services} />
+      <div>
+        {/* Partner With Us Section */}
+        <PartnerWithUs services={services} />
+      </div>
 
-        </div>
-      
-        <Footer/>
+      <Footer />
     </div>
   );
 };

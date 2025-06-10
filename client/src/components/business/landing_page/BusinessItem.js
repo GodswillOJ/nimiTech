@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaYoutube, FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { Card, CardContent, Typography, Button, CardMedia } from '@mui/material';
-import {businessImages} from '../../../assets/images';
+import { businessImages } from '../../../assets/images';
 
 const BusinessPostItem = ({ image, title, content }) => (
   <Card
@@ -58,24 +58,48 @@ const BusinessPostItem = ({ image, title, content }) => (
 
 const SocialLinks = () => {
   const links = [
-    { icon: <FaYoutube
-        style={{
-          color: '#c00302'
-        }}
-      />, url: 'https://youtube.com/yourchannel' },
+    {
+      icon: (
+        <FaYoutube
+          style={{
+            color: '#c00302',
+          }}
+        />
+      ),
+      url: 'https://youtube.com/yourchannel',
+    },
     { icon: <FaInstagram />, url: 'https://instagram.com/yourprofile' },
-    { icon: <FaFacebook
-              style={{
-          color: '#167ac6'
-        }}
-      />, url: 'https://facebook.com/yourpage' },
+    {
+      icon: (
+        <FaFacebook
+          style={{
+            color: '#167ac6',
+          }}
+        />
+      ),
+      url: 'https://facebook.com/yourpage',
+    },
     { icon: <FaTwitter />, url: 'https://twitter.com/yourhandle' },
   ];
 
   return (
-    <div style={{ display: 'flex',flexDirection: 'column',  gap: '15px', justifyContent: 'center', fontSize: '1.5rem' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+        justifyContent: 'center',
+        fontSize: '1.5rem',
+      }}
+    >
       {links.map((link, idx) => (
-        <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: '#333' }}>
+        <a
+          key={idx}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: '#333' }}
+        >
           {link.icon}
         </a>
       ))}
@@ -154,7 +178,8 @@ const PartnerWithUs = ({ services }) => {
                 color: '#444',
               }}
             >
-              Partnering with us means gaining access to a dedicated team of professionals who provide:
+              Partnering with us means gaining access to a dedicated team of professionals who
+              provide:
             </p>
             <ul style={{ paddingLeft: '20px', fontSize: '1rem', lineHeight: '1.6', color: '#333' }}>
               {services.slice(0, 6).map((item, index) => (
@@ -206,21 +231,15 @@ const PartnerWithUs = ({ services }) => {
               </h3>
               <p style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
                 We go beyond services—we build long-lasting partnerships to elevate your business.
-                Our aim is to deliver innovative, efficient, and scalable solutions that empower our clients
-                to thrive in an ever-evolving digital landscape.
+                Our aim is to deliver innovative, efficient, and scalable solutions that empower our
+                clients to thrive in an ever-evolving digital landscape.
               </p>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   );
 };
 
-export {
-  BusinessPostItem,
-  SocialLinks,
-  PartnerWithUs
-};
+export { BusinessPostItem, SocialLinks, PartnerWithUs };
