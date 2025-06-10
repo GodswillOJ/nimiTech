@@ -10,7 +10,7 @@ import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
 import Footer from '../../components/footer';
 
 
-const images = [businessImages.hero1, businessImages.hero2, businessImages.hero3, businessImages.hero4, businessImages.logo];
+const images = [businessImages.hero1, businessImages.hero2, businessImages.hero3, businessImages.hero4];
 
 
 const dummyBusinessPosts = [
