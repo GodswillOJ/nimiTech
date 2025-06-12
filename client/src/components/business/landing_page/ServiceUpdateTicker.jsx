@@ -19,6 +19,7 @@ const ServiceUpdateTicker = ({ posts }) => {
         height: '100%',
         display: 'flex',
         alignItems: 'center',
+        backgroundColor: '#f0f0f0',
       }}
     >
       <div

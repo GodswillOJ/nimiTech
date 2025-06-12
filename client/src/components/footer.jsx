@@ -1,16 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/NimiTechLogo1.png'; // Adjust the path as needed
+import logo2 from '../assets/NimiTechLogo2.png'; // Adjust the path as needed
+import { SocialLinks } from './business/landing_page/BusinessItem';
+import { useMediaQuery } from '@mui/material';
 
 const Footer = () => {
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const isMediumScreen = useMediaQuery('(max-width:900px)');
+
   return (
     <div className="footer-container">
       <div className="footer-inner">
         {/* Left: Company Info */}
         <div className="footer-company">
-          <img
-            src="/logo192.png" // Replace with your actual logo path
-            alt="Company Logo"
-            className="footer-logo"
-          />
+          <div className="logo" style={{ display: 'flex', alignItems: 'center', margin: '4rem 0' }}>
+            <Link to="/" className="logo-link">
+              <img src={logo} alt="NimiTechIT Logo" className="logo" style={{ height: '90px' }} />
+              <img src={logo2} alt="NimiTechIT Logo2" className="logo_2" />
+            </Link>
+          </div>
           <p className="footer-contact">+1 (555) 123-4567</p>
           <p className="footer-contact">123 Main Street, New York, NY, USA</p>
           <div className="footer-links">
@@ -41,29 +50,18 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h2>Follow Us</h2>
-            <ul className="social-links">
-              <li>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer">
-                  YouTube
-                </a>
-              </li>
-              <li>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a href="https://twitter.com" target="_blank" rel="noreferrer">
-                  Twitter
-                </a>
-              </li>
-            </ul>
+            <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
+              <h3
+                style={{
+                  marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                  marginBottom: '10px',
+                  color: '#000',
+                }}
+              >
+                Follow us on
+              </h3>
+              <SocialLinks />
+            </div>
           </div>
         </div>
       </div>

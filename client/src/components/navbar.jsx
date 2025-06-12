@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/NimiTechLogo.png'; // Adjust the path as
+import logo from '../assets/NimiTechLogo1.png'; // Adjust the path as
+import logo2 from '../assets/NimiTechLogo2.png'; // Adjust the path as
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup on unmount
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-left">
         <div className="logo">
-          <Link to="/">
+          <Link to="/" className="logo-link">
             <img src={logo} alt="NimiTechIT Logo" className="logo" />
+            <img src={logo2} alt="NimiTechIT Logo2" className="logo_2" />
           </Link>
         </div>
 
@@ -26,7 +40,7 @@ const Navbar = () => {
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li>
             <Link to="/#about" onClick={() => setIsOpen(false)}>
-              About
+              About Us
             </Link>
           </li>
           <li>
@@ -49,7 +63,7 @@ const Navbar = () => {
 
       {/* Contact button */}
       <div className={`contact-btn-container ${isOpen ? 'mobile-open' : ''}`}>
-        <button className="contact-btn">Contact support</button>
+        <button className="contact-btn">Contact Us</button>
       </div>
     </nav>
   );

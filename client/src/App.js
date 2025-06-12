@@ -4,8 +4,8 @@ import HomePage from './pages/business/home';
 import Blog from './pages/blog';
 import BlogDetails from './pages/blog/BlogDetailsPage/BlogDetails/BlogDetails';
 import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
+import RegisterPage from './pages/business/RegisterBusiness';
 import Navbar from './components/navbar';
-import Footer from './components/footer';
 import './App.css';
 
 function App() {
@@ -21,8 +21,8 @@ function App() {
             <Route path="/blogs/:id" element={<BlogDetails />} />
             {/* temporary usecase for blog CMS routes */}
             <Route path="/blog-editor" element={<BlogPostEditor />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
-          <Footer />
         </div>
       </Router>
     </div>
