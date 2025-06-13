@@ -7,6 +7,7 @@ import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import NotFound from './components/NotFound/NotFound';
 import RegisterPage from './pages/business/RegisterBusiness';
 import Navbar from './components/navbar';
+import Footer from './components/footer';
 import './App.css';
 
 // define other static routes
@@ -31,8 +32,8 @@ function App() {
         <Navbar />
         <div className="app-content">
           <AppRoutes />
-          <Footer />
         </div>
+        <Footer />
       </Router>
     </div>
   );
