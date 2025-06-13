@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import { BrowserRouter as Router, useRoutes, useLocation } from 'react-router-dom';
 import { dashboardRoutes } from './routes/dashboardRoutes';
 import HomePage from './pages/business/home';
 import Blog from './pages/blog';
@@ -25,6 +25,19 @@ function AppRoutes() {
   return routes;
 }
 
+// Component to conditionally render Footer
+function ConditionalFooter() {
+  const location = useLocation();
+  const includeFooterPaths = ['/blogs', '/register', '/dashboard'];
+  
+  // Check if current path starts with any of the included paths
+  const shouldShowFooter = includeFooterPaths.some(path => 
+    location.pathname.startsWith(path)
+  );
+  
+  return shouldShowFooter ? <Footer /> : null;
+}
+
 function App() {
   return (
     <div className="app-container">
@@ -33,7 +46,7 @@ function App() {
         <div className="app-content">
           <AppRoutes />
         </div>
-        <Footer />
+        <ConditionalFooter />
       </Router>
     </div>
   );
