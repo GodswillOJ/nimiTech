@@ -1,0 +1,102 @@
+// Mobile-first breakpoints
+$breakpoint-sm: 30em; // 480px
+$breakpoint-md: 48em; // 768px
+$breakpoint-lg: 64em; // 1024px
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: fadeIn 200ms ease-out;
+}
+
+.dialog {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 20rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  animation: slideUp 200ms ease-out;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 1.5rem;
+    max-width: 24rem;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    padding: 2rem;
+    max-width: 28rem;
+  }
+}
+
+.dialog__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.75rem;
+
+  @media (min-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+.dialog__message {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: $breakpoint-sm) {
+    font-size: 1rem;
+  }
+}
+
+.dialog__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @media (min-width: $breakpoint-sm) {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  button {
+    width: 100%;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

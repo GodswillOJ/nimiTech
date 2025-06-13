@@ -1,0 +1,173 @@
+// StatusBadge/StatusBadge.module.scss
+.status__wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    cursor: default;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  
+  .badge__interactive {
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  .badge__icon {
+    font-size: 12px;
+    line-height: 1;
+  }
+  
+  .badge__label {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .badge__arrow {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    opacity: 0.6;
+    transition: transform 0.15s ease;
+    
+    .badge__interactive:hover & {
+      opacity: 1;
+    }
+  }
+  
+  // Status Color Variants
+  .badge__yellow {
+    background-color: #fef3c7;
+    color: #92400e;
+    
+    &.badge__interactive:hover {
+      background-color: #fde68a;
+    }
+  }
+  
+  .badge__green {
+    background-color: #d1fae5;
+    color: #065f46;
+    
+    &.badge__interactive:hover {
+      background-color: #a7f3d0;
+    }
+  }
+  
+  .badge__blue {
+    background-color: #dbeafe;
+    color: #1e40af;
+    
+    &.badge__interactive:hover {
+      background-color: #bfdbfe;
+    }
+  }
+  
+  .badge__gray {
+    background-color: #f3f4f6;
+    color: #374151;
+    
+    &.badge__interactive:hover {
+      background-color: #e5e7eb;
+    }
+  }
+  
+  // Dropdown Styles
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 50;
+    margin-top: 4px;
+    min-width: 140px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    animation: fadeInScale 0.15s ease-out;
+  }
+  
+  .dropdown__content {
+    padding: 4px;
+  }
+  
+  .dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #374151;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    
+    &:hover {
+      background-color: #f3f4f6;
+    }
+    
+    &:active {
+      background-color: #e5e7eb;
+    }
+  }
+  
+  .dropdown__item__active {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 500;
+    
+    &:hover {
+      background-color: #dbeafe;
+    }
+  }
+  
+  .dropdown__icon {
+    font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  
+  .dropdown__label {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .dropdown__check {
+    width: 14px;
+    height: 14px;
+    color: #1d4ed8;
+    flex-shrink: 0;
+  }
+  
+  // Animation
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }

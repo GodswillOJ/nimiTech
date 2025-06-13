@@ -1,0 +1,141 @@
+// Breakpoints
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+.notFound {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: #f9fafb;
+
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      text-align: left;
+      gap: 48px;
+      padding: 0 24px;
+    }
+  }
+
+  &__content {
+    max-width: 100%;
+    padding: 0 16px;
+
+    @media (min-width: $breakpoint-md) {
+      flex: 1;
+      padding: 0;
+    }
+  }
+
+  &__subtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 16px 0;
+
+    @media (min-width: $breakpoint-sm) {
+      font-size: 28px;
+    }
+
+    @media (min-width: $breakpoint-md) {
+      font-size: 32px;
+    }
+  }
+
+  &__text {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $breakpoint-md) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    @media (min-width: $breakpoint-sm) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    @media (min-width: $breakpoint-md) {
+      justify-content: flex-start;
+    }
+  }
+
+  &__button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+
+    @media (min-width: $breakpoint-sm) {
+      width: auto;
+      min-width: 140px;
+    }
+
+    &_back {
+      background-color: transparent;
+      border: 2px solid #89199a98;
+      color: #88199a;
+
+      &:hover {
+        background-color: #6b1379;
+        border: none;
+        color: white;
+      }
+    }
+
+    &_home {
+      background-color: #8e44ad;
+      border: none;
+      color: white;
+
+      &:hover {
+        background-color: #6b1379;
+        border: none;
+      }
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    @media (min-width: $breakpoint-md) {
+      flex: 1;
+      max-width: 500px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+}

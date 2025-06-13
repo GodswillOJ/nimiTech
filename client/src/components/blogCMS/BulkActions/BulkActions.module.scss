@@ -1,0 +1,141 @@
+// Mobile-first breakpoints
+$breakpoint-sm: 30em; // 480px
+$breakpoint-md: 48em; // 768px
+$breakpoint-lg: 64em; // 1024px
+
+.bulk_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+}
+
+.bulk_actions__info {
+  display: flex;
+  align-items: center;
+}
+
+.bulk_actions__count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.bulk_actions__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @media (min-width: $breakpoint-sm) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.bulk_actions__dropdown {
+  position: relative;
+}
+
+.bulk_actions__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px #88199a;
+  }
+
+  &_danger {
+    color: #dc2626;
+    border-color: #dc2626;
+
+    &:hover {
+      background-color: #fee2e2;
+    }
+  }
+}
+
+.bulk_actions__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  min-width: 12rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  animation: slideDown 150ms ease;
+
+  @media (min-width: $breakpoint-sm) {
+    left: auto;
+    right: 0;
+  }
+}
+
+.bulk_actions__menu_item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+  background: none;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #88199a;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #f3f4f6;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
