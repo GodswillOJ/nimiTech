@@ -70,18 +70,28 @@ body, html, #root {
 .navbar {
   position: fixed;
   top: 0;
-  height: 50px;
+  height: 100px;
   left: 0;
   width: 100%;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  /* background: rgba(30, 30, 30, 0.2); */
-  padding: 0.7rem 1rem;
+  /* background: white; */
+  background: rgba(30, 30, 30, 0.2);
+  padding:0.5rem 1rem;
   color: white;
   box-shadow: rgba(17, 0, 0, 0.3) 0px 4px 12px;
+}
+
+/* scrolling effect */
+/* Dark background when scrolled */
+.navbar-scrolled {
+  background-color: rgba(0, 0, 0, 0.9); /* Dark */
+}
+
+.navbar.navbar-scrolled .nav-links li a {
+  color: #fff;
 }
 
 .navbar-left {
@@ -91,10 +101,27 @@ body, html, #root {
 }
 
 .logo {
-  height: 80px; /* adjust size as needed */
+  height: 40px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+  /* filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); */
+}
+.logo_2 {
+  height: 30px; /* adjust size as needed */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(117, 2, 2, 0.305));
+}
+
+.logo-link{
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  flex-direction: column;
+  bottom: 20px;
+  gap: 0.5rem;
 }
 
 .nav-links {
@@ -104,14 +131,15 @@ body, html, #root {
 }
 
 .nav-links li a {
-  /* color: white; */
+  color: rgb(161, 3, 124);
   text-decoration: none;
   font-weight: 500;
+  font-size: 18px;
   transition: color 0.3s;
 }
 
 .nav-links li a:hover {
-  color: #00aaff;
+  color: rgb(241, 8, 187);
 }
 
 .contact-btn-container {
@@ -121,7 +149,7 @@ body, html, #root {
 }
 
 .contact-btn {
-  background-color: #88199a;
+  background-color: #6d0f7b;
   border: none;
   color: white;
   padding: 1.5rem 2rem;
@@ -129,6 +157,8 @@ body, html, #root {
   font-size: 16px;
   cursor: pointer;
   font-weight: 600;
+  width: 200px;
+  height: 70px;
   transition: background-color 0.3s;
   box-shadow: rgba(8, 0, 0, 0.486) 0px 4px 12px;
 }
@@ -299,8 +329,56 @@ body, html, #root {
   padding-left: 40px;
 }
 
+/* buttons */
+.custom-button {
+  padding: 10px 20px;
+  background: none;
+  border: 2px solid #007bff61;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  font-size: 1.2rem;
+}
+
+.custom-button:hover {
+  background: #192c56;
+}
+
+/* Media-specific padding and font size */
+.custom-button.small {
+  padding: 2px 5px;
+  font-size: 0.8rem;
+}
+.custom-button.medium {
+  padding: 10px 10px;
+  font-size: 1rem;
+}
+.custom-button.large {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+}
+
 /* Service updates sections */
 /* Media queries for different screen sizes */
+.bounce-on-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.bounce-on-hover:hover {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-10px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+
 @media (max-width: 1200px) {
   /* Medium Screens */
   .latest-updates-container {

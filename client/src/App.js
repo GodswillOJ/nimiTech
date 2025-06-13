@@ -5,8 +5,8 @@ import Blog from './pages/blog';
 import BlogDetails from './pages/blog/BlogDetailsPage/BlogDetails/BlogDetails';
 import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import NotFound from './components/NotFound/NotFound';
+import RegisterPage from './pages/business/RegisterBusiness';
 import Navbar from './components/navbar';
-import Footer from './components/footer';
 import './App.css';
 
 // define other static routes
@@ -15,6 +15,7 @@ const baseRoutes = [
   { path: '/blogs', element: <Blog /> },
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
+  { path: '/register', element: <RegisterPage /> },
   { path: '*', element: <NotFound /> },
 ];
 

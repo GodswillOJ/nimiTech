@@ -12,6 +12,7 @@ import { businessImages } from '../../assets/images.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
 import Footer from '../../components/footer';
+import { Link } from 'react-router-dom';
 
 const images = [
   businessImages.hero1,
@@ -148,19 +149,10 @@ const HomePage = () => {
           </p>
 
           <button
-            className="hover-button"
+            className={`custom-button ${isSmallScreen ? 'small' : isMediumScreen ? 'medium' : 'large'}`}
             style={{
               position: 'absolute',
-              padding: isSmallScreen ? '2px 5px' : isMediumScreen ? '10px 10px' : '10px 20px',
-              background: '#da2721',
-              color: 'white',
-              border: 'none',
               top: isSmallScreen ? '460px' : isMediumScreen ? '450px' : '590px',
-              borderRadius: '30px',
-              cursor: 'pointer',
-              fontSize: isSmallScreen ? '0.8rem' : isMediumScreen ? '1rem' : '1.2rem',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.4s ease, box-shadow 0.4s ease', // fallback if no external CSS
             }}
           >
             <a
@@ -177,7 +169,7 @@ const HomePage = () => {
                 textDecoration: 'none',
               }}
             >
-              Find Out More
+              BOOK A FREE CONSULTATION
               <ArrowBackIcon />
             </a>
           </button>
@@ -190,7 +182,7 @@ const HomePage = () => {
           display: 'flex',
           flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'row' : 'row',
           alignItems: 'center',
-          background: '#ffffffcc', // semi-transparent white
+          background: '#66666621', // semi-transparent white
           padding: '20px',
           borderRadius: '16px',
           boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
@@ -199,33 +191,34 @@ const HomePage = () => {
           flexWrap: 'wrap', // Ensures wrapping on small screens
         }}
       >
-        <button
+        <span
+          className="bounce-on-hover"
           style={{
             padding: '10px 20px',
             fontSize: '1.2rem',
             fontWeight: 'bold',
-            color: '#fff',
-            background: '#7f7b7b',
+            color: 'rgb(103,88,88)',
+            backgroundColor: '#fff',
             border: 'none',
-            borderRadius: '30px',
+            borderRadius: '30px 30px 0 30px',
             cursor: 'pointer',
-            boxShadow: '0 4px 10px rgba(69, 4, 126, 0.4)',
-            flexShrink: 0, // Prevent button from shrinking on small screens
+            flexShrink: 0,
           }}
         >
           Latest Updates
-        </button>
+        </span>
 
         <div
           style={{
             flex: 1,
-            background: 'linear-gradient(to right, #fdfbfb, #ebedee)',
+            background: 'linear-gradient(to right,rgb(246, 246, 247),rgb(217, 219, 220))',
             borderRadius: '12px',
             padding: '10px 20px',
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center', // Ensure content is centered
+            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
             marginTop: '10px',
             flexWrap: 'wrap', // Allow content to adjust for mobile
           }}
@@ -242,7 +235,7 @@ const HomePage = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           gap: '40px',
-          background: '#fff',
+          background: 'linear-gradient(to right,rgb(245, 246, 247),rgb(237, 237, 237))',
           padding: '40px 20px',
           borderRadius: '16px',
           margin: '20px auto',
@@ -273,6 +266,7 @@ const HomePage = () => {
             style={{
               marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
               marginBottom: '10px',
+              color: '#000',
             }}
           >
             Follow us on
@@ -413,12 +407,11 @@ const HomePage = () => {
       </div>
 
       {/* partner with us */}
-
       <div>
         {/* Partner With Us Section */}
         <PartnerWithUs services={services} />
       </div>
-
+      {/* Footer */}
       <Footer />
     </div>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { FaYoutube, FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { Card, CardContent, Typography, Button, CardMedia } from '@mui/material';
 import { businessImages } from '../../../assets/images';
+import { Link } from 'react-router-dom';
 
 const BusinessPostItem = ({ image, title, content }) => (
   <Card
@@ -35,24 +36,27 @@ const BusinessPostItem = ({ image, title, content }) => (
       </Typography>
     </CardContent>
 
-    <Button
-      variant="contained"
-      href="/register"
-      sx={{
-        m: 2,
-        alignSelf: 'center',
-        borderRadius: '50px',
-        textTransform: 'none',
+    <Link
+      to={{
+        pathname: '/register',
+      }}
+      state={{
+        post: { image, title, content, date: new Date().toLocaleDateString() },
+      }}
+      style={{
+        textDecoration: 'none',
+        margin: '16px auto',
         padding: '10px 30px',
+        borderRadius: '50px',
         backgroundColor: '#3b1647',
+        color: 'white',
         fontWeight: 'bold',
-        '&:hover': {
-          backgroundColor: '#b71c1c',
-        },
+        textAlign: 'center',
+        display: 'inline-block',
       }}
     >
       Click here
-    </Button>
+    </Link>
   </Card>
 );
 

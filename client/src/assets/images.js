@@ -8,7 +8,7 @@ import heroBackImage7 from './business/images/heroBackImage7.jpg';
 import heroBackImage2 from './business/images/heroBackImage2.jpg';
 import heroBackImage1 from './business/images/heroBackImage.jpg';
 import heroBackImage3 from './business/images/heroBackImg5.jpg';
-import logo from './NimiTechLogo.png';
+import logo from './NimiTechLogo1.png';
 
 export const businessImages = {
   hero1,
