@@ -1,0 +1,265 @@
+// BlogTablComp.module.scss
+.table__container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .table__wrapper {
+    overflow-x: auto;
+    min-height: 200px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  
+  .table__head {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .table__header {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    
+    &:first-child {
+      width: 60px;
+      padding-left: 24px;
+    }
+    
+    &:last-child {
+      width: 120px;
+      text-align: center;
+    }
+  }
+  
+  .table__body {
+    background-color: #ffffff;
+  }
+  
+  .table__row {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.15s ease;
+    
+    &:hover {
+      background-color: #f9fafb;
+    }
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .table__cell {
+    padding: 20px;
+    vertical-align: top;
+    
+    &:first-child {
+      padding-left: 24px;
+      width: 60px;
+      vertical-align: middle;
+    }
+    
+    &:last-child {
+      padding-right: 24px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+  
+  // Post Info Styles
+  .post__info {
+    min-width: 280px;
+    max-width: 400px;
+  }
+  
+  .post__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .post__excerpt {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+
+  // Category Styles
+  .category {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  
+  // Date Info Styles
+  .date__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 100px;
+  }
+  
+  .date__label {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .date__value {
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+  }
+  
+  // Actions Styles
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .action__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    
+    &:hover {
+      background-color: #f3f4f6;
+      transform: translateY(-1px);
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+      color: #6b7280;
+      transition: color 0.15s ease;
+    }
+    
+    &:hover svg {
+      color: #374151;
+    }
+  }
+  
+  .delete__button {
+    &:hover {
+      background-color: #fef2f2;
+    }
+    
+    &:hover svg {
+      color: #dc2626;
+    }
+  }
+  
+  // Empty State Styles
+  .empty__state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .empty__icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  .empty__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 8px 0;
+  }
+  
+  .empty__description {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  // Responsive Design
+  @media (max-width: 1024px) {
+    .table__header,
+    .table__cell {
+      padding: 16px;
+    }
+    
+    .table__header:first-child,
+    .table__cell:first-child {
+      padding-left: 20px;
+    }
+    
+    .table__header:last-child,
+    .table__cell:last-child {
+      padding-right: 20px;
+    }
+    
+    .post__info {
+      min-width: 240px;
+      max-width: 320px;
+    }
+    
+    .post__title {
+      font-size: 15px;
+    }
+    
+    .post__excerpt {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .table__wrapper {
+      overflow-x: scroll;
+    }
+    
+    .table {
+      min-width: 800px;
+    }
+    
+    .actions {
+      gap: 2px;
+    }
+    
+    .action__button {
+      width: 28px;
+      height: 28px;
+      
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }

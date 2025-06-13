@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 
 interface ButtonProps {
-  children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'danger';
+  title?: string;
+  icon?: ReactNode;
+  children?: ReactNode;
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
   onClick?: () => void;
@@ -11,6 +13,8 @@ interface ButtonProps {
 }
 
 export const Button = ({
+  title,
+  icon,
   children,
   variant = 'primary',
   size = 'medium',
@@ -35,24 +39,20 @@ export const Button = ({
     primary: {
       backgroundColor: '#88199a',
       color: 'white',
-      '&:hover': {
-        backgroundColor: '#6d1278',
-      },
     },
     secondary: {
       backgroundColor: 'white',
       color: '#374151',
       border: '1px solid #d1d5db',
-      '&:hover': {
-        backgroundColor: '#f9fafb',
-      },
     },
     danger: {
       backgroundColor: '#ef4444',
       color: 'white',
-      '&:hover': {
-        backgroundColor: '#dc2626',
-      },
+    },
+    ghost: {
+      backgroundColor: 'transparent',
+      color: '#374151',
+      border: '1px solid transparent',
     },
     small: { padding: '6px 12px', fontSize: '14px' },
     medium: { padding: '12px 24px', fontSize: '14px' },
@@ -68,6 +68,8 @@ export const Button = ({
 
   return (
     <button style={style} disabled={disabled} onClick={onClick} className={className} {...props}>
+      {icon && <span>{icon}</span>}
+      {title && <span>{title}</span>}
       {children}
     </button>
   );
