@@ -28,14 +28,13 @@ function AppRoutes() {
 // Component to conditionally render Footer
 function ConditionalFooter() {
   const location = useLocation();
-  const includeFooterPaths = ['/blogs', '/register', '/dashboard'];
-  
-  // Check if current path starts with any of the included paths
-  const shouldShowFooter = includeFooterPaths.some(path => 
-    location.pathname.startsWith(path)
-  );
-  
-  return shouldShowFooter ? <Footer /> : null;
+
+  // Don't show footer on homepage
+  if (location.pathname === '/') {
+    return null;
+  }
+
+  return <Footer />;
 }
 
 function App() {
