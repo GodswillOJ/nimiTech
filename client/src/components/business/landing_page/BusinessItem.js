@@ -10,8 +10,9 @@ const BusinessPostItem = ({ image, title, content }) => (
       maxWidth: 345,
       display: 'flex',
       flexDirection: 'column',
+      fontFamily: 'Montserrat, sans-serif',
       borderRadius: '20px',
-      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 8px 24px rgba(141, 140, 140, 0.1)',
       transition: 'transform 0.3s ease, box-shadow 0.3s ease',
       '&:hover': {
         transform: 'translateY(-5px)',
@@ -43,17 +44,7 @@ const BusinessPostItem = ({ image, title, content }) => (
       state={{
         post: { image, title, content, date: new Date().toLocaleDateString() },
       }}
-      style={{
-        textDecoration: 'none',
-        margin: '16px auto',
-        padding: '10px 30px',
-        borderRadius: '50px',
-        backgroundColor: '#3b1647',
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        display: 'inline-block',
-      }}
+      className="hover-link"
     >
       Click here
     </Link>

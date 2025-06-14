@@ -1,3 +1,6 @@
+/* styles.css or App.css */
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:wdth,wght@80.7,100..900;100,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&display=swap');
+
 /* to move from right to left */
 @keyframes scroll-single {
   0% {
@@ -32,6 +35,21 @@ body, html, #root {
   flex: 1;
 }
 
+h1{
+  font-family: 'Domine', serif;
+}
+
+h2 {
+  font-family: 'EB Garamond', serif;
+}
+
+p {
+  font-family: 'Manrope', sans-serif;
+}
+
+.css-1jrq8e9-MuiTypography-root{
+  font-family: 'Noto Sans Bengali', sans-serif;
+}
 
 /* image containers */
 .image-container:hover .image-hover {
@@ -65,6 +83,26 @@ body, html, #root {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
+/* services buttons */
+.hover-link {
+  text-decoration: none;
+  padding: 10px 30px;
+  border-radius: 50px;
+  border: 2px solid rgb(67, 72, 76);
+  color: #000;
+  margin: 25px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  background: rgb(62, 46, 76);
+  color: white; /* optional for contrast */
+}
 
 /* Navbar */
 .navbar {
@@ -74,6 +112,7 @@ body, html, #root {
   left: 0;
   width: 100%;
   z-index: 1000;
+  font-family: 'Domine', serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -333,7 +372,7 @@ body, html, #root {
 .custom-button {
   padding: 10px 20px;
   background: none;
-  border: 2px solid #007bff61;
+  border: 2px solid #4f545a61;
   color: white;
   border-radius: 30px;
   cursor: pointer;

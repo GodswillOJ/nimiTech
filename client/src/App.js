@@ -20,23 +20,6 @@ const baseRoutes = [
   { path: '*', element: <NotFound /> },
 ];
 
-function AppRoutes() {
-  const routes = useRoutes([...baseRoutes, ...dashboardRoutes]);
-  return routes;
-}
-
-// Component to conditionally render Footer
-function ConditionalFooter() {
-  const location = useLocation();
-
-  // Don't show footer on homepage
-  if (location.pathname === '/') {
-    return null;
-  }
-
-  return <Footer />;
-}
-
 function App() {
   return (
     <div className="app-container">
@@ -51,4 +34,19 @@ function App() {
   );
 }
 
-export default App;
+function AppRoutes() {
+  const routes = useRoutes([...baseRoutes, ...dashboardRoutes]);
+  return routes;
+}
+// Component to conditionally render Footer
+function ConditionalFooter() {
+  const location = useLocation();
+
+  // Don't show footer on homepage
+  if (location.pathname === '/') {
+    return null;
+  }
+  return <Footer />;
+}
+
+export {App, AppRoutes, ConditionalFooter};

@@ -70,10 +70,20 @@ const courses = [
   'Database Management (SQL, PostgreSQL)',
   'Remote IT Career Readiness Training',
 ];
+const ceoMessage = [
+  "Welcome to Nimitech IT. We're dedicated to delivering expert IT solutions and digital marketing services that help your business grow, stay secure, and boost brand awareness. From cybersecurity to cloud computing and custom software, our affordable, tailored services are designed to drive real results.",
+  "Thank you for trusting Nimitech IT as your partner in technology and growth. Together, we'll unlock new opportunities and keep your business ahead of the curve.",
+  `"Busay Bright\nCEO, Nimitech IT"`,
+];
 
-const introTitle = 'From the manager",';
+// prettier-ignore-start
+
+const introTitle = 'From the CEO",';
 const introSubtitle = 'We offer a wide range of services best fit for your business projects.';
-const introText = `Our team is dedicated to empowering your business with top-tier digital solutions. From online presence to backend operations, we provide scalable and tailored services designed to meet modern business needs. Whether you're a startup, SME, or enterprise, our goal is to help you grow, innovate, and lead in your industry.`;
+const introText = `At Nimitech IT, we specialize in delivering affordable, expert IT service and support that helps your business operate smarter and more efficiently. We know that you want to reduce IT costs without sacrificing quality—and we make that possible by leveraging a global network of certified IT professionals. This allows us to offer world-class support, fast response times, and scalable solutions at a price that fits your budget.
+From 24/7 technical support to customized IT strategies, we’re committed to keeping your systems secure, your data protected, and your business running without interruptions. Trusted by businesses of all sizes, Nimitech is your partner in reliable, cost-effective technology.
+Get expert IT support—without the high cost. Choose Nimitech.
+.`;
 
 const HomePage = () => {
   const { data: businessPosts = [], isLoading, isError } = useGetBusinessPostsQuery();
@@ -176,13 +186,18 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* partner with us */}
+      <div>
+        {/* Partner With Us Section */}
+        <PartnerWithUs services={services} />
+      </div>
+
       {/* Service updates */}
       <div
         style={{
           display: 'flex',
           flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'row' : 'row',
           alignItems: 'center',
-          background: '#66666621', // semi-transparent white
           padding: '20px',
           borderRadius: '16px',
           boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
@@ -195,30 +210,32 @@ const HomePage = () => {
           className="bounce-on-hover"
           style={{
             padding: '10px 20px',
-            fontSize: '1.2rem',
+            fontSize: '0.8rem',
             fontWeight: 'bold',
-            color: 'rgb(103,88,88)',
-            backgroundColor: '#fff',
+            color: '#fff',
+            backgroundColor: 'rgb(0, 8, 10, 93%)',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             border: 'none',
             borderRadius: '30px 30px 0 30px',
             cursor: 'pointer',
             flexShrink: 0,
           }}
         >
-          Latest Updates
+          Latest on Service
         </span>
 
         <div
           style={{
             flex: 1,
-            background: 'linear-gradient(to right,rgb(246, 246, 247),rgb(217, 219, 220))',
+            background: 'none',
+            border: '1px solid #ccc',
             borderRadius: '12px',
-            padding: '10px 20px',
+            // padding: '10px 20px',
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center', // Ensure content is centered
-            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 8px 16px rgba(48, 48, 48, 0.1)',
             marginTop: '10px',
             flexWrap: 'wrap', // Allow content to adjust for mobile
           }}
@@ -227,63 +244,23 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Youtube Channel Section */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '40px',
-          background: 'linear-gradient(to right,rgb(245, 246, 247),rgb(237, 237, 237))',
-          padding: '40px 20px',
-          borderRadius: '16px',
-          margin: '20px auto',
-          maxWidth: '1200px',
-          textAlign: 'center',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-        }}
-      >
-        <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-          {/* <div style={{ marginBottom: '20px' }}>
-            <img
-              src={businessImages.logo}
-              alt="Company Logo"
-              style={{
-                maxWidth: '150px',
-                height: 'auto',
-                margin: '0 auto',
-                display: 'block',
-              }}
-            />
-          </div> */}
-
-          <YoutubeEmbed videoId="dQw4w9WgXcQ" />
-        </div>
-
-        <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
-          <h3
-            style={{
-              marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-              marginBottom: '10px',
-              color: '#000',
-            }}
-          >
-            Follow us on
-          </h3>
-          <SocialLinks />
-        </div>
-      </div>
-
       {/* Services */}
       <div
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: '40px 20px',
+          padding: isSmallScreen ? '1rem 3rem 1rem 3rem' : '1rem 5rem 1rem 5rem',
           maxWidth: '100%',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
+        <h1
+          style={{
+            textAlign: 'center',
+            marginBottom: '60px',
+          }}
+        >
+          Our Services
+        </h1>
         <div
           style={{
             display: 'flex',
@@ -292,6 +269,21 @@ const HomePage = () => {
             gap: '40px',
           }}
         >
+          {/* 📸 Right Side: Full-Size Image */}
+          <div className="image-container" style={{ flex: 1 }}>
+            <img
+              src={businessImages.hero2}
+              alt="Manager Section Visual"
+              className="image-hover"
+              style={{
+                width: '100%',
+                height: '800px',
+                objectFit: 'cover',
+                borderRadius: '16px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+              }}
+            />
+          </div>
           {/* 📌 Left Side: Text & List Block */}
           <div style={{ flex: 1 }}>
             <h2
@@ -333,22 +325,6 @@ const HomePage = () => {
               </ul>
             </div>
           </div>
-
-          {/* 📸 Right Side: Full-Size Image */}
-          <div className="image-container" style={{ flex: 1 }}>
-            <img
-              src={businessImages.hero2}
-              alt="Manager Section Visual"
-              className="image-hover"
-              style={{
-                width: '100%',
-                height: '800px',
-                objectFit: 'cover',
-                borderRadius: '16px',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-              }}
-            />
-          </div>
         </div>
       </div>
 
@@ -367,7 +343,8 @@ const HomePage = () => {
             display: 'flex',
             flexDirection: isBelow1100 ? 'column' : 'row',
             gap: '20px',
-            padding: '20px',
+            maxWidth: '1200px',
+            padding: '50px',
           }}
         >
           <ManagerMessage
@@ -383,15 +360,15 @@ const HomePage = () => {
             className="business-posts-container"
             style={{
               display: 'grid',
-              // flexDirection: isSmallScreen ? 'column' : 'row',
               gridTemplateColumns: isSmallScreen
                 ? '1fr'
                 : isMediumScreen
-                  ? 'repeat(2, 1fr)'
+                  ? 'repeat(2, 2fr)'
                   : 'repeat(2, 1fr)',
-              //flexWrap: 'wrap', // allow wrapping
               gap: '20px',
-              padding: '20px',
+              alignItems: 'center',
+              justifyItems: 'center',
+              paddingTop: isSmallScreen ? '70px' : '0',
             }}
           >
             {postsToShow.map((post) => (
@@ -406,10 +383,222 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* partner with us */}
-      <div>
-        {/* Partner With Us Section */}
-        <PartnerWithUs services={services} />
+      {/* Youtube Channel Section */}
+      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px' }}>
+        {/* Blurred Background Image */}
+        <img
+          src={businessImages.hero4} // Replace with your image path
+          alt="background"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'blur(8px)',
+            zIndex: 0,
+          }}
+        />
+
+        {/* Foreground Content */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '40px',
+            background: 'none', // Optional: semi-transparent layer for contrast
+            padding: '40px 20px',
+            borderRadius: '16px',
+            margin: '20px auto',
+            maxWidth: '1200px',
+            textAlign: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          }}
+        >
+          <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
+            <YoutubeEmbed videoId="dQw4w9WgXcQ" />
+          </div>
+
+          <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
+            <h3
+              style={{
+                marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                marginBottom: '10px',
+                color: '#000',
+              }}
+            >
+              Follow us on
+            </h3>
+            <SocialLinks />
+          </div>
+        </div>
+      </div>
+
+      {/* message from the ceo */}
+      <div
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: '16px',
+          margin: '40px 20px',
+        }}
+      >
+        {/* Foreground Content */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            background: 'rgba(255, 255, 255, 0.8)',
+            padding: '40px 30px',
+            borderRadius: '16px',
+            maxWidth: '1000px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+        >
+          <img
+            src={businessImages.hero1}
+            alt="CEO Busay Bright"
+            style={{
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              marginBottom: '20px',
+              border: '3px solid #4a4a4a',
+            }}
+          />
+          <h2
+            style={{
+              fontSize: '24px',
+              marginBottom: '10px',
+              color: '#333',
+            }}
+          >
+            A Message from Our CEO
+          </h2>
+
+          {ceoMessage.map((text, index) => (
+            <p
+              key={index}
+              style={{
+                fontSize: '16px',
+                lineHeight: '1.6',
+                color: index === 2 ? '#444' : '#222',
+                maxWidth: '800px',
+                margin: index === 2 ? '30px auto 0' : '20px auto 0',
+                fontWeight: index === 2 ? 'bold' : 'normal',
+              }}
+            >
+              {text}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <div
+        style={{
+          backgroundColor: '#f5f5f5',
+          padding: '60px 20px',
+          borderRadius: '16px',
+          margin: '40px auto',
+          maxWidth: '1000px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+          textAlign: 'center',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '28px',
+            fontWeight: 'bold',
+            color: '#333',
+            marginBottom: '30px',
+          }}
+        >
+          Support Our Mission
+        </h2>
+        <p
+          style={{
+            fontSize: '16px',
+            color: '#555',
+            lineHeight: '1.6',
+            maxWidth: '800px',
+            margin: '0 auto 20px',
+          }}
+        >
+          Nimitech IT is committed to providing impactful digital solutions and empowering
+          businesses with the tools to succeed. Your support helps us grow and serve more
+          communities. You can support us through the details below.
+        </p>
+        {/* Additional Mission */}
+        <div
+          style={{
+            backgroundColor: '#fff',
+            padding: '30px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+            marginBottom: '30px',
+            maxWidth: '800px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            textAlign: 'left',
+          }}
+        >
+          <h3 style={{ color: '#4a4a4a', fontWeight: '600', marginBottom: '15px' }}>
+            Help Feed Hungry Kids in Africa — Support Nimitech’s Fight Against Malnutrition
+          </h3>
+          <p style={{ color: '#555', lineHeight: '1.6', fontSize: '16px' }}>
+            At <strong>Nimitech IT</strong>, we believe in using technology and community to make a
+            real difference. Every day, millions of children in Africa suffer from hunger and
+            malnutrition, threatening their health and future. By donating as little as{' '}
+            <strong>$1 a day</strong>, you can help provide nutritious meals and essential support
+            to vulnerable kids, giving them a chance to thrive.
+          </p>
+          <p style={{ color: '#555', lineHeight: '1.6', fontSize: '16px', marginTop: '10px' }}>
+            Join us in this vital mission—your small contribution can create a big impact. Together,
+            we can fight hunger, nourish hope, and build brighter futures.
+          </p>
+          <p style={{ fontWeight: 'bold', color: '#444', marginTop: '15px' }}>
+            Donate today and be a part of the change. Every dollar counts!
+          </p>
+        </div>
+        <div
+          style={{
+            marginTop: '30px',
+            textAlign: 'left',
+            backgroundColor: '#fff',
+            padding: '30px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+            maxWidth: '700px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          {/* npx prettier src/pages/business/home.js --write */}
+          {/* <h3 style={{ color: '#444', fontWeight: '600', marginBottom: '15px' }}>
+            Account Details
+          </h3>
+          <p>
+            <strong>Account Name:</strong> Nimitech IT Solutions
+          </p> */}
+          {/* <p>
+            <strong>Bank:</strong> Zenith Bank
+          </p>
+          <p>
+            <strong>Account Number:</strong> 1234567890
+          </p> */}
+
+          <h3 style={{ color: '#444', fontWeight: '600', margin: '25px 0 10px' }}>
+            Contact Information
+          </h3>
+          <p>info@nimitech.com</p>
+        </div>
       </div>
       {/* Footer */}
       <Footer />

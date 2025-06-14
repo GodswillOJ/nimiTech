@@ -19,14 +19,15 @@ const ServiceUpdateTicker = ({ posts }) => {
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#fff',
       }}
     >
       <div
         key={currentIndex}
         style={{
           whiteSpace: 'nowrap',
-          animation: 'scroll-single 6s linear',
+          width: '100%',
+          animation: 'scroll-single 10s linear',
           fontSize: '1rem',
           fontWeight: 'bold',
           color: '#333',
