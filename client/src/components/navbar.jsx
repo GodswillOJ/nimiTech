@@ -16,15 +16,18 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Check if tab is active by pathname or hash
   const isActive = (target) => {
-    if (target.startsWith('#')) {
-      return location.hash === target ? 'active-tab' : '';
+    // Handle hash links
+    if (target.startsWith('#') || target.startsWith('/#')) {
+      const cleanTarget = target.replace('/', '');
+      return location.hash === cleanTarget ? 'active-tab' : '';
     }
-    if (target.startsWith('/#')) {
-      return location.hash === target.replace('/', '') ? 'active-tab' : '';
-    }
-    return location.pathname === target ? 'active-tab' : '';
+
+    // Exact match for home
+    if (target === '/' && location.pathname === '/') return 'active-tab';
+
+    // Match nested paths
+    return location.pathname.startsWith(target) ? 'active-tab' : '';
   };
 
   return (
