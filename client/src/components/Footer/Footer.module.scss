@@ -103,7 +103,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 24px;
+    margin: 0 0 24px 0;
   }
 
   &__icon {
@@ -289,6 +289,11 @@
       padding: 120px 32px 40px;
       grid-template-columns: 1fr;
       gap: 40px;
+    }
+    .brand {
+      &__logo {
+        margin: 42px 0 24px 0;
+      }
     }
   }
 
