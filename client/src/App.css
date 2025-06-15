@@ -132,7 +132,7 @@ p {
 .navbar {
   position: fixed;
   top: 0;
-  height: 65px;
+  height: 70px;
   left: 0;
   width: 100%;
   z-index: 1000;
@@ -142,7 +142,7 @@ p {
   align-items: center;
   background: white;
   /* background: rgba(30, 30, 30, 0.2); */
-  padding: 1rem 1rem;
+  padding: 1.5rem 1rem;
   color: #374151;
   box-shadow: rgba(17, 0, 0, 0.3) 0px 4px 12px;
 }
