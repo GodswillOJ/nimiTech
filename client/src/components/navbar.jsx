@@ -55,7 +55,7 @@ const Navbar = () => {
           </li>
           {isOpen && (
             <div className="contact-us-mobile">
-              <button className="contact-btn" onClick={() => setIsOpen(false)}>
+              <button className="contact-btn-mobile" onClick={() => setIsOpen(false)}>
                 Contact Us
               </button>
             </div>
