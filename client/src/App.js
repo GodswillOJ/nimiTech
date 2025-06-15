@@ -7,7 +7,8 @@ import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import NotFound from './components/NotFound/NotFound';
 import RegisterPage from './pages/business/RegisterBusiness';
 import Navbar from './components/navbar';
-import Footer from './components/footer';
+import Footer from './components/Footer/Footer';
+
 import './App.css';
 
 // define other static routes
@@ -49,4 +50,4 @@ function ConditionalFooter() {
   return <Footer />;
 }
 
-export {App, AppRoutes, ConditionalFooter};
+export { App, AppRoutes, ConditionalFooter };

@@ -4,6 +4,10 @@ import styles from './blog.module.scss';
 import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
+import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
+import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
+import GradientCard from '../../components/blog/GradientCard/GradientCard';
+import DonateSection from '../../components/blog/DonateSection/DonateSection';
 
 const Blog = () => {
   const [posts, setPosts] = useState<IBlogPost[]>([]);
@@ -34,13 +38,15 @@ const Blog = () => {
         className={styles.featuredPost}
         style={{ backgroundImage: `url(${featuredPost.image})` }}
       >
-        <Link to="/blog/featured">
-          <div className={styles.featuredContent}>
-            <span className={styles.category}>{featuredPost.category}</span>
-            <h1>{featuredPost.title}</h1>
-            <p>{featuredPost.description}</p>
-          </div>
-        </Link>
+        {posts.map((post) => (
+          <Link to={`/blogs/${post.id}`} key={post.id}>
+            <div className={styles.featuredContent} key={post.id}>
+              <span className={styles.category}>{featuredPost.category}</span>
+              <h1>{featuredPost.title}</h1>
+              <p>{featuredPost.description}</p>
+            </div>
+          </Link>
+        ))}
       </section>
 
       {/* Recent Blog Posts Section */}
@@ -80,6 +86,12 @@ const Blog = () => {
             {loading ? 'Loading...' : 'Load more posts'}
           </button>
         )}
+        {/* <GradientCard imageSrc={donationImage1} imagePosition="left" /> */}
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
       </section>
     </div>
   );
