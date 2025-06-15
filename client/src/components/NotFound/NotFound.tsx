@@ -9,7 +9,13 @@ const NotFound = () => {
     <div className={styles.notFound}>
       <div className={styles.notFound__container}>
         <div className={styles.notFound__image}>
-          <img src={notFoundImage} alt="Page not found illustration" width="100%" height="auto" />
+          <img
+            src={notFoundImage}
+            alt="Page not found illustration"
+            width="100%"
+            height="auto"
+            loading="lazy"
+          />
         </div>
         <div className={styles.notFound__content}>
           <h2 className={styles.notFound__subtitle}>Page Not Found</h2>

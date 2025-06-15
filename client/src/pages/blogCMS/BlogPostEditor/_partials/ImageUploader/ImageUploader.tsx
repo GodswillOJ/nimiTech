@@ -35,7 +35,7 @@ export const ImageUploader: FC<ImageUploaderProps> = ({ image, onImageChange }) 
 
       {image ? (
         <div className={styles.uploader__preview}>
-          <img src={image} alt="Featured" />
+          <img src={image} alt="Featured" loading="lazy" />
           <button className={styles.uploader__remove} onClick={() => onImageChange(null)}>
             <TrashIcon />
           </button>

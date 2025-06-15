@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-left">
-        <div className="logo">
+        <div className="logo_wrapper">
           <Link to="/" className="logo-link">
             <img src={logo} alt="NimiTechIT Logo" className="logo" />
             <img src={logo2} alt="NimiTechIT Logo2" className="logo_2" />
@@ -31,11 +31,6 @@ const Navbar = () => {
         </div>
 
         {/* Hamburger for mobile */}
-        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
-          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
-        </button>
 
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li>
@@ -58,11 +53,26 @@ const Navbar = () => {
               Online training
             </Link>
           </li>
+          {isOpen && (
+            <div className="contact-us-mobile">
+              <button className="contact-btn-mobile" onClick={() => setIsOpen(false)}>
+                Contact Us
+              </button>
+            </div>
+          )}
         </ul>
       </div>
 
+      <div className="navbar-right">
+        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${isOpen ? 'open' : ''}`}></div>
+        </button>
+      </div>
+
       {/* Contact button */}
-      <div className={`contact-btn-container ${isOpen ? 'mobile-open' : ''}`}>
+      <div className={`contact-btn-container`}>
         <button className="contact-btn">Contact Us</button>
       </div>
     </nav>

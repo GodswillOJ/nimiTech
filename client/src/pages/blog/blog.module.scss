@@ -5,8 +5,9 @@ $breakpoint-xl: 1200px;
 
 .blogContainer {
   max-width: 100%;
-  margin: 150px auto;
+  margin: 90px auto;
   padding: 1rem;
+  font-family: 'Manrope', sans-serif;
 
   @media (min-width: $breakpoint-lg) {
     max-width: 1200px;
@@ -19,7 +20,7 @@ $breakpoint-xl: 1200px;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
-  min-height: 300px;
+  min-height: 400px;
   background-position: center;
   background-size: cover;
   cursor: pointer;
@@ -41,7 +42,7 @@ $breakpoint-xl: 1200px;
   }
 
   @media (min-width: $breakpoint-md) {
-    min-height: 400px;
+    min-height: 500px;
   }
 
   .featuredContent {
@@ -209,6 +210,17 @@ $breakpoint-xl: 1200px;
       vertical-align: middle;
     }
   }
+
+}
+
+.donation{
+  margin-top: 100px;
+}
+.viewMoreBtn{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  justify-content: center;
 }
 
 @keyframes spin {

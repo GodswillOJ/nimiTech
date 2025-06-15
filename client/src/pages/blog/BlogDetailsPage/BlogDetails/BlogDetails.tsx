@@ -115,6 +115,7 @@ const BlogDetails = () => {
                 alt={`Avatar of ${currentPost.author.name}`}
                 width="60"
                 height="60"
+                loading="lazy"
               />
             </div>
             <div className={styles.article__author_card_info}>
