@@ -186,7 +186,6 @@ p {
   height: 30px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(117, 2, 2, 0.305));
 }
 
 .nav-links {
