@@ -23,7 +23,7 @@ const GradientCard: React.FC<GradientCardProps> = ({ imageSrc, imagePosition = '
 
       {imageSrc && (
         <div className={styles['gradient-card__image-wrapper']}>
-          <img src={imageSrc} alt="Donate Visual" />
+          <img src={imageSrc} alt="Donate Visual" loading="eager" />
           <div className={fadeClass} />
         </div>
       )}

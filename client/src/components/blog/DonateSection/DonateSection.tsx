@@ -37,7 +37,7 @@ const DonateSection: React.FC<DonateSectionProps> = ({ images, onDonateClick }) 
             key={index}
             className={`${styles['donate-section__image']} ${styles[`donate-section__image--${index + 1}`]}`}
           >
-            <img src={imgSrc} alt={`Child ${index + 1}`} />
+            <img src={imgSrc} alt={`Child ${index + 1}`} loading="lazy" />
           </div>
         ))}
       </div>
