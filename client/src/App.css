@@ -186,7 +186,6 @@ p {
   height: 30px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(117, 2, 2, 0.305));
 }
 
 .nav-links {
@@ -205,8 +204,13 @@ p {
   color: rgb(47, 40, 40);
 }
 
+.nav-links li a.active-tab {
+  font-weight: bold;
+  color: #88199a;
+}
+
 .nav-links li a:hover {
-  color: rgb(241, 8, 187);
+  color: #88199a;
 }
 
 .contact-btn-container {
@@ -319,7 +323,7 @@ p {
   .nav-links li {
     padding: 0.5rem;
     text-align: left;
-    border-bottom: 1px solid rgb(67, 67, 67);
+    border-bottom: 1px solid #b4bbc743;
   }
 
   .nav-links li .contact-us-mobile {

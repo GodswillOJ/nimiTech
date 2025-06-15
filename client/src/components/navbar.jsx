@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/NimiTechLogo1.png'; // Adjust the path as
-import logo2 from '../assets/NimiTechLogo2.png'; // Adjust the path as
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/NimiTechLogo1.png';
+import logo2 from '../assets/NimiTechLogo2.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 0);
     window.addEventListener('scroll', handleScroll);
-
-    // Cleanup on unmount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Check if tab is active by pathname or hash
+  const isActive = (target) => {
+    if (target.startsWith('#')) {
+      return location.hash === target ? 'active-tab' : '';
+    }
+    if (target.startsWith('/#')) {
+      return location.hash === target.replace('/', '') ? 'active-tab' : '';
+    }
+    return location.pathname === target ? 'active-tab' : '';
+  };
 
   return (
     <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
@@ -30,27 +37,29 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Hamburger for mobile */}
-
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li>
-            <Link to="/#about" onClick={() => setIsOpen(false)}>
+            <Link to="/#about" onClick={() => setIsOpen(false)} className={isActive('/#about')}>
               About Us
             </Link>
           </li>
           <li>
-            <Link to="/#services" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/#services"
+              onClick={() => setIsOpen(false)}
+              className={isActive('/#services')}
+            >
               Services
             </Link>
           </li>
           <li>
-            <Link to="/blogs" onClick={() => setIsOpen(false)}>
+            <Link to="/blogs" onClick={() => setIsOpen(false)} className={isActive('/blogs')}>
               Blogs
             </Link>
           </li>
           <li>
-            <Link to="/#care" onClick={() => setIsOpen(false)}>
-              Online training
+            <Link to="/#care" onClick={() => setIsOpen(false)} className={isActive('/#care')}>
+              Online Training
             </Link>
           </li>
           {isOpen && (
@@ -71,8 +80,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Contact button */}
-      <div className={`contact-btn-container`}>
+      <div className="contact-btn-container">
         <button className="contact-btn">Contact Us</button>
       </div>
     </nav>
