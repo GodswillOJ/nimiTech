@@ -49,4 +49,4 @@ function ConditionalFooter() {
   return <Footer />;
 }
 
-export {App, AppRoutes, ConditionalFooter};
+export { App, AppRoutes, ConditionalFooter };

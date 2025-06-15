@@ -13,77 +13,22 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
 import Footer from '../../components/footer';
 import { Link } from 'react-router-dom';
+import {
+  dummyBusinessPosts,
+  services,
+  courses,
+  ceoMessage,
+  introTitle,
+  introSubtitle,
+  introText,
+} from '../../components/business/business_post/buidnessData.jsx';
 
-const images = [
-  businessImages.hero1,
-  businessImages.hero2,
-  businessImages.hero3,
-  businessImages.hero4,
-];
-
-const dummyBusinessPosts = [
-  {
-    id: 1,
-    title: 'Boost Your Local Business with These 5 Tips',
-    content: 'Learn how to attract more customers and grow your local business effectively...',
-    image: businessImages.hero1,
-  },
-  {
-    id: 2,
-    title: 'Effective Marketing Strategies for Startups',
-    content: 'Explore practical marketing tactics tailored for startup success...',
-    image: businessImages.hero2,
-  },
-  {
-    id: 2,
-    title: 'Effective Marketing Strategies for Startups',
-    content: 'Explore practical marketing tactics tailored for startup success...',
-    image: businessImages.hero2,
-  },
-  {
-    id: 2,
-    title: 'Effective Marketing Strategies for Startups',
-    content: 'Explore practical marketing tactics tailored for startup success...',
-    image: businessImages.hero2,
-  },
-];
-
-const services = [
-  'Digital Marketing',
-  'Custom Software Development',
-  'Website Design & Development',
-  'Artificial Intelligence (AI) & Machine Learning (ML)',
-  'Cybersecurity Solutions',
-  'Cloud Infrastructure & Solutions',
-  'Remote IT Support & Helpdesk',
-  'Graphic Design – Logos, Branding & Identity',
-];
-
-const courses = [
-  'Frontend & Backend Web Development',
-  'Python Programming & Automation',
-  'Cloud Engineering (AWS, Azure, GCP)',
-  'DevOps & CI/CD Pipelines',
-  'Data Analysis & Visualization (Excel, Python, Power BI)',
-  'Machine Learning & AI with Python',
-  'Cybersecurity & Ethical Hacking',
-  'Database Management (SQL, PostgreSQL)',
-  'Remote IT Career Readiness Training',
-];
-const ceoMessage = [
-  "Welcome to Nimitech IT. We're dedicated to delivering expert IT solutions and digital marketing services that help your business grow, stay secure, and boost brand awareness. From cybersecurity to cloud computing and custom software, our affordable, tailored services are designed to drive real results.",
-  "Thank you for trusting Nimitech IT as your partner in technology and growth. Together, we'll unlock new opportunities and keep your business ahead of the curve.",
-  `"Busay Bright\nCEO, Nimitech IT"`,
-];
-
-// prettier-ignore-start
-
-const introTitle = 'From the CEO",';
-const introSubtitle = 'We offer a wide range of services best fit for your business projects.';
-const introText = `At Nimitech IT, we specialize in delivering affordable, expert IT service and support that helps your business operate smarter and more efficiently. We know that you want to reduce IT costs without sacrificing quality—and we make that possible by leveraging a global network of certified IT professionals. This allows us to offer world-class support, fast response times, and scalable solutions at a price that fits your budget.
-From 24/7 technical support to customized IT strategies, we’re committed to keeping your systems secure, your data protected, and your business running without interruptions. Trusted by businesses of all sizes, Nimitech is your partner in reliable, cost-effective technology.
-Get expert IT support—without the high cost. Choose Nimitech.
-.`;
+// const images = [
+//   businessImages.hero1,
+//   businessImages.hero2,
+//   businessImages.hero3,
+//   businessImages.hero4,
+// ];
 
 const HomePage = () => {
   const { data: businessPosts = [], isLoading, isError } = useGetBusinessPostsQuery();
@@ -95,16 +40,16 @@ const HomePage = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setCurrentImage((prev) => (prev + 1) % images.length);
-        setFade(true);
-      }, 1000);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setFade(false);
+  //     setTimeout(() => {
+  //       setCurrentImage((prev) => (prev + 1) % images.length);
+  //       setFade(true);
+  //     }, 1000);
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const postsToShow = !isError && businessPosts.length > 0 ? businessPosts : dummyBusinessPosts;
 
@@ -112,39 +57,43 @@ const HomePage = () => {
     <div
       className="home-page-business"
       style={{
-        backgroundImage: `url(${businessImages.heroBackImage2})`,
         height: isSmallScreen ? '635px' : isMediumScreen ? '800px' : '800px',
         margin: '0 auto',
         backgroundSize: 'cover',
       }}
     >
-      {/* Hero section */}
-      <div className="hero-container">
-        <div
+      {/* Hero Section */}
+      <div
+        style={{
+          position: 'relative',
+          height: '800px',
+          overflow: 'hidden',
+        }}
+      >
+        <video
           className="hero-bg"
+          autoPlay
+          muted
+          loop
+          playsInline
           style={{
-            backgroundImage: `url(${images[currentImage]})`,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '800px',
+            objectFit: 'cover',
+            zIndex: -1,
             opacity: fade ? 1 : 0,
             transition: 'opacity 1s ease-in-out',
-            height: '800px',
-            backgroundSize: 'cover',
           }}
-        />
+        >
+          <source src="/videos/nimiVid.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <div className="hero-overlay"></div>
-
         <div className="hero-text">
-          <h1
-            style={{
-              color: 'white',
-              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '2.5rem' : '3.5rem',
-              textAlign: 'left',
-              marginBottom: '20px',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
-            }}
-          >
-            We believe in harnessing technology to drive business success.
-          </h1>
-
+          <h1> We believe in harnessing technology to drive business success.</h1>
           <p
             style={{
               color: 'white',
@@ -160,10 +109,10 @@ const HomePage = () => {
 
           <button
             className={`custom-button ${isSmallScreen ? 'small' : isMediumScreen ? 'medium' : 'large'}`}
-            style={{
-              position: 'absolute',
-              top: isSmallScreen ? '460px' : isMediumScreen ? '450px' : '590px',
-            }}
+            // style={{
+            //   position: 'absolute',
+            //   top: isSmallScreen ? '460px' : isMediumScreen ? '450px' : '590px',
+            // }}
           >
             <a
               href="/blogs"
@@ -286,6 +235,14 @@ const HomePage = () => {
           </div>
           {/* 📌 Left Side: Text & List Block */}
           <div style={{ flex: 1 }}>
+            <div>
+              <h3 style={{ color: '#000', marginBottom: '10px' }}>Our Services</h3>
+              <ul style={{ paddingLeft: '20px', color: '#555', lineHeight: '1.6' }}>
+                {services.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
             <h2
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
@@ -315,15 +272,6 @@ const HomePage = () => {
             >
               {introText}
             </p>
-
-            <div>
-              <h3 style={{ color: '#000', marginBottom: '10px' }}>Our Services</h3>
-              <ul style={{ paddingLeft: '20px', color: '#555', lineHeight: '1.6' }}>
-                {services.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
           </div>
         </div>
       </div>
@@ -421,7 +369,7 @@ const HomePage = () => {
           }}
         >
           <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-            <YoutubeEmbed videoId="dQw4w9WgXcQ" />
+            <YoutubeEmbed videoId="S8oq8Zz2y5c" />
           </div>
 
           <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
@@ -429,7 +377,7 @@ const HomePage = () => {
               style={{
                 marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                 marginBottom: '10px',
-                color: '#000',
+                color: '#fff',
               }}
             >
               Follow us on
@@ -501,6 +449,7 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Support Our Mission Section */}
       <div
         style={{
           backgroundColor: '#f5f5f5',

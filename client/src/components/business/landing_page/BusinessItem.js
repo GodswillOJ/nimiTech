@@ -63,7 +63,16 @@ const SocialLinks = () => {
       ),
       url: 'https://youtube.com/yourchannel',
     },
-    { icon: <FaInstagram />, url: 'https://instagram.com/yourprofile' },
+    {
+      icon: (
+        <FaInstagram
+          style={{
+            color: '#c65216',
+          }}
+        />
+      ),
+      url: 'https://instagram.com/yourprofile',
+    },
     {
       icon: (
         <FaFacebook
@@ -74,7 +83,16 @@ const SocialLinks = () => {
       ),
       url: 'https://facebook.com/yourpage',
     },
-    { icon: <FaTwitter />, url: 'https://twitter.com/yourhandle' },
+    {
+      icon: (
+        <FaTwitter
+          style={{
+            color: '#01560e',
+          }}
+        />
+      ),
+      url: 'https://twitter.com/yourhandle',
+    },
   ];
 
   return (
