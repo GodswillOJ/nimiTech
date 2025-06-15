@@ -11,7 +11,8 @@ import ServiceUpdateTicker from '../../components/business/landing_page/ServiceU
 import { businessImages } from '../../assets/images.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
-import Footer from '../../components/footer';
+// import Footer from '../../components/footer';
+import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
 const images = [

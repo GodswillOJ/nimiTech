@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './blog.module.scss';
 import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
+import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
+import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
+import { Button } from '../../components/blogCMS/Button/Button';
+
+const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
+const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
 const Blog = () => {
   const [posts, setPosts] = useState<IBlogPost[]>([]);
@@ -34,13 +40,15 @@ const Blog = () => {
         className={styles.featuredPost}
         style={{ backgroundImage: `url(${featuredPost.image})` }}
       >
-        <Link to="/blog/featured">
-          <div className={styles.featuredContent}>
-            <span className={styles.category}>{featuredPost.category}</span>
-            <h1>{featuredPost.title}</h1>
-            <p>{featuredPost.description}</p>
-          </div>
-        </Link>
+        {posts.map((post) => (
+          <Link to={`/blogs/${post.id}`} key={post.id}>
+            <div className={styles.featuredContent} key={post.id}>
+              <span className={styles.category}>{featuredPost.category}</span>
+              <h1>{featuredPost.title}</h1>
+              <p>{featuredPost.description}</p>
+            </div>
+          </Link>
+        ))}
       </section>
 
       {/* Recent Blog Posts Section */}
@@ -71,6 +79,13 @@ const Blog = () => {
             </article>
           ))}
         </div>
+        {!loading && (
+          <div className={styles.viewMoreBtn}>
+            <Link to="/blogs" className={styles.viewMoreLink}>
+              <Button title="View more" variant="primary" />
+            </Link>
+          </div>
+        )}
         {posts.length < blogPosts.length && (
           <button
             className={`${styles.loadMore} ${loading ? styles.loading : ''}`}
@@ -80,6 +95,13 @@ const Blog = () => {
             {loading ? 'Loading...' : 'Load more posts'}
           </button>
         )}
+      </section>
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
       </section>
     </div>
   );

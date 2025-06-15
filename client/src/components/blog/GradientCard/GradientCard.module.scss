@@ -1,0 +1,99 @@
+.gradient-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 3rem;
+  min-height: 250px;
+  position: relative;
+
+  // Reverse column for left-image layout on mobile
+  &--image-left {
+    flex-direction: column-reverse;
+
+    @media (min-width: 768px) {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // Normal stacking for right-image layout on mobile
+  &--image-right {
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__text-content {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #88199a, #d8bfd8);
+    z-index: 2;
+
+    @media (min-width: 768px) {
+      font-size: 1.75rem;
+      padding: 2rem;
+    }
+  }
+
+  &__image-wrapper {
+    position: relative;
+    flex: 1;
+    min-height: 220px;
+
+    @media (min-width: 768px) {
+      min-height: 300px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__fade-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #88199a, transparent 50%);
+  }
+
+  &__fade-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to left, #88199a, transparent 50%);
+  }
+
+  &--image-left {
+    flex-direction: column-reverse;
+
+    @media (min-width: 768px) {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &--image-right {
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+}
