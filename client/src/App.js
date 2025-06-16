@@ -6,6 +6,7 @@ import BlogDetails from './pages/blog/BlogDetailsPage/BlogDetails/BlogDetails';
 import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import NotFound from './components/NotFound/NotFound';
 import RegisterPage from './pages/business/RegisterBusiness';
+import AuthPage from './pages/auth/AuthPage';
 import Navbar from './components/navbar';
 import Footer from './components/Footer/Footer';
 
@@ -18,6 +19,7 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/register', element: <RegisterPage /> },
+  { path: '/auth', element: <AuthPage /> },
   { path: '*', element: <NotFound /> },
 ];
 
@@ -25,7 +27,7 @@ function App() {
   return (
     <div className="app-container">
       <Router>
-        <Navbar />
+        <ConditionalNavbar />
         <div className="app-content">
           <AppRoutes />
         </div>
@@ -47,7 +49,20 @@ function ConditionalFooter() {
   if (location.pathname === '/') {
     return null;
   }
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
   return <Footer />;
 }
 
-export { App, AppRoutes, ConditionalFooter };
+function ConditionalNavbar() {
+  const location = useLocation();
+
+  // Don't show navbar on homepage
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
+  return <Navbar />;
+}
+
+export { App, AppRoutes, ConditionalFooter, ConditionalNavbar };
