@@ -8,7 +8,6 @@ import NotFound from './components/NotFound/NotFound';
 import RegisterPage from './pages/business/RegisterBusiness';
 import Navbar from './components/navbar';
 import Footer from './components/Footer/Footer';
-
 import './App.css';
 
 // define other static routes

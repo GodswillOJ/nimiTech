@@ -67,4 +67,4 @@ Get expert IT support—without the high cost. Choose Nimitech.
 // prettier fix
 // npx prettier src/pages/business/home.js --write
 // npx prettier src/pages/business/RegisterBusiness.jsx --write
-// npx prettier src/components/business/business_post/buidnessData.jsx --write
+// npx prettier src/components/business/business_post/buisnessData.jsx --write

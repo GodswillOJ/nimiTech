@@ -43,3 +43,8 @@ code {
     transform: scale(1);
   }
 }
+
+/* enroll services form */
+form .text_area {
+  background-color: #fff;
+}

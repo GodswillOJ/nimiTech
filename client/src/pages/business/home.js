@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { useGetBusinessPostsQuery } from '../../services/api';
 import {
@@ -11,9 +11,10 @@ import ServiceUpdateTicker from '../../components/business/landing_page/ServiceU
 import { businessImages } from '../../assets/images.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
-// import Footer from '../../components/footer';
+import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
+import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import Footer from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
+import styles from '../blog/blog.module.scss';
 import {
   dummyBusinessPosts,
   services,
@@ -22,7 +23,7 @@ import {
   introTitle,
   introSubtitle,
   introText,
-} from '../../components/business/business_post/buidnessData.jsx';
+} from '../../components/business/business_post/buisnessData.jsx';
 
 // const images = [
 //   businessImages.hero1,
@@ -30,6 +31,8 @@ import {
 //   businessImages.hero3,
 //   businessImages.hero4,
 // ];
+const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
+const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
 const HomePage = () => {
   const { data: businessPosts = [], isLoading, isError } = useGetBusinessPostsQuery();
@@ -248,6 +251,7 @@ const HomePage = () => {
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
                 color: '#7b7979',
+                marginTop: '20px',
                 marginBottom: '10px',
               }}
             >
@@ -282,7 +286,7 @@ const HomePage = () => {
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
           padding: '20px',
-          maxWidth: '100%',
+          margin: 0,
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
@@ -292,7 +296,7 @@ const HomePage = () => {
             display: 'flex',
             flexDirection: isBelow1100 ? 'column' : 'row',
             gap: '20px',
-            maxWidth: '1200px',
+            // maxWidth: '1200px',
             padding: '50px',
           }}
         >
@@ -314,6 +318,7 @@ const HomePage = () => {
                 : isMediumScreen
                   ? 'repeat(2, 2fr)'
                   : 'repeat(2, 1fr)',
+              gridAutoRows: 'minmax(200px, auto)',
               gap: '20px',
               alignItems: 'center',
               justifyItems: 'center',
@@ -517,39 +522,14 @@ const HomePage = () => {
             Donate today and be a part of the change. Every dollar counts!
           </p>
         </div>
-        <div
-          style={{
-            marginTop: '30px',
-            textAlign: 'left',
-            backgroundColor: '#fff',
-            padding: '30px',
-            borderRadius: '12px',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-            maxWidth: '700px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          {/* npx prettier src/pages/business/home.js --write */}
-          {/* <h3 style={{ color: '#444', fontWeight: '600', marginBottom: '15px' }}>
-            Account Details
-          </h3>
-          <p>
-            <strong>Account Name:</strong> Nimitech IT Solutions
-          </p> */}
-          {/* <p>
-            <strong>Bank:</strong> Zenith Bank
-          </p>
-          <p>
-            <strong>Account Number:</strong> 1234567890
-          </p> */}
-
-          <h3 style={{ color: '#444', fontWeight: '600', margin: '25px 0 10px' }}>
-            Contact Information
-          </h3>
-          <p>info@nimitech.com</p>
-        </div>
       </div>
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
+      </section>
       {/* Footer */}
       <Footer />
     </div>
