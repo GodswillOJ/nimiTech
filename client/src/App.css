@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:wdth,wght@80.7,100..900;100,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&display=swap'); /* styles.css or App.css */
 /* Global smooth scrolling */
-html {
+/* html {
   scroll-behavior: smooth;
-}
-
-/* to move from right to left */
-/* @keyframes scroll-single {
+} */
+ /* to move from right to left */
+@keyframes scroll-single {
   0% {
     transform: translateX(100%);
     opacity: 0.6;
@@ -20,7 +19,7 @@ html {
     transform: translateX(-100%);
     opacity: 0.6;
   }
-} */
+}
 
 /* App.css or a global CSS */
 * {
@@ -29,13 +28,13 @@ html {
   box-sizing: border-box;
 }
 
-html,
+/* html,
 body,
 #root {
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-}
+} */
 
 .app-container {
   min-height: 100vh;
@@ -386,17 +385,79 @@ p {
   z-index: 1;
 }
 
+/* new */
 .hero-text {
   position: relative;
-  z-index: 2;
-  max-width: 600px; /* Optional */
-  padding-top: 100px;
-  padding-left: 40px;
+  z-index: 1;
+  top: 40px;
+  width: 80%;
+  padding: 100px 40px;
+  color: white;
 }
+
+.hero-text h1 {
+  color: white;
+  font-size: 3.5rem;
+  text-align: left;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-text p {
+  color: white;
+  font-size: 1.5rem;
+  text-align: left;
+  /* margin-bottom: 10px; */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: 2.5rem;
+  }
+  .hero-text p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+  .hero-text p {
+    font-size: 1rem;
+  }
+}
+
+/* .custom-button {
+  position: absolute;
+  top: 590px;
+}
+
+.custom-button.medium {
+  top: 450px;
+}
+
+.custom-button.small {
+  top: 460px;
+}
+
+.custom-button a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 30px;
+  color: white;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-decoration: none;
+} */
 
 /* buttons */
 .custom-button {
-  padding: 10px 20px;
+  position: absolute;
+  padding: 20px 30px;
   background: none;
   border: 2px solid #4f545a61;
   color: white;
@@ -410,7 +471,7 @@ p {
 }
 
 .custom-button:hover {
-  background: #192c56;
+  background: #190131;
 }
 
 /* Media-specific padding and font size */

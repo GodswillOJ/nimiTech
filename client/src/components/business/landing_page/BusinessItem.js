@@ -1,13 +1,12 @@
-import React from 'react';
-import { FaYoutube, FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
-import { Card, CardContent, Typography, Button, CardMedia } from '@mui/material';
-import { businessImages } from '../../../assets/images';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { businessImages } from '../../../assets/images';
 
 const BusinessPostItem = ({ image, title, content }) => (
   <Card
     sx={{
-      maxWidth: 345,
+      maxWidth: '445px',
       display: 'flex',
       flexDirection: 'column',
       fontFamily: 'Montserrat, sans-serif',
@@ -22,7 +21,7 @@ const BusinessPostItem = ({ image, title, content }) => (
   >
     <CardMedia
       component="img"
-      height="180"
+      height="250"
       image={image}
       alt={title}
       sx={{ borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
@@ -46,7 +45,7 @@ const BusinessPostItem = ({ image, title, content }) => (
       }}
       className="hover-link"
     >
-      Click here
+      Enroll here
     </Link>
   </Card>
 );
@@ -63,7 +62,16 @@ const SocialLinks = () => {
       ),
       url: 'https://youtube.com/yourchannel',
     },
-    { icon: <FaInstagram />, url: 'https://instagram.com/yourprofile' },
+    {
+      icon: (
+        <FaInstagram
+          style={{
+            color: '#c65216',
+          }}
+        />
+      ),
+      url: 'https://instagram.com/yourprofile',
+    },
     {
       icon: (
         <FaFacebook
@@ -74,7 +82,16 @@ const SocialLinks = () => {
       ),
       url: 'https://facebook.com/yourpage',
     },
-    { icon: <FaTwitter />, url: 'https://twitter.com/yourhandle' },
+    {
+      icon: (
+        <FaTwitter
+          style={{
+            color: '#01560e',
+          }}
+        />
+      ),
+      url: 'https://twitter.com/yourhandle',
+    },
   ];
 
   return (
@@ -237,4 +254,4 @@ const PartnerWithUs = ({ services }) => {
   );
 };
 
-export { BusinessPostItem, SocialLinks, PartnerWithUs };
+export { BusinessPostItem, PartnerWithUs, SocialLinks };
