@@ -521,7 +521,9 @@ Get expert IT support—without the high cost. Choose Nimitech.
 
 // prettier fix
 // npx prettier src/pages/business/home.js --write
+// npx prettier src/pages/business/ServicesPage.jsx --write
+// npx prettier src/pages/business/AboutPage.jsx --write
 // npx prettier src/pages/business/RegisterBusiness.jsx --write
-// npx prettier src/components/business/business_post/buisnessData.jsx --write
+// npx prettier src/components/navbar.jsx --write
 // npx prettier src/components/business/business_post/buisnessItem.js -- write
 // npx prettier src/components/business/landing_page/BusinessItem.js -- write
