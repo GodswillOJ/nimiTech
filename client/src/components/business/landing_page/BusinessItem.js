@@ -1,54 +1,85 @@
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
 
-const BusinessPostItem = ({ image, title, content }) => (
-  <Card
-    sx={{
-      maxWidth: '445px',
-      display: 'flex',
-      flexDirection: 'column',
-      fontFamily: 'Montserrat, sans-serif',
-      borderRadius: '20px',
-      boxShadow: '0 8px 24px rgba(141, 140, 140, 0.1)',
-      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-      '&:hover': {
-        transform: 'translateY(-5px)',
-        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
-      },
-    }}
-  >
-    <CardMedia
-      component="img"
-      height="250"
-      image={image}
-      alt={title}
-      sx={{ borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
-    />
+const BusinessPostItem = ({ id, image, title, content }) => {
+  // Truncate content to 15 words
+  const getShortContent = (jsxContent) => {
+    if (typeof jsxContent === 'string') {
+      const words = jsxContent.split(' ');
+      return words.length > 15 ? words.slice(0, 15).join(' ') + '...' : jsxContent;
+    }
 
-    <CardContent sx={{ flexGrow: 1 }}>
-      <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-        {title}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {content}
-      </Typography>
-    </CardContent>
+    if (React.isValidElement(jsxContent)) {
+      const children = jsxContent.props?.children;
 
-    <Link
-      to={{
-        pathname: '/register',
+      // Find the first <p> tag in the JSX children
+      const firstParagraph = Array.isArray(children)
+        ? children.find((child) => React.isValidElement(child) && child.type === 'p')
+        : React.isValidElement(children) && children.type === 'p'
+          ? children
+          : null;
+
+      if (firstParagraph) {
+        const paragraphText = firstParagraph.props?.children;
+
+        // Extract plain text (even if it's nested inside arrays or fragments)
+        let rawText = '';
+
+        if (typeof paragraphText === 'string') {
+          rawText = paragraphText;
+        } else if (Array.isArray(paragraphText)) {
+          rawText = paragraphText.filter((t) => typeof t === 'string').join(' ');
+        }
+
+        const words = rawText.split(' ');
+        return words.length > 15 ? words.slice(0, 15).join(' ') + '...' : rawText;
+      }
+    }
+
+    return 'Click to read more...';
+  };
+  return (
+    <Card
+      sx={{
+        maxWidth: '445px',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'Montserrat, sans-serif',
+        borderRadius: '20px',
+        boxShadow: '0 8px 24px rgba(141, 140, 140, 0.1)',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        '&:hover': {
+          transform: 'translateY(-5px)',
+          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
+        },
       }}
-      state={{
-        post: { image, title, content, date: new Date().toLocaleDateString() },
-      }}
-      className="hover-link"
     >
-      Enroll here
-    </Link>
-  </Card>
-);
+      <CardMedia
+        component="img"
+        height="250"
+        image={image}
+        alt={title}
+        sx={{ borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
+      />
+
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {getShortContent(content)}
+        </Typography>
+      </CardContent>
+
+      <Link to={`/services?id=${id}`} className="hover-link">
+        Enroll here
+      </Link>
+    </Card>
+  );
+};
 
 const SocialLinks = () => {
   const links = [
