@@ -11,6 +11,7 @@ import HomePage from './pages/business/home';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
 import { dashboardRoutes } from './routes/dashboardRoutes';
+import ScrollToTop from './components/ScrollToTop';
 
 // define other static routes
 const baseRoutes = [
@@ -29,6 +30,7 @@ function App() {
     <div className="app-container">
       <Router>
         <Navbar />
+        <ScrollToTop />
         <div className="app-content">
           <AppRoutes />
         </div>

@@ -1,10 +1,13 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
 
 const BusinessPostItem = ({ id, image, title, content }) => {
+  const isBelow1100 = useMediaQuery('(max-width:1100px)');
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const isMediumScreen = useMediaQuery('(max-width:900px)');
   // Truncate content to 15 words
   const getShortContent = (jsxContent) => {
     if (typeof jsxContent === 'string') {
@@ -44,11 +47,12 @@ const BusinessPostItem = ({ id, image, title, content }) => {
   return (
     <Card
       sx={{
-        maxWidth: '445px',
+        // maxWidth: '445px',
+        padding: '0',
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Montserrat, sans-serif',
-        borderRadius: '20px',
+        borderRadius: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
         boxShadow: '0 8px 24px rgba(141, 140, 140, 0.1)',
         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
         '&:hover': {
@@ -62,7 +66,10 @@ const BusinessPostItem = ({ id, image, title, content }) => {
         height="250"
         image={image}
         alt={title}
-        sx={{ borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
+        sx={{
+          borderTopLeftRadius: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
+          borderTopRightRadius: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
+        }}
       />
 
       <CardContent sx={{ flexGrow: 1 }}>
@@ -75,7 +82,7 @@ const BusinessPostItem = ({ id, image, title, content }) => {
       </CardContent>
 
       <Link to={`/services?id=${id}`} className="hover-link">
-        Enroll here
+        Learn more
       </Link>
     </Card>
   );
