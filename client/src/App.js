@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
-import './App.css';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/navbar';
 import NotFound from './components/NotFound/NotFound';
@@ -11,6 +10,10 @@ import HomePage from './pages/business/home';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
 import { dashboardRoutes } from './routes/dashboardRoutes';
+import RegisterPage from './pages/business/RegisterBusiness';
+import AuthPage from './pages/auth/AuthPage';
+
+import './App.css';
 
 // define other static routes
 const baseRoutes = [
@@ -21,6 +24,8 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/services', element: <BusinessRegisterPage /> },
+  { path: '/register', element: <RegisterPage /> },
+  { path: '/auth', element: <AuthPage /> },
   { path: '*', element: <NotFound /> },
 ];
 
@@ -28,7 +33,7 @@ function App() {
   return (
     <div className="app-container">
       <Router>
-        <Navbar />
+        <ConditionalNavbar />
         <div className="app-content">
           <AppRoutes />
         </div>
@@ -50,7 +55,20 @@ function ConditionalFooter() {
   if (location.pathname === '/') {
     return null;
   }
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
   return <Footer />;
 }
 
-export { App, AppRoutes, ConditionalFooter };
+function ConditionalNavbar() {
+  const location = useLocation();
+
+  // Don't show navbar on homepage
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
+  return <Navbar />;
+}
+
+export { App, AppRoutes, ConditionalFooter, ConditionalNavbar };
