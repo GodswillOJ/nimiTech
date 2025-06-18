@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FacebookIcon from '../../assets/blog/icons/FacebookIcon';
-import InstagramIconWhite from '../../assets/blog/icons/InstagramIconWhite';
-import SpaceXIcon from '../../assets/blog/icons/SpaceXIcon';
-import YoutubeIcon from '../../assets/blog/icons/YoutubeIcon';
+import {
+  FacebookIcon,
+  YouTubeIcon,
+  XIcon,
+  InstagramIcon,
+} from '../../assets/blog/icons/SocialIcons';
 import styles from './Footer.module.scss';
 
 import logoIcon from '../../assets/NimiTechLogo1.png';
@@ -57,10 +59,10 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks: SocialLink[] = [
-    { icon: <SpaceXIcon />, href: '#', label: 'twitter' },
-    { icon: <InstagramIconWhite />, href: '#', label: 'instagram' },
+    { icon: <XIcon />, href: '#', label: 'twitter' },
+    { icon: <InstagramIcon />, href: '#', label: 'instagram' },
     { icon: <FacebookIcon />, href: '#', label: 'facebook' },
-    { icon: <YoutubeIcon />, href: '#', label: 'youtube' },
+    { icon: <YouTubeIcon />, href: '#', label: 'youtube' },
   ];
 
   const footerLinks = [
@@ -143,9 +145,9 @@ const Footer: React.FC = () => {
                   <Link to={link.path} className={styles.footer__link}>
                     {link.text}
                   </Link>
-                  {index < footerLinks.length - 1 && (
+                  {/* {index < footerLinks.length - 1 && (
                     <span className={styles.footer__separator}>•</span>
-                  )}
+                  )} */}
                 </div>
               ))}
             </div>
