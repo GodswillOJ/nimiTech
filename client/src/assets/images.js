@@ -9,6 +9,14 @@ import heroBackImage2 from './business/images/heroBackImage2.jpg';
 import heroBackImage1 from './business/images/heroBackImage.jpg';
 import heroBackImage3 from './business/images/heroBackImg5.jpg';
 import heroBackImage6 from './business/images/hero6.jpg';
+import DM_image from './business/images/Digital_marketing.jpg';
+import CS_image from './business/images/CberSecurity.jpg';
+import IT_image from './business/images/Remote_IT_support.jpg';
+import RM_image from './business/images/RemoteIT_support.jpg';
+import AI_image from './business/images/AI.jpg';
+import ST_image from './business/images/Software_development.jpg';
+import WD_image from './business/images/Web_development.jpg';
+import CS2_image2 from './business/images/cybersecurity.jpg';
 import logo from './NimiTechLogo1.png';
 
 export const businessImages = {
@@ -16,6 +24,14 @@ export const businessImages = {
   hero2,
   hero3,
   hero4,
+  DM_image,
+  CS_image,
+  IT_image,
+  RM_image,
+  AI_image,
+  ST_image,
+  WD_image,
+  CS2_image2,
   heroBackImage7,
   heroBackImage2,
   heroBackImage1,

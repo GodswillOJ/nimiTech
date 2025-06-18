@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:10000/api' }), // change to your backend base url
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_BASE_URL }), // change to your backend base url
   tagTypes: ['Business', 'Blogs', 'HomePage', 'BlogPostEditor'],
   endpoints: (builder) => ({
     // landing page

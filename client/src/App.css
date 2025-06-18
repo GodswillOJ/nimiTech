@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:wdth,wght@80.7,100..900;100,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&display=swap'); /* styles.css or App.css */
-/* Global smooth scrolling */
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:...&display=swap');
 /* html {
   scroll-behavior: smooth;
 } */
- /* to move from right to left */
+/* to move from right to left */
 @keyframes scroll-single {
   0% {
     transform: translateX(100%);
@@ -27,14 +26,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-/* html,
-body,
-#root {
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-} */
 
 .app-container {
   min-height: 100vh;
@@ -60,6 +51,16 @@ p {
 
 .css-1jrq8e9-MuiTypography-root {
   font-family: 'Noto Sans Bengali', sans-serif;
+}
+
+.my-domine {
+  font-family: 'Manrope', sans-serif;
+  color: #fff;
+}
+
+h2 .my-domine1{
+  font-family: 'Domine', serif;
+  color: #fff;
 }
 
 /* image containers */
@@ -743,4 +744,11 @@ p {
     align-items: center;
     width: fit-content;
   }
+}
+
+.services_block {
+  max-width: 1000px;
+  width: 90%; /* Shrinks on small screens */
+  margin: 0 auto; /* Centers the content */
+  padding: 2rem; /* Fluid spacing */
 }

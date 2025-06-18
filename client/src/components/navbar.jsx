@@ -42,15 +42,20 @@ const Navbar = () => {
 
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li>
-            <Link to="/#about" onClick={() => setIsOpen(false)} className={isActive('/#about')}>
+            <Link to="/" onClick={() => setIsOpen(false)} className={isActive('/')}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" onClick={() => setIsOpen(false)} className={isActive('/about')}>
               About Us
             </Link>
           </li>
           <li>
             <Link
-              to="/#services"
+              to="/our-services"
               onClick={() => setIsOpen(false)}
-              className={isActive('/#services')}
+              className={isActive('/our-services')}
             >
               Services
             </Link>
@@ -61,7 +66,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/#care" onClick={() => setIsOpen(false)} className={isActive('/#care')}>
+            <Link
+              to="https://www.nimitutor.com/"
+              onClick={() => setIsOpen(false)}
+              className={isActive('https://www.nimitutor.com/')}
+            >
               Online Training
             </Link>
           </li>

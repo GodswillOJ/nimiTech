@@ -300,15 +300,6 @@ const HomePage = () => {
             padding: '50px',
           }}
         >
-          <ManagerMessage
-            isSmallScreen={isSmallScreen}
-            services={services}
-            courses={courses}
-            introTitle={introTitle}
-            introSubtitle={introSubtitle}
-            introText={introText}
-          />
-
           <div
             className="business-posts-container"
             style={{
@@ -327,6 +318,7 @@ const HomePage = () => {
           >
             {postsToShow.map((post) => (
               <BusinessPostItem
+                id={post.id}
                 key={post.id}
                 title={post.title}
                 content={post.content}
@@ -334,6 +326,14 @@ const HomePage = () => {
               />
             ))}
           </div>
+          <ManagerMessage
+            isSmallScreen={isSmallScreen}
+            services={services}
+            courses={courses}
+            introTitle={introTitle}
+            introSubtitle={introSubtitle}
+            introText={introText}
+          />
         </div>
       </div>
 

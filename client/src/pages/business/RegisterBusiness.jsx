@@ -2,10 +2,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { businessImages } from '../../assets/images.js';
+import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
 import { BusinessPostItem } from '../../components/business/landing_page/BusinessItem';
-const RegisterPage = () => {
-  const location = useLocation();
-  const post = location.state?.post;
+const BusinessRegisterPage = () => {
+  const search = useLocation().search;
+  const postId = parseInt(new URLSearchParams(search).get('id'), 10);
+  const post = dummyBusinessPosts.find((p) => p.id === postId);
+  const otherPosts = dummyBusinessPosts.filter((p) => p.id !== postId);
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
@@ -34,18 +37,18 @@ const RegisterPage = () => {
             zIndex: 1,
           }}
         >
-          <Typography
-            variant="h1"
+          <h1
+            className="my-domine"
             style={{
-              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '3.5rem' : '4.5rem',
+              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '3.5rem' : '5.8rem',
               marginBottom: '20px',
               textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
             }}
           >
             NimiTech IT
-          </Typography>
-          <Typography
-            variant="h2"
+          </h1>
+          <h2
+            className="my-domine1"
             style={{
               fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '2.5rem' : '3.5rem',
               marginBottom: '20px',
@@ -53,7 +56,7 @@ const RegisterPage = () => {
             }}
           >
             Solutions LLC
-          </Typography>
+          </h2>
 
           <button
             className="services-btn"
@@ -141,7 +144,7 @@ const RegisterPage = () => {
           }}
         >
           <img
-            src={businessImages.hero2}
+            src={post.image}
             alt="Manager Section Visual"
             style={{
               width: '100%',
@@ -187,18 +190,13 @@ const RegisterPage = () => {
             gap: '20px',
           }}
         >
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                flex: '1 1 300px',
-                maxWidth: '100%',
-              }}
-            >
+          {otherPosts.map((otherPost) => (
+            <div key={otherPost.id} style={{ flex: '1 1 300px', maxWidth: '100%' }}>
               <BusinessPostItem
-                image={post.image}
-                title={`More Insight ${i + 1}`}
-                content="Another update you may want to explore."
+                id={otherPost.id}
+                image={otherPost.image}
+                title={otherPost.title}
+                content={otherPost.content}
               />
             </div>
           ))}
@@ -323,4 +321,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default BusinessRegisterPage;
