@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
-import './App.css';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/navbar';
 import NotFound from './components/NotFound/NotFound';
@@ -11,11 +10,9 @@ import HomePage from './pages/business/home';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
 import { dashboardRoutes } from './routes/dashboardRoutes';
-import NotFound from './components/NotFound/NotFound';
 import RegisterPage from './pages/business/RegisterBusiness';
 import AuthPage from './pages/auth/AuthPage';
-import Navbar from './components/navbar';
-import Footer from './components/Footer/Footer';
+
 import './App.css';
 
 // define other static routes
