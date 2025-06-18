@@ -10,14 +10,11 @@ import HomePage from './pages/business/home';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
 import { dashboardRoutes } from './routes/dashboardRoutes';
-<<<<<<< HEAD
 import ScrollToTop from './components/ScrollToTop';
-=======
 import RegisterPage from './pages/business/RegisterBusiness';
 import AuthPage from './pages/auth/AuthPage';
 
 import './App.css';
->>>>>>> 86974e14904caf041a98c5dab279500828b290ee
 
 // define other static routes
 const baseRoutes = [
@@ -37,12 +34,9 @@ function App() {
   return (
     <div className="app-container">
       <Router>
-<<<<<<< HEAD
         <Navbar />
         <ScrollToTop />
-=======
         <ConditionalNavbar />
->>>>>>> 86974e14904caf041a98c5dab279500828b290ee
         <div className="app-content">
           <AppRoutes />
         </div>
