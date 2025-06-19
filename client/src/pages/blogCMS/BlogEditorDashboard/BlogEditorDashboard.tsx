@@ -155,7 +155,10 @@ const BlogEditorDashboard: React.FC<BlogEditorDashboardProps> = ({
           <BlogTableComp
             posts={filteredAndSortedPosts.map((post) => ({
               ...post,
-              author: { id: '1', name: post.author },
+              author:
+                typeof post.author === 'string'
+                  ? { id: '1', name: post.author, avatar: '', date: post.createdAt }
+                  : { id: '1', ...post.author },
               tags: post.tags ? post.tags.map((tag) => ({ id: tag, name: tag })) : [],
               slug: post.slug || '',
             }))}

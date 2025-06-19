@@ -4,6 +4,7 @@ export interface IAuthor {
   name: string;
   avatar: string;
   date: string;
+  bio?: string;
 }
 
 export interface IContent {
@@ -25,6 +26,8 @@ export interface IBlogPost {
   image: string;
   content?: IContent;
   youtubeUrl?: string;
+  contentImage?: string;
+  contentImageTitle?: string;
 }
 
 export interface IFeaturedPost extends IBlogPost {}

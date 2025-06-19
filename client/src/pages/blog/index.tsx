@@ -12,25 +12,66 @@ const GradientCard = lazy(() => import('../../components/blog/GradientCard/Gradi
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
 const Blog = () => {
-  const [posts, setPosts] = useState<IBlogPost[]>([]);
+  const [displayedPosts, setDisplayedPosts] = useState<IBlogPost[]>([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMorePosts, setHasMorePosts] = useState(true);
   const postsPerPage = 6;
 
   useEffect(() => {
-    // Initially load the first page of posts
-    setPosts(blogPosts.slice(0, postsPerPage));
+    const initialPosts = blogPosts.slice(0, postsPerPage);
+    setDisplayedPosts(initialPosts);
+    setHasMorePosts(blogPosts.length > postsPerPage);
   }, []);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
+    if (loading || !hasMorePosts) return;
+
     setLoading(true);
-    // Simulate loading delay
-    setTimeout(() => {
-      const nextPosts = blogPosts.slice(0, (page + 1) * postsPerPage);
-      setPosts(nextPosts);
-      setPage(page + 1);
-      setLoading(false);
-    }, 800);
+
+    // Simulate API call with smooth loading
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    const nextPage = currentPage + 1;
+    const startIndex = 0;
+    const endIndex = nextPage * postsPerPage;
+    const newPosts = blogPosts.slice(startIndex, endIndex);
+
+    setDisplayedPosts(newPosts);
+    setCurrentPage(nextPage);
+    setHasMorePosts(endIndex < blogPosts.length);
+    setLoading(false);
+  };
+
+  const renderLoadMoreButton = () => {
+    if (!hasMorePosts) return null;
+
+    return (
+      <div className={styles.loadMoreContainer}>
+        <button
+          className={`${styles.loadMoreButton} ${loading ? styles.loading : ''}`}
+          onClick={handleLoadMore}
+          disabled={loading}
+          aria-label={loading ? 'Loading more posts' : 'Load more posts'}
+        >
+          <span className={styles.buttonText}>{loading ? 'Loading...' : 'Load more posts'}</span>
+          {loading && <div className={styles.spinner} />}
+        </button>
+      </div>
+    );
+  };
+
+  const renderViewMoreButton = () => {
+    if (hasMorePosts || displayedPosts.length < blogPosts.length) {
+      return (
+        <div className={styles.viewMoreContainer}>
+          <Link to="/blogs" className={styles.viewMoreLink}>
+            <Button title={`View all ${blogPosts.length} posts`} variant="primary" />
+          </Link>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -40,7 +81,7 @@ const Blog = () => {
         className={styles.featuredPost}
         style={{ backgroundImage: `url(${featuredPost.image})` }}
       >
-        {posts.map((post) => (
+        {displayedPosts.map((post: any) => (
           <Link to={`/blogs/${post.id}`} key={post.id}>
             <div className={styles.featuredContent} key={post.id}>
               <span className={styles.category}>{featuredPost.category}</span>
@@ -53,13 +94,25 @@ const Blog = () => {
 
       {/* Recent Blog Posts Section */}
       <section className={styles.recentPosts}>
-        <h2>Recent blog posts</h2>
+        <div className={styles.sectionHeader}>
+          <h2>Recent blog posts</h2>
+          <span className={styles.postCount}>
+            Showing {displayedPosts.length} of {blogPosts.length} posts
+          </span>
+        </div>
+
         <div className={styles.postsGrid}>
-          {posts.map((post) => (
-            <article key={post.id} className={styles.blogCard}>
+          {displayedPosts.map((post, index) => (
+            <article
+              key={post.id}
+              className={styles.blogCard}
+              style={{
+                animationDelay: `${(index % postsPerPage) * 100}ms`,
+              }}
+            >
               <Link to={`/blogs/${post.id}`} className={styles.blogCardLink}>
                 <div className={styles.imageContainer}>
-                  <img src={post.image} alt={post.title} />
+                  <img src={post.image} alt={post.title} loading="lazy" />
                 </div>
                 <div className={styles.contentContainer}>
                   <h3>{post.title}</h3>
@@ -79,28 +132,20 @@ const Blog = () => {
             </article>
           ))}
         </div>
-        {!loading && (
-          <div className={styles.viewMoreBtn}>
-            <Link to="/blogs" className={styles.viewMoreLink}>
-              <Button title="View more" variant="primary" />
-            </Link>
-          </div>
-        )}
-        {posts.length < blogPosts.length && (
-          <button
-            className={`${styles.loadMore} ${loading ? styles.loading : ''}`}
-            onClick={handleLoadMore}
-            disabled={loading}
-          >
-            {loading ? 'Loading...' : 'Load more posts'}
-          </button>
-        )}
+
+        {/* Action Buttons */}
+        <div className={styles.actionsContainer}>
+          {renderLoadMoreButton()}
+          {renderViewMoreButton()}
+        </div>
       </section>
+
+      {/* Donation Section */}
       <section className={styles.donation}>
         <GradientCard imageSrc={donationImage2} imagePosition="left" />
         <DonateSection
           images={[donationImage1, donationImage2, donationImage1]}
-          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+          // onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
         />
       </section>
     </div>

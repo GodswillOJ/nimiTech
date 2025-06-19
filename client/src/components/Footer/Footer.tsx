@@ -30,12 +30,17 @@ interface SocialLink {
 const Footer: React.FC = () => {
   const navigationData: NavigationItem[] = [
     {
-      title: 'Product',
+      title: 'Services',
       links: [
-        { text: 'Features', path: '/features' },
-        { text: 'Pricing', path: '/pricing' },
-        // { text: 'Integrations', path: '/integrations' },
-        { text: 'Services', path: '/services' },
+        { text: 'Digital Marketing Services', path: '/digital-marketing' },
+        { text: 'Tailored Software Development Solutions', path: '/software-development' },
+        { text: 'Professional Website Design & Development', path: '/website-development' },
+        {
+          text: 'AI & Machine Learning Solutions for Business Growth',
+          path: '/ai-machine-learning',
+        },
+        { text: 'Advanced Cybersecurity Services & Risk Protection', path: '/cybersecurity' },
+        { text: 'Scalable Cloud Infrastructure & IT Solutions', path: '/cloud-infrastructure' },
       ],
     },
     {
@@ -43,19 +48,27 @@ const Footer: React.FC = () => {
       links: [
         // { text: 'Services', path: '/services' },
         { text: 'Blog', path: '/blogs' },
-        { text: 'Tutorials', path: '/tutorials' },
-        { text: 'Support', path: '/support' },
+        { text: 'Case Studies', path: '/case-studies' },
+        { text: 'FAQs', path: '/faqs' },
       ],
     },
     {
-      title: 'Company',
+      title: 'Support',
       links: [
-        { text: 'About', path: '/about' },
-        { text: 'Careers', path: '/careers' },
-        { text: 'Contact', path: '/contact' },
-        { text: 'Partners', path: '/partners' },
+        { text: 'Customer Support', path: '/support' },
+        { text: 'Help Desk', path: '/help-desk' },
       ],
     },
+    // {
+    //   title: 'Company',
+    //   links: [
+    //     { text: 'About', path: '/about' },
+    //     { text: 'Careers', path: '/careers' },
+    //     { text: 'Contact', path: '/contact' },
+    //     { text: 'Training', path: '/training' },
+    //     { text: 'Subscribe', path: '/subscribe' },
+    //   ],
+    // },
   ];
 
   const socialLinks: SocialLink[] = [
@@ -76,13 +89,13 @@ const Footer: React.FC = () => {
       <section className={styles.cta}>
         <div className={styles.cta__container}>
           <div className={styles.cta__content}>
-            <h1 className={styles.cta__title}>Ready to transform your business success?</h1>
+            <h1 className={styles.cta__title}>
+              Ready to grow your business with digital innovation?
+            </h1>
             <p className={styles.cta__subtitle}>
-              Join thousands of professionals who are creating
-              <br />
-              beautiful milestones.
+              Discover why thousands trust our tech solutions to succeed
             </p>
-            <button className={styles.cta__ctaButton}>Start for free</button>
+            <button className={styles.cta__ctaButton}>Book a free consultation now</button>
           </div>
         </div>
       </section>
@@ -97,8 +110,10 @@ const Footer: React.FC = () => {
               <img className={styles.brand__name} src={logoText} />
             </div>
             <p className={styles.brand__description}>
-              Nimitech delivers innovative, efficient, and scalable digital solution that empower
-              clients to thrive in an ever-evolving digital landscape.
+              Nimitech IT is a global technology solutions provider specializing in cybersecurity,
+              artificial intelligence, machine learning, digital marketing, software development,
+              and graphic design. We empower businesses with innovative, secure, and scalable IT
+              solutions tailored to drive digital transformation and long-term success.
             </p>
             <div className={styles.brand__social}>
               {socialLinks.map((social, index) => (

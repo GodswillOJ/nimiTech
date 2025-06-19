@@ -26,6 +26,7 @@ export interface FormData extends IBlogPost {
     name: string;
     avatar: string;
     date: string;
+    bio?: string;
   };
   content?: IContent;
   excerpt?: string;
@@ -43,6 +44,7 @@ export interface FieldUpdate {
   title?: string;
   excerpt?: string;
   content?: string;
+  'content.subtitle'?: string;
   status?: string;
   category?: string;
   tags?: string | string[];
@@ -51,4 +53,6 @@ export interface FieldUpdate {
   metaTitle?: string;
   metaDescription?: string;
   featuredImage?: string | null;
+  youtubeUrl?: string;
+  contentImageTitle?: string;
 }

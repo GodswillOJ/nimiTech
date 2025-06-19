@@ -17,17 +17,17 @@ const Navbar = () => {
   }, []);
 
   const isActive = (target) => {
-    // Handle hash links
     if (target.startsWith('#') || target.startsWith('/#')) {
       const cleanTarget = target.replace('/', '');
       return location.hash === cleanTarget ? 'active-tab' : '';
     }
-
-    // Exact match for home
     if (target === '/' && location.pathname === '/') return 'active-tab';
 
-    // Match nested paths
-    return location.pathname.startsWith(target) ? 'active-tab' : '';
+    if (target === '/' && location.pathname !== '/') return '';
+
+    if (target !== '/' && location.pathname.startsWith(target)) return 'active-tab';
+
+    return '';
   };
 
   return (
