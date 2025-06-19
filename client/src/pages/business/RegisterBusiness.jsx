@@ -1,3 +1,4 @@
+import { React, useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
@@ -8,10 +9,18 @@ const BusinessRegisterPage = () => {
   const search = useLocation().search;
   const postId = parseInt(new URLSearchParams(search).get('id'), 10);
   const post = dummyBusinessPosts.find((p) => p.id === postId);
-  const otherPosts = dummyBusinessPosts.filter((p) => p.id !== postId);
+  const otherPosts = Array.from(
+    new Map(
+      dummyBusinessPosts.filter((p) => p.id !== postId).map((p) => [p.id, p]) // Use ID as the key to remove duplicates
+    ).values()
+  );
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [postId]);
 
   if (!post) return <p>No post data provided.</p>;
 
@@ -32,7 +41,7 @@ const BusinessRegisterPage = () => {
             top: isSmallScreen ? 250 : isMediumScreen ? 250 : 300,
             background: 'none',
             color: '#fff',
-            padding: isSmallScreen ? '10px' : '20px',
+            padding: isSmallScreen ? '0' : '20px',
             textAlign: 'center',
             zIndex: 1,
           }}
@@ -130,46 +139,23 @@ const BusinessRegisterPage = () => {
           flexWrap: 'wrap',
           justifyContent: 'center',
           alignItems: 'flex-start',
-          padding: '40px 20px',
+          padding: isSmallScreen ? '40px 0 20px 0' : isMediumScreen ? '20px 20px' : '40px 20px',
           gap: '20px',
         }}
       >
-        {/* Left - Image */}
-        <div
-          className="image-container"
-          style={{
-            flex: '1 1 400px',
-            maxWidth: '600px',
-            width: '100%',
-          }}
-        >
-          <img
-            src={post.image}
-            alt="Manager Section Visual"
-            style={{
-              width: '100%',
-              height: 'auto',
-              maxHeight: '700px',
-              objectFit: 'cover',
-              borderRadius: '16px',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-            }}
-          />
-        </div>
-
         {/* Right - Main Content */}
-        <Box flex="2 1 300px" minWidth="280px" paddingRight="20px" style={{ width: '100%' }}>
-          <Typography variant="h5" gutterBottom>
+        <Box flex="2 1 300px" minWidth="380px" style={{ width: '100%' }}>
+          {/* <Typography variant="h5" gutterBottom>
             {post.title}
-          </Typography>
-          <Typography variant="body1" paragraph>
+          </Typography> */}
+          <Typography variant="" paragraph>
             {post.content}
           </Typography>
         </Box>
       </div>
 
       {/* Right - Latest Posts */}
-      <Box sx={{ m: 6 }}>
+      <Box sx={{ margin: isSmallScreen ? '0' : '48px' }}>
         <Typography
           variant="h5"
           gutterBottom

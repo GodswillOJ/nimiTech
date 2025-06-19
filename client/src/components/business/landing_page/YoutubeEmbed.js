@@ -1,4 +1,3 @@
-// components/YoutubeEmbed.js
 import React from 'react';
 
 const YoutubeEmbed = ({ videoId }) => {
@@ -7,13 +6,12 @@ const YoutubeEmbed = ({ videoId }) => {
       style={{
         position: 'relative',
         paddingBottom: '56.25%',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
         height: 0,
         overflow: 'hidden',
       }}
     >
       <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
+        src={`https://www.youtube.com/embed/${videoId}?modestbranding=1&showinfo=0&rel=0&iv_load_policy=3`}
         title="YouTube video"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

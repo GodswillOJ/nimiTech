@@ -1,29 +1,27 @@
-import React, { useEffect, useState, lazy } from 'react';
-import { useMediaQuery } from '@mui/material';
-import { useGetBusinessPostsQuery } from '../../services/api';
-import {
-  BusinessPostItem,
-  SocialLinks,
-  PartnerWithUs,
-} from '../../components/business/landing_page/BusinessItem';
-import ManagerMessage from '../../components/business/landing_page/ManagerMessage';
-import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
-import { businessImages } from '../../assets/images.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
+import { useMediaQuery } from '@mui/material';
+import { lazy, useState } from 'react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
-import Footer from '../../components/Footer/Footer';
-import styles from '../blog/blog.module.scss';
+import { businessImages } from '../../assets/images.js';
 import {
-  dummyBusinessPosts,
-  services,
-  courses,
   ceoMessage,
-  introTitle,
+  dummyBusinessPosts,
   introSubtitle,
   introText,
+  introTitle,
+  services,
 } from '../../components/business/business_post/buisnessData.jsx';
+import {
+  BusinessPostItem,
+  PartnerWithUs,
+  SocialLinks,
+} from '../../components/business/landing_page/BusinessItem';
+import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
+import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
+import Footer from '../../components/Footer/Footer';
+import { useGetBusinessPostsQuery } from '../../services/api';
+import styles from '../blog/blog.module.scss';
 
 // const images = [
 //   businessImages.hero1,
@@ -43,17 +41,6 @@ const HomePage = () => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setFade(false);
-  //     setTimeout(() => {
-  //       setCurrentImage((prev) => (prev + 1) % images.length);
-  //       setFade(true);
-  //     }, 1000);
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const postsToShow = !isError && businessPosts.length > 0 ? businessPosts : dummyBusinessPosts;
 
@@ -183,7 +170,7 @@ const HomePage = () => {
             background: 'none',
             border: '1px solid #ccc',
             borderRadius: '12px',
-            // padding: '10px 20px',
+            width: '90%',
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
@@ -201,7 +188,7 @@ const HomePage = () => {
       <div
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: isSmallScreen ? '1rem 3rem 1rem 3rem' : '1rem 5rem 1rem 5rem',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
           maxWidth: '100%',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
@@ -210,6 +197,7 @@ const HomePage = () => {
           style={{
             textAlign: 'center',
             marginBottom: '60px',
+            padding: isSmallScreen ? '20px' : '20px',
           }}
         >
           Our Services
@@ -239,9 +227,9 @@ const HomePage = () => {
           </div>
           {/* 📌 Left Side: Text & List Block */}
           <div style={{ flex: 1 }}>
-            <div>
+            <div style={{ padding: isSmallScreen ? '20px' : '20px' }}>
               <h3 style={{ color: '#000', marginBottom: '10px' }}>Our Services</h3>
-              <ul style={{ paddingLeft: '20px', color: '#555', lineHeight: '1.6' }}>
+              <ul style={{ color: '#555', lineHeight: '1.6' }}>
                 {services.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
@@ -250,6 +238,7 @@ const HomePage = () => {
             <h2
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
+                padding: isSmallScreen ? '20px' : '20px',
                 color: '#7b7979',
                 marginTop: '20px',
                 marginBottom: '10px',
@@ -260,6 +249,7 @@ const HomePage = () => {
             <h1
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2.4rem',
+                padding: isSmallScreen ? '20px' : '20px',
                 fontWeight: 'bold',
                 color: '#333',
                 marginBottom: '20px',
@@ -270,6 +260,7 @@ const HomePage = () => {
             <p
               style={{
                 fontSize: isSmallScreen ? '1rem' : '1.2rem',
+                padding: isSmallScreen ? '20px' : '20px',
                 lineHeight: '1.7',
                 color: '#444',
                 marginBottom: '30px',
@@ -285,7 +276,8 @@ const HomePage = () => {
       <div
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: '20px',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
+          width: '100%',
           margin: 0,
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
@@ -294,10 +286,10 @@ const HomePage = () => {
           className="business-posts-container"
           style={{
             display: 'flex',
-            flexDirection: isBelow1100 ? 'column' : 'row',
+            flexDirection: 'column',
             gap: '20px',
             // maxWidth: '1200px',
-            padding: '50px',
+            padding: isSmallScreen ? '0' : isMediumScreen ? '30x' : '50px',
           }}
         >
           <div
@@ -308,7 +300,7 @@ const HomePage = () => {
                 ? '1fr'
                 : isMediumScreen
                   ? 'repeat(2, 2fr)'
-                  : 'repeat(2, 1fr)',
+                  : 'repeat(3, 1fr)',
               gridAutoRows: 'minmax(200px, auto)',
               gap: '20px',
               alignItems: 'center',
@@ -326,14 +318,6 @@ const HomePage = () => {
               />
             ))}
           </div>
-          <ManagerMessage
-            isSmallScreen={isSmallScreen}
-            services={services}
-            courses={courses}
-            introTitle={introTitle}
-            introSubtitle={introSubtitle}
-            introText={introText}
-          />
         </div>
       </div>
 
@@ -375,7 +359,7 @@ const HomePage = () => {
           }}
         >
           <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-            <YoutubeEmbed videoId="S8oq8Zz2y5c" />
+            <YoutubeEmbed videoId="81W1f49ctpk" />
           </div>
 
           <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
@@ -467,6 +451,13 @@ const HomePage = () => {
           textAlign: 'center',
         }}
       >
+        <section className={styles.donation}>
+          <GradientCard imageSrc={donationImage2} imagePosition="left" />
+          <DonateSection
+            images={[donationImage1, donationImage2, donationImage1]}
+            onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+          />
+        </section>
         <h2
           style={{
             fontSize: '28px',
@@ -523,13 +514,6 @@ const HomePage = () => {
           </p>
         </div>
       </div>
-      <section className={styles.donation}>
-        <GradientCard imageSrc={donationImage2} imagePosition="left" />
-        <DonateSection
-          images={[donationImage1, donationImage2, donationImage1]}
-          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
-        />
-      </section>
       {/* Footer */}
       <Footer />
     </div>
