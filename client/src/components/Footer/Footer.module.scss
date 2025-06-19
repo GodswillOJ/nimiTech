@@ -73,7 +73,8 @@
   &__container {
     max-width: 1200px;
     margin: 0 auto;
-    background: #ffffff;
+    background: url('../../assets/blog/images/background1.jpg') no-repeat center center;
+    background-size: cover;
     border-radius: 24px;
     padding: 160px 60px 60px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
@@ -121,7 +122,7 @@
 
   &__description {
     font-size: 14px;
-    color: #6b7280;
+    color: rgb(255, 255, 255);
     line-height: 1.6;
     margin: 0 0 32px 0;
   }
@@ -129,6 +130,14 @@
   &__social {
     display: flex;
     gap: 16px;
+    background: #f3f4f6cf;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: fit-content;
+    padding: 0px 10px;
 
     &__social > a > svg {
       width: 24px;
@@ -173,7 +182,7 @@
   &__title {
     font-size: 16px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #fff;
     margin: 0 0 20px 0;
   }
 
@@ -189,7 +198,7 @@
 
   &__link {
     font-size: 14px;
-    color: #7e8697;
+    color: #fff;
     text-decoration: none;
     transition: color 0.2s ease;
 
@@ -211,7 +220,7 @@
     background: #ffffff;
     border-radius: 24px;
     padding: 32px 60px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 15px 35px rgba(34, 25, 25, 0.06);
     margin-top: -24px;
     position: relative;
 
@@ -236,7 +245,7 @@
 
   &__copyright {
     font-size: 14px;
-    color: #9ca3af;
+    color: #000;
     margin: 0;
   }
 
@@ -248,7 +257,7 @@
 
   &__link {
     font-size: 14px;
-    color: #6b7280;
+    color: #000;
     text-decoration: none;
     transition: color 0.2s ease;
 
