@@ -5,7 +5,8 @@ import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
-import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
+import donationImage5 from '../../assets/blog/images/donationImage5.jpg';
+import donationImage4 from '../../assets/blog/images/donationImage4.jpg';
 import { Button } from '../../components/blogCMS/Button/Button';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
@@ -142,11 +143,8 @@ const Blog = () => {
 
       {/* Donation Section */}
       <section className={styles.donation}>
-        <GradientCard imageSrc={donationImage2} imagePosition="left" />
-        <DonateSection
-          images={[donationImage1, donationImage2, donationImage1]}
-          // onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
-        />
+        <GradientCard imageSrc={donationImage5} imagePosition="left" />
+        <DonateSection images={[donationImage1, donationImage4, donationImage5]} />
       </section>
     </div>
   );
