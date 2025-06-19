@@ -68,6 +68,7 @@ const HomePage = () => {
             left: 0,
             width: '100%',
             height: '800px',
+            marginTop: '4rem',
             objectFit: 'cover',
             zIndex: -1,
             opacity: fade ? 1 : 0,
@@ -179,6 +180,80 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Courses */}
+      <div
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
+          width: '100%',
+          margin: 0,
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <div
+          className="business-posts-container"
+          style={{
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'column' : 'row',
+            gap: '60px',
+            // maxWidth: '1200px',
+            padding: isSmallScreen ? '0' : isMediumScreen ? '30x' : '50px',
+          }}
+        >
+          <div>
+            <img
+              src={businessImages.heroBackImage6}
+              alt="Explore our services"
+              style={{
+                width: '100%',
+                height: '',
+                objectFit: 'cover',
+                marginBottom: '20px',
+                borderRadius: '10px',
+                border: '3px solid #4a4a4a',
+              }}
+            />
+            <h4
+              style={{
+                fontSize: '24px',
+                marginBottom: '10px',
+                color: '#333',
+                padding: isSmallScreen ? '16px' : isMediumScreen ? '0' : '0',
+              }}
+            >
+              Explore Our Services* and learn why leading businesses globally rely on us to deliver
+              Exceptional Solutions that drive success.
+            </h4>
+          </div>
+          <div
+            className="business-posts-container"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: isSmallScreen
+                ? '1fr'
+                : isMediumScreen
+                  ? 'repeat(2, 2fr)'
+                  : 'repeat(2, 1fr)',
+              gridAutoRows: 'minmax(200px, auto)',
+              gap: '20px',
+              alignItems: 'center',
+              justifyItems: 'center',
+              paddingTop: isSmallScreen ? '70px' : '0',
+            }}
+          >
+            {postsToShow.map((post) => (
+              <BusinessPostItem
+                id={post.id}
+                key={post.id}
+                title={post.title}
+                content={post.content}
+                image={post.image}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Services */}
       <div
         style={{
@@ -267,60 +342,11 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Courses */}
-      <div
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
-          width: '100%',
-          margin: 0,
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <div
-          className="business-posts-container"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            // maxWidth: '1200px',
-            padding: isSmallScreen ? '0' : isMediumScreen ? '30x' : '50px',
-          }}
-        >
-          <div
-            className="business-posts-container"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isSmallScreen
-                ? '1fr'
-                : isMediumScreen
-                  ? 'repeat(2, 2fr)'
-                  : 'repeat(3, 1fr)',
-              gridAutoRows: 'minmax(200px, auto)',
-              gap: '20px',
-              alignItems: 'center',
-              justifyItems: 'center',
-              paddingTop: isSmallScreen ? '70px' : '0',
-            }}
-          >
-            {postsToShow.map((post) => (
-              <BusinessPostItem
-                id={post.id}
-                key={post.id}
-                title={post.title}
-                content={post.content}
-                image={post.image}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Youtube Channel Section */}
       <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px' }}>
         {/* Blurred Background Image */}
         <img
-          src={businessImages.hero4} // Replace with your image path
+          src={businessImages.IT_image} // Replace with your image path
           alt="background"
           style={{
             position: 'absolute',
@@ -354,7 +380,7 @@ const HomePage = () => {
           }}
         >
           <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-            <YoutubeEmbed videoId="81W1f49ctpk" />
+            <YoutubeEmbed videoId="fWk0YKyVGBk" />
           </div>
 
           <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
@@ -395,7 +421,7 @@ const HomePage = () => {
           }}
         >
           <img
-            src={businessImages.hero1}
+            src={businessImages.CEO_image}
             alt="CEO Busay Bright"
             style={{
               width: '120px',
@@ -509,7 +535,15 @@ const HomePage = () => {
           </p>
         </div>
       </div>
-      <div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: isSmallScreen ? '1fr' : isMediumScreen ? '1fr 1fr' : '1fr 1fr 1fr',
+          gap: '30px',
+          padding: isSmallScreen ? '50px 20px' : '70px 40px',
+          justifyItems: 'center',
+        }}
+      >
         {testimonials.map((item, index) => (
           <ClientReview
             key={index}
