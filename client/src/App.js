@@ -7,7 +7,6 @@ import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import About from './pages/business/AboutPage';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
-import { dashboardRoutes } from './routes/dashboardRoutes';
 import ScrollToTop from './components/ScrollToTop';
 import RegisterPage from './pages/business/RegisterBusiness';
 import AuthPage from './pages/auth/AuthPage';
