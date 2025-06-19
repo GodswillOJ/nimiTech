@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/NimiTechLogo1.png';
 import logo2 from '../assets/NimiTechLogo2.png';
@@ -17,17 +17,18 @@ const Navbar = () => {
   }, []);
 
   const isActive = (target) => {
-    // Handle hash links
     if (target.startsWith('#') || target.startsWith('/#')) {
       const cleanTarget = target.replace('/', '');
       return location.hash === cleanTarget ? 'active-tab' : '';
     }
 
-    // Exact match for home
+    // Exact match for Home
     if (target === '/' && location.pathname === '/') return 'active-tab';
 
-    // Match nested paths
-    return location.pathname.startsWith(target) ? 'active-tab' : '';
+    // Exact match for other internal routes
+    if (target !== '/' && location.pathname === target) return 'active-tab';
+
+    return '';
   };
 
   return (
@@ -41,7 +42,7 @@ const Navbar = () => {
         </div>
 
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <li>
+          <li style={{ paddingTop: '5px' }}>
             <Link to="/" onClick={() => setIsOpen(false)} className={isActive('/')}>
               Home
             </Link>

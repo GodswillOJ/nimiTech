@@ -1,6 +1,6 @@
-import { React, useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { businessImages } from '../../assets/images.js';
 import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
@@ -144,7 +144,7 @@ const BusinessRegisterPage = () => {
         }}
       >
         {/* Right - Main Content */}
-        <Box flex="2 1 300px" minWidth="380px" style={{ width: '100%' }}>
+        <Box flex="2 1 300px" style={{ width: '100%' }}>
           {/* <Typography variant="h5" gutterBottom>
             {post.title}
           </Typography> */}
@@ -196,9 +196,9 @@ const BusinessRegisterPage = () => {
           alignItems: 'stretch',
           justifyContent: 'center',
           gap: 4,
-          padding: '40px 20px',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '20px 10px' : '40px 20px',
           backgroundColor: '#f0f0f0',
-          borderRadius: '16px',
+          borderRadius: isSmallScreen ? '0' : isMediumScreen ? '5px' : '16px',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
           maxWidth: '1200px',
           margin: '40px auto',
@@ -209,10 +209,11 @@ const BusinessRegisterPage = () => {
           sx={{
             flex: 1,
             minHeight: '400px',
+            width: isSmallScreen ? '100%' : '0',
             backgroundImage: `url(${businessImages.hero2})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            borderRadius: '16px',
+            borderRadius: isSmallScreen ? '0' : isMediumScreen ? '5px' : '16px',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -230,7 +231,7 @@ const BusinessRegisterPage = () => {
               padding: 6,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '16px',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '5px' : '16px',
             }}
           >
             <Typography

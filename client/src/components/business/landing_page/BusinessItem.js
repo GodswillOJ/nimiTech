@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -158,12 +158,16 @@ const SocialLinks = () => {
 };
 
 const PartnerWithUs = ({ services }) => {
+  const isBelow1100 = useMediaQuery('(max-width:1100px)');
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const isMediumScreen = useMediaQuery('(max-width:900px)');
+
   return (
     <div
       style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 20px',
+        padding: isSmallScreen ? '0' : isMediumScreen ? '20px 10px' : '40px 20px',
       }}
     >
       <h2
@@ -172,6 +176,11 @@ const PartnerWithUs = ({ services }) => {
           fontWeight: 'bold',
           color: '#333',
           textAlign: 'center',
+          padding: isSmallScreen
+            ? '40px 60px 10px 60px'
+            : isMediumScreen
+              ? '20px 10px'
+              : '40px 20px',
           marginBottom: '40px',
         }}
       >
@@ -245,7 +254,7 @@ const PartnerWithUs = ({ services }) => {
               flex: 1,
               minWidth: '300px',
               position: 'relative',
-              borderRadius: '16px',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '20px' : '40px',
               overflow: 'hidden',
               height: '500px',
             }}
@@ -292,4 +301,109 @@ const PartnerWithUs = ({ services }) => {
   );
 };
 
-export { BusinessPostItem, PartnerWithUs, SocialLinks };
+const cyberImage = businessImages.hero1;
+const aiImage = businessImages.hero2;
+const marketingImage = businessImages.hero3;
+const softwareImage = businessImages.hero4;
+
+export const testimonials = [
+  {
+    image: cyberImage,
+    course: 'Cybersecurity – United States',
+    name: 'Jessica Moore, New York, USA',
+    review:
+      'Nimitech IT has been a game changer for our cybersecurity infrastructure. We were struggling with outdated protocols and frequent threats, but their team swiftly implemented advanced security measures and 24/7 monitoring. Since onboarding them, we’ve experienced zero breaches and complete peace of mind. Their professionalism and expertise are unmatched!',
+  },
+  {
+    image: aiImage,
+    course: 'AI & Machine Learning – Germany',
+    name: 'Lukas Fischer, Berlin, Germany',
+    review:
+      'We partnered with Nimitech IT to integrate AI and machine learning into our logistics platform, and the results have been phenomenal. Their solutions have improved our forecasting accuracy and reduced delivery times. Their technical team was collaborative, agile, and truly understood our business needs. Highly recommended for innovation-driven projects!',
+  },
+  {
+    image: marketingImage,
+    course: 'Digital Marketing – Nigeria',
+    name: 'Amaka Okonkwo, Lagos, Nigeria',
+    review:
+      'I cannot thank Nimitech IT enough for revamping our digital marketing strategy. From SEO to social media campaigns, their targeted efforts helped us reach new audiences and boost online sales by over 40% in just three months. Their analytics-driven approach really sets them apart from other agencies we’ve worked with.',
+  },
+  {
+    image: softwareImage,
+    course: 'Software Development & Graphic Design – Australia',
+    name: 'Ethan Roberts, Sydney, Australia',
+    review:
+      'Nimitech developed a custom software solution for our real estate platform and provided end-to-end branding and graphic design. Their UI/UX work was stunning, and the software functions seamlessly. They delivered on time, within budget, and exceeded expectations at every turn. We’re already planning our next project with them.',
+  },
+];
+
+const ClientReview = ({ image, course, name, review }) => {
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const isMediumScreen = useMediaQuery('(max-width:1024px)');
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: isSmallScreen ? 'column' : 'row',
+        alignItems: 'center',
+        gap: 3,
+        padding: '30px',
+        borderRadius: '16px',
+        backgroundColor: '#fff',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+        maxWidth: '900px',
+        margin: '40px auto',
+        textAlign: isSmallScreen ? 'center' : 'left',
+      }}
+    >
+      {/* Client Image */}
+      <Box
+        component="img"
+        src={image}
+        alt={name}
+        sx={{
+          width: isSmallScreen ? '120px' : '140px',
+          height: isSmallScreen ? '120px' : '140px',
+          borderRadius: '50%',
+          objectFit: 'cover',
+          border: '4px solid #ccc',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        }}
+      />
+
+      {/* Review Content */}
+      <Box sx={{ display: 'block' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: isSmallScreen ? '1.2rem' : isMediumScreen ? '1.5rem' : '1.6rem',
+            fontWeight: 'bold',
+            color: '#3b1647',
+            mb: 1,
+          }}
+        >
+          {course}
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontSize: '1.1rem', fontWeight: 600, color: '#222', mb: 1 }}
+        >
+          {name}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: isSmallScreen ? '1rem' : '1.1rem',
+            lineHeight: 1.7,
+            color: '#555',
+          }}
+        >
+          &ldquo;{review}&ldquo;
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
+export { BusinessPostItem, ClientReview, PartnerWithUs, SocialLinks };

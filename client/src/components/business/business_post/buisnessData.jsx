@@ -60,12 +60,12 @@ export const dummyBusinessPosts = [
 ];
 
 export const services = [
-  'Digital Marketing',
-  'Custom Software Development',
-  'Website Design & Development',
-  'Artificial Intelligence (AI) & Machine Learning (ML)',
-  'Cybersecurity Solutions',
-  'Cloud Infrastructure & Solutions',
+  'Results-Driven Digital Marketing Services',
+  'Tailored Software Development Solutions',
+  'Professional Website Design & Development',
+  'AI & Machine Learning Solutions for Business Growth',
+  'Advanced Cybersecurity Services & Risk Protection',
+  'Scalable Cloud Infrastructure & IT Solutions',
   'Remote IT Support & Helpdesk',
   'Graphic Design – Logos, Branding & Identity',
 ];
@@ -103,7 +103,7 @@ Get expert IT support—without the high cost. Choose Nimitech.
 // npx prettier src/pages/business/RegisterBusiness.jsx --write
 // npx prettier src/pages/business/RegisterBusiness.jsx --write
 // npx prettier src/components/navbar.jsx --write
-// npx prettier src/components/business/landing_page/BusinessItem.js -- write
+// npx prettier src/components/business/landing_page/BusinessItem.js --write
 // npx prettier src/components/business/landing_page/buisnessItem.js -- write
 // npx prettier src/components/business/business_post/buisnessData.jsx --write
 // npx prettier src/components/business/serviceContent/BrandingContent.jsx --write

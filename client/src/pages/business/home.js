@@ -9,13 +9,14 @@ import {
   dummyBusinessPosts,
   introSubtitle,
   introText,
-  introTitle,
   services,
 } from '../../components/business/business_post/buisnessData.jsx';
 import {
   BusinessPostItem,
+  ClientReview,
   PartnerWithUs,
   SocialLinks,
+  testimonials,
 } from '../../components/business/landing_page/BusinessItem';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
@@ -23,12 +24,6 @@ import Footer from '../../components/Footer/Footer';
 import { useGetBusinessPostsQuery } from '../../services/api';
 import styles from '../blog/blog.module.scss';
 
-// const images = [
-//   businessImages.hero1,
-//   businessImages.hero2,
-//   businessImages.hero3,
-//   businessImages.hero4,
-// ];
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
@@ -161,7 +156,7 @@ const HomePage = () => {
             flexShrink: 0,
           }}
         >
-          Latest on Service
+          Explore our IT services
         </span>
 
         <div
@@ -211,7 +206,7 @@ const HomePage = () => {
           }}
         >
           {/* 📸 Right Side: Full-Size Image */}
-          <div className="image-container" style={{ flex: 1 }}>
+          <div className="image-container service-img-container" style={{ flex: 1 }}>
             <img
               src={businessImages.hero2}
               alt="Manager Section Visual"
@@ -220,7 +215,7 @@ const HomePage = () => {
                 width: '100%',
                 height: '800px',
                 objectFit: 'cover',
-                borderRadius: '16px',
+                borderRadius: isSmallScreen ? '0' : isMediumScreen ? '10px' : '16px',
                 boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
               }}
             />
@@ -235,7 +230,7 @@ const HomePage = () => {
                 ))}
               </ul>
             </div>
-            <h2
+            {/* <h2
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
                 padding: isSmallScreen ? '20px' : '20px',
@@ -245,7 +240,7 @@ const HomePage = () => {
               }}
             >
               {introTitle}
-            </h2>
+            </h2> */}
             <h1
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2.4rem',
@@ -513,6 +508,17 @@ const HomePage = () => {
             Donate today and be a part of the change. Every dollar counts!
           </p>
         </div>
+      </div>
+      <div>
+        {testimonials.map((item, index) => (
+          <ClientReview
+            key={index}
+            image={item.image}
+            course={item.course}
+            name={item.name}
+            review={item.review}
+          />
+        ))}
       </div>
       {/* Footer */}
       <Footer />

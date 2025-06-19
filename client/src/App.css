@@ -729,13 +729,6 @@ h2 .my-domine1{
   }
 }
 
-.services_block {
-  max-width: 1000px;
-  width: 90%; /* Shrinks on small screens */
-  margin: 0 auto; /* Centers the content */
-  padding: 2rem; /* Fluid spacing */
-}
-
 /* services update */
 /* Container that holds the animated text */
 .ticker-wrapper {
