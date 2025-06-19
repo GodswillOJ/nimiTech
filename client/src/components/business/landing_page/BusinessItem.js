@@ -82,7 +82,7 @@ const BusinessPostItem = ({ id, image, title, content }) => {
       </CardContent>
 
       <Link to={`/services?id=${id}`} className="hover-link">
-        Learn more
+        Learn More
       </Link>
     </Card>
   );
@@ -344,27 +344,31 @@ const ClientReview = ({ image, course, name, review }) => {
   return (
     <Box
       sx={{
+        width: '100%',
+        maxWidth: 400,
         display: 'flex',
-        flexDirection: isSmallScreen ? 'column' : 'row',
+        flexDirection: 'column',
         alignItems: 'center',
-        gap: 3,
-        padding: '30px',
+        gap: 2,
+        padding: '25px',
         borderRadius: '16px',
         backgroundColor: '#fff',
         boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-        maxWidth: '900px',
-        margin: '40px auto',
-        textAlign: isSmallScreen ? 'center' : 'left',
+        textAlign: 'center',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        '&:hover': {
+          transform: 'translateY(-10px) scale(1.02)',
+          boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
+        },
       }}
     >
-      {/* Client Image */}
       <Box
         component="img"
         src={image}
         alt={name}
         sx={{
-          width: isSmallScreen ? '120px' : '140px',
-          height: isSmallScreen ? '120px' : '140px',
+          width: '120px',
+          height: '120px',
           borderRadius: '50%',
           objectFit: 'cover',
           border: '4px solid #ccc',
@@ -372,12 +376,11 @@ const ClientReview = ({ image, course, name, review }) => {
         }}
       />
 
-      {/* Review Content */}
-      <Box sx={{ display: 'block' }}>
+      <Box>
         <Typography
           variant="h6"
           sx={{
-            fontSize: isSmallScreen ? '1.2rem' : isMediumScreen ? '1.5rem' : '1.6rem',
+            fontSize: isSmallScreen ? '1.2rem' : isMediumScreen ? '1.4rem' : '1.6rem',
             fontWeight: 'bold',
             color: '#3b1647',
             mb: 1,
@@ -385,21 +388,18 @@ const ClientReview = ({ image, course, name, review }) => {
         >
           {course}
         </Typography>
-        <Typography
-          variant="subtitle1"
-          sx={{ fontSize: '1.1rem', fontWeight: 600, color: '#222', mb: 1 }}
-        >
+        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#222', mb: 1 }}>
           {name}
         </Typography>
         <Typography
           variant="body1"
           sx={{
-            fontSize: isSmallScreen ? '1rem' : '1.1rem',
-            lineHeight: 1.7,
+            fontSize: '1rem',
+            lineHeight: 1.6,
             color: '#555',
           }}
         >
-          &ldquo;{review}&ldquo;
+          &ldquo;{review}&rdquo;
         </Typography>
       </Box>
     </Box>

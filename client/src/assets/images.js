@@ -16,6 +16,7 @@ import RM_image from './business/images/RemoteIT_support.jpg';
 import AI_image from './business/images/AI.jpg';
 import ST_image from './business/images/Software_development.jpg';
 import WD_image from './business/images/Web_development.jpg';
+import CEO_image from './business/images/ceo.jpg';
 import CS2_image2 from './business/images/cybersecurity.jpg';
 import logo from './NimiTechLogo1.png';
 
@@ -38,4 +39,5 @@ export const businessImages = {
   heroBackImage3,
   heroBackImage6,
   logo,
+  CEO_image,
 };
