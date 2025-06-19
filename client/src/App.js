@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="app-container">
       <Router>
-        <Navbar />
+        <ConditionalNavbar />
         <div className="app-content">
           <AppRoutes />
         </div>
@@ -58,4 +58,14 @@ function ConditionalFooter() {
   return <Footer />;
 }
 
-export { App, AppRoutes, ConditionalFooter };
+function ConditionalNavbar() {
+  const location = useLocation();
+
+  // Don't show navbar on homepage
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
+  return <Navbar />;
+}
+
+export { App, AppRoutes, ConditionalFooter, ConditionalNavbar };
