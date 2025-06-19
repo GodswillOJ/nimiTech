@@ -1,17 +1,28 @@
 export interface Post {
   id: string;
   title: string;
-  content: string;
+  content: any;
   excerpt?: string;
   status: PostStatus;
   category: string;
-  author: string;
+  author:
+    | {
+        name: string;
+        avatar: string;
+        date: string;
+        bio?: string;
+      }
+    | string;
   createdAt: string;
   updatedAt: string;
-  publishedAt?: string;
-  featuredImage?: string;
+  publishDate?: string;
+  image?: string;
   tags?: string[];
   slug?: string;
+  readTime?: string;
+  youtubeUrl?: string;
+  contentImage?: string;
+  contentImageTitle?: string;
 }
 
 export enum PostStatus {

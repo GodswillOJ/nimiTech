@@ -21,12 +21,20 @@ const Navbar = () => {
       const cleanTarget = target.replace('/', '');
       return location.hash === cleanTarget ? 'active-tab' : '';
     }
+<<<<<<< HEAD
 
     // Exact match for Home
     if (target === '/' && location.pathname === '/') return 'active-tab';
 
     // Exact match for other internal routes
     if (target !== '/' && location.pathname === target) return 'active-tab';
+=======
+    if (target === '/' && location.pathname === '/') return 'active-tab';
+
+    if (target === '/' && location.pathname !== '/') return '';
+
+    if (target !== '/' && location.pathname.startsWith(target)) return 'active-tab';
+>>>>>>> 7e0e46399cc044739232d3cc7b849bf93dd152e0
 
     return '';
   };

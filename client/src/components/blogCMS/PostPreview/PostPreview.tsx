@@ -60,7 +60,9 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, onClose, onEdit 
               >
                 {post.status}
               </span>
-              <span className={styles.post_preview__author}>by {post.author}</span>
+              <span className={styles.post_preview__author}>
+                by {typeof post.author === 'string' ? post.author : post.author.name}
+              </span>
               <span className={styles.post_preview__date}>{formatDate(post.updatedAt)}</span>
             </div>
           </div>
@@ -84,9 +86,9 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post, onClose, onEdit 
         </header>
 
         <div className={styles.post_preview__content}>
-          {post.featuredImage && (
+          {post.image && (
             <div className={styles.post_preview__image}>
-              <img src={post.featuredImage} alt={post.title} />
+              <img src={post.image} alt={post.title} />
             </div>
           )}
 

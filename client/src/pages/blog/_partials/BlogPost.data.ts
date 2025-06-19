@@ -15,6 +15,34 @@ export const featuredPost: IFeaturedPost = {
   image: featuredPostImage,
   category: 'Featured',
   readTime: '15 min read',
+  content: {
+    subtitle: 'A Comprehensive Guide to Project Management Migration',
+    paragraphs: [
+      {
+        type: 'text',
+        content:
+          'Linear has revolutionized how teams manage software projects. This guide will walk you through the essential steps to migrate your existing project management system to Linear effectively.',
+      },
+      {
+        type: 'quote',
+        content:
+          'A well-organized project management system is key to maintaining development velocity and team alignment.',
+      },
+      {
+        type: 'text',
+        content:
+          "Start by exporting your existing tasks and carefully mapping them to Linear's structure. Linear's intuitive interface and powerful features make it an excellent choice for modern development teams.",
+      },
+    ],
+    highlights: {
+      title: 'Key Benefits',
+      benefits: [
+        'Improves usability by making navigation smooth and intuitive',
+        'Enhances accessibility to ensure inclusivity for all users',
+        'Boosts engagement by creating visually appealing interfaces',
+      ],
+    },
+  },
   author: {
     name: 'Frankie Sullivan',
     avatar:
@@ -22,6 +50,8 @@ export const featuredPost: IFeaturedPost = {
     date: '8 June 2025',
   },
   youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+  contentImage: featuredPostImage,
+  contentImageTitle: 'Breaking Into Product Design',
 };
 
 export const blogPosts: IBlogPost[] = [
@@ -68,6 +98,8 @@ export const blogPosts: IBlogPost[] = [
       },
     },
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+    contentImage: featuredPostImage,
+    contentImageTitle: 'Breaking Into Product Design',
   },
   {
     id: 2,
@@ -111,6 +143,8 @@ export const blogPosts: IBlogPost[] = [
       },
     },
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+    contentImage: blogPostImage,
+    contentImageTitle: 'Breaking Into Product Design',
   },
   {
     id: 3,
@@ -155,6 +189,8 @@ export const blogPosts: IBlogPost[] = [
       },
     },
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+    contentImage: blogPostImage2,
+    contentImageTitle: 'Breaking Into Product Design',
   },
   {
     id: 4,
@@ -199,6 +235,8 @@ export const blogPosts: IBlogPost[] = [
       },
     },
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+    contentImage: featuredPostImage,
+    contentImageTitle: 'Breaking Into Product Design',
   },
   {
     id: 5,
@@ -287,5 +325,7 @@ export const blogPosts: IBlogPost[] = [
       },
     },
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
+    contentImage: featuredPostImage,
+    contentImageTitle: 'Breaking Into Product Design',
   },
 ];

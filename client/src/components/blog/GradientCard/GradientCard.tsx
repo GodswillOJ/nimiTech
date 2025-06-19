@@ -19,7 +19,7 @@ const GradientCard: React.FC<GradientCardProps> = ({ imageSrc, imagePosition = '
 
   return (
     <div className={containerClass}>
-      <div className={styles['gradient-card__text-content']}>Donate with Us</div>
+      <div className={styles['gradient-card__text-content']}>Change a life now</div>
 
       {imageSrc && (
         <div className={styles['gradient-card__image-wrapper']}>
