@@ -1,20 +1,19 @@
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { blogPosts } from '../../_partials/BlogPost.data';
 import { BackIcon } from '../../../../assets/blog/icons/BackIcon';
 import { NextIcon } from '../../../../assets/blog/icons/NextIcon';
 import { Highlights } from '../../../../components/blog/Highlights/Highlights';
 import { VideoEmbed } from '../../../../components/blog/VideoEmbed/VideoEmbed';
+import Newsletter from '../../../../components/blog/Modal/NewsLetter/Newsletter';
 import styles from './BlogDetails.module.scss';
 
 const BlogDetails = () => {
   const { id } = useParams();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
-  // Find the current post from blogPosts data
   const currentPost = useMemo(() => blogPosts.find((post) => post.id.toString() === id), [id]);
-
-  // Get related posts from the same category
   const relatedPosts = useMemo(
     () =>
       currentPost
@@ -31,28 +30,25 @@ const BlogDetails = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAllRelated, setShowAllRelated] = useState(false);
-
-  // Calculate how many posts to show
   const postsPerPage = 3;
   const totalPages = Math.ceil(relatedPosts.length / postsPerPage);
   const displayedPosts = showAllRelated
     ? relatedPosts
     : relatedPosts.slice(currentIndex * postsPerPage, (currentIndex + 1) * postsPerPage);
 
-  if (!currentPost) {
-    return (
-      <div className={styles.blog_view}>
-        <main className={styles.blog_view__main}>
-          <div className={styles.not_found}>
-            <h1 className={styles.not_found__title}>Blog post not found</h1>
-            <Link to="/blogs" className={styles.not_found__link}>
-              ← Back to blogs
-            </Link>
-          </div>
-        </main>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const handleScroll = () => {
+        if (window.scrollY >= window.innerHeight / 4) {
+          setShowNewsletterModal(true);
+          window.removeEventListener('scroll', handleScroll);
+        }
+      };
+      window.addEventListener('scroll', handleScroll);
+    }, 12000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handlePageChange = (index: number) => {
     if (index >= 0 && index < totalPages) {
@@ -105,9 +101,24 @@ const BlogDetails = () => {
     return match && match[2].length === 11 ? match[2] : '';
   };
 
+  if (!currentPost) {
+    return (
+      <div className={styles.blog_view}>
+        <main className={styles.blog_view__main}>
+          <div className={styles.not_found}>
+            <h1 className={styles.not_found__title}>Blog post not found</h1>
+            <Link to="/blogs" className={styles.not_found__link}>
+              ← Back to blogs
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.blog_view}>
-      {/* Backlink to blog list */}
+      {/* <Newsletter isOpen={showNewsletterModal} onClose={() => setShowNewsletterModal(false)} /> */}
       <header className={styles.blog_view__header}>
         <Link to="/blogs" className={styles.blog_view__back_link}>
           <BackIcon className={styles.blog_view__back_icon} />
@@ -135,11 +146,9 @@ const BlogDetails = () => {
             </div>
 
             <h1 className={styles.article__title}>{currentPost.title}</h1>
-
             <p className={styles.article__subtitle}>{currentPost.description}</p>
           </header>
 
-          {/* featured image */}
           <div className={styles.article__featured_image}>
             <img
               src={currentPost.image}
@@ -149,7 +158,6 @@ const BlogDetails = () => {
             />
           </div>
 
-          {/* main content */}
           <div className={styles.article__content}>
             {currentPost?.content?.paragraphs?.map((paragraph, i) => (
               <p key={i} className={styles.article__paragraph}>
@@ -157,7 +165,6 @@ const BlogDetails = () => {
               </p>
             ))}
 
-            {/* content images */}
             {currentPost.contentImage && currentPost.contentImageTitle && (
               <div className={styles.article__content_image}>
                 <img
@@ -175,7 +182,6 @@ const BlogDetails = () => {
             />
           </div>
 
-          {/* author card */}
           <div className={styles.article__author_card}>
             <div className={styles.article__author_card_avatar}>
               <img
@@ -195,6 +201,7 @@ const BlogDetails = () => {
             </div>
           </div>
         </article>
+
         {currentPost.youtubeUrl && (
           <div className={styles.article__video_card}>
             <VideoEmbed

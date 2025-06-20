@@ -5,13 +5,14 @@ export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   type: 'confirmation' | 'success';
-  title: string;
-  content: string;
+  title?: string;
+  content?: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
   onPrimaryAction?: () => void;
   onSecondaryAction?: () => void;
   showSecondaryButton?: boolean;
+  customContent?: React.ReactNode;
 }
 
 const ModalComp: React.FC<ModalProps> = ({
@@ -25,6 +26,7 @@ const ModalComp: React.FC<ModalProps> = ({
   onPrimaryAction,
   onSecondaryAction,
   showSecondaryButton = true,
+  customContent,
 }) => {
   if (!isOpen) return null;
 
@@ -58,43 +60,28 @@ const ModalComp: React.FC<ModalProps> = ({
           ×
         </button>
 
-        {type === 'success' && (
-          <div className={styles.successIcon}>
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="12" cy="12" r="10" fill="#10B981" />
-              <path
-                d="M8.5 12.5l2 2 4.5-4.5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+        {customContent ? (
+          customContent
+        ) : (
+          <>
+            <h2 className={styles.modalTitle}>{title}</h2>
+            <p className={styles.modalText}>{content}</p>
+
+            <div className={styles.modalActions}>
+              {showSecondaryButton && type === 'confirmation' && (
+                <button className={styles.secondaryButton} onClick={handleSecondaryClick}>
+                  {secondaryButtonText}
+                </button>
+              )}
+              <button
+                className={`${styles.primaryButton} ${type === 'success' ? styles.successButton : ''}`}
+                onClick={handlePrimaryClick}
+              >
+                {primaryButtonText}
+              </button>
+            </div>
+          </>
         )}
-
-        <h2 className={styles.modalTitle}>{title}</h2>
-        <p className={styles.modalText}>{content}</p>
-
-        <div className={styles.modalActions}>
-          {showSecondaryButton && type === 'confirmation' && (
-            <button className={styles.secondaryButton} onClick={handleSecondaryClick}>
-              {secondaryButtonText}
-            </button>
-          )}
-          <button
-            className={`${styles.primaryButton} ${type === 'success' ? styles.successButton : ''}`}
-            onClick={handlePrimaryClick}
-          >
-            {primaryButtonText}
-          </button>
-        </div>
       </div>
     </div>
   );
