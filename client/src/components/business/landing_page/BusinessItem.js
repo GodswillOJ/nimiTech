@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
 
-const BusinessPostItem = ({ id, image, title, content }) => {
+const BusinessPostItem = ({ id, image, title, content, summary }) => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
@@ -77,7 +77,7 @@ const BusinessPostItem = ({ id, image, title, content }) => {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {getShortContent(content)}
+          {summary ? summary : getShortContent(content)}
         </Typography>
       </CardContent>
 

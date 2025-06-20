@@ -778,8 +778,18 @@ h2 .my-domine1 {
 .text-order{
   padding: 0;
 }
+.text-order{
+  padding: 0;
+}
+.text-order-home {
+  padding: 0;
+  list-style: none;
+}
 @media (max-width: 768px) {
   .text-order{
+    padding: 0 10px 0 10px;
+  }
+  .text-order-home{
     padding: 0 10px 0 10px;
   }
 }

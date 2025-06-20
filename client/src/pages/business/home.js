@@ -1,5 +1,5 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useMediaQuery } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
 import { lazy, useState } from 'react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
@@ -195,36 +195,101 @@ const HomePage = () => {
           style={{
             display: 'flex',
             flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'column' : 'row',
-            gap: '60px',
+            gap: '40px',
             // maxWidth: '1200px',
             padding: isSmallScreen ? '0' : isMediumScreen ? '30x' : '50px',
           }}
         >
           <div>
-            <img
-              src={businessImages.heroBackImage6}
-              alt="Explore our services"
-              style={{
-                width: '100%',
-                height: '',
-                objectFit: 'cover',
-                marginBottom: '20px',
-                borderRadius: '10px',
-                border: '3px solid #4a4a4a',
-              }}
-            />
-            <h4
-              style={{
-                fontSize: '24px',
-                marginBottom: '10px',
-                color: '#333',
-                padding: isSmallScreen ? '16px' : isMediumScreen ? '0' : '0',
-              }}
-            >
-              Explore Our Services* and learn why leading businesses globally rely on us to deliver
-              Exceptional Solutions that drive success.
-            </h4>
+            <div>
+              <Typography
+                lineHeight={1.7}
+                mb={4}
+                fontSize={'1rem'}
+                color="textSecondary"
+                className="text-order-home"
+              >
+                <p
+                  style={{
+                    fontSize: '2rem',
+                    padding: isSmallScreen ? '10px' : '0',
+                    textAlign: isSmallScreen ? 'center' : isMediumScreen ? 'center' : 'normal',
+                    color: 'rgb(51, 51, 51)',
+                    fontFamily: '"EB Garamond", serif',
+                  }}
+                >
+                  <strong>What We Do Best</strong>
+                </p>
+                <br />
+                Managed IT Services Forget tech stress—we’ve got it covered. From 24/7 system
+                monitoring to lightning-fast helpdesk support, we keep your business running without
+                a hitch. Our proactive approach means fewer issues and more uptime.
+              </Typography>
+              <ul
+                style={{
+                  fontSize: '1rem',
+                  lineHeight: '2',
+                  marginLeft: 10,
+                  color: '#555',
+                }}
+                className="text-order-home"
+              >
+                <li>
+                  <strong>→ We manage IT so you can manage your business.</strong> <br />
+                  Digital Marketing That Converts Your audience is online—are you standing out? We
+                  craft SEO-optimized websites, run targeted ads, manage your socials, and create
+                  content that connects and converts.
+                </li>
+                <li>
+                  <strong>→ Let’s grow your visibility and turn clicks into customers.</strong>{' '}
+                  <br />
+                  Cybersecurity Solutions The digital world is risky—but you’re safe with us. We
+                  protect your business with firewalls, malware defense, secure access protocols,
+                  and full compliance (HIPAA, GDPR, and more).
+                </li>
+                <li>
+                  <strong>→ Your data. Your reputation. Fully protected.</strong> <br />
+                  Cloud Services & Migration Want flexibility, speed, and scalability? The cloud is
+                  calling. We migrate and manage secure cloud environments (AWS, Azure, Google
+                  Cloud) that grow as you grow.
+                </li>
+                <li>
+                  <strong>→ Work smarter, anywhere, anytime.</strong> <br />
+                  AI & Machine Learning Imagine systems that learn, predict, and automate. Now stop
+                  imagining—let’s build it. From AI chatbots to predictive analytics, we create
+                  intelligent tools that put your data to work.
+                </li>
+                <li>
+                  <strong>→ Smarter decisions. Faster outcomes.</strong> <br />
+                  Real results. Web & Software Development Your digital presence matters. Whether
+                  it&#39;s a sleek website, custom CRM, or full-stack app, we design, build, and
+                  launch platforms that look great and perform even better.
+                </li>
+                <li>
+                  <strong>→ Built to impress. Engineered to perform.</strong> <br />
+                  IT Consulting & Strategy You’ve got big goals—we help you build the tech to match.
+                  Our consultants craft smart, scalable IT roadmaps that align with your vision and
+                  fuel real business growth.
+                </li>
+                <li>
+                  <strong>→ Your goals, ouar strategy, unstoppable results.</strong> <br />
+                  Data Backup & Disaster Recovery Disasters happen. Be ready. With Nimitech, your
+                  critical data is backed up, protected, and redy to bounce back—fast.
+                </li>
+                <li>
+                  <strong>→ Stay secure. Stay online. Stay in control.</strong> <br />
+                  IT Training & Support Tech is only as strong as the people using it. We provide
+                  hands-on training, onboarding, and IT support that empowers your team to work
+                  smarter and safer.
+                </li>
+                <li>
+                  <strong>→ Confident teams.</strong> <br />
+                  Fewer tech hiccups. Better performance.
+                </li>
+              </ul>
+            </div>
           </div>
+
           <div
             className="business-posts-container"
             style={{
@@ -248,6 +313,7 @@ const HomePage = () => {
                 title={post.title}
                 content={post.content}
                 image={post.image}
+                summary={post.summary}
               />
             ))}
           </div>
@@ -268,6 +334,8 @@ const HomePage = () => {
             textAlign: 'center',
             marginBottom: '60px',
             padding: isSmallScreen ? '20px' : '20px',
+            color: 'rgb(51, 51, 51)',
+            fontFamily: '"EB Garamond", serif',
           }}
         >
           Our Services
@@ -297,14 +365,6 @@ const HomePage = () => {
           </div>
           {/* 📌 Left Side: Text & List Block */}
           <div style={{ flex: 1 }}>
-            <div style={{ padding: isSmallScreen ? '20px' : '20px' }}>
-              <h3 style={{ color: '#000', marginBottom: '10px' }}>Our Services</h3>
-              <ul style={{ color: '#555', lineHeight: '1.6' }}>
-                {services.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
             {/* <h2
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
@@ -330,14 +390,20 @@ const HomePage = () => {
             <p
               style={{
                 fontSize: isSmallScreen ? '1rem' : '1.2rem',
-                padding: isSmallScreen ? '20px' : '20px',
+                padding: isSmallScreen ? '20px 20px 0 20px' : '20px 20px 0 20px',
                 lineHeight: '1.7',
                 color: '#444',
-                marginBottom: '30px',
               }}
             >
               {introText}
             </p>
+            <div style={{ padding: isSmallScreen ? '20px' : '20px' }}>
+              <ul style={{ color: '#555', lineHeight: '1.6', marginBottom: '30px' }}>
+                {services.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
