@@ -4,7 +4,7 @@ import styles from './blog.module.scss';
 import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
-import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
+import donationImage1 from '../../assets/blog/images/donationImage1.webp';
 import donationImage5 from '../../assets/blog/images/donationImage5.jpg';
 import donationImage4 from '../../assets/blog/images/donationImage4.jpg';
 import { Button } from '../../components/blogCMS/Button/Button';
