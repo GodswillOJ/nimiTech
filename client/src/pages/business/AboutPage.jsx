@@ -19,7 +19,7 @@ const About = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Box position="relative" height={isSmallScreen ? 300 : 500} overflow="hidden">
+      <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
         <video
           src="/videos/nimiVid.mp4"
           autoPlay
@@ -102,9 +102,10 @@ const About = () => {
                 <Typography
                   mt={6}
                   variant="body1"
+                  color="textSecondary"
                   lineHeight={1.7}
                   style={{
-                    fontSize: '1.2rem',
+                    fontSize: '1rem',
                     paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                     paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                   }}
@@ -115,9 +116,9 @@ const About = () => {
                 </Typography>
                 <ul
                   style={{
-                    fontSize: '1.2rem',
+                    fontSize: '1rem',
                     lineHeight: '2',
-                    marginLeft: 20,
+                    padding: 30,
                     marginBottom: 30,
                     color: '#555',
                   }}
@@ -166,7 +167,7 @@ const About = () => {
                   style={{
                     paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                     paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                    fontSize: '1.2rem',
+                    fontSize: '1rem',
                     lineHeight: '2',
                     color: '#555',
                   }}

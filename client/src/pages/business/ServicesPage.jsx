@@ -40,7 +40,7 @@ const Services = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Box position="relative" height={isSmallScreen ? 400 : 500} overflow="hidden">
+      <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
         <video
           src="/videos/nimiVid.mp4"
           autoPlay
@@ -84,7 +84,12 @@ const Services = () => {
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
               <Box>
-                <Typography variant="h4" gutterBottom className="text-order">
+                <Typography
+                  variant="h4"
+                  style={{ fontWeight: '600' }}
+                  gutterBottom
+                  className="text-order"
+                >
                   Our Comprehensive Services | Nimitech IT
                 </Typography>
                 <Typography lineHeight={1.7} mb={4} color="textSecondary" className="text-order">
@@ -99,18 +104,20 @@ const Services = () => {
                   <Typography
                     lineHeight={1.7}
                     mb={4}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Custom Software & Web Development</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Custom Software & Web Development
+                    </strong>
                     <br />
                     Craft powerful, user friendly applications that streamline workflows and boost
                     productivity:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
@@ -142,17 +149,19 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={2}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Digital Marketing</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Digital Marketing
+                    </strong>
                     <br />
                     Accelerate online growth with data driven campaigns that convert:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
@@ -185,18 +194,20 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={2}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Cybersecurity Solutions</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Cybersecurity Solutions
+                    </strong>
                     <br />
                     Protect your data and maintain business continuity with enterprise grade
                     security:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
@@ -229,11 +240,13 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>AI & Machine Learning</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      AI & Machine Learning
+                    </strong>
                     <br />
                     Turn raw data into actionable insights and automate complex processes:
                   </Typography>
@@ -272,17 +285,19 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Graphic Design & Branding</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Graphic Design & Branding
+                    </strong>
                     <br />
                     Create a memorable visual identity that resonates with your audience:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
@@ -316,17 +331,19 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Cloud Infrastructure & Solutions</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Cloud Infrastructure & Solutions
+                    </strong>
                     <br />
                     Scale efficiently with secure, cost-effective cloud services:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
@@ -359,17 +376,19 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
                   >
-                    <strong style={{ fontSize: '2rem' }}>Remote IT Support & Help Desk</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                      Remote IT Support & Help Desk
+                    </strong>
                     <br />
                     Keep your operations running smoothly with expert assistance:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,

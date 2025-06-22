@@ -793,3 +793,20 @@ h2 .my-domine1 {
     padding: 0 10px 0 10px;
   }
 }
+
+/* contact us */
+/* SocialIcons.module.scss or inline styles */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+
+.icon-link:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+

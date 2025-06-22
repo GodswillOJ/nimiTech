@@ -127,4 +127,6 @@ Get expert IT support—without the high cost. Choose Nimitech.
 // npx prettier src/components/business/serviceContent/RemoteCloudSolutionsContent.jsx --write
 // npx prettier src/components/business/serviceContent/AiMlContent.jsx --write
 // npx prettier src/pages/business/ServicesPage.jsx --write
+// npx prettier src/pages/business/ContactUs.jsx --write
 // npx prettier src/pages/business/AboutPage.jsx --write
+// npm install react-slick slick-carousel

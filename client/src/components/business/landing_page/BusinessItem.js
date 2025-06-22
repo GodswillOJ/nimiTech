@@ -172,7 +172,7 @@ const PartnerWithUs = ({ services }) => {
     >
       <h2
         style={{
-          fontSize: '2.4rem',
+          fontSize: isSmallScreen ? '1.6rem' : isMediumScreen ? '1.8rem' : '2.4rem',
           fontWeight: 'bold',
           color: '#333',
           textAlign: 'center',
@@ -212,41 +212,52 @@ const PartnerWithUs = ({ services }) => {
               minWidth: '300px',
               backgroundColor: '#f9f9f9',
               borderRadius: '16px',
-              padding: '40px 30px',
+              padding: isSmallScreen ? '20px 16px' : isMediumScreen ? '30px 24px' : '40px 30px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '500px', // Match the image height
+              height: isSmallScreen ? 'auto' : '500px', // Let it expand naturally on mobile
             }}
           >
             <h3
               style={{
-                fontSize: '1.8rem',
+                fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
                 fontWeight: 'bold',
                 marginBottom: '20px',
+                marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
                 color: '#111',
+                textAlign: isSmallScreen ? 'center' : 'left',
               }}
             >
               Unlock Limitless Potential
             </h3>
             <p
               style={{
-                fontSize: '1.1rem',
+                fontSize: isSmallScreen ? '1rem' : '1.1rem',
                 lineHeight: '1.7',
                 marginBottom: '20px',
                 color: '#444',
+                textAlign: isSmallScreen ? 'center' : 'left',
               }}
             >
               Partnering with us means gaining access to a dedicated team of professionals who
               provide:
             </p>
-            <ul style={{ paddingLeft: '20px', fontSize: '1rem', lineHeight: '1.6', color: '#333' }}>
+            <ul
+              style={{
+                paddingLeft: isSmallScreen ? '16px' : '20px',
+                fontSize: isSmallScreen ? '0.95rem' : '1rem',
+                lineHeight: '1.6',
+                color: '#333',
+                listStyleType: 'disc',
+                textAlign: isSmallScreen ? 'center' : 'left',
+              }}
+            >
               {services.slice(0, 6).map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
           </div>
-
           {/* Image container with overlay text */}
           <div
             className="image-container"
@@ -406,4 +417,71 @@ const ClientReview = ({ image, course, name, review }) => {
   );
 };
 
-export { BusinessPostItem, ClientReview, PartnerWithUs, SocialLinks };
+const ServiceHighlights = () => {
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+
+  const sectionStyle = {
+    display: 'flex',
+    flexDirection: isSmallScreen ? 'column' : 'row',
+    gap: '20px',
+    justifyContent: 'space-between',
+    marginTop: '40px',
+  };
+
+  const cardStyle = {
+    flex: 1,
+    padding: 0,
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  };
+
+  const headingStyle = {
+    fontSize: '1.2rem',
+    fontWeight: '700',
+    marginBottom: '20px',
+    color: '#2e0135',
+  };
+
+  const listStyle = {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  const listItemStyle = {
+    display: 'flex',
+    alignItems: 'start',
+    gap: '12px',
+    color: '#444',
+    fontSize: '0.9rem',
+    lineHeight: 1.6,
+  };
+
+  return (
+    <div style={sectionStyle}>
+      {/* First List */}
+      <div style={cardStyle}>
+        <h3 style={headingStyle}>Digital & Development</h3>
+        <ul style={listStyle}>
+          <li style={listItemStyle}>Results-Driven Digital Marketing Services</li>
+          <li style={listItemStyle}>Tailored Software Development Solutions</li>
+          <li style={listItemStyle}>Professional Website Design & Development</li>
+          <li style={listItemStyle}>AI & Machine Learning</li>
+        </ul>
+      </div>
+      {/* Second List */}
+      <div style={cardStyle}>
+        <h3 style={headingStyle}>Cloud, Support & Security</h3>
+        <ul style={listStyle}>
+          <li style={listItemStyle}>Scalable Cloud Infrastructure & IT Solutions</li>
+          <li style={listItemStyle}>Remote IT Support & Helpdesk</li>
+          <li style={listItemStyle}>Graphic Design – Logos, Branding & Identity</li>
+          <li style={listItemStyle}>Advanced Cybersecurity Services & Risk Protection</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export { BusinessPostItem, ClientReview, PartnerWithUs, ServiceHighlights, SocialLinks };
