@@ -1,4 +1,5 @@
 import React from 'react';
+import { businessImages } from '../../../assets/images';
 
 //  AI Support content
 const AiMlContent = () => (
@@ -39,6 +40,10 @@ const AiMlContent = () => (
       </ul>
     </div>
 
+    <div className="image-container">
+      <img src={businessImages.AI_image4} alt="Software Development Visual" />
+    </div>
+
     <div>
       <p className="font-semibold mb-1">Our AI & ML Services Include:</p>
       <ul className="list-disc list-inside space-y-1">
@@ -56,6 +61,10 @@ const AiMlContent = () => (
       Transform your business with Nimitech’s AI and Machine Learning services—where advanced
       technology meets practical, affordable solutions.
     </p>
+
+    <div className="image-container">
+      <img src={businessImages.AI_image} alt="Software Development Visual" />
+    </div>
   </div>
 );
 

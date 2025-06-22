@@ -19,9 +19,9 @@ import {
   BusinessPostItem,
   ClientReview,
   PartnerWithUs,
+  ServiceHighlights,
   SocialLinks,
   testimonials,
-  ServiceHighlights,
 } from '../../components/business/landing_page/BusinessItem';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
@@ -197,7 +197,7 @@ const HomePage = () => {
             flexWrap: 'wrap', // Allow content to adjust for mobile
           }}
         >
-          <ServiceUpdateTicker posts={postsToDisplay} />
+          <ServiceUpdateTicker posts={postsToShow} />
         </div>
       </div>
 

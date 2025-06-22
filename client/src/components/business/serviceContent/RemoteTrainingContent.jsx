@@ -17,7 +17,7 @@ const RemoteTrainingContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.RM_image} alt="Remote Training Visual" />
+        <img src={businessImages.RM_training} alt="Remote Training Visual" />
       </div>
 
       <p>
@@ -57,6 +57,10 @@ const RemoteTrainingContent = () => {
             management, and certification prep.
           </li>
         </ul>
+      </div>
+
+      <div className="image-container">
+        <img src={businessImages.RM_training1} alt="Remote Training Visual" />
       </div>
 
       <div>

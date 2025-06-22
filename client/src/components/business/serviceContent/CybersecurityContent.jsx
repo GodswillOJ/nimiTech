@@ -14,10 +14,6 @@ const CybersecurityContent = () => {
         services that safeguard your data, systems, and reputation against evolving cyber threats.
       </p>
 
-      <div className="image-container">
-        <img src={businessImages.CS_image} alt="Cybersecurity Visual" />
-      </div>
-
       <div>
         <p className="font-semibold">Why Cybersecurity Matters</p>
         <p>
@@ -27,6 +23,10 @@ const CybersecurityContent = () => {
           brand’s trust. Nimitech IT helps you stay one step ahead with proactive, enterprise-grade
           protection designed to keep your business safe 24/7.
         </p>
+      </div>
+
+      <div className="image-container">
+        <img src={businessImages.CS_image1} alt="Cybersecurity Visual" />
       </div>
 
       <div>
@@ -57,6 +57,10 @@ const CybersecurityContent = () => {
             restore operations after a breach.
           </li>
         </ul>
+      </div>
+
+      <div className="image-container">
+        <img src={businessImages.CS_image2} alt="Cybersecurity Visual" />
       </div>
 
       <div>

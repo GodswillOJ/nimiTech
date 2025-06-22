@@ -23,7 +23,7 @@ export const dummyBusinessPosts = [
     content: <CybersecurityContent />,
     summary:
       'Safeguard your business from threats with advanced cybersecurity solutions, threat detection, and ongoing protection by certified experts.',
-    image: businessImages.CS_image,
+    image: businessImages.CS2_image2,
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ export const dummyBusinessPosts = [
     content: <SoftwareDevelopmentContent />,
     summary:
       'Streamline operations and grow faster with custom software, mobile apps, and responsive websites built for your business.',
-    image: businessImages.ST_image,
+    image: businessImages.WD_image1,
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const dummyBusinessPosts = [
     content: <AiMlContent />,
     summary:
       'Use AI and machine learning to automate tasks, analyze data, and make smarter business decisions in real time.',
-    image: businessImages.AI_image,
+    image: businessImages.AI_image1,
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ export const dummyBusinessPosts = [
     content: <RemoteITSupportContent />,
     summary:
       'Get fast, affordable, and secure remote IT support and 24/7 help desk services from certified professionals.',
-    image: businessImages.IT_image,
+    image: businessImages.RM_training1,
   },
   {
     id: 7,
@@ -63,7 +63,7 @@ export const dummyBusinessPosts = [
     content: <RemoteTrainingContent />,
     summary:
       'Empower your team or career with flexible online IT training in development, cybersecurity, and cloud technologies.',
-    image: businessImages.RM_image,
+    image: businessImages.RM_training2,
   },
   {
     id: 8,
@@ -71,7 +71,7 @@ export const dummyBusinessPosts = [
     content: <RemoteCloudSolutionsContent />,
     summary:
       'Migrate to the cloud with scalable, secure solutions that improve performance, flexibility, and collaboration for your business.',
-    image: businessImages.hero4,
+    image: businessImages.cloud2,
   },
 ];
 

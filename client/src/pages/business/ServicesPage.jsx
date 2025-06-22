@@ -134,10 +134,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.WD_image1}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -179,10 +179,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.DM_image}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -225,10 +225,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.CS_image2}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -269,10 +269,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage6} // replace with correct image
+                        src={businessImages.AI_image1} // replace with correct image
                         alt="AI & ML"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -315,10 +315,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage3} // replace with correct image
+                        src={businessImages.branding2} // replace with correct image
                         alt="Graphic Design"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -360,10 +360,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage1} // replace with correct image
+                        src={businessImages.cloud2} // replace with correct image
                         alt="Cloud Infrastructure"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -405,10 +405,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage3} // replace with correct image
+                        src={businessImages.IT_image} // replace with correct image
                         alt="IT Support"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>

@@ -19,7 +19,7 @@ const DigitalMarketingContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.DM_image} alt="Digital Marketing Visual" />
+        <img src={businessImages.DM_image1} alt="Digital Marketing Visual" />
       </div>
 
       <div>
@@ -35,6 +35,9 @@ const DigitalMarketingContent = () => {
       <p className="font-medium text-gray-900">
         Dominate search engines. Drive real growth. Choose Nimitech Digital Marketing today.
       </p>
+      <div className="image-container">
+        <img src={businessImages.DM_image2} alt="Digital Marketing Visual" />
+      </div>
     </div>
   );
 };

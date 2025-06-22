@@ -24,7 +24,7 @@ const SoftwareDevelopmentContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.ST_image} alt="Software Development Visual" />
+        <img src={businessImages.ST_image1} alt="Software Development Visual" />
       </div>
 
       <div>
@@ -53,6 +53,10 @@ const SoftwareDevelopmentContent = () => {
             communication every step of the way.
           </li>
         </ul>
+      </div>
+
+      <div className="image-container">
+        <img src={businessImages.WD_image} alt="Software Development Visual" />
       </div>
 
       <div>

@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
+import { lazy } from 'react';
 import { FiClock, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import {
   FacebookIcon,
@@ -7,9 +8,17 @@ import {
   XIcon,
   YouTubeIcon,
 } from '../../assets/blog/icons/SocialIcons';
+import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
+import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
+import { businessImages } from '../../assets/images';
+import styles from '../blog/blog.module.scss';
+
+const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
+const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
 const ContactUs = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
+  const isMediumScreen = useMediaQuery('(max-width:900px)');
 
   return (
     <Box>
@@ -62,6 +71,43 @@ const ContactUs = () => {
       <Box py={10} display="flex" justifyContent="center">
         <Box width="100%" maxWidth="1200px" px={isSmallScreen ? 2 : 4}>
           <Grid container spacing={8}>
+            <Box>
+              <Typography
+                variant="h4"
+                style={{
+                  paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                  paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                }}
+              >
+                Contact Us | Nimitech IT – Your Technology Partner
+              </Typography>
+              {/* <Typography variant="h4">Our Mission & Objectives</Typography> */}
+              <Typography
+                mb={3}
+                lineHeight={1.7}
+                color="textSecondary"
+                style={{
+                  paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                  paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                }}
+              >
+                Ready to transform your business? Contact Nimitech IT today and discover how our IT
+                solutions, digital marketing, and design expertise can help you outperform the
+                competition.
+              </Typography>
+            </Box>
+            <Grid item xs={12} md={6}>
+              <Fade in timeout={1500}>
+                <Box
+                  component="img"
+                  src={businessImages.customer}
+                  alt="Services Visual"
+                  width="100%"
+                  borderRadius={isSmallScreen ? 0 : 2}
+                  boxShadow={3}
+                />
+              </Fade>
+            </Grid>
             {/* Left - Contact Info */}
             <Grid item xs={12} md={6}>
               <Fade in timeout={1000}>
@@ -161,48 +207,57 @@ const ContactUs = () => {
             <Grid item xs={12} md={6}>
               <Fade in timeout={1500}>
                 <Box>
-                  <Typography variant="h6" fontWeight="bold" mb={3}>
-                    Send Us a Message
-                  </Typography>
-                  <Typography color="text.secondary" mb={3}>
-                    Have a question about our services? Fill out the form below and we’ll get back
-                    to you within one business day.
-                  </Typography>
+                  <Box>
+                    <Typography variant="h6" fontWeight="bold" mb={3}>
+                      Send Us a Message
+                    </Typography>
+                    <Typography color="text.secondary" mb={3}>
+                      Have a question about our services? Fill out the form below and we’ll get back
+                      to you within one business day.
+                    </Typography>
 
-                  <form noValidate autoComplete="off">
-                    <TextField fullWidth label="Your Name" variant="outlined" margin="normal" />
-                    <TextField fullWidth label="Your Email" variant="outlined" margin="normal" />
-                    <TextField fullWidth label="Subject" variant="outlined" margin="normal" />
-                    <TextField
-                      fullWidth
-                      label="Message"
-                      variant="outlined"
-                      multiline
-                      rows={5}
-                      margin="normal"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        mt: 2,
-                        px: 4,
-                        py: 1.5,
-                        fontWeight: 'bold',
-                        backgroundColor: '#9b07ad',
-                        borderRadius: 2,
-                        textTransform: 'none',
-                      }}
-                    >
-                      Send Message
-                    </Button>
-                  </form>
+                    <form noValidate autoComplete="off">
+                      <TextField fullWidth label="Your Name" variant="outlined" margin="normal" />
+                      <TextField fullWidth label="Your Email" variant="outlined" margin="normal" />
+                      <TextField fullWidth label="Subject" variant="outlined" margin="normal" />
+                      <TextField
+                        fullWidth
+                        label="Message"
+                        variant="outlined"
+                        multiline
+                        rows={5}
+                        margin="normal"
+                      />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                          mt: 2,
+                          px: 4,
+                          py: 1.5,
+                          fontWeight: 'bold',
+                          backgroundColor: '#9b07ad',
+                          borderRadius: 2,
+                          textTransform: 'none',
+                        }}
+                      >
+                        Send Message
+                      </Button>
+                    </form>
+                  </Box>
                 </Box>
               </Fade>
             </Grid>
           </Grid>
         </Box>
       </Box>
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
+      </section>
     </Box>
   );
 };

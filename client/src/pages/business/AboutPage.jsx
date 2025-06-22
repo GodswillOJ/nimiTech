@@ -94,7 +94,7 @@ const About = () => {
                       src={businessImages.hero2}
                       alt="Team Working"
                       width="100%"
-                      borderRadius={2}
+                      borderRadius={isSmallScreen ? 0 : 2}
                       boxShadow={4}
                     />
                   </Fade>
@@ -153,10 +153,10 @@ const About = () => {
                   <Fade in timeout={1500}>
                     <Box
                       component="img"
-                      src={businessImages.hero3}
+                      src={businessImages.RM_image}
                       alt="Services Visual"
                       width="100%"
-                      borderRadius={2}
+                      borderRadius={isSmallScreen ? 0 : 2}
                       boxShadow={3}
                     />
                   </Fade>

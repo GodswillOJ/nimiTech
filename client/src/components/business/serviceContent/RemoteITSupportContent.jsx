@@ -13,7 +13,7 @@ const RemoteITSupportContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.IT_image} alt="Manager Section Visual" />
+        <img src={businessImages.IT_image1} alt="Manager Section Visual" />
       </div>
 
       <div>
