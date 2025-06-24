@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import { lazy } from 'react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
@@ -95,7 +95,7 @@ const Services = () => {
                 <Typography
                   variant="h4"
                   style={{ fontWeight: '600', fontFamily: 'Montserrat, sans-serif' }}
-                  px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   gutterBottom
                   className="text-order"
                 >
@@ -104,7 +104,7 @@ const Services = () => {
                 <Typography
                   lineHeight={1.7}
                   mb={4}
-                  px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   color="textSecondary"
                   className="text-order"
                   sx={{ fontFamily: 'Montserrat, sans-serif' }}
@@ -124,7 +124,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Custom Software & Web Development
@@ -141,7 +141,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -174,7 +174,7 @@ const Services = () => {
                     className="text-order"
                     fontFamily="Montserrat, sans-serif"
                     sx={{ fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Digital Marketing
@@ -190,7 +190,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -223,7 +223,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cybersecurity Solutions
@@ -240,7 +240,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -273,7 +273,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       AI & Machine Learning
@@ -289,7 +289,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -322,7 +322,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Graphic Design & Branding
@@ -338,7 +338,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -372,7 +372,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cloud Infrastructure & Solutions
@@ -388,7 +388,7 @@ const Services = () => {
                       marginBottom: 30,
                       fontFamily: 'Montserrat, sans-serif',
                       color: '#555',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -421,7 +421,7 @@ const Services = () => {
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Remote IT Support & Help Desk
@@ -437,7 +437,7 @@ const Services = () => {
                       marginBottom: 30,
                       color: '#555',
                       fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -461,7 +461,7 @@ const Services = () => {
                 </div>
                 <div
                   className="text-order"
-                  style={{ fontFamily: 'Montserrat, sans-serif', padding: '10px' }}
+                  style={{ fontFamily: 'Montserrat, sans-serif', padding: '40px' }}
                 >
                   <Typography
                     lineHeight={1.7}
@@ -479,7 +479,9 @@ const Services = () => {
                     size="large"
                     fontFamily="Montserrat, sans-serif"
                   >
-                    Contact Us
+                    <Link href="/contact-us" sx={{ color: '#fff' }}>
+                      Contact Us
+                    </Link>
                   </Button>
                 </div>
               </Box>
