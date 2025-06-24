@@ -374,6 +374,7 @@ h2 .my-domine1 {
   position: relative;
   z-index: 1;
   top: 60px;
+  font-family: 'Montserrat, sans-serif';
   width: 80%;
   padding: 100px 40px;
   color: white;
@@ -384,6 +385,7 @@ h2 .my-domine1 {
   font-size: 3.5rem;
   text-align: normal;
   margin-bottom: 20px;
+  font-family: 'Montserrat, sans-serif';
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -792,4 +794,20 @@ h2 .my-domine1 {
   .text-order-home {
     padding: 0 10px 0 10px;
   }
+}
+
+/* contact us */
+/* SocialIcons.module.scss or inline styles */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+
+.icon-link:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
 }

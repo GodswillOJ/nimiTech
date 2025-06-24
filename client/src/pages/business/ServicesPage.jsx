@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import { lazy } from 'react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
@@ -40,7 +40,7 @@ const Services = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Box position="relative" height={isSmallScreen ? 400 : 500} overflow="hidden">
+      <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
         <video
           src="/videos/nimiVid.mp4"
           autoPlay
@@ -68,10 +68,18 @@ const Services = () => {
             textAlign: isSmallScreen ? 'normal' : 'left',
           }}
         >
-          <Typography variant={isSmallScreen ? 'h4' : 'h2'} fontWeight="bold">
+          <Typography
+            variant={isSmallScreen ? 'h4' : 'h2'}
+            fontWeight="bold"
+            sx={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
             Explore Our Expert Services
           </Typography>
-          <Typography mt={2} fontSize={isSmallScreen ? '1rem' : '1.25rem'}>
+          <Typography
+            mt={2}
+            fontSize={isSmallScreen ? '1rem' : '1.25rem'}
+            sx={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
             From marketing and security to AI and custom development — tailored solutions to help
             your business thrive.
           </Typography>
@@ -79,15 +87,28 @@ const Services = () => {
       </Box>
 
       {/* Why Choose Us */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 8 : 20} bgcolor="#f9f9f9">
+      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0} bgcolor="#f9f9f9">
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
               <Box>
-                <Typography variant="h4" gutterBottom className="text-order">
+                <Typography
+                  variant="h4"
+                  style={{ fontWeight: '600', fontFamily: 'Montserrat, sans-serif' }}
+                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                  gutterBottom
+                  className="text-order"
+                >
                   Our Comprehensive Services | Nimitech IT
                 </Typography>
-                <Typography lineHeight={1.7} mb={4} color="textSecondary" className="text-order">
+                <Typography
+                  lineHeight={1.7}
+                  mb={4}
+                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                  color="textSecondary"
+                  className="text-order"
+                  sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
                   At Nimitech IT, we offer end to end technology and marketing solutions designed to
                   help your business thrive. From building bespoke software and securing your
                   infrastructure to driving growth through digital marketing and crafting standout
@@ -98,23 +119,29 @@ const Services = () => {
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
-                    fontSize={'1.2rem'}
+                    mb={3}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Custom Software & Web Development</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Custom Software & Web Development
+                    </strong>
                     <br />
                     Craft powerful, user friendly applications that streamline workflows and boost
                     productivity:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -127,10 +154,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.WD_image1}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -142,21 +169,28 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={2}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    fontFamily="Montserrat, sans-serif"
+                    sx={{ fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Digital Marketing</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Digital Marketing
+                    </strong>
                     <br />
                     Accelerate online growth with data driven campaigns that convert:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -170,10 +204,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.DM_image}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -185,22 +219,28 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={2}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Cybersecurity Solutions</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Cybersecurity Solutions
+                    </strong>
                     <br />
                     Protect your data and maintain business continuity with enterprise grade
                     security:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -214,10 +254,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.hero3}
+                        src={businessImages.CS_image2}
                         alt="Services Visual"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -229,11 +269,15 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>AI & Machine Learning</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      AI & Machine Learning
+                    </strong>
                     <br />
                     Turn raw data into actionable insights and automate complex processes:
                   </Typography>
@@ -244,6 +288,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -256,10 +302,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage6} // replace with correct image
+                        src={businessImages.AI_image1} // replace with correct image
                         alt="AI & ML"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -272,21 +318,27 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Graphic Design & Branding</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Graphic Design & Branding
+                    </strong>
                     <br />
                     Create a memorable visual identity that resonates with your audience:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -300,10 +352,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage3} // replace with correct image
+                        src={businessImages.branding2} // replace with correct image
                         alt="Graphic Design"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -316,21 +368,27 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Cloud Infrastructure & Solutions</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Cloud Infrastructure & Solutions
+                    </strong>
                     <br />
                     Scale efficiently with secure, cost-effective cloud services:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
+                      fontFamily: 'Montserrat, sans-serif',
                       color: '#555',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -343,10 +401,10 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage1} // replace with correct image
+                        src={businessImages.cloud2} // replace with correct image
                         alt="Cloud Infrastructure"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
@@ -359,21 +417,27 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem' }}>Remote IT Support & Help Desk</strong>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
+                      Remote IT Support & Help Desk
+                    </strong>
                     <br />
                     Keep your operations running smoothly with expert assistance:
                   </Typography>
                   <ul
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -386,22 +450,38 @@ const Services = () => {
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.heroBackImage3} // replace with correct image
+                        src={businessImages.IT_image} // replace with correct image
                         alt="IT Support"
                         width="100%"
-                        borderRadius={2}
+                        borderRadius={isSmallScreen ? 0 : 2}
                         boxShadow={3}
                       />
                     </Fade>
                   </Grid>
                 </div>
-                <div className="text-order">
-                  <Typography lineHeight={1.7} mb={4} mt={6} fontSize={'1.2rem'}>
+                <div
+                  className="text-order"
+                  style={{ fontFamily: 'Montserrat, sans-serif', padding: '40px' }}
+                >
+                  <Typography
+                    lineHeight={1.7}
+                    mb={4}
+                    mt={6}
+                    fontSize={'1.2rem'}
+                    fontFamily="Montserrat, sans-serif"
+                  >
                     Ready to Elevate Your Business? Partner with Nimitech IT for fully managed
                     technology and marketing solutions that deliver measurable results.
                   </Typography>
-                  <Button variant="contained" color="primary" size="large">
-                    Contact Us
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fontFamily="Montserrat, sans-serif"
+                  >
+                    <Link href="/contact-us" sx={{ color: '#fff' }}>
+                      Contact Us
+                    </Link>
                   </Button>
                 </div>
               </Box>

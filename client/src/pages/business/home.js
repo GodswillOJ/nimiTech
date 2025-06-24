@@ -1,6 +1,10 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Typography, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { lazy, useState } from 'react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images.js';
@@ -15,6 +19,7 @@ import {
   BusinessPostItem,
   ClientReview,
   PartnerWithUs,
+  ServiceHighlights,
   SocialLinks,
   testimonials,
 } from '../../components/business/landing_page/BusinessItem';
@@ -29,16 +34,32 @@ const DonateSection = lazy(() => import('../../components/blog/DonateSection/Don
 
 const HomePage = () => {
   const { data: businessPosts = [], isLoading, isError } = useGetBusinessPostsQuery();
-
+  const [showAllPosts, setShowAllPosts] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [fade, setFade] = useState(true);
 
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
-
   const postsToShow = !isError && businessPosts.length > 0 ? businessPosts : dummyBusinessPosts;
+  const postsToDisplay = isSmallScreen
+    ? postsToShow
+    : showAllPosts
+      ? postsToShow
+      : postsToShow.slice(0, 4);
 
+  // Testimonials Carousel Settings
+  const testimonialSettings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: isSmallScreen ? 1 : isMediumScreen ? 2 : 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    cssEase: 'ease-in-out',
+    arrows: false,
+  };
   return (
     <div
       className="home-page-business"
@@ -80,7 +101,10 @@ const HomePage = () => {
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-text">
-          <h1> We believe in harnessing technology to drive business success.</h1>
+          <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            {' '}
+            We believe in harnessing technology to drive business success.
+          </h1>
           <p
             style={{
               color: 'white',
@@ -102,7 +126,7 @@ const HomePage = () => {
             // }}
           >
             <a
-              href="/blogs"
+              href="/contact-us"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -110,6 +134,7 @@ const HomePage = () => {
                 padding: '20px 30px',
                 color: 'white',
                 borderRadius: '30px',
+                fontFamily: 'Montserrat, sans-serif',
                 fontWeight: 'bold',
                 fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
                 textDecoration: 'none',
@@ -154,6 +179,7 @@ const HomePage = () => {
             border: 'none',
             borderRadius: '30px 30px 0 30px',
             cursor: 'pointer',
+            fontFamily: 'Montserrat, sans-serif',
             flexShrink: 0,
           }}
         >
@@ -188,10 +214,20 @@ const HomePage = () => {
           width: '100%',
           margin: 0,
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          fontFamily: 'Montserrat, sans-serif',
         }}
       >
+        <h1
+          style={{
+            textAlign: 'center',
+            marginBottom: isSmallScreen ? '0' : '60px',
+            padding: isSmallScreen ? '20px' : '20px',
+            color: '#433c4c',
+          }}
+        >
+          Our Services
+        </h1>
         <div
-          className="business-posts-container"
           style={{
             display: 'flex',
             flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'column' : 'row',
@@ -201,170 +237,58 @@ const HomePage = () => {
           }}
         >
           <div>
-            <div>
-              <Typography
-                lineHeight={1.7}
-                mb={4}
-                fontSize={'1rem'}
-                color="textSecondary"
-                className="text-order-home"
-              >
-                <p
-                  style={{
-                    fontSize: '2rem',
-                    padding: isSmallScreen ? '10px' : '0',
-                    textAlign: isSmallScreen ? 'center' : isMediumScreen ? 'center' : 'normal',
-                    color: 'rgb(51, 51, 51)',
-                    fontFamily: '"EB Garamond", serif',
-                  }}
-                >
-                  <strong>What We Do Best</strong>
-                </p>
-                <br />
-                Managed IT Services Forget tech stress—we’ve got it covered. From 24/7 system
-                monitoring to lightning-fast helpdesk support, we keep your business running without
-                a hitch. Our proactive approach means fewer issues and more uptime.
-              </Typography>
-              <ul
-                style={{
-                  fontSize: '1rem',
-                  lineHeight: '2',
-                  marginLeft: 10,
-                  color: '#555',
-                }}
-                className="text-order-home"
-              >
-                <li>
-                  <strong>→ We manage IT so you can manage your business.</strong> <br />
-                  Digital Marketing That Converts Your audience is online—are you standing out? We
-                  craft SEO-optimized websites, run targeted ads, manage your socials, and create
-                  content that connects and converts.
-                </li>
-                <li>
-                  <strong>→ Let’s grow your visibility and turn clicks into customers.</strong>{' '}
-                  <br />
-                  Cybersecurity Solutions The digital world is risky—but you’re safe with us. We
-                  protect your business with firewalls, malware defense, secure access protocols,
-                  and full compliance (HIPAA, GDPR, and more).
-                </li>
-                <li>
-                  <strong>→ Your data. Your reputation. Fully protected.</strong> <br />
-                  Cloud Services & Migration Want flexibility, speed, and scalability? The cloud is
-                  calling. We migrate and manage secure cloud environments (AWS, Azure, Google
-                  Cloud) that grow as you grow.
-                </li>
-                <li>
-                  <strong>→ Work smarter, anywhere, anytime.</strong> <br />
-                  AI & Machine Learning Imagine systems that learn, predict, and automate. Now stop
-                  imagining—let’s build it. From AI chatbots to predictive analytics, we create
-                  intelligent tools that put your data to work.
-                </li>
-                <li>
-                  <strong>→ Smarter decisions. Faster outcomes.</strong> <br />
-                  Real results. Web & Software Development Your digital presence matters. Whether
-                  it&#39;s a sleek website, custom CRM, or full-stack app, we design, build, and
-                  launch platforms that look great and perform even better.
-                </li>
-                <li>
-                  <strong>→ Built to impress. Engineered to perform.</strong> <br />
-                  IT Consulting & Strategy You’ve got big goals—we help you build the tech to match.
-                  Our consultants craft smart, scalable IT roadmaps that align with your vision and
-                  fuel real business growth.
-                </li>
-                <li>
-                  <strong>→ Your goals, ouar strategy, unstoppable results.</strong> <br />
-                  Data Backup & Disaster Recovery Disasters happen. Be ready. With Nimitech, your
-                  critical data is backed up, protected, and redy to bounce back—fast.
-                </li>
-                <li>
-                  <strong>→ Stay secure. Stay online. Stay in control.</strong> <br />
-                  IT Training & Support Tech is only as strong as the people using it. We provide
-                  hands-on training, onboarding, and IT support that empowers your team to work
-                  smarter and safer.
-                </li>
-                <li>
-                  <strong>→ Confident teams.</strong> <br />
-                  Fewer tech hiccups. Better performance.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div
-            className="business-posts-container"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isSmallScreen
-                ? '1fr'
-                : isMediumScreen
-                  ? 'repeat(2, 2fr)'
-                  : 'repeat(2, 1fr)',
-              gridAutoRows: 'minmax(200px, auto)',
-              gap: '20px',
-              alignItems: 'center',
-              justifyItems: 'center',
-              paddingTop: isSmallScreen ? '70px' : '0',
-            }}
-          >
-            {postsToShow.map((post) => (
-              <BusinessPostItem
-                id={post.id}
-                key={post.id}
-                title={post.title}
-                content={post.content}
-                image={post.image}
-                summary={post.summary}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Services */}
-      <div
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
-          maxWidth: '100%',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <h1
-          style={{
-            textAlign: 'center',
-            marginBottom: '60px',
-            padding: isSmallScreen ? '20px' : '20px',
-            color: 'rgb(51, 51, 51)',
-            fontFamily: '"EB Garamond", serif',
-          }}
-        >
-          Our Services
-        </h1>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: isBelow1100 ? 'column' : 'row',
-            alignItems: 'flex-start',
-            gap: '40px',
-          }}
-        >
-          {/* 📸 Right Side: Full-Size Image */}
-          <div className="image-container service-img-container" style={{ flex: 1 }}>
-            <img
-              src={businessImages.hero2}
-              alt="Manager Section Visual"
-              className="image-hover"
+            <div
+              className="business-posts-container"
               style={{
-                width: '100%',
-                height: '800px',
-                objectFit: 'cover',
-                borderRadius: isSmallScreen ? '0' : isMediumScreen ? '10px' : '16px',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                display: 'grid',
+                gridTemplateColumns: isSmallScreen
+                  ? '1fr'
+                  : isMediumScreen
+                    ? 'repeat(2, 2fr)'
+                    : 'repeat(2, 1fr)',
+                gridAutoRows: 'minmax(200px, auto)',
+                gap: '20px',
+                alignItems: 'center',
+                justifyItems: 'center',
+                paddingTop: isSmallScreen ? '70px' : '0',
               }}
-            />
+            >
+              {postsToDisplay.map((post) => (
+                <BusinessPostItem
+                  id={post.id}
+                  key={post.id}
+                  title={post.title}
+                  content={post.content}
+                  image={post.image}
+                  summary={post.summary}
+                />
+              ))}
+            </div>
+            {!isSmallScreen && postsToShow.length > 4 && (
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <button
+                  onClick={() => setShowAllPosts(!showAllPosts)}
+                  style={{
+                    background: '#88199a',
+                    color: '#FFF',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    padding: '16px',
+                    marginTop: '16px',
+                    fontWeight: 'bold',
+                    textDecoration: 'none',
+                    borderRadius: '16px',
+                  }}
+                  className="contact-btn"
+                >
+                  {showAllPosts ? 'Show Less' : 'click to view more'}
+                </button>
+              </div>
+            )}
           </div>
           {/* 📌 Left Side: Text & List Block */}
-          <div style={{ flex: 1 }}>
+          <div style={{ width: '100%' }}>
             {/* <h2
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : '2rem',
@@ -379,9 +303,10 @@ const HomePage = () => {
             <h1
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2.4rem',
-                padding: isSmallScreen ? '20px' : '20px',
-                fontWeight: 'bold',
-                color: '#333',
+                padding: isSmallScreen ? '20px' : '0',
+                fontFamily: 'Montserrat, sans-serif',
+                fontWeight: '400',
+                color: '#2e0135',
                 marginBottom: '20px',
               }}
             >
@@ -390,29 +315,97 @@ const HomePage = () => {
             <p
               style={{
                 fontSize: isSmallScreen ? '1rem' : '1.2rem',
-                padding: isSmallScreen ? '20px 20px 0 20px' : '20px 20px 0 20px',
+                padding: isSmallScreen ? '20px 20px 0 20px' : '20px 0 0 0',
                 lineHeight: '1.7',
                 color: '#444',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               {introText}
             </p>
-            <div style={{ padding: isSmallScreen ? '20px' : '20px' }}>
-              <ul style={{ color: '#555', lineHeight: '1.6', marginBottom: '30px' }}>
-                {services.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+            <div style={{ padding: isSmallScreen ? '20px' : '0' }}>
+              <ServiceHighlights />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Services */}
+      <div
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
+          maxWidth: '100%',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isBelow1100 ? 'column' : 'column',
+            gap: '40px',
+          }}
+        >
+          {/* 📸 Right Side: Full-Size Image */}
+          <div
+            className="service-img-container"
+            style={{
+              position: 'relative',
+              margin: isSmallScreen ? '0 0 2rem 0' : '0 0 4rem 0',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
+              overflow: 'hidden',
+              boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+            }}
+          >
+            <img
+              src={businessImages.hero2}
+              alt="Manager Section Visual"
+              className="image-hover"
+              style={{
+                width: '100%',
+                height: isSmallScreen ? '300px' : '500px',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
+
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                height: '100%',
+                width: '100%',
+                background: 'rgba(0, 0, 0, 0.4)',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '20px',
+                textAlign: 'center',
+              }}
+            >
+              <h1
+                style={{
+                  color: 'white',
+                  fontSize: isSmallScreen ? '1.5rem' : '2.5rem',
+                  fontWeight: 'bold',
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
+                  fontFamily: 'Montserrat, sans-serif',
+                  maxWidth: '90%',
+                }}
+              >
+                Innovate. Grow. Thrive
+              </h1>
             </div>
           </div>
         </div>
       </div>
 
       {/* Youtube Channel Section */}
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px' }}>
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
         {/* Blurred Background Image */}
         <img
-          src={businessImages.IT_image} // Replace with your image path
+          src={businessImages.WD_image} // Replace with your image path
           alt="background"
           style={{
             position: 'absolute',
@@ -455,6 +448,7 @@ const HomePage = () => {
                 marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                 marginBottom: '10px',
                 color: '#fff',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               Follow us on
@@ -484,6 +478,7 @@ const HomePage = () => {
             maxWidth: '1000px',
             margin: '0 auto',
             textAlign: 'center',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           <img
@@ -503,6 +498,7 @@ const HomePage = () => {
               fontSize: '24px',
               marginBottom: '10px',
               color: '#333',
+              fontFamily: 'Montserrat, sans-serif',
             }}
           >
             A Message from Our CEO
@@ -516,6 +512,7 @@ const HomePage = () => {
                 lineHeight: '1.6',
                 color: index === 2 ? '#444' : '#222',
                 maxWidth: '800px',
+                fontFamily: 'Montserrat, sans-serif',
                 margin: index === 2 ? '30px auto 0' : '20px auto 0',
                 fontWeight: index === 2 ? 'bold' : 'normal',
               }}
@@ -525,7 +522,14 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-
+      {/* donate */}
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
+      </section>
       {/* Support Our Mission Section */}
       <div
         style={{
@@ -538,19 +542,13 @@ const HomePage = () => {
           textAlign: 'center',
         }}
       >
-        <section className={styles.donation}>
-          <GradientCard imageSrc={donationImage2} imagePosition="left" />
-          <DonateSection
-            images={[donationImage1, donationImage2, donationImage1]}
-            onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
-          />
-        </section>
         <h2
           style={{
             fontSize: '28px',
             fontWeight: 'bold',
             color: '#333',
             marginBottom: '30px',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           Support Our Mission
@@ -562,6 +560,7 @@ const HomePage = () => {
             lineHeight: '1.6',
             maxWidth: '800px',
             margin: '0 auto 20px',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           Nimitech IT is committed to providing impactful digital solutions and empowering
@@ -571,6 +570,7 @@ const HomePage = () => {
         {/* Additional Mission */}
         <div
           style={{
+            position: 'relative',
             backgroundColor: '#fff',
             padding: '30px',
             borderRadius: '12px',
@@ -582,43 +582,88 @@ const HomePage = () => {
             textAlign: 'left',
           }}
         >
-          <h3 style={{ color: '#4a4a4a', fontWeight: '600', marginBottom: '15px' }}>
-            Help Feed Hungry Kids in Africa — Support Nimitech’s Fight Against Malnutrition
-          </h3>
-          <p style={{ color: '#555', lineHeight: '1.6', fontSize: '16px' }}>
-            At <strong>Nimitech IT</strong>, we believe in using technology and community to make a
-            real difference. Every day, millions of children in Africa suffer from hunger and
-            malnutrition, threatening their health and future. By donating as little as{' '}
-            <strong>$1 a day</strong>, you can help provide nutritious meals and essential support
-            to vulnerable kids, giving them a chance to thrive.
-          </p>
-          <p style={{ color: '#555', lineHeight: '1.6', fontSize: '16px', marginTop: '10px' }}>
-            Join us in this vital mission—your small contribution can create a big impact. Together,
-            we can fight hunger, nourish hope, and build brighter futures.
-          </p>
-          <p style={{ fontWeight: 'bold', color: '#444', marginTop: '15px' }}>
-            Donate today and be a part of the change. Every dollar counts!
-          </p>
+          <img
+            src={businessImages.cloud1} // Replace with your image path
+            alt="background"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              filter: 'blur(8px)',
+              zIndex: 0,
+            }}
+          />
+          <div style={{ position: 'relative', overflow: 'hidden' }}>
+            <h3
+              style={{
+                color: '#ac00d6',
+                fontWeight: 'bold',
+                marginBottom: '15px',
+                fontFamily: 'Montserrat, sans-serif',
+              }}
+            >
+              Help Feed Hungry Kids in Africa — Support Nimitech’s Fight Against Malnutrition
+            </h3>
+            <p
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                color: '#fff',
+                fontWeight: '600',
+                lineHeight: '1.6',
+                fontSize: '16px',
+              }}
+            >
+              At <strong>Nimitech IT</strong>, we believe in using technology and community to make
+              a real difference. Every day, millions of children in Africa suffer from hunger and
+              malnutrition, threatening their health and future. By donating as little as{' '}
+              <strong>$1 a day</strong>, you can help provide nutritious meals and essential support
+              to vulnerable kids, giving them a chance to thrive.
+            </p>
+            <p
+              style={{
+                color: '#fff',
+                fontWeight: '600',
+                lineHeight: '1.6',
+                fontSize: '16px',
+                marginTop: '10px',
+                fontFamily: 'Montserrat, sans-serif',
+              }}
+            >
+              Join us in this vital mission—your small contribution can create a big impact.
+              Together, we can fight hunger, nourish hope, and build brighter futures.
+            </p>
+            <p style={{ fontWeight: 'bold', color: '#fff', marginTop: '15px' }}>
+              Donate today and be a part of the change. Every dollar counts!
+            </p>
+          </div>
         </div>
       </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: isSmallScreen ? '1fr' : isMediumScreen ? '1fr 1fr' : '1fr 1fr 1fr',
-          gap: '30px',
-          padding: isSmallScreen ? '50px 20px' : '70px 40px',
-          justifyItems: 'center',
-        }}
-      >
-        {testimonials.map((item, index) => (
-          <ClientReview
-            key={index}
-            image={item.image}
-            course={item.course}
-            name={item.name}
-            review={item.review}
-          />
-        ))}
+      {/* Testimonials Slider */}
+      <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={20}
+          slidesPerView={isSmallScreen ? 1 : isMediumScreen ? 2 : 3}
+          autoplay={{ delay: 5000 }}
+          pagination={{ clickable: true }}
+          dir="rtl" // Right to left
+          loop={true}
+          style={{ paddingBottom: '40px' }}
+        >
+          {testimonials.map((item, index) => (
+            <SwiperSlide key={index}>
+              <ClientReview
+                image={item.image}
+                course={item.course}
+                name={item.name}
+                review={item.review}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       {/* Footer */}
       <Footer />

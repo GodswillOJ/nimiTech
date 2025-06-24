@@ -7,6 +7,7 @@ import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
 import About from './pages/business/AboutPage';
 import BusinessRegisterPage from './pages/business/RegisterBusiness';
 import Services from './pages/business/ServicesPage';
+import ContactUs from './pages/business/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 import RegisterPage from './pages/business/RegisterBusiness';
 import AuthPage from './pages/auth/AuthPage';
@@ -28,6 +29,7 @@ const baseRoutes = [
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
   { path: '/services', element: <BusinessRegisterPage /> },
+  { path: '/contact-us', element: <ContactUs /> },
   { path: '/register', element: <RegisterPage /> },
   { path: '/auth', element: <AdminAuth /> },
   { path: '/authe', element: <AuthPage /> },

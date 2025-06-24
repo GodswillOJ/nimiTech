@@ -1,35 +1,79 @@
 // src/assets/business/index.ts
 
+import AI_image from './business/images/AI.jpg';
+import AI_image1 from './business/images/AI2.jpg';
+import AI_image3 from './business/images/Ai3.jpg';
+import AI_image4 from './business/images/AI4.jpg';
+import branding2 from './business/images/branding2__.jpg';
+import branding1 from './business/images/branding4__.jpg';
+import CS_image from './business/images/CberSecurity.jpg';
+import CEO_image from './business/images/ceo.jpg';
+import cloud1 from './business/images/cloud3.jpg';
+import cloud2 from './business/images/cloud6.jpg';
+import customer from './business/images/customer_service.jpg';
+import CS_image1 from './business/images/cybersec2.jpg';
+import CS_image2 from './business/images/cybersec_.jpg';
+import CS2_image2 from './business/images/cybersecurity.jpg';
+import DM_image1 from './business/images/digital1.jpg';
+import DM_image2 from './business/images/digital2.jpg';
+import DM_image from './business/images/Digital_marketing.jpg';
+import heroBackImage6 from './business/images/hero6.jpg';
+import heroBackImage1 from './business/images/heroBackImage.jpg';
+import heroBackImage2 from './business/images/heroBackImage2.jpg';
+import heroBackImage7 from './business/images/heroBackImage7.jpg';
+import heroBackImage3 from './business/images/heroBackImg5.jpg';
 import hero1 from './business/images/heroImage1.jpg';
 import hero2 from './business/images/heroImage2.jpg';
-import hero3 from './business/images/heroImage4.jpg';
 import hero4 from './business/images/heroImage3.jpg';
-import heroBackImage7 from './business/images/heroBackImage7.jpg';
-import heroBackImage2 from './business/images/heroBackImage2.jpg';
-import heroBackImage1 from './business/images/heroBackImage.jpg';
-import heroBackImage3 from './business/images/heroBackImg5.jpg';
-import heroBackImage6 from './business/images/hero6.jpg';
-import DM_image from './business/images/Digital_marketing.jpg';
-import CS_image from './business/images/CberSecurity.jpg';
+import hero3 from './business/images/heroImage4.jpg';
+import IT_image1 from './business/images/it_support.jpg';
+import RM_training1 from './business/images/it_support_.jpg';
 import IT_image from './business/images/Remote_IT_support.jpg';
+import RM_training from './business/images/remote_train1.jpg';
+import RM_training2 from './business/images/remote_training2.jpg';
 import RM_image from './business/images/RemoteIT_support.jpg';
-import AI_image from './business/images/AI.jpg';
+import WD_image1 from './business/images/soft_dev.jpg';
+import ST_image1 from './business/images/soft_dev__.jpg';
 import ST_image from './business/images/Software_development.jpg';
 import WD_image from './business/images/Web_development.jpg';
-import CEO_image from './business/images/ceo.jpg';
-import CS2_image2 from './business/images/cybersecurity.jpg';
 import logo from './NimiTechLogo1.png';
+import client1 from './business/images/guy2.jpg';
+import client2 from './business/images/guy3.jpg';
+import client3 from './business/images/dark_lad.jpg';
+import client4 from './business/images/white_lady.jpg';
 
 export const businessImages = {
+  client1,
+  client2,
+  client3,
+  client4,
+  customer,
   hero1,
   hero2,
   hero3,
   hero4,
+  cloud1,
+  cloud2,
+  branding1,
+  branding2,
+  IT_image1,
+  RM_training,
+  AI_image1,
+  AI_image4,
+  RM_training1,
+  RM_training2,
+  CS_image1,
+  CS_image2,
+  ST_image1,
+  WD_image1,
   DM_image,
+  DM_image1,
+  DM_image2,
   CS_image,
   IT_image,
   RM_image,
   AI_image,
+  AI_image3,
   ST_image,
   WD_image,
   CS2_image2,

@@ -1,13 +1,13 @@
-import React from 'react';
 import { businessImages } from '../../../assets/images';
 import './services.css'; // Reuse global styles
 
 const SoftwareDevelopmentContent = () => {
   return (
-    <div className="services_block">
+    <div
+      className="services_block"
+      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Apply Montserrat here
+    >
       <p>
-        <strong>Custom Software & Web Development to Optimize Your Business Workflow</strong>
-        <br />
         At Nimitech IT, we specialize in building custom software and web solutions designed to
         streamline your business operations and boost productivity. From enterprise resource
         planning (ERP) systems, inventory management, CRM platforms, workflow optimization apps, and
@@ -24,40 +24,44 @@ const SoftwareDevelopmentContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.ST_image} alt="Software Development Visual" />
+        <img src={businessImages.ST_image1} alt="Software Development Visual" />
       </div>
 
       <div>
-        <p className="font-semibold">
+        <p style={{ fontSize: '20px' }}>
           Why Trust Nimitech IT with Your Custom Software and Web Development Needs?
         </p>
-        <ul>
+        <ul className="list-disc list-inside space-y-1">
           <li>
-            <strong>Tailor-Made Apps</strong>: We build custom ERP, CRM, inventory systems, and much
-            more, designed to optimize your workflow and business processes.
+            Tailor-Made Apps: We build custom ERP, CRM, inventory systems, and much more, designed
+            to optimize your workflow and business processes.
           </li>
           <li>
-            <strong>No Subscription Required</strong>: Enjoy full ownership of your software with no
-            hidden monthly or yearly fees.
+            No Subscription Required: Enjoy full ownership of your software with no hidden monthly
+            or yearly fees.
           </li>
           <li>
-            <strong>Experienced Developers</strong>: Skilled in modern languages and frameworks
-            including React, Python, Java, .NET, and others.
+            Experienced Developers: Skilled in modern languages and frameworks including React,
+            Python, Java, .NET, and others.
           </li>
           <li>
-            <strong>Mobile-Responsive & Scalable</strong>: Solutions built for seamless use on any
-            device and growth-ready for the future.
+            Mobile-Responsive & Scalable: Solutions built for seamless use on any device and
+            growth-ready for the future.
           </li>
           <li>
-            <strong>Transparent Pricing</strong>: Affordable, one-time development costs with clear
-            communication every step of the way.
+            Transparent Pricing: Affordable, one-time development costs with clear communication
+            every step of the way.
           </li>
         </ul>
       </div>
 
+      <div className="image-container">
+        <img src={businessImages.WD_image} alt="Software Development Visual" />
+      </div>
+
       <div>
-        <p className="font-semibold">Our Development Services Include:</p>
-        <ul>
+        <p style={{ fontSize: '20px' }}>Our Development Services Include:</p>
+        <ul className="list-disc list-inside space-y-1">
           <li>Custom Web Applications & Websites</li>
           <li>Mobile App Development (iOS & Android)</li>
           <li>ERP & CRM Software Development</li>

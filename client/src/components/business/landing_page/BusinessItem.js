@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
 
@@ -73,7 +74,12 @@ const BusinessPostItem = ({ id, image, title, content, summary }) => {
       />
 
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+        <Typography
+          gutterBottom
+          variant="h6"
+          component="div"
+          sx={{ fontWeight: '400', fontFamily: 'Montserrat, sans-serif' }}
+        >
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -114,7 +120,7 @@ const SocialLinks = () => {
       icon: (
         <FaFacebook
           style={{
-            color: '#167ac6',
+            color: '#1877f2',
           }}
         />
       ),
@@ -122,9 +128,19 @@ const SocialLinks = () => {
     },
     {
       icon: (
-        <FaTwitter
+        <FaXTwitter
           style={{
-            color: '#01560e',
+            color: '#000',
+          }}
+        />
+      ),
+      url: 'https://twitter.com/yourhandle',
+    },
+    {
+      icon: (
+        <FaWhatsapp
+          style={{
+            color: '#1bcc2a',
           }}
         />
       ),
@@ -165,17 +181,18 @@ const PartnerWithUs = ({ services }) => {
   return (
     <div
       style={{
-        maxWidth: '1200px',
+        maxWidth: '1300px',
         margin: '0 auto',
-        padding: isSmallScreen ? '0' : isMediumScreen ? '20px 10px' : '40px 20px',
+        padding: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
       }}
     >
       <h2
         style={{
-          fontSize: '2.4rem',
+          fontSize: isSmallScreen ? '1.6rem' : isMediumScreen ? '1.8rem' : '2.4rem',
           fontWeight: 'bold',
           color: '#333',
           textAlign: 'center',
+          fontFamily: 'Montserrat, sans-serif',
           padding: isSmallScreen
             ? '40px 60px 10px 60px'
             : isMediumScreen
@@ -212,41 +229,53 @@ const PartnerWithUs = ({ services }) => {
               minWidth: '300px',
               backgroundColor: '#f9f9f9',
               borderRadius: '16px',
-              padding: '40px 30px',
+              padding: isSmallScreen ? '20px 16px' : isMediumScreen ? '30px 24px' : '40px 30px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '500px', // Match the image height
+              fontFamily: 'Montserrat, sans-serif',
+              height: isSmallScreen ? 'auto' : '500px', // Let it expand naturally on mobile
             }}
           >
-            <h3
+            <h4
               style={{
-                fontSize: '1.8rem',
-                fontWeight: 'bold',
+                fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
                 marginBottom: '20px',
-                color: '#111',
+                marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
+                color: '#433c4c',
+                textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
               Unlock Limitless Potential
-            </h3>
+            </h4>
             <p
               style={{
-                fontSize: '1.1rem',
+                fontSize: isSmallScreen ? '1rem' : '1.1rem',
                 lineHeight: '1.7',
+                fontStyle: 'italic',
                 marginBottom: '20px',
-                color: '#444',
+                color: '#433c4c',
+                textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
               Partnering with us means gaining access to a dedicated team of professionals who
               provide:
             </p>
-            <ul style={{ paddingLeft: '20px', fontSize: '1rem', lineHeight: '1.6', color: '#333' }}>
+            <ul
+              style={{
+                paddingLeft: isSmallScreen ? '16px' : '20px',
+                fontSize: isSmallScreen ? '0.95rem' : '1rem',
+                lineHeight: '1.6',
+                color: '#333',
+                listStyleType: 'disc',
+                textAlign: isSmallScreen ? 'left' : 'left',
+              }}
+            >
               {services.slice(0, 6).map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
           </div>
-
           {/* Image container with overlay text */}
           <div
             className="image-container"
@@ -254,7 +283,7 @@ const PartnerWithUs = ({ services }) => {
               flex: 1,
               minWidth: '300px',
               position: 'relative',
-              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '20px' : '40px',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
               overflow: 'hidden',
               height: '500px',
             }}
@@ -280,9 +309,10 @@ const PartnerWithUs = ({ services }) => {
                 color: 'white',
                 padding: '30px',
                 textAlign: 'left',
-                borderRadius: '12px',
+                borderRadius: '0',
                 width: '90%',
                 maxWidth: '500px',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               <h3 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>
@@ -301,10 +331,10 @@ const PartnerWithUs = ({ services }) => {
   );
 };
 
-const cyberImage = businessImages.hero1;
-const aiImage = businessImages.hero2;
-const marketingImage = businessImages.hero3;
-const softwareImage = businessImages.hero4;
+const cyberImage = businessImages.client4;
+const aiImage = businessImages.client1;
+const marketingImage = businessImages.client3;
+const softwareImage = businessImages.client2;
 
 export const testimonials = [
   {
@@ -345,7 +375,7 @@ const ClientReview = ({ image, course, name, review }) => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: 400,
+        // maxWidth: 400,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -383,18 +413,23 @@ const ClientReview = ({ image, course, name, review }) => {
             fontSize: isSmallScreen ? '1.2rem' : isMediumScreen ? '1.4rem' : '1.6rem',
             fontWeight: 'bold',
             color: '#3b1647',
+            fontFamily: 'Montserrat, sans-serif',
             mb: 1,
           }}
         >
           {course}
         </Typography>
-        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#222', mb: 1 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, fontFamily: 'Montserrat, sans-serif', color: '#222', mb: 1 }}
+        >
           {name}
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: '1rem',
+            fontFamily: 'Montserrat, sans-serif',
             lineHeight: 1.6,
             color: '#555',
           }}
@@ -406,4 +441,88 @@ const ClientReview = ({ image, course, name, review }) => {
   );
 };
 
-export { BusinessPostItem, ClientReview, PartnerWithUs, SocialLinks };
+const ServiceHighlights = () => {
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+
+  const sectionStyle = {
+    display: 'flex',
+    flexDirection: isSmallScreen ? 'column' : 'row',
+    gap: '20px',
+    justifyContent: 'space-between',
+    marginTop: '40px',
+    padding: '0 20px',
+  };
+
+  const cardStyle = {
+    flex: 1,
+    padding: '20px',
+    backgroundColor: '#fafafa',
+    borderRadius: '16px',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  };
+
+  const listStyle = {
+    listStyle: 'none',
+    paddingLeft: '0',
+    margin: 0,
+  };
+
+  const listItemStyle = {
+    color: '#333',
+    fontSize: '1rem',
+    lineHeight: 1.8,
+    position: 'relative',
+    paddingLeft: '32px',
+    marginBottom: '12px',
+  };
+
+  const checkMarkStyle = {
+    position: 'absolute',
+    left: '0',
+    top: '2px',
+    color: '#333', // green
+    fontSize: '1.1rem',
+    lineHeight: 1,
+  };
+
+  return (
+    <div style={sectionStyle}>
+      {/* First List */}
+      <div style={cardStyle}>
+        <ul style={listStyle}>
+          {[
+            'Digital Marketing Services',
+            'Software Development Solutions',
+            'Website Design & Development',
+            'AI & Machine Learning',
+          ].map((item, index) => (
+            <li style={listItemStyle} key={index}>
+              <span style={checkMarkStyle}>✔</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Second List */}
+      <div style={cardStyle}>
+        <ul style={listStyle}>
+          {[
+            'Cloud Infrastructure & IT Solutions',
+            'Remote IT Support & Helpdesk',
+            'Graphic Design – Logos, Branding & Identity',
+            'Cybersecurity Services & Risk Protection',
+          ].map((item, index) => (
+            <li style={listItemStyle} key={index}>
+              <span style={checkMarkStyle}>✔</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export { BusinessPostItem, ClientReview, PartnerWithUs, ServiceHighlights, SocialLinks };

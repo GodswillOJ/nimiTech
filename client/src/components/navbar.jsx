@@ -80,10 +80,14 @@ const Navbar = () => {
             </Link>
           </li>
           {isOpen && (
-            <div className="contact-us-mobile">
-              <button className="contact-btn-mobile" onClick={() => setIsOpen(false)}>
+            <div className="contact-us-mobile" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              <Link
+                to="/contact-us"
+                className="contact-btn-mobile"
+                onClick={() => setIsOpen(false)}
+              >
                 Contact Us
-              </button>
+              </Link>
             </div>
           )}
         </ul>
@@ -98,7 +102,14 @@ const Navbar = () => {
       </div>
 
       <div className="contact-btn-container">
-        <button className="contact-btn">Contact Us</button>
+        <Link
+          to="/contact-us"
+          style={{ textDecoration: 'none' }}
+          className="contact-btn"
+          onClick={() => setIsOpen(false)}
+        >
+          Contact Us
+        </Link>
       </div>
     </nav>
   );
