@@ -58,43 +58,58 @@ const BusinessRegisterPage = () => {
             Reliable Tech Solutions to Power Your Growth
           </h2>
 
-          <button
-            className="services-btn"
-            style={{
-              backgroundColor: '#88199a',
-              borderRadius: '10px',
-              padding: isSmallScreen ? '10px 20px' : '12px 28px',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
-              fontWeight: 'bold',
-            }}
-          >
-            <Link
-              href={
-                post.title === 'Reliable Remote IT Support & 24/7 Help Desk Services — Nimitech IT'
-                  ? '/contact-us'
-                  : '/our-services'
-              }
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                color: 'white',
-                borderRadius: '30px',
-                fontWeight: 'bold',
-                fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
-                textDecoration: 'none',
-                fontFamily: 'Montserrat, sans-serif',
-              }}
+          {post.title === 'Remote IT Training — Powered by NimiTutor.com' ? (
+            <a
+              href="https://www.nimitutor.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
             >
-              {post.title === 'Reliable Remote IT Support & 24/7 Help Desk Services — Nimitech IT'
-                ? 'Book a free consultation'
-                : 'Book a free consultation'}
-              <ArrowBackIcon />
+              <button
+                className="services-btn"
+                style={{
+                  backgroundColor: '#88199a',
+                  borderRadius: '10px',
+                  padding: isSmallScreen ? '10px 20px' : '12px 28px',
+                  color: 'white',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
+                  fontWeight: 'bold',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  fontFamily: 'Montserrat, sans-serif',
+                }}
+              >
+                Visit NimiTutor
+                <ArrowBackIcon />
+              </button>
+            </a>
+          ) : (
+            <Link to="/contact-us" style={{ textDecoration: 'none' }}>
+              <button
+                className="services-btn"
+                style={{
+                  backgroundColor: '#88199a',
+                  borderRadius: '10px',
+                  padding: isSmallScreen ? '10px 20px' : '12px 28px',
+                  color: 'white',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
+                  fontWeight: 'bold',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  fontFamily: 'Montserrat, sans-serif',
+                }}
+              >
+                Book a free consultation
+                <ArrowBackIcon />
+              </button>
             </Link>
-          </button>
+          )}
         </div>
 
         <div

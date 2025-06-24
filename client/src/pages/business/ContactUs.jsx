@@ -1,3 +1,4 @@
+import { WhatsApp } from '@mui/icons-material';
 import { Box, Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import { lazy } from 'react';
@@ -227,6 +228,18 @@ const ContactUs = () => {
                       aria-label="YouTube"
                     >
                       <YouTubeIcon />
+                    </a>
+                    <a
+                      href="https://youtube.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="YouTube"
+                    >
+                      <WhatsApp
+                        style={{
+                          color: '#1bcc2a',
+                        }}
+                      />
                     </a>
                   </Box>
                 </Box>
