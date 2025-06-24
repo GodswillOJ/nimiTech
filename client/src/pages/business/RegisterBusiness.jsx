@@ -72,7 +72,11 @@ const BusinessRegisterPage = () => {
             }}
           >
             <Link
-              href="/our-services"
+              href={
+                post.title === 'Reliable Remote IT Support & 24/7 Help Desk Services — Nimitech IT'
+                  ? '/contact-us'
+                  : '/our-services'
+              }
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -85,7 +89,9 @@ const BusinessRegisterPage = () => {
                 fontFamily: 'Montserrat, sans-serif',
               }}
             >
-              More services
+              {post.title === 'Reliable Remote IT Support & 24/7 Help Desk Services — Nimitech IT'
+                ? 'Book a free consultation'
+                : 'Book a free consultation'}
               <ArrowBackIcon />
             </Link>
           </button>

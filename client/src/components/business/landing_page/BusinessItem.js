@@ -450,31 +450,40 @@ const ServiceHighlights = () => {
     gap: '20px',
     justifyContent: 'space-between',
     marginTop: '40px',
+    padding: '0 20px',
   };
 
   const cardStyle = {
     flex: 1,
-    padding: 0,
+    padding: '20px',
+    backgroundColor: '#fafafa',
+    borderRadius: '16px',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
   };
 
-  const headingStyle = {
-    fontSize: '1.2rem',
-    fontWeight: '700',
-    marginBottom: '20px',
-    color: '#2e0135',
-  };
-
   const listStyle = {
-    listStyleType: 'disc',
-    paddingLeft: '20px',
+    listStyle: 'none',
+    paddingLeft: '0',
     margin: 0,
   };
 
   const listItemStyle = {
-    color: '#444',
-    fontSize: '0.9rem',
-    lineHeight: 1.6,
+    color: '#333',
+    fontSize: '1rem',
+    lineHeight: 1.8,
+    position: 'relative',
+    paddingLeft: '32px',
+    marginBottom: '12px',
+  };
+
+  const checkMarkStyle = {
+    position: 'absolute',
+    left: '0',
+    top: '2px',
+    color: '#333', // green
+    fontSize: '1.1rem',
+    lineHeight: 1,
   };
 
   return (
@@ -482,19 +491,34 @@ const ServiceHighlights = () => {
       {/* First List */}
       <div style={cardStyle}>
         <ul style={listStyle}>
-          <li style={listItemStyle}>Digital Marketing Services</li>
-          <li style={listItemStyle}>Software Development Solutions</li>
-          <li style={listItemStyle}>Website Design & Development</li>
-          <li style={listItemStyle}>AI & Machine Learning</li>
+          {[
+            'Digital Marketing Services',
+            'Software Development Solutions',
+            'Website Design & Development',
+            'AI & Machine Learning',
+          ].map((item, index) => (
+            <li style={listItemStyle} key={index}>
+              <span style={checkMarkStyle}>✔</span>
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
+
       {/* Second List */}
       <div style={cardStyle}>
         <ul style={listStyle}>
-          <li style={listItemStyle}>Cloud Infrastructure & IT Solutions</li>
-          <li style={listItemStyle}>Remote IT Support & Helpdesk</li>
-          <li style={listItemStyle}>Graphic Design – Logos, Branding & Identity</li>
-          <li style={listItemStyle}>Cybersecurity Services & Risk Protection</li>
+          {[
+            'Cloud Infrastructure & IT Solutions',
+            'Remote IT Support & Helpdesk',
+            'Graphic Design – Logos, Branding & Identity',
+            'Cybersecurity Services & Risk Protection',
+          ].map((item, index) => (
+            <li style={listItemStyle} key={index}>
+              <span style={checkMarkStyle}>✔</span>
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
