@@ -105,7 +105,7 @@ const BusinessRegisterPage = () => {
                   fontFamily: 'Montserrat, sans-serif',
                 }}
               >
-                Book a free consultation
+                Book a Free Consultation
                 <ArrowBackIcon />
               </button>
             </Link>
@@ -178,7 +178,7 @@ const BusinessRegisterPage = () => {
             marginBottom: '40px',
           }}
         >
-          Other services
+          Other Services
         </Typography>
 
         <div

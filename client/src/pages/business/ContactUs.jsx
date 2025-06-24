@@ -271,7 +271,18 @@ const ContactUs = () => {
                     <form noValidate autoComplete="off">
                       <TextField fullWidth label="Your Name" variant="outlined" margin="normal" />
                       <TextField fullWidth label="Your Email" variant="outlined" margin="normal" />
-                      <TextField fullWidth label="Subject" variant="outlined" margin="normal" />
+                      <TextField
+                        fullWidth
+                        label="Phone number"
+                        variant="outlined"
+                        margin="normal"
+                      />
+                      <TextField
+                        fullWidth
+                        label="Service you are inquiring about"
+                        variant="outlined"
+                        margin="normal"
+                      />
                       <TextField
                         fullWidth
                         label="Message"
@@ -293,7 +304,7 @@ const ContactUs = () => {
                           textTransform: 'none',
                         }}
                       >
-                        Send Message
+                        Submit
                       </Button>
                     </form>
                   </Box>
