@@ -47,17 +47,22 @@ const About = () => {
             zIndex: 2,
           }}
         >
-          <Typography variant="h2" fontWeight="bold">
+          <Typography variant="h2" fontWeight="bold" fontFamily="Montserrat, sans-serif">
             About Us
           </Typography>
-          <Typography mt={2} fontSize={isSmallScreen ? '1rem' : '1.25rem'}>
+          <Typography
+            variant="h4"
+            mt={2}
+            fontSize={isSmallScreen ? '1rem' : '1.25rem'}
+            sx={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}
+          >
             Learn who we are, what drives us, and where we’re making an impact.
           </Typography>
         </Box>
       </Box>
 
       {/* Mission and Contact Info */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 8 : 20}>
+      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
@@ -65,8 +70,12 @@ const About = () => {
                 <Typography
                   variant="h4"
                   style={{
-                    paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                    paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                    padding: isSmallScreen
+                      ? '0 10px 0 10px'
+                      : isMediumScreen
+                        ? '0 40px 0 40px'
+                        : '0 40px 0 40px',
+                    fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
                   About Us | Nimitech IT – Driving Your Digital Transformation
@@ -77,8 +86,12 @@ const About = () => {
                   lineHeight={1.7}
                   color="textSecondary"
                   style={{
-                    paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                    paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                    fontFamily: 'Montserrat, sans-serif',
+                    padding: isSmallScreen
+                      ? '0 10px 0 10px'
+                      : isMediumScreen
+                        ? '10px 40px 0 40px'
+                        : '10px 40px 0 40px',
                   }}
                 >
                   At Nimitech IT, we’re passionate about empowering businesses to thrive in an ever
@@ -87,14 +100,14 @@ const About = () => {
                   marketing, graphic design, and cloud solutions—all designed to meet your unique
                   challenges and fuel sustainable growth.
                 </Typography>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} m={2}>
                   <Fade in timeout={1500}>
                     <Box
                       component="img"
                       src={businessImages.hero2}
                       alt="Team Working"
                       width="100%"
-                      borderRadius={isSmallScreen ? 0 : 2}
+                      borderRadius={isSmallScreen ? 0 : 0}
                       boxShadow={4}
                     />
                   </Fade>
@@ -106,8 +119,12 @@ const About = () => {
                   lineHeight={1.7}
                   style={{
                     fontSize: '1rem',
-                    paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                    paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                    fontFamily: 'Montserrat, sans-serif',
+                    padding: isSmallScreen
+                      ? '0 10px 0 10px'
+                      : isMediumScreen
+                        ? '10px 40px 0 40px'
+                        : '10px 40px 0 40px',
                   }}
                 >
                   Founded on a commitment to innovation and client success, our team of certified
@@ -118,9 +135,10 @@ const About = () => {
                   style={{
                     fontSize: '1rem',
                     lineHeight: '2',
-                    padding: 30,
+                    padding: '0 60px 0 60px',
                     marginBottom: 30,
                     color: '#555',
+                    fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
                   <li>
@@ -149,14 +167,14 @@ const About = () => {
                     that resonate with your audience.
                   </li>
                 </ul>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} m={2}>
                   <Fade in timeout={1500}>
                     <Box
                       component="img"
                       src={businessImages.RM_image}
                       alt="Services Visual"
                       width="100%"
-                      borderRadius={isSmallScreen ? 0 : 2}
+                      borderRadius={isSmallScreen ? 0 : 0}
                       boxShadow={3}
                     />
                   </Fade>
@@ -165,11 +183,15 @@ const About = () => {
                   mt={6}
                   variant="body1"
                   style={{
-                    paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                    paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                     fontSize: '1rem',
+                    padding: isSmallScreen
+                      ? '0 10px 0 10px'
+                      : isMediumScreen
+                        ? '10px 40px 0 40px'
+                        : '10px 40px 0 40px',
                     lineHeight: '2',
                     color: '#555',
+                    fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
                   Based in Raleigh, North Carolina, and serving clients across the United States and

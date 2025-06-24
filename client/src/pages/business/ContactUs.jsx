@@ -77,6 +77,7 @@ const ContactUs = () => {
                 style={{
                   paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                   paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                  fontFamily: 'Montserrat, sans-serif',
                 }}
               >
                 Contact Us | Nimitech IT – Your Technology Partner
@@ -89,6 +90,7 @@ const ContactUs = () => {
                 style={{
                   paddingLeft: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                   paddingRight: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
+                  fontFamily: 'Montserrat, sans-serif',
                 }}
               >
                 Ready to transform your business? Contact Nimitech IT today and discover how our IT
@@ -112,14 +114,19 @@ const ContactUs = () => {
             <Grid item xs={12} md={6}>
               <Fade in timeout={1000}>
                 <Box>
-                  <Typography variant="h5" fontWeight="bold" mb={4}>
+                  <Typography
+                    variant="h5"
+                    fontWeight="bold"
+                    mb={4}
+                    sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
                     Get in Touch
                   </Typography>
 
                   {/* Location */}
                   <Box display="flex" alignItems="flex-start" gap={2} mb={3}>
                     <FiMapPin size={24} style={{ color: '#333', marginTop: 4 }} />
-                    <Box>
+                    <Box sx={{ fontFamily: 'Montserrat, sans-serif' }}>
                       <Typography fontWeight="bold">Our Office (Raleigh, NC)</Typography>
                       <Typography color="text.secondary">
                         Nimitech IT, Raleigh, NC 27601, USA
@@ -128,7 +135,13 @@ const ContactUs = () => {
                   </Box>
 
                   {/* Phone */}
-                  <Box display="flex" alignItems="flex-start" gap={2} mb={3}>
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    gap={2}
+                    mb={3}
+                    sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
                     <FiPhone size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Phone</Typography>
@@ -137,7 +150,13 @@ const ContactUs = () => {
                   </Box>
 
                   {/* Email */}
-                  <Box display="flex" alignItems="flex-start" gap={2} mb={3}>
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    gap={2}
+                    mb={3}
+                    sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
                     <FiMail size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Email</Typography>
@@ -148,7 +167,13 @@ const ContactUs = () => {
                   </Box>
 
                   {/* Office Hours */}
-                  <Box display="flex" alignItems="flex-start" gap={2} mb={3}>
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    gap={2}
+                    mb={3}
+                    sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
                     <FiClock size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Office Hours</Typography>
@@ -162,7 +187,12 @@ const ContactUs = () => {
 
                   {/* Social Media */}
                   <Divider sx={{ my: 4 }} />
-                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                    gutterBottom
+                  >
                     Connect with Us
                   </Typography>
                   <Box display="flex" gap={3} mt={1}>
@@ -208,10 +238,19 @@ const ContactUs = () => {
               <Fade in timeout={1500}>
                 <Box>
                   <Box>
-                    <Typography variant="h6" fontWeight="bold" mb={3}>
-                      Send Us a Message
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={3}
+                      sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
+                      Schedule a free consultation
                     </Typography>
-                    <Typography color="text.secondary" mb={3}>
+                    <Typography
+                      color="text.secondary"
+                      mb={3}
+                      sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
                       Have a question about our services? Fill out the form below and we’ll get back
                       to you within one business day.
                     </Typography>

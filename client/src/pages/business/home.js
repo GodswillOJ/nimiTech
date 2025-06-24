@@ -101,7 +101,10 @@ const HomePage = () => {
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-text">
-          <h1> We believe in harnessing technology to drive business success.</h1>
+          <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            {' '}
+            We believe in harnessing technology to drive business success.
+          </h1>
           <p
             style={{
               color: 'white',
@@ -131,6 +134,7 @@ const HomePage = () => {
                 padding: '20px 30px',
                 color: 'white',
                 borderRadius: '30px',
+                fontFamily: 'Montserrat, sans-serif',
                 fontWeight: 'bold',
                 fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
                 textDecoration: 'none',
@@ -175,6 +179,7 @@ const HomePage = () => {
             border: 'none',
             borderRadius: '30px 30px 0 30px',
             cursor: 'pointer',
+            fontFamily: 'Montserrat, sans-serif',
             flexShrink: 0,
           }}
         >
@@ -209,6 +214,7 @@ const HomePage = () => {
           width: '100%',
           margin: 0,
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          fontFamily: 'Montserrat, sans-serif',
         }}
       >
         <h1
@@ -216,8 +222,7 @@ const HomePage = () => {
             textAlign: 'center',
             marginBottom: isSmallScreen ? '0' : '60px',
             padding: isSmallScreen ? '20px' : '20px',
-            color: 'rgb(51, 51, 51)',
-            fontFamily: '"EB Garamond", serif',
+            color: '#433c4c',
           }}
         >
           Our Services
@@ -264,16 +269,20 @@ const HomePage = () => {
                 <button
                   onClick={() => setShowAllPosts(!showAllPosts)}
                   style={{
-                    background: 'none',
-                    color: '#ac01d6',
+                    background: '#88199a',
+                    color: '#FFF',
                     border: 'none',
                     cursor: 'pointer',
                     fontSize: '1rem',
+                    padding: '16px',
+                    marginTop: '16px',
                     fontWeight: 'bold',
-                    textDecoration: 'underline',
+                    textDecoration: 'none',
+                    borderRadius: '16px',
                   }}
+                  className="contact-btn"
                 >
-                  {showAllPosts ? 'Show Less' : 'Click to See More'}
+                  {showAllPosts ? 'Show Less' : 'click to view more'}
                 </button>
               </div>
             )}
@@ -295,7 +304,8 @@ const HomePage = () => {
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2.4rem',
                 padding: isSmallScreen ? '20px' : '0',
-                fontWeight: 'bold',
+                fontFamily: 'Montserrat, sans-serif',
+                fontWeight: '400',
                 color: '#2e0135',
                 marginBottom: '20px',
               }}
@@ -308,6 +318,7 @@ const HomePage = () => {
                 padding: isSmallScreen ? '20px 20px 0 20px' : '20px 0 0 0',
                 lineHeight: '1.7',
                 color: '#444',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               {introText}
@@ -323,7 +334,7 @@ const HomePage = () => {
       <div
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
+          padding: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
           maxWidth: '100%',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
@@ -340,8 +351,8 @@ const HomePage = () => {
             className="service-img-container"
             style={{
               position: 'relative',
-              margin: isSmallScreen ? '0 0 2rem 0' : '30px 40px',
-              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '12px' : '20px',
+              margin: isSmallScreen ? '0 0 2rem 0' : '0 0 4rem 0',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
               overflow: 'hidden',
               boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
             }}
@@ -379,11 +390,11 @@ const HomePage = () => {
                   fontSize: isSmallScreen ? '1.5rem' : '2.5rem',
                   fontWeight: 'bold',
                   textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
-                  fontFamily: '"EB Garamond", serif',
+                  fontFamily: 'Montserrat, sans-serif',
                   maxWidth: '90%',
                 }}
               >
-                Innovate, Grow & Thrive
+                Innovate. Grow. Thrive
               </h1>
             </div>
           </div>
@@ -391,7 +402,7 @@ const HomePage = () => {
       </div>
 
       {/* Youtube Channel Section */}
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px' }}>
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
         {/* Blurred Background Image */}
         <img
           src={businessImages.WD_image} // Replace with your image path
@@ -437,6 +448,7 @@ const HomePage = () => {
                 marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                 marginBottom: '10px',
                 color: '#fff',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               Follow us on
@@ -466,6 +478,7 @@ const HomePage = () => {
             maxWidth: '1000px',
             margin: '0 auto',
             textAlign: 'center',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           <img
@@ -485,6 +498,7 @@ const HomePage = () => {
               fontSize: '24px',
               marginBottom: '10px',
               color: '#333',
+              fontFamily: 'Montserrat, sans-serif',
             }}
           >
             A Message from Our CEO
@@ -498,6 +512,7 @@ const HomePage = () => {
                 lineHeight: '1.6',
                 color: index === 2 ? '#444' : '#222',
                 maxWidth: '800px',
+                fontFamily: 'Montserrat, sans-serif',
                 margin: index === 2 ? '30px auto 0' : '20px auto 0',
                 fontWeight: index === 2 ? 'bold' : 'normal',
               }}
@@ -507,7 +522,14 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-
+      {/* donate */}
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
+      </section>
       {/* Support Our Mission Section */}
       <div
         style={{
@@ -520,19 +542,13 @@ const HomePage = () => {
           textAlign: 'center',
         }}
       >
-        <section className={styles.donation}>
-          <GradientCard imageSrc={donationImage2} imagePosition="left" />
-          <DonateSection
-            images={[donationImage1, donationImage2, donationImage1]}
-            onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
-          />
-        </section>
         <h2
           style={{
             fontSize: '28px',
             fontWeight: 'bold',
             color: '#333',
             marginBottom: '30px',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           Support Our Mission
@@ -544,6 +560,7 @@ const HomePage = () => {
             lineHeight: '1.6',
             maxWidth: '800px',
             margin: '0 auto 20px',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
           Nimitech IT is committed to providing impactful digital solutions and empowering
@@ -566,7 +583,7 @@ const HomePage = () => {
           }}
         >
           <img
-            src={businessImages.IT_image} // Replace with your image path
+            src={businessImages.cloud1} // Replace with your image path
             alt="background"
             style={{
               position: 'absolute',
@@ -580,10 +597,25 @@ const HomePage = () => {
             }}
           />
           <div style={{ position: 'relative', overflow: 'hidden' }}>
-            <h3 style={{ color: '#ac00d6', fontWeight: 'bold', marginBottom: '15px' }}>
+            <h3
+              style={{
+                color: '#ac00d6',
+                fontWeight: 'bold',
+                marginBottom: '15px',
+                fontFamily: 'Montserrat, sans-serif',
+              }}
+            >
               Help Feed Hungry Kids in Africa — Support Nimitech’s Fight Against Malnutrition
             </h3>
-            <p style={{ color: '#444', fontWeight: '600', lineHeight: '1.6', fontSize: '16px' }}>
+            <p
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                color: '#fff',
+                fontWeight: '600',
+                lineHeight: '1.6',
+                fontSize: '16px',
+              }}
+            >
               At <strong>Nimitech IT</strong>, we believe in using technology and community to make
               a real difference. Every day, millions of children in Africa suffer from hunger and
               malnutrition, threatening their health and future. By donating as little as{' '}
@@ -592,17 +624,18 @@ const HomePage = () => {
             </p>
             <p
               style={{
-                color: '#444',
+                color: '#fff',
                 fontWeight: '600',
                 lineHeight: '1.6',
                 fontSize: '16px',
                 marginTop: '10px',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               Join us in this vital mission—your small contribution can create a big impact.
               Together, we can fight hunger, nourish hope, and build brighter futures.
             </p>
-            <p style={{ fontWeight: 'bold', color: '#000', marginTop: '15px' }}>
+            <p style={{ fontWeight: 'bold', color: '#fff', marginTop: '15px' }}>
               Donate today and be a part of the change. Every dollar counts!
             </p>
           </div>

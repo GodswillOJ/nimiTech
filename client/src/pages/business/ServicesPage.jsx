@@ -68,10 +68,18 @@ const Services = () => {
             textAlign: isSmallScreen ? 'normal' : 'left',
           }}
         >
-          <Typography variant={isSmallScreen ? 'h4' : 'h2'} fontWeight="bold">
+          <Typography
+            variant={isSmallScreen ? 'h4' : 'h2'}
+            fontWeight="bold"
+            sx={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
             Explore Our Expert Services
           </Typography>
-          <Typography mt={2} fontSize={isSmallScreen ? '1rem' : '1.25rem'}>
+          <Typography
+            mt={2}
+            fontSize={isSmallScreen ? '1rem' : '1.25rem'}
+            sx={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
             From marketing and security to AI and custom development — tailored solutions to help
             your business thrive.
           </Typography>
@@ -79,20 +87,28 @@ const Services = () => {
       </Box>
 
       {/* Why Choose Us */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 8 : 20} bgcolor="#f9f9f9">
+      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0} bgcolor="#f9f9f9">
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
               <Box>
                 <Typography
                   variant="h4"
-                  style={{ fontWeight: '600' }}
+                  style={{ fontWeight: '600', fontFamily: 'Montserrat, sans-serif' }}
+                  px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   gutterBottom
                   className="text-order"
                 >
                   Our Comprehensive Services | Nimitech IT
                 </Typography>
-                <Typography lineHeight={1.7} mb={4} color="textSecondary" className="text-order">
+                <Typography
+                  lineHeight={1.7}
+                  mb={4}
+                  px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
+                  color="textSecondary"
+                  className="text-order"
+                  sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
                   At Nimitech IT, we offer end to end technology and marketing solutions designed to
                   help your business thrive. From building bespoke software and securing your
                   infrastructure to driving growth through digital marketing and crafting standout
@@ -103,12 +119,14 @@ const Services = () => {
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
+                    mb={3}
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Custom Software & Web Development
                     </strong>
                     <br />
@@ -122,6 +140,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -152,8 +172,11 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    fontFamily="Montserrat, sans-serif"
+                    sx={{ fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Digital Marketing
                     </strong>
                     <br />
@@ -166,6 +189,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -197,8 +222,10 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cybersecurity Solutions
                     </strong>
                     <br />
@@ -212,6 +239,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -243,8 +272,10 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       AI & Machine Learning
                     </strong>
                     <br />
@@ -257,6 +288,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -288,8 +321,10 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Graphic Design & Branding
                     </strong>
                     <br />
@@ -302,6 +337,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -334,8 +371,10 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cloud Infrastructure & Solutions
                     </strong>
                     <br />
@@ -347,7 +386,9 @@ const Services = () => {
                       lineHeight: '2',
                       marginLeft: 20,
                       marginBottom: 30,
+                      fontFamily: 'Montserrat, sans-serif',
                       color: '#555',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -379,8 +420,10 @@ const Services = () => {
                     fontSize={'1rem'}
                     color="textSecondary"
                     className="text-order"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
+                    px={isSmallScreen ? 0 : isMediumScreen ? 8 : 8}
                   >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135' }}>
+                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Remote IT Support & Help Desk
                     </strong>
                     <br />
@@ -393,6 +436,8 @@ const Services = () => {
                       marginLeft: 20,
                       marginBottom: 30,
                       color: '#555',
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: isSmallScreen ? '0' : isMediumScreen ? '60px' : '60px',
                     }}
                     className="text-order"
                   >
@@ -414,12 +459,26 @@ const Services = () => {
                     </Fade>
                   </Grid>
                 </div>
-                <div className="text-order">
-                  <Typography lineHeight={1.7} mb={4} mt={6} fontSize={'1.2rem'}>
+                <div
+                  className="text-order"
+                  style={{ fontFamily: 'Montserrat, sans-serif', padding: '10px' }}
+                >
+                  <Typography
+                    lineHeight={1.7}
+                    mb={4}
+                    mt={6}
+                    fontSize={'1.2rem'}
+                    fontFamily="Montserrat, sans-serif"
+                  >
                     Ready to Elevate Your Business? Partner with Nimitech IT for fully managed
                     technology and marketing solutions that deliver measurable results.
                   </Typography>
-                  <Button variant="contained" color="primary" size="large">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fontFamily="Montserrat, sans-serif"
+                  >
                     Contact Us
                   </Button>
                 </div>

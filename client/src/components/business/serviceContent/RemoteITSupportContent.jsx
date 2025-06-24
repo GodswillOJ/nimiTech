@@ -1,13 +1,13 @@
-import React from 'react';
 import { businessImages } from '../../../assets/images';
 import './services.css'; // 👈 import the CSS file
 
 const RemoteITSupportContent = () => {
   return (
-    <div className="services_block">
+    <div
+      className="services_block"
+      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Apply Montserrat font here
+    >
       <p>
-        <strong>Reliable Remote IT Support & 24/7 Help Desk Services — Nimitech IT</strong>
-        <br />
         Technology should simplify your business—not slow it down. At Nimitech IT, we deliver remote
         IT support and around-the-clock help desk services...
       </p>
@@ -17,20 +17,16 @@ const RemoteITSupportContent = () => {
       </div>
 
       <div>
-        <p className="font-semibold">What We Offer</p>
-        <ul className="why-IT">
-          <li>
-            <strong>✔ Remote IT Support</strong>: Get immediate assistance...
-          </li>
-          <li>
-            <strong>✔ 24/7 Help Desk Services</strong>: Our dedicated help desk team...
-          </li>
+        <p style={{ fontSize: '20px' }}>What We Offer</p>
+        <ul className="why-IT list-disc list-inside space-y-1">
+          <li>✔ Remote IT Support: Get immediate assistance...</li>
+          <li>✔ 24/7 Help Desk Services: Our dedicated help desk team...</li>
         </ul>
       </div>
 
       <div>
-        <p className="font-semibold">Why Smart Businesses Choose Nimitech IT</p>
-        <ul>
+        <p style={{ fontSize: '20px' }}>Why Smart Businesses Choose Nimitech IT</p>
+        <ul className="list-disc list-inside space-y-1">
           <li>Certified, Experienced IT Professionals</li>
           <li>Fast Response Times, 24/7 Availability</li>
           <li>Affordable, Scalable Support for Any Business Size</li>

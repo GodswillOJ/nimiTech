@@ -37,8 +37,16 @@ import ST_image1 from './business/images/soft_dev__.jpg';
 import ST_image from './business/images/Software_development.jpg';
 import WD_image from './business/images/Web_development.jpg';
 import logo from './NimiTechLogo1.png';
+import client1 from './business/images/guy2.jpg';
+import client2 from './business/images/guy3.jpg';
+import client3 from './business/images/dark_lad.jpg';
+import client4 from './business/images/white_lady.jpg';
 
 export const businessImages = {
+  client1,
+  client2,
+  client3,
+  client4,
   customer,
   hero1,
   hero2,

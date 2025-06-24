@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
 
@@ -73,7 +74,12 @@ const BusinessPostItem = ({ id, image, title, content, summary }) => {
       />
 
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+        <Typography
+          gutterBottom
+          variant="h6"
+          component="div"
+          sx={{ fontWeight: '400', fontFamily: 'Montserrat, sans-serif' }}
+        >
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -114,7 +120,7 @@ const SocialLinks = () => {
       icon: (
         <FaFacebook
           style={{
-            color: '#167ac6',
+            color: '#1877f2',
           }}
         />
       ),
@@ -122,9 +128,19 @@ const SocialLinks = () => {
     },
     {
       icon: (
-        <FaTwitter
+        <FaXTwitter
           style={{
-            color: '#01560e',
+            color: '#000',
+          }}
+        />
+      ),
+      url: 'https://twitter.com/yourhandle',
+    },
+    {
+      icon: (
+        <FaWhatsapp
+          style={{
+            color: '#1bcc2a',
           }}
         />
       ),
@@ -165,9 +181,9 @@ const PartnerWithUs = ({ services }) => {
   return (
     <div
       style={{
-        maxWidth: '1200px',
+        maxWidth: '1300px',
         margin: '0 auto',
-        padding: isSmallScreen ? '0' : isMediumScreen ? '20px 10px' : '40px 20px',
+        padding: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
       }}
     >
       <h2
@@ -176,6 +192,7 @@ const PartnerWithUs = ({ services }) => {
           fontWeight: 'bold',
           color: '#333',
           textAlign: 'center',
+          fontFamily: 'Montserrat, sans-serif',
           padding: isSmallScreen
             ? '40px 60px 10px 60px'
             : isMediumScreen
@@ -216,28 +233,29 @@ const PartnerWithUs = ({ services }) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              fontFamily: 'Montserrat, sans-serif',
               height: isSmallScreen ? 'auto' : '500px', // Let it expand naturally on mobile
             }}
           >
-            <h3
+            <h4
               style={{
                 fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
-                fontWeight: 'bold',
                 marginBottom: '20px',
                 marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
-                color: '#111',
-                textAlign: isSmallScreen ? 'center' : 'left',
+                color: '#433c4c',
+                textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
               Unlock Limitless Potential
-            </h3>
+            </h4>
             <p
               style={{
                 fontSize: isSmallScreen ? '1rem' : '1.1rem',
                 lineHeight: '1.7',
+                fontStyle: 'italic',
                 marginBottom: '20px',
-                color: '#444',
-                textAlign: isSmallScreen ? 'center' : 'left',
+                color: '#433c4c',
+                textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
               Partnering with us means gaining access to a dedicated team of professionals who
@@ -250,7 +268,7 @@ const PartnerWithUs = ({ services }) => {
                 lineHeight: '1.6',
                 color: '#333',
                 listStyleType: 'disc',
-                textAlign: isSmallScreen ? 'center' : 'left',
+                textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
               {services.slice(0, 6).map((item, index) => (
@@ -265,7 +283,7 @@ const PartnerWithUs = ({ services }) => {
               flex: 1,
               minWidth: '300px',
               position: 'relative',
-              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '20px' : '40px',
+              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
               overflow: 'hidden',
               height: '500px',
             }}
@@ -291,9 +309,10 @@ const PartnerWithUs = ({ services }) => {
                 color: 'white',
                 padding: '30px',
                 textAlign: 'left',
-                borderRadius: '12px',
+                borderRadius: '0',
                 width: '90%',
                 maxWidth: '500px',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               <h3 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>
@@ -312,10 +331,10 @@ const PartnerWithUs = ({ services }) => {
   );
 };
 
-const cyberImage = businessImages.hero1;
-const aiImage = businessImages.hero2;
-const marketingImage = businessImages.hero3;
-const softwareImage = businessImages.hero4;
+const cyberImage = businessImages.client4;
+const aiImage = businessImages.client1;
+const marketingImage = businessImages.client3;
+const softwareImage = businessImages.client2;
 
 export const testimonials = [
   {
@@ -356,7 +375,7 @@ const ClientReview = ({ image, course, name, review }) => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: 400,
+        // maxWidth: 400,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -394,18 +413,23 @@ const ClientReview = ({ image, course, name, review }) => {
             fontSize: isSmallScreen ? '1.2rem' : isMediumScreen ? '1.4rem' : '1.6rem',
             fontWeight: 'bold',
             color: '#3b1647',
+            fontFamily: 'Montserrat, sans-serif',
             mb: 1,
           }}
         >
           {course}
         </Typography>
-        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#222', mb: 1 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, fontFamily: 'Montserrat, sans-serif', color: '#222', mb: 1 }}
+        >
           {name}
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontSize: '1rem',
+            fontFamily: 'Montserrat, sans-serif',
             lineHeight: 1.6,
             color: '#555',
           }}
@@ -442,17 +466,12 @@ const ServiceHighlights = () => {
   };
 
   const listStyle = {
-    listStyle: 'none',
-    padding: 0,
+    listStyleType: 'disc',
+    paddingLeft: '20px',
     margin: 0,
-    display: 'flex',
-    flexDirection: 'column',
   };
 
   const listItemStyle = {
-    display: 'flex',
-    alignItems: 'start',
-    gap: '12px',
     color: '#444',
     fontSize: '0.9rem',
     lineHeight: 1.6,
@@ -462,22 +481,20 @@ const ServiceHighlights = () => {
     <div style={sectionStyle}>
       {/* First List */}
       <div style={cardStyle}>
-        <h3 style={headingStyle}>Digital & Development</h3>
         <ul style={listStyle}>
-          <li style={listItemStyle}>Results-Driven Digital Marketing Services</li>
-          <li style={listItemStyle}>Tailored Software Development Solutions</li>
-          <li style={listItemStyle}>Professional Website Design & Development</li>
+          <li style={listItemStyle}>Digital Marketing Services</li>
+          <li style={listItemStyle}>Software Development Solutions</li>
+          <li style={listItemStyle}>Website Design & Development</li>
           <li style={listItemStyle}>AI & Machine Learning</li>
         </ul>
       </div>
       {/* Second List */}
       <div style={cardStyle}>
-        <h3 style={headingStyle}>Cloud, Support & Security</h3>
         <ul style={listStyle}>
-          <li style={listItemStyle}>Scalable Cloud Infrastructure & IT Solutions</li>
+          <li style={listItemStyle}>Cloud Infrastructure & IT Solutions</li>
           <li style={listItemStyle}>Remote IT Support & Helpdesk</li>
           <li style={listItemStyle}>Graphic Design – Logos, Branding & Identity</li>
-          <li style={listItemStyle}>Advanced Cybersecurity Services & Risk Protection</li>
+          <li style={listItemStyle}>Cybersecurity Services & Risk Protection</li>
         </ul>
       </div>
     </div>

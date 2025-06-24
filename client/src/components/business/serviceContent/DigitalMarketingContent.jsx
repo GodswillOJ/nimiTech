@@ -1,10 +1,13 @@
 import React from 'react';
 import { businessImages } from '../../../assets/images';
-import './services.css'; // 👈 Same CSS as RemoteITSupportContent
+import './services.css'; // 👈 Shared CSS
 
 const DigitalMarketingContent = () => {
   return (
-    <div className="services_block">
+    <div
+      className="services_block"
+      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Apply Montserrat here
+    >
       <p>
         At Nimitech IT, we specialize in data-driven digital marketing services that accelerate your
         business growth. Whether you’re launching a new brand or scaling an existing one, our expert
@@ -23,8 +26,8 @@ const DigitalMarketingContent = () => {
       </div>
 
       <div>
-        <p className="font-semibold">Why Choose Nimitech Digital Marketing?</p>
-        <ul>
+        <p style={{ fontSize: '20px' }}>Why Choose Nimitech Digital Marketing?</p>
+        <ul className="list-disc list-inside space-y-1">
           <li>Proven strategies backed by data and industry best practices</li>
           <li>Comprehensive services covering SEO, PPC, content marketing, and social media</li>
           <li>Transparent reporting and continuous optimization for sustained growth</li>
@@ -32,9 +35,10 @@ const DigitalMarketingContent = () => {
         </ul>
       </div>
 
-      <p className="font-medium text-gray-900">
+      <p className="font-medium text-gray-900" style={{ fontSize: '20px' }}>
         Dominate search engines. Drive real growth. Choose Nimitech Digital Marketing today.
       </p>
+
       <div className="image-container">
         <img src={businessImages.DM_image2} alt="Digital Marketing Visual" />
       </div>

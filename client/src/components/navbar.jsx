@@ -80,7 +80,7 @@ const Navbar = () => {
             </Link>
           </li>
           {isOpen && (
-            <div className="contact-us-mobile">
+            <div className="contact-us-mobile" style={{ fontFamily: 'Montserrat, sans-serif' }}>
               <Link
                 to="/contact-us"
                 className="contact-btn-mobile"

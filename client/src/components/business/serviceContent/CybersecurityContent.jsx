@@ -1,13 +1,13 @@
-import React from 'react';
 import { businessImages } from '../../../assets/images';
 import './services.css'; // 👈 shared styles
 
 const CybersecurityContent = () => {
   return (
-    <div className="services_block">
+    <div
+      className="services_block"
+      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Font applied here
+    >
       <p>
-        <strong>Comprehensive Cybersecurity Solutions Tailored for Your Industry</strong>
-        <br />
         At Nimitech IT, we know that in today’s digital world, cybersecurity isn’t just an
         option—it’s a necessity. Whether you’re a healthcare organization, construction company,
         financial institution, or a small business, we provide customized, affordable cybersecurity
@@ -15,7 +15,7 @@ const CybersecurityContent = () => {
       </p>
 
       <div>
-        <p className="font-semibold">Why Cybersecurity Matters</p>
+        <p style={{ fontSize: '20px' }}>Why Cybersecurity Matters</p>
         <p>
           Cyber attacks are becoming more frequent and sophisticated, putting businesses of all
           sizes at risk. From data breaches and ransomware to compliance violations, the
@@ -30,31 +30,31 @@ const CybersecurityContent = () => {
       </div>
 
       <div>
-        <p className="font-semibold">Our Cybersecurity Services</p>
-        <ul>
+        <p style={{ fontSize: '20px' }}>Our Cybersecurity Services</p>
+        <ul className="list-disc list-inside space-y-1">
           <li>
-            <strong>Real-Time Threat Detection & Monitoring</strong>: Identify and respond to
-            threats instantly to minimize risk.
+            Real-Time Threat Detection & Monitoring: Identify and respond to threats instantly to
+            minimize risk.
           </li>
           <li>
-            <strong>Network Security</strong>: Secure your infrastructure with firewalls, VPNs, and
-            intrusion prevention systems.
+            Network Security: Secure your infrastructure with firewalls, VPNs, and intrusion
+            prevention systems.
           </li>
           <li>
-            <strong>Compliance & Risk Management</strong>: Navigate complex regulations like HIPAA,
-            PCI, and GDPR with ease.
+            Compliance & Risk Management: Navigate complex regulations like HIPAA, PCI, and GDPR
+            with ease.
           </li>
           <li>
-            <strong>Endpoint Protection</strong>: Safeguard all devices connected to your network,
-            from laptops to mobile phones.
+            Endpoint Protection: Safeguard all devices connected to your network, from laptops to
+            mobile phones.
           </li>
           <li>
-            <strong>Vulnerability Assessments & Penetration Testing</strong>: Identify and fix
-            security gaps before attackers find them.
+            Vulnerability Assessments & Penetration Testing: Identify and fix security gaps before
+            attackers find them.
           </li>
           <li>
-            <strong>Incident Response & Recovery</strong>: Rapid support to mitigate damage and
-            restore operations after a breach.
+            Incident Response & Recovery: Rapid support to mitigate damage and restore operations
+            after a breach.
           </li>
         </ul>
       </div>
@@ -64,31 +64,32 @@ const CybersecurityContent = () => {
       </div>
 
       <div>
-        <p className="font-semibold">Why Choose Nimitech IT?</p>
-        <ul>
+        <p style={{ fontSize: '20px' }}>Why Choose Nimitech IT?</p>
+        <ul className="list-disc list-inside space-y-1">
           <li>
-            <strong>Industry Expertise</strong>: We’ve successfully served clients in healthcare,
-            construction, finance, and small business sectors—tailoring solutions to fit your unique
-            security challenges.
+            Industry Expertise: We’ve successfully served clients in healthcare, construction,
+            finance, and small business sectors—tailoring solutions to fit your unique security
+            challenges.
           </li>
           <li>
-            <strong>Affordable & Scalable</strong>: Our global outsourcing model lets us offer
-            top-tier cybersecurity at a fraction of traditional costs, making protection accessible
-            for every budget.
+            Affordable & Scalable: Our global outsourcing model lets us offer top-tier cybersecurity
+            at a fraction of traditional costs, making protection accessible for every budget.
           </li>
           <li>
-            <strong>24/7 Support</strong>: Cyber threats never rest, and neither do we. Our
-            dedicated team monitors your systems around the clock.
+            24/7 Support: Cyber threats never rest, and neither do we. Our dedicated team monitors
+            your systems around the clock.
           </li>
           <li>
-            <strong>Certified Professionals</strong>: Work with experienced, certified cybersecurity
-            experts committed to your business’s safety.
+            Certified Professionals: Work with experienced, certified cybersecurity experts
+            committed to your business’s safety.
           </li>
         </ul>
       </div>
 
       <p className="font-medium text-gray-900">
-        Don’t Wait for a Breach — Secure Your Business Today.
+        <div style={{ fontSize: '20px' }}>
+          Don’t Wait for a Breach — Secure Your Business Today.
+        </div>
         <br />
         Your data and your customers’ trust are your most valuable assets. Partner with Nimitech IT
         to implement a robust cybersecurity strategy that prevents attacks before they happen. Let

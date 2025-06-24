@@ -1,12 +1,11 @@
-import React from 'react';
 import { businessImages } from '../../../assets/images';
 
-//  AI Support content
 const AiMlContent = () => (
-  <div className="services_block bg-white rounded-xl shadow-md p-6 space-y-4 text-gray-800 leading-relaxed">
+  <div
+    className="services_block bg-white rounded-xl shadow-md p-6 space-y-4 text-gray-800 leading-relaxed"
+    style={{ fontFamily: 'Montserrat, sans-serif' }} // 👈 Apply font here
+  >
     <p>
-      <strong>Transform Your Business with Intelligent Automation</strong>
-      <br />
       At Nimitech IT, we leverage the power of Artificial Intelligence (AI) and Machine Learning
       (ML) to help businesses unlock new levels of efficiency, insight, and innovation. Our AI and
       ML solutions are designed to automate complex processes, enhance decision-making, and deliver
@@ -14,28 +13,30 @@ const AiMlContent = () => (
     </p>
 
     <div>
-      <p className="font-semibold mb-1">Why Partner with Nimitech for AI & ML Solutions?</p>
+      <p className="mb-1" style={{ fontSize: '20px' }}>
+        Why Partner with Nimitech for AI & ML Solutions?
+      </p>
       <ul className="list-disc list-inside space-y-1">
         <li>
-          <strong>Tailored AI Solutions</strong>: From predictive analytics and natural language
-          processing to image recognition and automation, we develop AI models customized for your
-          industry and business needs.
+          Tailored AI Solutions: From predictive analytics and natural language processing to image
+          recognition and automation, we develop AI models customized for your industry and business
+          needs.
         </li>
         <li>
-          <strong>Data-Driven Decisions</strong>: Harness the power of your data with machine
-          learning algorithms that identify patterns, forecast trends, and optimize operations.
+          Data-Driven Decisions: Harness the power of your data with machine learning algorithms
+          that identify patterns, forecast trends, and optimize operations.
         </li>
         <li>
-          <strong>Automation at Scale</strong>: Reduce manual effort and human error with
-          intelligent automation that boosts productivity and accuracy across workflows.
+          Automation at Scale: Reduce manual effort and human error with intelligent automation that
+          boosts productivity and accuracy across workflows.
         </li>
         <li>
-          <strong>Expert Team</strong>: Work with seasoned AI/ML engineers and data scientists
-          skilled in Python, TensorFlow, PyTorch, and other leading technologies.
+          Expert Team: Work with seasoned AI/ML engineers and data scientists skilled in Python,
+          TensorFlow, PyTorch, and other leading technologies.
         </li>
         <li>
-          <strong>Affordable Innovation</strong>: We provide cost-effective AI and ML services to
-          businesses of all sizes, helping you stay competitive without breaking the bank.
+          Affordable Innovation: We provide cost-effective AI and ML services to businesses of all
+          sizes, helping you stay competitive without breaking the bank.
         </li>
       </ul>
     </div>
@@ -45,7 +46,9 @@ const AiMlContent = () => (
     </div>
 
     <div>
-      <p className="font-semibold mb-1">Our AI & ML Services Include:</p>
+      <p className="mb-1" style={{ fontSize: '20px' }}>
+        Our AI & ML Services Include:
+      </p>
       <ul className="list-disc list-inside space-y-1">
         <li>Predictive Analytics & Forecasting</li>
         <li>Natural Language Processing (NLP) & Chatbots</li>

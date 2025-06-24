@@ -41,30 +41,21 @@ const BusinessRegisterPage = () => {
             top: isSmallScreen ? 250 : isMediumScreen ? 250 : 300,
             background: 'none',
             color: '#fff',
-            padding: isSmallScreen ? '0' : '20px',
+            padding: '0 4rem 0 4rem',
             textAlign: 'center',
             zIndex: 1,
           }}
         >
-          <h1
+          <h2
             className="my-domine"
             style={{
-              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '3.5rem' : '5.8rem',
+              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '2.4rem' : '3.8rem',
               marginBottom: '20px',
               textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+              fontFamily: 'Montserrat, sans-serif',
             }}
           >
-            NimiTech IT
-          </h1>
-          <h2
-            className="my-domine1"
-            style={{
-              fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '2.5rem' : '3.5rem',
-              marginBottom: '20px',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
-            }}
-          >
-            Solutions LLC
+            Reliable Tech Solutions to Power Your Growth
           </h2>
 
           <button
@@ -81,7 +72,7 @@ const BusinessRegisterPage = () => {
             }}
           >
             <Link
-              href="/blogs"
+              href="/our-services"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -91,6 +82,7 @@ const BusinessRegisterPage = () => {
                 fontWeight: 'bold',
                 fontSize: isSmallScreen ? '0.9rem' : isMediumScreen ? '1rem' : '1.2rem',
                 textDecoration: 'none',
+                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               More services
@@ -236,6 +228,7 @@ const BusinessRegisterPage = () => {
           >
             <Typography
               variant="h2"
+              fontFamily="Montserrat, sans-serif"
               sx={{
                 color: 'white',
                 fontWeight: 'bold',
@@ -243,10 +236,11 @@ const BusinessRegisterPage = () => {
                 px: 2,
               }}
             >
-              Enroll With Us
+              Reach out to us
             </Typography>
             <Typography
               variant="p"
+              fontFamily="Montserrat, sans-serif"
               sx={{
                 color: 'white',
                 fontWeight: 'bold',
@@ -255,8 +249,7 @@ const BusinessRegisterPage = () => {
                 px: 2,
               }}
             >
-              Our enrollment process is simple and straightforward. Fill out the form to get
-              started.
+              Schedule a free, no obligation consultation today.
             </Typography>
           </Box>
         </Box>
@@ -270,21 +263,40 @@ const BusinessRegisterPage = () => {
             borderRadius: '16px',
           }}
         >
-          <Typography variant="h4" gutterBottom>
-            Enroll now
+          <Typography variant="h4" fontFamily="Montserrat, sans-serif" gutterBottom>
+            Contact us
           </Typography>
 
           <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <TextField className="text_area" label="Full Name" variant="outlined" required />
+            <TextField
+              className="text_area"
+              label="Full Name"
+              fontFamily="Montserrat, sans-serif"
+              variant="outlined"
+              required
+            />
             <TextField
               className="text_area"
               label="Email"
               variant="outlined"
               type="email"
+              fontFamily="Montserrat, sans-serif"
               required
             />
-            <TextField className="text_area" label="Phone Number" variant="outlined" required />
-            <TextField className="text_area" label="Location" variant="outlined" required />
+            <TextField
+              className="text_area"
+              fontFamily="Montserrat, sans-serif"
+              label="Phone Number"
+              variant="outlined"
+              required
+            />
+            <TextField
+              className="text_area"
+              fontFamily="Montserrat, sans-serif"
+              label="Location"
+              variant="outlined"
+              required
+            />
             <Button
               variant="contained"
               sx={{
@@ -293,13 +305,14 @@ const BusinessRegisterPage = () => {
                 padding: '10px 30px',
                 textTransform: 'none',
                 fontWeight: 'bold',
+                fontFamily: 'Montserrat, sans-serif',
                 '&:hover': {
                   backgroundColor: '#b71c1c',
                 },
               }}
               type="submit"
             >
-              Enroll
+              Send
             </Button>
           </form>
         </Box>
