@@ -30,26 +30,22 @@ interface SocialLink {
 const Footer: React.FC = () => {
   const navigationData: NavigationItem[] = [
     {
-      title: 'Services',
-      links: [
-        { text: 'Digital Marketing Services', path: '/digital-marketing' },
-        { text: 'Tailored Software Development Solutions', path: '/software-development' },
-        { text: 'Professional Website Design & Development', path: '/website-development' },
-        {
-          text: 'AI & Machine Learning Solutions for Business Growth',
-          path: '/ai-machine-learning',
-        },
-        { text: 'Advanced Cybersecurity Services & Risk Protection', path: '/cybersecurity' },
-        { text: 'Scalable Cloud Infrastructure & IT Solutions', path: '/cloud-infrastructure' },
-      ],
-    },
-    {
       title: 'Resources',
       links: [
-        // { text: 'Services', path: '/services' },
+        { text: 'Services', path: '/services' },
         { text: 'Blog', path: '/blogs' },
         { text: 'Case Studies', path: '/case-studies' },
         { text: 'FAQs', path: '/faqs' },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { text: 'About', path: '/about' },
+        { text: 'Careers', path: '/careers' },
+        { text: 'Contact', path: '/contact' },
+        { text: 'Training', path: '/training' },
+        { text: 'Subscribe', path: '/subscribe' },
       ],
     },
     {
@@ -59,16 +55,6 @@ const Footer: React.FC = () => {
         { text: 'Help Desk', path: '/help-desk' },
       ],
     },
-    // {
-    //   title: 'Company',
-    //   links: [
-    //     { text: 'About', path: '/about' },
-    //     { text: 'Careers', path: '/careers' },
-    //     { text: 'Contact', path: '/contact' },
-    //     { text: 'Training', path: '/training' },
-    //     { text: 'Subscribe', path: '/subscribe' },
-    //   ],
-    // },
   ];
 
   const socialLinks: SocialLink[] = [
@@ -153,7 +139,7 @@ const Footer: React.FC = () => {
       <footer className={styles.footer}>
         <div className={styles.footer__container}>
           <div className={styles.footer__content}>
-            <p className={styles.footer__copyright}>© 2025 NimiTech. All rights reserved.</p>
+            <p className={styles.footer__copyright}>© 2025 NIMITECH. All rights reserved.</p>
             <div className={styles.footer__links}>
               {footerLinks.map((link, index) => (
                 <div key={index}>

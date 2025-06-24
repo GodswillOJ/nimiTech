@@ -8,7 +8,7 @@ import featuredPostImage from '../../../assets/blog/images/blogImage6.jpg';
 import { IBlogPost, IFeaturedPost } from '../blog.types';
 
 export const featuredPost: IFeaturedPost = {
-  id: 0,
+  id: '0',
   title: 'Breaking Into Product Design: Advice from Untitled Founder, Frankie',
   description:
     "Let's get one thing out of the way: you don't need a fancy Bachelor's Degree to get into Product Design. We sat down with Frankie Sullivan to talk about gatekeeping in product design and how anyone can get into this growing industry.",
@@ -56,7 +56,7 @@ export const featuredPost: IFeaturedPost = {
 
 export const blogPosts: IBlogPost[] = [
   {
-    id: 1,
+    id: '1',
     title: 'Migrating to Linear 101',
     description:
       "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here's how to get started.",
@@ -102,7 +102,7 @@ export const blogPosts: IBlogPost[] = [
     contentImageTitle: 'Breaking Into Product Design',
   },
   {
-    id: 2,
+    id: '2',
     title: 'Building your API Stack',
     description:
       'The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing them.',
@@ -147,7 +147,7 @@ export const blogPosts: IBlogPost[] = [
     contentImageTitle: 'Breaking Into Product Design',
   },
   {
-    id: 3,
+    id: '3',
     title: 'The Future of Web Development',
     description:
       'Exploring emerging trends and technologies shaping the future of web development.',
@@ -193,7 +193,7 @@ export const blogPosts: IBlogPost[] = [
     contentImageTitle: 'Breaking Into Product Design',
   },
   {
-    id: 4,
+    id: '4',
     title: 'The Future of Web Development',
     description:
       'Exploring emerging trends and technologies shaping the future of web development.',
@@ -239,7 +239,7 @@ export const blogPosts: IBlogPost[] = [
     contentImageTitle: 'Breaking Into Product Design',
   },
   {
-    id: 5,
+    id: '5',
     title: 'The Future of Web Development',
     description:
       'Exploring emerging trends and technologies shaping the future of web development.',
@@ -283,7 +283,7 @@ export const blogPosts: IBlogPost[] = [
     youtubeUrl: 'https://youtu.be/nbZK821T2_s?si=At8ejDG8Sg7jogGF',
   },
   {
-    id: 6,
+    id: '6',
     title: 'The Future of Web Development',
     description:
       'Exploring emerging trends and technologies shaping the future of web development.',

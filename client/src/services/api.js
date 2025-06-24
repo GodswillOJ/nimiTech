@@ -1,28 +1,16 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { secureBaseQuery } from './utilis/baseQuery';
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_BASE_URL }), // change to your backend base url
-  tagTypes: ['Business', 'Blogs', 'HomePage', 'BlogPostEditor'],
+  baseQuery: secureBaseQuery,
+  tagTypes: ['HomePage'],
   endpoints: (builder) => ({
-    // landing page
     getBusinessPosts: builder.query({
-      query: () => '/', // your API endpoint for business posts
+      query: () => '/business',
       providesTags: ['HomePage'],
-    }),
-
-    // blogs
-    getBlogs: builder.query({
-      query: () => '/blogs',
-      providesTags: ['Blogs'],
-    }),
-
-    // blogs
-    getBlogEditor: builder.query({
-      query: () => '/blog-editor',
-      providesTags: ['BlogPostEditor'],
     }),
   }),
 });
 
-export const { useGetBusinessPostsQuery, useGetBlogEditorQuery } = api;
+export const { useGetBusinessPostsQuery } = api;

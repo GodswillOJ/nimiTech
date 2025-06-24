@@ -13,8 +13,10 @@ import AuthPage from './pages/auth/AuthPage';
 import NotFound from './components/NotFound/NotFound';
 import Navbar from './components/navbar';
 import Footer from './components/Footer/Footer';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 import './App.css';
+import AdminAuth from './components/admin/AdminAuth/AdminAuth';
 
 // define other static routes
 const baseRoutes = [
@@ -27,7 +29,9 @@ const baseRoutes = [
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/register', element: <RegisterPage /> },
-  { path: '/auth', element: <AuthPage /> },
+  { path: '/auth', element: <AdminAuth /> },
+  { path: '/authe', element: <AuthPage /> },
+  { path: '/admin/*', element: <AdminDashboard /> },
   { path: '*', element: <NotFound /> },
 ];
 
@@ -48,27 +52,33 @@ function App() {
 }
 
 function AppRoutes() {
-  const routes = useRoutes([...baseRoutes, ...dashboardRoutes]);
+  const routes = useRoutes([...baseRoutes]);
   return routes;
-}
-
-function ConditionalFooter() {
-  const location = useLocation();
-
-  if (location.pathname === '/') {
-    return null;
-  }
-  return <Footer />;
 }
 
 function ConditionalNavbar() {
   const location = useLocation();
 
-  // Don't show navbar on homepage
-  if (location.pathname.startsWith('/auth')) {
+  // Don't show navbar on homepage, auth pages, or admin pages
+  if (location.pathname.startsWith('/auth') || location.pathname.startsWith('/auth')) {
     return null;
   }
   return <Navbar />;
+}
+
+function ConditionalFooter() {
+  const location = useLocation();
+
+  // Don't show footer on homepage or admin pages
+  if (
+    location.pathname === '/' ||
+    location.pathname.startsWith('/admin') ||
+    location.pathname.startsWith('/auth') ||
+    location.pathname.startsWith('/authe')
+  ) {
+    return null;
+  }
+  return <Footer />;
 }
 
 export { App, AppRoutes, ConditionalFooter, ConditionalNavbar };

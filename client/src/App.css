@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:...&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Monteserrat:wght@200..800&family=Noto+Sans+Bengali:...&display=swap');
 /* html {
   scroll-behavior: smooth;
 } */
@@ -29,15 +29,15 @@ h2 {
 }
 
 p {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Monteserrat', sans-serif;
 }
 
 .css-1jrq8e9-MuiTypography-root {
-  font-family: 'Noto Sans Bengali', sans-serif;
+  font-family: 'Monteserrati', sans-serif;
 }
 
 .my-domine {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Monteserrat', sans-serif;
   color: #fff;
 }
 
@@ -182,7 +182,7 @@ h2 .my-domine1 {
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
-  font-family: 'Noto Sans Bengali', sans-serif;
+  font-family: 'Monteserrati', sans-serif;
   transition: color 0.3s;
   color: rgb(47, 40, 40);
 }
@@ -403,7 +403,7 @@ h2 .my-domine1 {
     font-size: 2.5rem;
   }
   .hero-text p {
-    font-size: 1.4rem,
+    font-size: 1.4rem;
   }
 }
 
@@ -412,7 +412,7 @@ h2 .my-domine1 {
     font-size: 1.8rem;
   }
   .hero-text p {
-    font-size: 1.3rem,
+    font-size: 1.3rem;
   }
 }
 
@@ -623,7 +623,7 @@ h2 .my-domine1 {
 .footer-container {
   background-color: #f2f2f2;
   padding: 40px 20px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Monteserrat', sans-serif;
 }
 
 .footer-inner {
@@ -775,10 +775,10 @@ h2 .my-domine1 {
 }
 
 /* service text order */
-.text-order{
+.text-order {
   padding: 0;
 }
-.text-order{
+.text-order {
   padding: 0;
 }
 .text-order-home {
@@ -786,10 +786,10 @@ h2 .my-domine1 {
   list-style: none;
 }
 @media (max-width: 768px) {
-  .text-order{
+  .text-order {
     padding: 0 10px 0 10px;
   }
-  .text-order-home{
+  .text-order-home {
     padding: 0 10px 0 10px;
   }
 }
