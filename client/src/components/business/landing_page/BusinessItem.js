@@ -481,7 +481,7 @@ const ServiceHighlights = () => {
     position: 'absolute',
     left: '0',
     top: '2px',
-    color: '#333', // green
+    color: '#333',
     fontSize: '1.1rem',
     lineHeight: 1,
   };

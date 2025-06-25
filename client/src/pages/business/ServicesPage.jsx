@@ -9,33 +9,58 @@ import styles from '../blog/blog.module.scss';
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
-const servicesSummary = [
-  {
-    title: 'Digital Marketing',
-    text: 'Boost your online presence with SEO, social media, and targeted campaigns that drive real results.',
-    img: businessImages.hero2,
-  },
-  {
-    title: 'Cybersecurity',
-    text: 'Protect your data with tailored, affordable security solutions for all industries.',
-    img: businessImages.hero3,
-  },
-  {
-    title: 'AI & Machine Learning',
-    text: 'Leverage AI/ML to automate processes, gain insights, and power smarter decisions.',
-    img: businessImages.hero4,
-  },
-  {
-    title: 'Custom Software & Web Development',
-    text: 'Build scalable apps and websites tailored to your business—no subscriptions required.',
-    img: businessImages.hero1,
-  },
-];
-
 const Services = () => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+
+  const listStyle = {
+    fontSize: '1rem',
+    lineHeight: '2',
+    marginLeft: 20,
+    marginBottom: 30,
+    fontFamily: 'Montserrat, sans-serif',
+    color: '#333',
+    listStyle: 'none',
+    padding: isSmallScreen
+      ? '0 20px 20px 20px'
+      : isMediumScreen
+        ? '0 60px 60px 60px'
+        : '0 60px 60px 60px',
+  };
+
+  const renderList = (items) => (
+    <Box
+      sx={{
+        padding: '20px',
+        backgroundColor: '#fafafa',
+        borderRadius: '16px',
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
+        mt: 2,
+        mb: 4,
+        mx: isSmallScreen ? 2 : 8,
+      }}
+    >
+      <ul
+        style={{
+          fontSize: '1rem',
+          lineHeight: '2',
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
+          fontFamily: 'Montserrat, sans-serif',
+        }}
+        className="text-order"
+      >
+        {items.map((item, idx) => (
+          <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', color: '#333' }}>
+            <span style={{ marginRight: '8px', lineHeight: '1.6' }}>✔</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </Box>
+  );
 
   return (
     <Box>
@@ -87,7 +112,7 @@ const Services = () => {
       </Box>
 
       {/* Why Choose Us */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0} bgcolor="#f9f9f9">
+      <Box py={8} px={isSmallScreen ? 0 : 0} bgcolor="#f9f9f9">
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
@@ -95,7 +120,7 @@ const Services = () => {
                 <Typography
                   variant="h4"
                   style={{ fontWeight: '600', fontFamily: 'Montserrat, sans-serif' }}
-                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                  px={isSmallScreen ? 2 : 8}
                   gutterBottom
                   className="text-order"
                 >
@@ -104,7 +129,7 @@ const Services = () => {
                 <Typography
                   lineHeight={1.7}
                   mb={4}
-                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                  px={isSmallScreen ? 2 : 8}
                   color="textSecondary"
                   className="text-order"
                   sx={{ fontFamily: 'Montserrat, sans-serif' }}
@@ -115,16 +140,16 @@ const Services = () => {
                   brand experiences, our expert team delivers scalable, affordable services you own
                   outright—no subscriptions, no surprises.
                 </Typography>
-                {/* Web Dev */}
+
+                {/* Custom Software */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={3}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Custom Software & Web Development
@@ -133,23 +158,12 @@ const Services = () => {
                     Craft powerful, user friendly applications that streamline workflows and boost
                     productivity:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>ERP & CRM Platforms for unified resource and customer management</li>
-                    <li>Workflow Automation Apps to eliminate manual tasks</li>
-                    <li>Responsive Web & Mobile Apps built with modern frameworks</li>
-                    <li>One Time Development—full ownership, zero recurring fees</li>
-                  </ul>
+                  {renderList([
+                    'ERP & CRM Platforms for unified resource and customer management',
+                    'Workflow Automation Apps to eliminate manual tasks',
+                    'Responsive Web & Mobile Apps built with modern frameworks',
+                    'One Time Development—full ownership, zero recurring fees',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
@@ -163,18 +177,18 @@ const Services = () => {
                     </Fade>
                   </Grid>
                 </div>
+
                 {/* Digital Marketing */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={2}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     fontFamily="Montserrat, sans-serif"
                     sx={{ fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Digital Marketing
@@ -182,24 +196,13 @@ const Services = () => {
                     <br />
                     Accelerate online growth with data driven campaigns that convert:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>SEO & Content Strategy to boost organic search rankings</li>
-                    <li>PPC & Targeted Advertising on Google, Facebook, LinkedIn</li>
-                    <li>Social Media Management for consistent brand engagement</li>
-                    <li>Email Marketing & Automation to nurture leads and retain customers</li>
-                    <li>Analytics & Reporting with clear ROI metrics</li>
-                  </ul>
+                  {renderList([
+                    'SEO & Content Strategy to boost organic search rankings',
+                    'PPC & Targeted Advertising on Google, Facebook, LinkedIn',
+                    'Social Media Management for consistent brand engagement',
+                    'Email Marketing & Automation to nurture leads and retain customers',
+                    'Analytics & Reporting with clear ROI metrics',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
@@ -213,17 +216,17 @@ const Services = () => {
                     </Fade>
                   </Grid>
                 </div>
-                {/* CYBER SECURITY */}
+
+                {/* Cybersecurity */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={2}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cybersecurity Solutions
@@ -232,24 +235,13 @@ const Services = () => {
                     Protect your data and maintain business continuity with enterprise grade
                     security:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>24/7 Threat Detection & Monitoring</li>
-                    <li>Vulnerability Assessments & Pen Testing</li>
-                    <li>Network Security (firewalls, VPNs, intrusion prevention)</li>
-                    <li>Compliance & Risk Management (HIPAA, PCI, GDPR)</li>
-                    <li>Incident Response & Recovery</li>
-                  </ul>
+                  {renderList([
+                    '24/7 Threat Detection & Monitoring',
+                    'Vulnerability Assessments & Pen Testing',
+                    'Network Security (firewalls, VPNs, intrusion prevention)',
+                    'Compliance & Risk Management (HIPAA, PCI, GDPR)',
+                    'Incident Response & Recovery',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
@@ -263,17 +255,17 @@ const Services = () => {
                     </Fade>
                   </Grid>
                 </div>
+
                 {/* AI & Machine Learning */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={6}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       AI & Machine Learning
@@ -281,28 +273,17 @@ const Services = () => {
                     <br />
                     Turn raw data into actionable insights and automate complex processes:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1.2rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Custom ML Model Development (classification, regression, deep learning)</li>
-                    <li>Predictive Analytics & Data Visualization</li>
-                    <li>Computer Vision & NLP for image, video, and text automation</li>
-                    <li>Seamless Integration with your existing systems and cloud platforms</li>
-                  </ul>
+                  {renderList([
+                    'Custom ML Model Development (classification, regression, deep learning)',
+                    'Predictive Analytics & Data Visualization',
+                    'Computer Vision & NLP for image, video, and text automation',
+                    'Seamless Integration with your existing systems and cloud platforms',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.AI_image1} // replace with correct image
+                        src={businessImages.AI_image1}
                         alt="AI & ML"
                         width="100%"
                         borderRadius={isSmallScreen ? 0 : 2}
@@ -316,13 +297,12 @@ const Services = () => {
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={6}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Graphic Design & Branding
@@ -330,29 +310,18 @@ const Services = () => {
                     <br />
                     Create a memorable visual identity that resonates with your audience:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Logo & Brand Identity Development</li>
-                    <li>Brand Style Guides & Templates for consistency</li>
-                    <li>Marketing Collateral (business cards, brochures, digital graphics)</li>
-                    <li>Social Media Graphics & Ad Creatives</li>
-                    <li>Fast Turnaround & Competitive Pricing</li>
-                  </ul>
+                  {renderList([
+                    'Logo & Brand Identity Development',
+                    'Brand Style Guides & Templates for consistency',
+                    'Marketing Collateral (business cards, brochures, digital graphics)',
+                    'Social Media Graphics & Ad Creatives',
+                    'Fast Turnaround & Competitive Pricing',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.branding2} // replace with correct image
+                        src={businessImages.branding2}
                         alt="Graphic Design"
                         width="100%"
                         borderRadius={isSmallScreen ? 0 : 2}
@@ -362,17 +331,16 @@ const Services = () => {
                   </Grid>
                 </div>
 
-                {/* Cloud Infrastructure & Solutions */}
+                {/* Cloud Infrastructure */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={6}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Cloud Infrastructure & Solutions
@@ -380,28 +348,17 @@ const Services = () => {
                     <br />
                     Scale efficiently with secure, cost-effective cloud services:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      fontFamily: 'Montserrat, sans-serif',
-                      color: '#555',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Cloud Migration & Management (AWS, Azure, Google Cloud)</li>
-                    <li>Infrastructure as Code for automated, repeatable deployments</li>
-                    <li>Backup & Disaster Recovery to protect critical data</li>
-                    <li>Cost Optimization to maximize your IT budget</li>
-                  </ul>
+                  {renderList([
+                    'Cloud Migration & Management (AWS, Azure, Google Cloud)',
+                    'Infrastructure as Code for automated, repeatable deployments',
+                    'Backup & Disaster Recovery to protect critical data',
+                    'Cost Optimization to maximize your IT budget',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.cloud2} // replace with correct image
+                        src={businessImages.cloud2}
                         alt="Cloud Infrastructure"
                         width="100%"
                         borderRadius={isSmallScreen ? 0 : 2}
@@ -411,17 +368,16 @@ const Services = () => {
                   </Grid>
                 </div>
 
-                {/* Remote IT Support & Help Desk */}
+                {/* Remote IT Support */}
                 <div>
                   <Typography
                     lineHeight={1.7}
-                    mb={4}
                     mt={6}
-                    fontSize={'1rem'}
+                    fontSize="1rem"
                     color="textSecondary"
                     className="text-order"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
+                    px={isSmallScreen ? 2 : 8}
                   >
                     <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
                       Remote IT Support & Help Desk
@@ -429,28 +385,17 @@ const Services = () => {
                     <br />
                     Keep your operations running smoothly with expert assistance:
                   </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Remote Troubleshooting for software, networks, and devices</li>
-                    <li>24/7 Help Desk via phone, email, and chat</li>
-                    <li>Certified Technicians skilled in Windows, macOS, Linux, and more</li>
-                    <li>Service Level Agreements guaranteeing timely response</li>
-                  </ul>
+                  {renderList([
+                    'Remote Troubleshooting for software, networks, and devices',
+                    '24/7 Help Desk via phone, email, and chat',
+                    'Certified Technicians skilled in Windows, macOS, Linux, and more',
+                    'Service Level Agreements guaranteeing timely response',
+                  ])}
                   <Grid item xs={12} md={6}>
                     <Fade in timeout={1500}>
                       <Box
                         component="img"
-                        src={businessImages.IT_image} // replace with correct image
+                        src={businessImages.IT_image}
                         alt="IT Support"
                         width="100%"
                         borderRadius={isSmallScreen ? 0 : 2}
@@ -459,6 +404,7 @@ const Services = () => {
                     </Fade>
                   </Grid>
                 </div>
+
                 <div
                   className="text-order"
                   style={{ fontFamily: 'Montserrat, sans-serif', padding: '40px' }}
@@ -467,7 +413,7 @@ const Services = () => {
                     lineHeight={1.7}
                     mb={4}
                     mt={6}
-                    fontSize={'1.2rem'}
+                    fontSize="1.2rem"
                     fontFamily="Montserrat, sans-serif"
                   >
                     Ready to Elevate Your Business? Partner with Nimitech IT for fully managed

@@ -9,10 +9,7 @@ import styles from '../blog/blog.module.scss';
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
-const countries = ['Nigeria', 'Kenya', 'Canada', 'Germany', 'Australia'];
-
 const About = () => {
-  const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
 
@@ -28,14 +25,7 @@ const About = () => {
           playsInline
           style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '4rem' }}
         />
-        <Box
-          position="absolute"
-          top={0}
-          left={0}
-          width="100%"
-          height="100%"
-          // bgcolor="rgba(116, 67, 67, 0.4)"
-        />
+        <Box position="absolute" top={0} left={0} width="100%" height="100%" />
         <Box
           position="absolute"
           top="50%"
@@ -61,8 +51,8 @@ const About = () => {
         </Box>
       </Box>
 
-      {/* Mission and Contact Info */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0}>
+      {/* Mission and Info */}
+      <Box py={8} px={isSmallScreen ? 0 : 0}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
@@ -70,28 +60,19 @@ const About = () => {
                 <Typography
                   variant="h4"
                   style={{
-                    padding: isSmallScreen
-                      ? '0 10px 0 10px'
-                      : isMediumScreen
-                        ? '0 40px 0 40px'
-                        : '0 40px 0 40px',
+                    padding: isSmallScreen ? '0 10px' : '0 40px',
                     fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
                   About Us | Nimitech IT – Driving Your Digital Transformation
                 </Typography>
-                {/* <Typography variant="h4">Our Mission & Objectives</Typography> */}
                 <Typography
                   mb={3}
                   lineHeight={1.7}
                   color="textSecondary"
                   style={{
                     fontFamily: 'Montserrat, sans-serif',
-                    padding: isSmallScreen
-                      ? '0 10px 0 10px'
-                      : isMediumScreen
-                        ? '10px 40px 0 40px'
-                        : '10px 40px 0 40px',
+                    padding: isSmallScreen ? '0 10px' : '10px 40px',
                   }}
                 >
                   At Nimitech IT, we’re passionate about empowering businesses to thrive in an ever
@@ -107,7 +88,7 @@ const About = () => {
                       src={businessImages.hero2}
                       alt="Team Working"
                       width="100%"
-                      borderRadius={isSmallScreen ? 0 : 0}
+                      borderRadius={0}
                       boxShadow={4}
                     />
                   </Fade>
@@ -120,53 +101,42 @@ const About = () => {
                   style={{
                     fontSize: '1rem',
                     fontFamily: 'Montserrat, sans-serif',
-                    padding: isSmallScreen
-                      ? '0 10px 0 10px'
-                      : isMediumScreen
-                        ? '10px 40px 0 40px'
-                        : '10px 40px 0 40px',
+                    padding: isSmallScreen ? '0 10px' : '10px 40px',
                   }}
                 >
                   Founded on a commitment to innovation and client success, our team of certified
                   developers, security specialists, data scientists, and creative designers
                   collaborates closely with you to craft solutions that:
                 </Typography>
+
+                {/* ✔ Bullet List */}
                 <ul
                   style={{
                     fontSize: '1rem',
                     lineHeight: '2',
-                    padding: '0 60px 0 60px',
+                    padding: '0 60px',
                     marginBottom: 30,
-                    color: '#555',
                     fontFamily: 'Montserrat, sans-serif',
+                    listStyle: 'none',
                   }}
                 >
-                  <li>
-                    Optimize Workflows: From bespoke ERP and CRM platforms to workflow automation
-                    apps, we build scalable software that streamlines operations and maximizes
-                    efficiency.
-                  </li>
-                  <li>
-                    Secure Your Assets: Our enterprise grade cybersecurity services protect your
-                    data and IT infrastructure 24/7, ensuring business continuity and regulatory
-                    compliance.
-                  </li>
-                  <li>
-                    Leverage Intelligent Insights: Through AI powered analytics and machine learning
-                    models, we help you uncover actionable insights and stay ahead of the
-                    competition.
-                  </li>
-                  <li>
-                    Grow Your Brand Online: With targeted SEO, PPC, social media strategy, and
-                    compelling content, our digital marketing experts boost your visibility,
-                    engagement, and customer acquisition.
-                  </li>
-                  <li>
-                    Elevate Your Visual Identity: Our graphic design and branding services create
-                    memorable logos, cohesive brand guidelines, and striking marketing collateral
-                    that resonate with your audience.
-                  </li>
+                  {[
+                    'Optimize Workflows: From bespoke ERP and CRM platforms to workflow automation apps, we build scalable software that streamlines operations and maximizes efficiency.',
+                    'Secure Your Assets: Our enterprise grade cybersecurity services protect your data and IT infrastructure 24/7, ensuring business continuity and regulatory compliance.',
+                    'Leverage Intelligent Insights: Through AI powered analytics and machine learning models, we help you uncover actionable insights and stay ahead of the competition.',
+                    'Grow Your Brand Online: With targeted SEO, PPC, social media strategy, and compelling content, our digital marketing experts boost your visibility, engagement, and customer acquisition.',
+                    'Elevate Your Visual Identity: Our graphic design and branding services create memorable logos, cohesive brand guidelines, and striking marketing collateral that resonate with your audience.',
+                  ].map((item, idx) => (
+                    <li
+                      key={idx}
+                      style={{ display: 'flex', alignItems: 'flex-start', color: '#333' }}
+                    >
+                      <span style={{ marginRight: '8px', lineHeight: '1.6' }}>✔</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
                 </ul>
+
                 <Grid item xs={12} m={2}>
                   <Fade in timeout={1500}>
                     <Box
@@ -174,21 +144,18 @@ const About = () => {
                       src={businessImages.RM_image}
                       alt="Services Visual"
                       width="100%"
-                      borderRadius={isSmallScreen ? 0 : 0}
+                      borderRadius={0}
                       boxShadow={3}
                     />
                   </Fade>
                 </Grid>
+
                 <Typography
                   mt={6}
                   variant="body1"
                   style={{
                     fontSize: '1rem',
-                    padding: isSmallScreen
-                      ? '0 10px 0 10px'
-                      : isMediumScreen
-                        ? '10px 40px 0 40px'
-                        : '10px 40px 0 40px',
+                    padding: isSmallScreen ? '0 10px' : '10px 40px',
                     lineHeight: '2',
                     color: '#555',
                     fontFamily: 'Montserrat, sans-serif',
@@ -202,17 +169,10 @@ const About = () => {
                   challenges into opportunities. Let’s build your competitive edge together.
                   Schedule a free consultation
                 </Typography>
-                {/* <Typography mt={4} variant="subtitle1">
-                  Office:
-                </Typography>
-                <Typography color="textSecondary">123 Tech Avenue, Lagos, Nigeria</Typography>
-                <Typography mt={2} variant="subtitle1">
-                  Contact:
-                </Typography>
-                <Typography color="textSecondary">+234 800 123 4567</Typography> */}
               </Box>
             </Fade>
           </Grid>
+
           <section className={styles.donation}>
             <GradientCard imageSrc={donationImage2} imagePosition="left" />
             <DonateSection
