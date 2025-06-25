@@ -151,7 +151,7 @@ const BlogDetails = () => {
       <header className={styles.blog_view__header}>
         <Link to="/blogs" className={styles.blog_view__back_link}>
           <BackIcon className={styles.blog_view__back_icon} />
-          Prev
+          Back to Blogs
         </Link>
       </header>
 
