@@ -2,12 +2,14 @@ import { IAuthor } from '../../../../blog/blog.types';
 import styles from './AuthorCard.module.scss';
 
 interface AuthorCardProps {
-  author?: IAuthor | {
-    name: string;
-    avatar: string;
-    date: string;
-    bio?: string;
-  };
+  author?:
+    | IAuthor
+    | {
+        name: string;
+        avatar: string;
+        date: string;
+        bio?: string;
+      };
 }
 
 export const AuthorCard = ({ author }: AuthorCardProps) => (

@@ -3,9 +3,10 @@ import React from 'react';
 interface PreviewIconProps {
   className?: string;
   size?: number;
+  onClick?: () => void;
 }
 
-export const PreviewIcon: React.FC<PreviewIconProps> = ({ className = '', size = 16 }) => {
+export const PreviewIcon: React.FC<PreviewIconProps> = ({ className = '', size = 24 }) => {
   return (
     <svg
       className={className}

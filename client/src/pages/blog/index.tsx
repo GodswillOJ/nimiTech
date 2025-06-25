@@ -8,41 +8,64 @@ import donationImage1 from '../../assets/blog/images/donationImage1.webp';
 import donationImage5 from '../../assets/blog/images/donationImage5.jpg';
 import donationImage4 from '../../assets/blog/images/donationImage4.jpg';
 import { Button } from '../../components/blogCMS/Button/Button';
+import {
+  useGetAllBlogPostPaginatedQuery,
+  useGetFeaturedPostQuery,
+  // useGetBlogCategoriesQuery,
+} from '../../services/utilis/blogApiService';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
 const Blog = () => {
-  const [displayedPosts, setDisplayedPosts] = useState<IBlogPost[]>([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasMorePosts, setHasMorePosts] = useState(true);
+  // const [selectedCategory, setSelectedCategory] = useState('all');
+  // const [searchTerm, setSearchTerm] = useState('');
   const postsPerPage = 6;
 
-  useEffect(() => {
-    const initialPosts = blogPosts.slice(0, postsPerPage);
-    setDisplayedPosts(initialPosts);
-    setHasMorePosts(blogPosts.length > postsPerPage);
-  }, []);
+  // API queries
+  const {
+    data: blogData,
+    isLoading: blogLoading,
+    error: blogError,
+    refetch: refetchBlogs,
+  } = useGetAllBlogPostPaginatedQuery({
+    page: currentPage,
+    limit: postsPerPage,
+    // category: selectedCategory !== 'all' ? selectedCategory : undefined,
+    // search: searchTerm || undefined,
+  });
+
+  const {
+    data: featured,
+    isLoading: featuredLoading,
+    error: featuredError,
+  } = useGetFeaturedPostQuery();
+
+  // Fallback to mock data if API fails
+  const displayedPosts = blogData?.posts || blogPosts.slice(0, postsPerPage);
+  const featuredPostData = featured || featuredPost;
+  const loading = blogLoading || featuredLoading;
+  const hasMorePosts = blogData?.hasNextPage || false;
+  const totalPages = blogData?.totalPages || Math.ceil(blogPosts.length / postsPerPage);
+
+  // useEffect(() => {
+  //   // Reset to first page when category or search changes
+  //   setCurrentPage(1);
+  // }, []);
 
   const handleLoadMore = async () => {
     if (loading || !hasMorePosts) return;
-
-    setLoading(true);
-
-    // Simulate API call with smooth loading
-    await new Promise((resolve) => setTimeout(resolve, 10));
-
-    const nextPage = currentPage + 1;
-    const startIndex = 0;
-    const endIndex = nextPage * postsPerPage;
-    const newPosts = blogPosts.slice(startIndex, endIndex);
-
-    setDisplayedPosts(newPosts);
-    setCurrentPage(nextPage);
-    setHasMorePosts(endIndex < blogPosts.length);
-    setLoading(false);
+    setCurrentPage((prev) => prev + 1);
   };
+
+  // const handleCategoryChange = (category: string) => {
+  //   setSelectedCategory(category);
+  // };
+
+  // const handleSearch = (term: string) => {
+  //   setSearchTerm(term);
+  // };
 
   const renderLoadMoreButton = () => {
     if (!hasMorePosts) return null;
@@ -80,58 +103,59 @@ const Blog = () => {
       {/* Featured Post Section */}
       <section
         className={styles.featuredPost}
-        style={{ backgroundImage: `url(${featuredPost.image})` }}
+        style={{ backgroundImage: `url(${featuredPostData.image})` }}
       >
-        {displayedPosts.map((post: any) => (
-          <Link to={`/blogs/${post.id}`} key={post.id}>
-            <div className={styles.featuredContent} key={post.id}>
-              <span className={styles.category}>{featuredPost.category}</span>
-              <h1>{featuredPost.title}</h1>
-              <p>{featuredPost.description}</p>
-            </div>
-          </Link>
-        ))}
+        <Link to={`/blogs/${featuredPostData.id || featuredPostData._id}`}>
+          <div className={styles.featuredContent}>
+            <span className={styles.category}>{featuredPostData.category}</span>
+            <h1>{featuredPostData.title}</h1>
+            <p>{featuredPostData.description}</p>
+          </div>
+        </Link>
       </section>
 
       {/* Recent Blog Posts Section */}
       <section className={styles.recentPosts}>
         <div className={styles.sectionHeader}>
-          <h2>Recent blog posts</h2>
+          <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
           {/* <span className={styles.postCount}>
             Showing {displayedPosts.length} of {blogPosts.length} posts
           </span> */}
         </div>
 
         <div className={styles.postsGrid}>
-          {displayedPosts.map((post, index) => (
-            <article
-              key={post.id}
-              className={styles.blogCard}
-              style={{
-                animationDelay: `${(index % postsPerPage) * 100}ms`,
-              }}
-            >
-              <Link to={`/blogs/${post.id}`} className={styles.blogCardLink}>
-                <div className={styles.imageContainer}>
-                  <img src={post.image} alt={post.title} loading="lazy" />
-                </div>
-                <div className={styles.contentContainer}>
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                  <div className={styles.metaInfo}>
-                    <img
-                      src={authorAvatar}
-                      alt={post.author.name}
-                      className={styles.authorAvatar}
-                    />
-                    <span>{post.author.name}</span>
-                    <span>•</span>
-                    <span>{post.author.date}</span>
+          {displayedPosts.map((post: any, index: number) => {
+            const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
+            return (
+              <article
+                key={postId}
+                className={styles.blogCard}
+                style={{
+                  animationDelay: `${(index % postsPerPage) * 100}ms`,
+                }}
+              >
+                <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
+                  <div className={styles.imageContainer}>
+                    <img src={post.image} alt={post.title} loading="lazy" />
                   </div>
-                </div>
-              </Link>
-            </article>
-          ))}
+                  <div className={styles.contentContainer}>
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    <div className={styles.metaInfo}>
+                      <img
+                        src={authorAvatar}
+                        alt={post.author.name}
+                        className={styles.authorAvatar}
+                      />
+                      <span>{post.author.name}</span>
+                      <span>•</span>
+                      <span>{post.author.date}</span>
+                    </div>
+                  </div>
+                </Link>
+              </article>
+            );
+          })}
         </div>
 
         {/* Action Buttons */}

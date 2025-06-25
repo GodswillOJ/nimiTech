@@ -17,7 +17,7 @@ export interface IContent {
 }
 
 export interface IBlogPost {
-  id: number;
+  id: string | number;
   title: string;
   description: string;
   category: string;
@@ -28,6 +28,7 @@ export interface IBlogPost {
   youtubeUrl?: string;
   contentImage?: string;
   contentImageTitle?: string;
+  status?: 'draft' | 'published' | 'archived' | 'scheduled';
 }
 
 export interface IFeaturedPost extends IBlogPost {}
