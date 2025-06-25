@@ -117,7 +117,7 @@ const Blog = () => {
       {/* Recent Blog Posts Section */}
       <section className={styles.recentPosts}>
         <div className={styles.sectionHeader}>
-          <h2>Recent blog posts</h2>
+          <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
           {/* <span className={styles.postCount}>
             Showing {displayedPosts.length} of {blogPosts.length} posts
           </span> */}
