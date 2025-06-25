@@ -6,27 +6,44 @@ import { NextIcon } from '../../../../assets/blog/icons/NextIcon';
 import { Highlights } from '../../../../components/blog/Highlights/Highlights';
 import { VideoEmbed } from '../../../../components/blog/VideoEmbed/VideoEmbed';
 import Newsletter from '../../../../components/blog/Modal/NewsLetter/Newsletter';
+import {
+  useGetBlogPostByIdQuery,
+  useGetRelatedPostsQuery,
+} from '../../../../services/utilis/blogApiService';
 import styles from './BlogDetails.module.scss';
+import Loader from '../../../../components/blog/SuspenseLoader/Loader';
 
 const BlogDetails = () => {
   const { id } = useParams();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
-  const currentPost = useMemo(() => blogPosts.find((post) => post.id.toString() === id), [id]);
-  const relatedPosts = useMemo(
-    () =>
-      currentPost
-        ? blogPosts
-            .filter(
-              (post) =>
-                post.id !== currentPost.id &&
-                post.category.toLowerCase() === currentPost.category.toLowerCase()
-            )
-            .slice(0, 6)
-        : [],
-    [currentPost]
-  );
+  // API queries
+  const {
+    data: currentPost,
+    isLoading: postLoading,
+    error: postError,
+  } = useGetBlogPostByIdQuery(id!, { skip: !id });
+
+  const {
+    data: relatedPostsData,
+    isLoading: relatedLoading,
+    error: relatedError,
+  } = useGetRelatedPostsQuery({ id: id!, limit: 6 }, { skip: !id });
+
+  // Fallback to mock data if API fails
+  const post = currentPost || blogPosts.find((post) => post.id.toString() === id);
+  const relatedPosts =
+    relatedPostsData ||
+    (post
+      ? blogPosts
+          .filter(
+            (mockPost) =>
+              mockPost.id !== post.id &&
+              mockPost.category.toLowerCase() === post.category.toLowerCase()
+          )
+          .slice(0, 6)
+      : []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAllRelated, setShowAllRelated] = useState(false);
@@ -101,7 +118,19 @@ const BlogDetails = () => {
     return match && match[2].length === 11 ? match[2] : '';
   };
 
-  if (!currentPost) {
+  if (postLoading) {
+    return (
+      <div className={styles.blog_view}>
+        <main className={styles.blog_view__main}>
+          <div className={styles.loading}>
+            <Loader />
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!post) {
     return (
       <div className={styles.blog_view}>
         <main className={styles.blog_view__main}>
@@ -118,11 +147,11 @@ const BlogDetails = () => {
 
   return (
     <div className={styles.blog_view}>
-      {/* <Newsletter isOpen={showNewsletterModal} onClose={() => setShowNewsletterModal(false)} /> */}
+      <Newsletter isOpen={showNewsletterModal} onClose={() => setShowNewsletterModal(false)} />
       <header className={styles.blog_view__header}>
         <Link to="/blogs" className={styles.blog_view__back_link}>
           <BackIcon className={styles.blog_view__back_icon} />
-          Prev
+          Back to Blogs
         </Link>
       </header>
 
@@ -132,44 +161,44 @@ const BlogDetails = () => {
             <div className={styles.article__meta}>
               <div className={styles.article__author}>
                 <img
-                  src={currentPost.author.avatar}
-                  alt={`Avatar of ${currentPost.author.name}`}
+                  src={post.author.avatar}
+                  alt={`Avatar of ${post.author.name}`}
                   className={styles.article__author_avatar}
                   width="32"
                   height="32"
                 />
-                <span className={styles.article__author_name}>{currentPost.author.name}</span>
+                <span className={styles.article__author_name}>{post.author.name}</span>
               </div>
               <time className={styles.article__date}>
-                {currentPost.author.date} • {currentPost.readTime}
+                {post.author.date} • {post.readTime}
               </time>
             </div>
 
-            <h1 className={styles.article__title}>{currentPost.title}</h1>
-            <p className={styles.article__subtitle}>{currentPost.description}</p>
+            <h1 className={styles.article__title}>{post.title}</h1>
+            <p className={styles.article__subtitle}>{post.description}</p>
           </header>
 
           <div className={styles.article__featured_image}>
             <img
-              src={currentPost.image}
-              alt={currentPost.title}
+              src={post.image}
+              alt={post.title}
               className={styles.article__image}
               loading="eager"
             />
           </div>
 
           <div className={styles.article__content}>
-            {currentPost?.content?.paragraphs?.map((paragraph, i) => (
+            {post?.content?.paragraphs?.map((paragraph: any, i: any) => (
               <p key={i} className={styles.article__paragraph}>
                 {paragraph?.content}
               </p>
             ))}
 
-            {currentPost.contentImage && currentPost.contentImageTitle && (
+            {post.contentImage && post.contentImageTitle && (
               <div className={styles.article__content_image}>
                 <img
-                  src={currentPost.contentImage}
-                  alt={currentPost.contentImageTitle}
+                  src={post.contentImage}
+                  alt={post.contentImageTitle}
                   className={styles.article__contentImage}
                   loading="lazy"
                 />
@@ -177,16 +206,16 @@ const BlogDetails = () => {
             )}
 
             <Highlights
-              title={currentPost?.content?.highlights?.title}
-              benefits={currentPost?.content?.highlights?.benefits}
+              title={post?.content?.highlights?.title}
+              benefits={post?.content?.highlights?.benefits}
             />
           </div>
 
           <div className={styles.article__author_card}>
             <div className={styles.article__author_card_avatar}>
               <img
-                src={currentPost.author.avatar}
-                alt={`Avatar of ${currentPost.author.name}`}
+                src={post.author.avatar}
+                alt={`Avatar of ${post.author.name}`}
                 width="60"
                 height="60"
                 loading="lazy"
@@ -240,35 +269,38 @@ const BlogDetails = () => {
 
             <div className={styles.related__container} ref={scrollContainerRef}>
               <div className={styles.related__grid}>
-                {displayedPosts.map((post, index) => (
-                  <article key={post.id} className={styles.related__card}>
-                    <Link to={`/blogs/${post.id}`} className={styles.related__card_link}>
-                      <div className={styles.related__card_image}>
-                        <img src={post.image} alt="" loading="lazy" width="280" height="180" />
-                      </div>
-                      <div className={styles.related__card_content}>
-                        <div className={styles.related__card_meta}>
-                          <time className={styles.related__card_date}>{post.author.date}</time>
-                          <span className={styles.related__card_read_time}>{post.readTime}</span>
+                {displayedPosts.map((post: any, index: any) => {
+                  const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
+                  return (
+                    <article key={postId} className={styles.related__card}>
+                      <Link to={`/blogs/${postId}`} className={styles.related__card_link}>
+                        <div className={styles.related__card_image}>
+                          <img src={post.image} alt="" loading="lazy" width="280" height="180" />
                         </div>
-                        <h3 className={styles.related__card_title}>{post.title}</h3>
-                        <p className={styles.related__card_description}>{post.description}</p>
-                        <div className={styles.related__card_author}>
-                          <img
-                            src={post.author.avatar}
-                            alt={`Avatar of ${post.author.name}`}
-                            width="24"
-                            height="24"
-                            loading="eager"
-                          />
-                          <span className={styles.related__card_author_name}>
-                            {post.author.name}
-                          </span>
+                        <div className={styles.related__card_content}>
+                          <div className={styles.related__card_meta}>
+                            <time className={styles.related__card_date}>{post.author.date}</time>
+                            <span className={styles.related__card_read_time}>{post.readTime}</span>
+                          </div>
+                          <h3 className={styles.related__card_title}>{post.title}</h3>
+                          <p className={styles.related__card_description}>{post.description}</p>
+                          <div className={styles.related__card_author}>
+                            <img
+                              src={post.author.avatar}
+                              alt={`Avatar of ${post.author.name}`}
+                              width="24"
+                              height="24"
+                              loading="eager"
+                            />
+                            <span className={styles.related__card_author_name}>
+                              {post.author.name}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </article>
-                ))}
+                      </Link>
+                    </article>
+                  );
+                })}
               </div>
             </div>
 

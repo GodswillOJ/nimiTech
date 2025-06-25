@@ -3,9 +3,10 @@ import React from 'react';
 interface DuplicateIconProps {
   className?: string;
   size?: number;
+  onClick?: () => void;
 }
 
-export const DuplicateIcon: React.FC<DuplicateIconProps> = ({ className = '', size = 16 }) => {
+export const DuplicateIcon: React.FC<DuplicateIconProps> = ({ className = '', size = 24 }) => {
   return (
     <svg
       className={className}

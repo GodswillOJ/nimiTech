@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '../Modal';
 import styles from './Newsletter.module.scss';
+import { useSubscribeToNewsletterMutation } from '../../../../services/utilis/newsletterApiService';
 
 export interface NewsletterProps {
   isOpen: boolean;
@@ -9,9 +10,11 @@ export interface NewsletterProps {
 
 const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [firstName, setFirstName] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; firstName?: string }>({});
+
+  const [subscribeToNewsletter, { isLoading: isSubmitting }] = useSubscribeToNewsletterMutation();
 
   const tempEmailDomains = [
     '10minutemail.com',
@@ -40,25 +43,47 @@ const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
     return null;
   };
 
-  const handleSubmit = () => {
+  const validateFirstName = (firstName: string) => {
+    if (!firstName || firstName.trim().length < 2)
+      return 'First name must be at least 2 characters';
+    return null;
+  };
+
+  const handleSubmit = async () => {
     const emailError = validateEmail(email);
-    if (emailError) {
-      setErrors({ email: emailError });
+    const firstNameError = validateFirstName(firstName);
+
+    if (emailError || firstNameError) {
+      setErrors({
+        email: emailError || undefined,
+        firstName: firstNameError || undefined,
+      });
       return;
     }
+
     setErrors({});
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      await subscribeToNewsletter({
+        firstName: firstName.trim(),
+        email: email.trim().toLowerCase(),
+        subscriptionSource: 'modal',
+      }).unwrap();
+
       setShowThankYou(true);
-    }, 1500);
+    } catch (error: any) {
+      console.error('Newsletter subscription error:', error);
+      setErrors({
+        email: error?.data?.message || 'Subscription failed. Please try again.',
+      });
+    }
   };
 
   const handleClose = () => {
     setEmail('');
+    setFirstName('');
     setErrors({});
     setShowThankYou(false);
-    setIsSubmitting(false);
     onClose();
   };
 
@@ -105,6 +130,16 @@ const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
         community of readers and never miss out on valuable content!
       </p>
       <div className={styles.newsletter__form}>
+        <input
+          type="text"
+          className={`${styles.newsletter__input} ${errors.firstName ? styles['newsletter__input--error'] : ''}`}
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          onKeyPress={handleKeyPress}
+          disabled={isSubmitting}
+        />
+        {errors.firstName && <p className={styles.newsletter__error}>{errors.firstName}</p>}
         <input
           type="email"
           className={`${styles.newsletter__input} ${errors.email ? styles['newsletter__input--error'] : ''}`}

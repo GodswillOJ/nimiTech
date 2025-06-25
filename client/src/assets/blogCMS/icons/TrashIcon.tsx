@@ -1,7 +1,14 @@
-export const TrashIcon = () => (
+interface TrashIconProps {
+  className?: string;
+  size?: number;
+  onClick?: () => void;
+}
+
+export const TrashIcon: React.FC<TrashIconProps> = ({ className = '', size = 24, onClick }) => (
   <svg
-    width="24"
-    height="24"
+    className={className}
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"

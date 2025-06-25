@@ -15,7 +15,7 @@ export interface PostEditorProps {
 export interface FormData extends IBlogPost {
   metaTitle?: string;
   metaDescription?: string;
-  status?: string;
+  status?: 'draft' | 'published' | 'archived' | 'scheduled';
   createdAt?: string;
   updatedAt?: string;
   tags?: string | string[];
