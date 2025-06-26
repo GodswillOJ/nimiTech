@@ -14,7 +14,7 @@ const BrandingContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.RM_image} alt="Branding Visual" />
+        <img src={businessImages.IT_image} alt="Branding Visual" />
       </div>
 
       <div>
@@ -44,7 +44,7 @@ const BrandingContent = () => {
       </div>
 
       <div className="image-container">
-        <img src={businessImages.branding2} alt="Branding Visual" />
+        <img src={businessImages.branding__2} alt="Branding Visual" />
       </div>
 
       <div>

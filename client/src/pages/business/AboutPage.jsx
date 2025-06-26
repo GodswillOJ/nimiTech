@@ -15,6 +15,33 @@ const About = () => {
 
   return (
     <Box>
+      {/* Inline CSS for zoom effect */}
+      <style>
+        {`
+          @keyframes zoomInOut {
+            0%, 100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.05);
+            }
+          }
+
+          .zoomContainer {
+            overflow: hidden;
+          }
+
+          .zoomImage {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            animation: zoomInOut 10s ease-in-out infinite;
+            transition: transform 0.5s ease-in-out;
+            display: block;
+          }
+        `}
+      </style>
+
       {/* Hero Section */}
       <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
         <video
@@ -81,16 +108,15 @@ const About = () => {
                   marketing, graphic design, and cloud solutions—all designed to meet your unique
                   challenges and fuel sustainable growth.
                 </Typography>
-                <Grid item xs={12} m={2}>
+                <Grid item xs={12} m={isSmallScreen ? 0 : 2}>
                   <Fade in timeout={1500}>
-                    <Box
-                      component="img"
-                      src={businessImages.hero2}
-                      alt="Team Working"
-                      width="100%"
-                      borderRadius={0}
-                      boxShadow={4}
-                    />
+                    <Box className="zoomContainer" borderRadius={0} boxShadow={4}>
+                      <img
+                        src={businessImages.branding2}
+                        alt="Team Working"
+                        className="zoomImage"
+                      />
+                    </Box>
                   </Fade>
                 </Grid>
                 <Typography
@@ -137,16 +163,15 @@ const About = () => {
                   ))}
                 </ul>
 
-                <Grid item xs={12} m={2}>
+                <Grid item xs={12} m={isSmallScreen ? 0 : 2}>
                   <Fade in timeout={1500}>
-                    <Box
-                      component="img"
-                      src={businessImages.RM_image}
-                      alt="Services Visual"
-                      width="100%"
-                      borderRadius={0}
-                      boxShadow={3}
-                    />
+                    <Box className="zoomContainer" borderRadius={0} boxShadow={3}>
+                      <img
+                        src={businessImages.about_us_1}
+                        alt="Services Visual"
+                        className="zoomImage"
+                      />
+                    </Box>
                   </Fade>
                 </Grid>
 

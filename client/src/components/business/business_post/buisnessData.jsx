@@ -47,7 +47,7 @@ export const dummyBusinessPosts = [
     content: <BrandingContent />,
     summary:
       'Create a powerful brand identity with professional logo design, visual branding, and consistent messaging across platforms.',
-    image: businessImages.IT_image,
+    image: businessImages.RM_image,
   },
   {
     id: 6,

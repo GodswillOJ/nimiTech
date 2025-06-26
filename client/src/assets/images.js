@@ -6,17 +6,24 @@ import AI_image3 from './business/images/Ai3.jpg';
 import AI_image4 from './business/images/AI4.jpg';
 import branding2 from './business/images/branding2__.jpg';
 import branding1 from './business/images/branding4__.jpg';
+import branding__2 from './business/images/branding10__.jpg';
+import about_us_1 from './business/images/about_4__.jpg';
+import RM_image from './business/images/Branding_support.jpg';
 import CS_image from './business/images/CberSecurity.jpg';
 import CEO_image from './business/images/ceo.jpg';
 import cloud1 from './business/images/cloud3.jpg';
 import cloud2 from './business/images/cloud6.jpg';
+import cloud7 from './business/images/cloud7.jpg';
 import customer from './business/images/customer_service.jpg';
 import CS_image1 from './business/images/cybersec2.jpg';
 import CS_image2 from './business/images/cybersec_.jpg';
 import CS2_image2 from './business/images/cybersecurity.jpg';
+import client3 from './business/images/dark_lad.jpg';
 import DM_image1 from './business/images/digital1.jpg';
 import DM_image2 from './business/images/digital2.jpg';
 import DM_image from './business/images/Digital_marketing.jpg';
+import client1 from './business/images/guy2.jpg';
+import client2 from './business/images/guy3.jpg';
 import heroBackImage6 from './business/images/hero6.jpg';
 import heroBackImage1 from './business/images/heroBackImage.jpg';
 import heroBackImage2 from './business/images/heroBackImage2.jpg';
@@ -28,21 +35,21 @@ import hero4 from './business/images/heroImage3.jpg';
 import hero3 from './business/images/heroImage4.jpg';
 import IT_image1 from './business/images/it_support.jpg';
 import RM_training1 from './business/images/it_support_.jpg';
+import online2 from './business/images/Online_train.jpg';
+import online_1 from './business/images/Online_train2.jpg';
 import IT_image from './business/images/Remote_IT_support.jpg';
 import RM_training from './business/images/remote_train1.jpg';
 import RM_training2 from './business/images/remote_training2.jpg';
-import RM_image from './business/images/RemoteIT_support.jpg';
 import WD_image1 from './business/images/soft_dev.jpg';
 import ST_image1 from './business/images/soft_dev__.jpg';
 import ST_image from './business/images/Software_development.jpg';
 import WD_image from './business/images/Web_development.jpg';
-import logo from './NimiTechLogo1.png';
-import client1 from './business/images/guy2.jpg';
-import client2 from './business/images/guy3.jpg';
-import client3 from './business/images/dark_lad.jpg';
 import client4 from './business/images/white_lady.jpg';
+import logo from './NimiTechLogo1.png';
 
 export const businessImages = {
+  about_us_1,
+  branding__2,
   client1,
   client2,
   client3,
@@ -54,6 +61,7 @@ export const businessImages = {
   hero4,
   cloud1,
   cloud2,
+  cloud7,
   branding1,
   branding2,
   IT_image1,
@@ -62,6 +70,8 @@ export const businessImages = {
   AI_image4,
   RM_training1,
   RM_training2,
+  online2,
+  online_1,
   CS_image1,
   CS_image2,
   ST_image1,

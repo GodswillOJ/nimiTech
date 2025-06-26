@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import './AdminAuth.scss';
 import {
   useLoginAdminMutation,
   useRegisterAdminMutation,
 } from '../../../services/utilis/adminApiService';
 import { setAuthToken } from '../../../services/utilis/authUtils';
 import ModalComp from '../../blog/Modal/Modal';
+import './AdminAuth.scss';
 
 interface AdminAuthProps {
   mode?: 'login' | 'register';

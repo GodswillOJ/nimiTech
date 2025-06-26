@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Link } from '@mui/material';
 import { businessImages } from '../../../assets/images';
 import './services.css'; // Shared CSS styles
 
@@ -17,7 +17,7 @@ const RemoteCloudSolutionsContent = () => {
       </p>
 
       <div className="image-container">
-        <img src={businessImages.cloud1} alt="Cloud Solutions Visual" />
+        <img src={businessImages.cloud7} alt="Cloud Solutions Visual" />
       </div>
 
       <p>
@@ -46,15 +46,17 @@ const RemoteCloudSolutionsContent = () => {
           Ready to Elevate Your Business? Partner with Nimitech IT for fully managed technology and
           marketing solutions that deliver measurable results.
         </Typography>
-
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          sx={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Font for Button
+        <div
+          style={{
+            padding: '1.6rem',
+          }}
         >
-          Contact Us
-        </Button>
+          <Button variant="contained" color="primary" size="large">
+            <Link href="/contact-us" style={{ color: '#fff', textDecoration: 'none' }}>
+              Contact Us
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
