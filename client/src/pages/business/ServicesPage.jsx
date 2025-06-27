@@ -210,7 +210,7 @@ const Services = () => {
                       boxShadow={3}
                       sx={{
                         mx: isSmallScreen ? 0 : 4,
-                        width: '100%',
+                        // width: '100%',
                       }}
                     >
                       <Box

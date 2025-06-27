@@ -1,101 +1,103 @@
 import { businessImages } from '../../../assets/images';
-import './services.css'; // 👈 shared styles
+import './services.css';
 
 const CybersecurityContent = () => {
   return (
-    <div
-      className="services_block"
-      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Font applied here
-    >
-      <p>
-        At Nimitech IT, we know that in today’s digital world, cybersecurity isn’t just an
-        option—it’s a necessity. Whether you’re a healthcare organization, construction company,
-        financial institution, or a small business, we provide customized, affordable cybersecurity
-        services that safeguard your data, systems, and reputation against evolving cyber threats.
-      </p>
+    <div className="services_block" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      {/* Hero Image with Overlay */}
+      <div className="image-with-overlay">
+        <img src={businessImages.CS_image1} alt="Cybersecurity Hero" />
+        <div className="overlay-text">
+          <h3>Cybersecurity, Redefined</h3>
+          <p>Real-time defense for your digital world</p>
+        </div>
+      </div>
 
-      <div>
-        <p style={{ fontSize: '20px' }}>Why Cybersecurity Matters</p>
+      {/* Main Intro */}
+      <div
+        className="marketing-intro"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8), rgba(46,1,53,0.7)), url(${businessImages.CS_image2})`,
+        }}
+      >
+        <h1>Stay Secure with Nimitech IT Cybersecurity Services</h1>
         <p>
-          Cyber attacks are becoming more frequent and sophisticated, putting businesses of all
-          sizes at risk. From data breaches and ransomware to compliance violations, the
-          consequences can be devastating—financial losses, legal penalties, and damage to your
-          brand’s trust. Nimitech IT helps you stay one step ahead with proactive, enterprise-grade
-          protection designed to keep your business safe 24/7.
+          Proactive, enterprise-grade cybersecurity tailored for businesses of all sizes. Let us
+          protect your data and systems so you can grow with confidence.
         </p>
       </div>
 
-      <div className="image-container">
-        <img src={businessImages.CS_image1} alt="Cybersecurity Visual" />
-      </div>
-
-      <div>
-        <p style={{ fontSize: '20px' }}>Our Cybersecurity Services</p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>
-            Real-Time Threat Detection & Monitoring: Identify and respond to threats instantly to
-            minimize risk.
-          </li>
-          <li>
-            Network Security: Secure your infrastructure with firewalls, VPNs, and intrusion
-            prevention systems.
-          </li>
-          <li>
-            Compliance & Risk Management: Navigate complex regulations like HIPAA, PCI, and GDPR
-            with ease.
-          </li>
-          <li>
-            Endpoint Protection: Safeguard all devices connected to your network, from laptops to
-            mobile phones.
-          </li>
-          <li>
-            Vulnerability Assessments & Penetration Testing: Identify and fix security gaps before
-            attackers find them.
-          </li>
-          <li>
-            Incident Response & Recovery: Rapid support to mitigate damage and restore operations
-            after a breach.
-          </li>
-        </ul>
-      </div>
-
-      <div className="image-container">
-        <img src={businessImages.CS_image2} alt="Cybersecurity Visual" />
-      </div>
-
-      <div>
-        <p style={{ fontSize: '20px' }}>Why Choose Nimitech IT?</p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>
-            Industry Expertise: We’ve successfully served clients in healthcare, construction,
-            finance, and small business sectors—tailoring solutions to fit your unique security
-            challenges.
-          </li>
-          <li>
-            Affordable & Scalable: Our global outsourcing model lets us offer top-tier cybersecurity
-            at a fraction of traditional costs, making protection accessible for every budget.
-          </li>
-          <li>
-            24/7 Support: Cyber threats never rest, and neither do we. Our dedicated team monitors
-            your systems around the clock.
-          </li>
-          <li>
-            Certified Professionals: Work with experienced, certified cybersecurity experts
-            committed to your business’s safety.
-          </li>
-        </ul>
-      </div>
-
-      <p className="font-medium text-gray-900">
-        <div style={{ fontSize: '20px' }}>
-          Don’t Wait for a Breach — Secure Your Business Today.
+      {/* Why It Matters */}
+      <div className="dm-flex-block">
+        <div className="dm-image-container">
+          <img src={businessImages.CS_image2} alt="Threats Overview" />
         </div>
-        <br />
-        Your data and your customers’ trust are your most valuable assets. Partner with Nimitech IT
-        to implement a robust cybersecurity strategy that prevents attacks before they happen. Let
-        us handle your IT security so you can focus on growing your business confidently and
-        securely.
-      </p>
+        <div className="dm-text-content">
+          <p className="dm-title">Why Cybersecurity Matters</p>
+          <ul className="dm-fancy-list">
+            <li>Rise of ransomware, phishing, and data breaches threatens all industries</li>
+            <li>Legal consequences and reputation loss from non-compliance</li>
+            <li>Financial devastation from downtime and recovery</li>
+            <li>Increased need for proactive, round-the-clock protection</li>
+          </ul>
+          <p className="dm-cta">Don’t wait for an incident — take control with Nimitech IT.</p>
+        </div>
+      </div>
+
+      {/* Cybersecurity Offerings */}
+      <div className="ai-services-flex-container">
+        <div className="ai-services-text">
+          <p className="section-title">Our Cybersecurity Services</p>
+          <ul className="dm-fancy-list">
+            <li>Real-Time Threat Detection & Monitoring</li>
+            <li>Network Security (Firewalls, VPNs, IPS)</li>
+            <li>Compliance Support (HIPAA, PCI, GDPR)</li>
+            <li>Endpoint Protection for all devices</li>
+            <li>Vulnerability Scanning & Penetration Testing</li>
+            <li>Incident Response & Recovery Planning</li>
+          </ul>
+          <p className="ai-services-summary">
+            We blend strategy, automation, and expert knowledge to ensure you’re not just
+            protected—but ahead of threats.
+          </p>
+        </div>
+        <div className="ai-services-image-container">
+          <div className="zoom-wrapper">
+            <img src={businessImages.CS_image1} alt="Cybersecurity Defense" />
+          </div>
+        </div>
+      </div>
+
+      {/* Why Choose Us */}
+      <div className="dm-flex-block">
+        <div className="dm-image-container">
+          <img src={businessImages.CS_image2} alt="Certified Security Team" />
+        </div>
+        <div className="dm-text-content">
+          <p className="dm-title">Why Choose Nimitech IT?</p>
+          <ul className="dm-fancy-list">
+            <li>Proven expertise across healthcare, finance, and enterprise</li>
+            <li>24/7 monitoring and rapid incident response</li>
+            <li>Affordable, scalable protection for any budget</li>
+            <li>Team of certified cybersecurity specialists</li>
+          </ul>
+          <p className="dm-cta">
+            Let’s build your digital fortress. Secure your business with Nimitech.
+          </p>
+        </div>
+      </div>
+
+      {/* Final Call to Action */}
+      <div className="text-content" style={{ padding: '40px 20px', textAlign: 'center' }}>
+        <p className="dm-title">Take the First Step Toward Security</p>
+        <p className="font-medium text-gray-900">
+          Your business deserves more than antivirus software. Protect your operations with a
+          comprehensive cybersecurity strategy designed for today’s threats.
+        </p>
+        <a href="/contact-us" className="contact-button" style={{ marginTop: '20px' }}>
+          Talk to Our Security Team
+        </a>
+      </div>
     </div>
   );
 };

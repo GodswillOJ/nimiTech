@@ -4,6 +4,7 @@ import AI_image from './business/images/AI.jpg';
 import AI_image1 from './business/images/AI2.jpg';
 import AI_image3 from './business/images/Ai3.jpg';
 import AI_image4 from './business/images/AI4.jpg';
+import AI_image5 from './business/images/AI5.jpg';
 import branding2 from './business/images/branding2__.jpg';
 import branding1 from './business/images/branding4__.jpg';
 import branding__2 from './business/images/branding10__.jpg';
@@ -84,6 +85,7 @@ export const businessImages = {
   RM_image,
   AI_image,
   AI_image3,
+  AI_image5,
   ST_image,
   WD_image,
   CS2_image2,
