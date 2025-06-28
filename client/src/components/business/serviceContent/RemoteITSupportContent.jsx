@@ -34,7 +34,7 @@ const RemoteITSupportContent = () => {
       {/* What We Offer */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.hero1} alt="IT Support Services" />
+          <img src={businessImages.IT_2} alt="IT Support Services" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">What We Offer</p>
@@ -68,7 +68,7 @@ const RemoteITSupportContent = () => {
         </div>
         <div className="ai-services-image-container">
           <div className="zoom-wrapper">
-            <img src={businessImages.hero1} alt="Remote IT Support Visual" />
+            <img src={businessImages.HelpDesk2} alt="Remote IT Support Visual" />
           </div>
         </div>
       </div>

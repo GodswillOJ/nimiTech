@@ -1,4 +1,4 @@
-import { WhatsApp } from '@mui/icons-material';
+import { LinkedIn, WhatsApp } from '@mui/icons-material';
 import { Box, Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import { lazy } from 'react';
@@ -146,7 +146,20 @@ const ContactUs = () => {
                     <FiPhone size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Phone</Typography>
-                      <Typography color="text.secondary">+1 252-903-9651</Typography>
+                      <Typography color="text.secondary">
+                        <a
+                          href="tel:+12529039651"
+                          className="phone-link"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            textDecoration: 'underline',
+                            transition: 'color 0.3s ease',
+                          }}
+                        >
+                          +1 (252) 903-9651
+                        </a>
+                      </Typography>
                     </Box>
                   </Box>
 
@@ -161,8 +174,21 @@ const ContactUs = () => {
                     <FiMail size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Email</Typography>
-                      <Typography color="text.secondary">
-                        <a href="mailto:info@nimitechit.com">info@nimitechit.com</a>
+                      <Typography
+                        color="text.secondary"
+                        sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                      >
+                        <a
+                          href="mailto:info@nimitechit.com"
+                          style={{
+                            color: '#3b1647',
+                            textDecoration: 'underline',
+                            fontWeight: 500,
+                            transition: 'color 0.3s ease',
+                          }}
+                        >
+                          info@nimitechit.com
+                        </a>
                       </Typography>
                     </Box>
                   </Box>
@@ -198,7 +224,7 @@ const ContactUs = () => {
                   </Typography>
                   <Box display="flex" gap={3} mt={1}>
                     <a
-                      href="https://twitter.com/nimitech"
+                      href="https://x.com/nimi_techIT'"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="X"
@@ -206,7 +232,7 @@ const ContactUs = () => {
                       <XIcon />
                     </a>
                     <a
-                      href="https://instagram.com"
+                      href="https://instagram.com/nimi.techit/"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Instagram"
@@ -214,7 +240,7 @@ const ContactUs = () => {
                       <InstagramIcon />
                     </a>
                     <a
-                      href="https://facebook.com"
+                      href="https://www.facebook.com/profile.php?id=61577287182430"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Facebook"
@@ -222,12 +248,20 @@ const ContactUs = () => {
                       <FacebookIcon />
                     </a>
                     <a
-                      href="https://youtube.com"
+                      href="https://www.youtube.com/@NimiTechITConsultantsLLC-IT"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="YouTube"
                     >
                       <YouTubeIcon />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="YouTube"
+                    >
+                      <LinkedIn />
                     </a>
                     <a
                       href="https://youtube.com"

@@ -9,7 +9,7 @@ const RemoteTrainingContent = () => {
     >
       {/* Hero Section with Overlay */}
       <div className="image-with-overlay">
-        <img src={businessImages.online_1} alt="Remote Training Hero" />
+        <img src={businessImages.online2} alt="Remote Training Hero" />
         <div className="overlay-text">
           <h3>Learn Today, Lead Tomorrow</h3>
           <p>Empowering digital minds through hands-on IT training</p>
@@ -20,7 +20,7 @@ const RemoteTrainingContent = () => {
       <div
         className="marketing-intro"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.85), rgba(46,1,53,0.75)), url(${businessImages.online2})`,
+          backgroundImage: `linear-gradient(to right, rgba(19, 0, 0, 0.85), rgb(35, 1, 40)), url(${businessImages.Training3})`,
         }}
       >
         <h1>Empower Your Future with Remote IT Training</h1>
@@ -34,7 +34,7 @@ const RemoteTrainingContent = () => {
       {/* Training Highlights */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.online2} alt="Remote Training Platform" />
+          <img src={businessImages.Training} alt="Remote Training Platform" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">What We Offer</p>
@@ -69,7 +69,7 @@ const RemoteTrainingContent = () => {
         </div>
         <div className="ai-services-image-container">
           <div className="zoom-wrapper">
-            <img src={businessImages.online_1} alt="Live Virtual Training" />
+            <img src={businessImages.HelpDesk} alt="Live Virtual Training" />
           </div>
         </div>
       </div>

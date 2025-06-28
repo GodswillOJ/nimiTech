@@ -30,7 +30,7 @@ const CybersecurityContent = () => {
       {/* Why It Matters */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.CS_image2} alt="Threats Overview" />
+          <img src={businessImages.Cysec} alt="Threats Overview" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">Why Cybersecurity Matters</p>
@@ -63,7 +63,7 @@ const CybersecurityContent = () => {
         </div>
         <div className="ai-services-image-container">
           <div className="zoom-wrapper">
-            <img src={businessImages.CS_image1} alt="Cybersecurity Defense" />
+            <img src={businessImages.CBSC} alt="Cybersecurity Defense" />
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@ const CybersecurityContent = () => {
       {/* Why Choose Us */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.CS_image2} alt="Certified Security Team" />
+          <img src={businessImages.Access_denied} alt="Certified Security Team" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">Why Choose Nimitech IT?</p>

@@ -444,11 +444,12 @@ const HomePage = () => {
 
           <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
             <h3
+              fontFamily="Montserrat, sans-serif"
+              fontWeight="400px"
               style={{
                 marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
                 marginBottom: '10px',
                 color: '#fff',
-                fontFamily: 'Montserrat, sans-serif',
               }}
             >
               Follow us on

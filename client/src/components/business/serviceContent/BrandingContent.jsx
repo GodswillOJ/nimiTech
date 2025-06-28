@@ -6,7 +6,7 @@ const BrandingContent = () => {
     <div className="services_block" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       {/* Hero Image with Overlay */}
       <div className="image-with-overlay">
-        <img src={businessImages.IT_image} alt="Brand Identity Hero" />
+        <img src={businessImages.Brand_pic} alt="Brand Identity Hero" />
         <div className="overlay-text">
           <h3>Build a Brand That Sticks</h3>
           <p>Designs that speak your business values</p>
@@ -31,7 +31,7 @@ const BrandingContent = () => {
       {/* Why Branding Matters */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.branding__2} alt="Why Branding Matters" />
+          <img src={businessImages.Brand_pic2} alt="Why Branding Matters" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">Why Nimitech IT for Logo & Branding?</p>
@@ -67,7 +67,7 @@ const BrandingContent = () => {
         </div>
         <div className="ai-services-image-container">
           <div className="zoom-wrapper">
-            <img src={businessImages.branding__2} alt="Branding Services Visual" />
+            <img src={businessImages.IT_image} alt="Branding Services Visual" />
           </div>
         </div>
       </div>

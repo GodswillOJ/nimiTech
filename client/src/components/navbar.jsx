@@ -1,3 +1,5 @@
+import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
+import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/NimiTechLogo1.png';
@@ -7,6 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isMobile = useMediaQuery('(max-width:870px)');
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -80,11 +83,48 @@ const Navbar = () => {
             </Link>
           </li>
           {isOpen && (
-            <div className="contact-us-mobile" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <div
+              className="contact-us-mobile"
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                alignItems: 'flex-start',
+              }}
+            >
+              <a
+                href="tel:+12529039651"
+                className="phone-link"
+                style={{
+                  display: isMobile ? 'flex' : 'none',
+                  alignItems: 'center',
+                  color: '#3b1647',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                  transition: 'color 0.3s ease',
+                }}
+              >
+                <PhoneRoundedIcon sx={{ fontSize: 20, color: '#3b1647', marginRight: '8px' }} />
+                +1 (252) 903-9651
+              </a>
+
               <Link
                 to="/contact-us"
                 className="contact-btn-mobile"
                 onClick={() => setIsOpen(false)}
+                style={{
+                  padding: '8px 20px',
+                  marginTop: '20px',
+                  backgroundColor: '#3b1647',
+                  color: '#fff',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  transition: 'background 0.3s ease',
+                }}
               >
                 Contact Us
               </Link>

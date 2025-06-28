@@ -7,7 +7,7 @@ const RemoteCloudSolutionsContent = () => {
     <div className="services_block" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       {/* Hero Section with Overlay */}
       <div className="image-with-overlay">
-        <img src={businessImages.cloud7} alt="Cloud Solutions Hero" />
+        <img src={businessImages.CLD} alt="Cloud Solutions Hero" />
         <div className="overlay-text">
           <h3>Next-Gen Cloud Power</h3>
           <p>Scalable, secure, and remote — just like your future</p>
@@ -32,7 +32,7 @@ const RemoteCloudSolutionsContent = () => {
       {/* Key Features Block */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.hero4} alt="Cloud Architecture" />
+          <img src={businessImages.Cloud_comp} alt="Cloud Architecture" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">Why Choose Nimitech Cloud?</p>

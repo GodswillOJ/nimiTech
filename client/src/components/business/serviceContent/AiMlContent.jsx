@@ -1,10 +1,8 @@
 import { businessImages } from '../../../assets/images';
 
 const AiMlContent = () => (
-  <div
-    className="services_block bg-white rounded-xl shadow-md p-6 space-y-4 text-gray-800 leading-relaxed"
-    style={{ fontFamily: 'Montserrat, sans-serif' }} // 👈 Apply font here
-  >
+  <div className="services_block" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    {/* Hero Gradient Container */}
     <div className="ai-ml-container">
       <p className="ai-ml-content">
         At <span className="highlight-yellow">Nimitech IT</span>, we leverage the power of
@@ -16,10 +14,11 @@ const AiMlContent = () => (
       </p>
     </div>
 
+    {/* Section with Overlay Image + Text List */}
     <div className="ai-ml-flex-container">
       <div className="ai-image-container">
         <div className="zoom-wrapper">
-          <img src={businessImages.AI_image5} alt="Software Development Visual" />
+          <img src={businessImages.AI_image5} alt="AI Empowerment" />
         </div>
 
         <div className="overlay-content">
@@ -37,42 +36,33 @@ const AiMlContent = () => (
       </div>
 
       <div className="text-content">
-        <p className="title">Why Partner with Nimitech for AI & ML Solutions?</p>
-        <ul className="benefits-list">
+        <p className="dm-title">Why Partner with Nimitech for AI & ML Solutions?</p>
+        <ul className="dm-fancy-list">
           <li>
-            Tailored AI Solutions: From predictive analytics and natural language processing to
-            image recognition and automation, we develop AI models customized for your industry and
-            business needs.
+            Tailored AI Solutions: From predictive analytics and NLP to image recognition, we
+            develop AI models customized for your unique business needs.
           </li>
           <li>
-            Data-Driven Decisions: Harness the power of your data with machine learning algorithms
-            that identify patterns, forecast trends, and optimize operations.
+            Data-Driven Decisions: Machine learning algorithms that forecast trends and optimize
+            operations.
           </li>
-          <li>
-            Automation at Scale: Reduce manual effort and human error with intelligent automation
-            that boosts productivity and accuracy across workflows.
-          </li>
-          <li>
-            Expert Team: Work with seasoned AI/ML engineers and data scientists skilled in Python,
-            TensorFlow, PyTorch, and other leading technologies.
-          </li>
-          <li>
-            Affordable Innovation: We provide cost-effective AI and ML services to businesses of all
-            sizes, helping you stay competitive without breaking the bank.
-          </li>
+          <li>Automation at Scale: Reduce manual effort and error with intelligent automation.</li>
+          <li>Expert Team: Engineers skilled in Python, TensorFlow, PyTorch, and more.</li>
+          <li>Affordable Innovation: Cost-effective AI services tailored to all business sizes.</li>
         </ul>
       </div>
     </div>
 
+    {/* Service Offerings Section */}
     <div className="ai-services-flex-container">
       <div className="ai-services-image-container">
         <div className="zoom-wrapper">
-          <img src={businessImages.AI_image} alt="Software Development Visual" />
+          <img src={businessImages.AI_image} alt="AI Services" />
         </div>
       </div>
       <div className="ai-services-text">
         <p className="section-title">Our AI & ML Services Include:</p>
-        <ul className="ai-services-list">
+        <ul className="dm-fancy-list">
           <li>Predictive Analytics & Forecasting</li>
           <li>Natural Language Processing (NLP) & Chatbots</li>
           <li>Computer Vision & Image Recognition</li>

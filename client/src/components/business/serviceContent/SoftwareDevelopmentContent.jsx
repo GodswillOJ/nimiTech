@@ -33,7 +33,7 @@ const SoftwareDevelopmentContent = () => {
       {/* Why Choose Us */}
       <div className="dm-flex-block">
         <div className="dm-image-container">
-          <img src={businessImages.WD_image} alt="Software Integration Visual" />
+          <img src={businessImages.Developers} alt="Software Integration Visual" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">Why Trust Nimitech IT?</p>
@@ -69,7 +69,7 @@ const SoftwareDevelopmentContent = () => {
         </div>
         <div className="ai-services-image-container">
           <div className="zoom-wrapper">
-            <img src={businessImages.ST_image1} alt="Software Showcase Visual" />
+            <img src={businessImages.Developers2} alt="Software Showcase Visual" />
           </div>
         </div>
       </div>
