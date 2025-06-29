@@ -14,7 +14,15 @@ export const api = createApi({
     // 👇 Contact form mutation
     sendContactForm: builder.mutation({
       query: (formData) => ({
-        url: '/contact-us',
+        url: '/business/contact', // ✅ Matches backend
+        method: 'POST',
+        body: formData,
+      }),
+    }),
+
+    sendServiceInquiry: builder.mutation({
+      query: (formData) => ({
+        url: '/business/inquiry',
         method: 'POST',
         body: formData,
       }),
@@ -25,4 +33,5 @@ export const api = createApi({
 export const {
   useGetBusinessPostsQuery,
   useSendContactFormMutation, // <-- export it
+  useSendServiceInquiryMutation,
 } = api;

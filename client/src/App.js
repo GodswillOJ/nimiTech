@@ -15,9 +15,9 @@ import NotFound from './components/NotFound/NotFound';
 import Navbar from './components/navbar';
 import Footer from './components/Footer/Footer';
 import AdminDashboard from './pages/admin/AdminDashboard';
-
 import './App.css';
 import AdminAuth from './components/admin/AdminAuth/AdminAuth';
+import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
 
 // define other static routes
 const baseRoutes = [
@@ -28,6 +28,7 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
+  { path: '/privacy-policy', element: <PrivacyPolicyPage /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },
   { path: '/register', element: <RegisterPage /> },

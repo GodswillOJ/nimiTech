@@ -154,7 +154,7 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://twitter.com/yourhandle',
+      url: 'https://wa.me/12529039651',
     },
   ];
 

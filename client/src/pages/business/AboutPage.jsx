@@ -1,6 +1,7 @@
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
-import { lazy } from 'react';
+import { motion } from 'framer-motion';
+import { lazy, useState } from 'react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
@@ -11,8 +12,27 @@ const DonateSection = lazy(() => import('../../components/blog/DonateSection/Don
 
 const About = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
-  const isMediumScreen = useMediaQuery('(max-width:900px)');
-
+  // const isMediumScreen = useMediaQuery('(max-width:900px)');
+  // const listVariants = {
+  //   hidden: { opacity: 0, y: 30 },
+  //   visible: (i) => ({
+  //     opacity: 1,
+  //     y: 0,
+  //     transition: {
+  //       delay: i * 0.2,
+  //       duration: 0.5,
+  //       ease: 'easeOut',
+  //     },
+  //   }),
+  // };
+  const [showMore, setShowMore] = useState(false);
+  const listItems = [
+    'Optimize Workflows: From bespoke ERP and CRM platforms to workflow automation apps, we build scalable software that streamlines operations and maximizes efficiency.',
+    'Secure Your Assets: Our enterprise-grade cybersecurity services protect your data and IT infrastructure 24/7, ensuring business continuity and regulatory compliance.',
+    'Leverage Intelligent Insights: Through AI-powered analytics and machine learning models, we help you uncover actionable insights and stay ahead of the competition.',
+    'Grow Your Brand Online: With targeted SEO, PPC, social media strategy, and compelling content, our digital marketing experts boost your visibility, engagement, and customer acquisition.',
+    'Elevate Your Visual Identity: Our graphic design and branding services create memorable logos, cohesive brand guidelines, and striking marketing collateral that resonate with your audience.',
+  ];
   return (
     <Box>
       {/* Inline CSS for zoom effect */}
@@ -84,119 +104,532 @@ const About = () => {
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
               <Box>
-                <Typography
-                  variant="h4"
-                  style={{
-                    padding: isSmallScreen ? '0 10px' : '0 40px',
+                <Box
+                  display="flex"
+                  flexDirection={isSmallScreen ? 'column' : 'row'}
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{
+                    px: isSmallScreen ? 2 : 6,
+                    py: 8,
+                    gap: 6,
+                    backgroundColor: '#f5f7fa',
                     fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
-                  About Us | Nimitech IT – Driving Your Digital Transformation
-                </Typography>
-                <Typography
-                  mb={3}
-                  lineHeight={1.7}
-                  color="textSecondary"
-                  style={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    padding: isSmallScreen ? '0 10px' : '10px 40px',
-                  }}
-                >
-                  At Nimitech IT, we’re passionate about empowering businesses to thrive in an ever
-                  evolving digital landscape. As a full service technology partner, we deliver
-                  custom software development, cybersecurity, AI & machine learning, digital
-                  marketing, graphic design, and cloud solutions—all designed to meet your unique
-                  challenges and fuel sustainable growth.
-                </Typography>
-                <Grid item xs={12} m={isSmallScreen ? 0 : 2}>
-                  <Fade in timeout={1500}>
-                    <Box className="zoomContainer" borderRadius={0} boxShadow={4}>
-                      <img
-                        src={businessImages.branding2}
-                        alt="Team Working"
-                        className="zoomImage"
-                      />
-                    </Box>
-                  </Fade>
-                </Grid>
-                <Typography
-                  mt={6}
-                  variant="body1"
-                  color="textSecondary"
-                  lineHeight={1.7}
-                  style={{
-                    fontSize: '1rem',
-                    fontFamily: 'Montserrat, sans-serif',
-                    padding: isSmallScreen ? '0 10px' : '10px 40px',
-                  }}
-                >
-                  Founded on a commitment to innovation and client success, our team of certified
-                  developers, security specialists, data scientists, and creative designers
-                  collaborates closely with you to craft solutions that:
-                </Typography>
-
-                {/* ✔ Bullet List */}
-                <ul
-                  style={{
-                    fontSize: '1rem',
-                    lineHeight: '2',
-                    padding: '0 60px',
-                    marginBottom: 30,
-                    fontFamily: 'Montserrat, sans-serif',
-                    listStyle: 'none',
-                  }}
-                >
-                  {[
-                    'Optimize Workflows: From bespoke ERP and CRM platforms to workflow automation apps, we build scalable software that streamlines operations and maximizes efficiency.',
-                    'Secure Your Assets: Our enterprise grade cybersecurity services protect your data and IT infrastructure 24/7, ensuring business continuity and regulatory compliance.',
-                    'Leverage Intelligent Insights: Through AI powered analytics and machine learning models, we help you uncover actionable insights and stay ahead of the competition.',
-                    'Grow Your Brand Online: With targeted SEO, PPC, social media strategy, and compelling content, our digital marketing experts boost your visibility, engagement, and customer acquisition.',
-                    'Elevate Your Visual Identity: Our graphic design and branding services create memorable logos, cohesive brand guidelines, and striking marketing collateral that resonate with your audience.',
-                  ].map((item, idx) => (
-                    <li
-                      key={idx}
-                      style={{ display: 'flex', alignItems: 'flex-start', color: '#333' }}
+                  {/* Text Section */}
+                  <Box
+                    flex={1}
+                    sx={{
+                      background: '#ffffff',
+                      borderRadius: 4,
+                      boxShadow: '0px 6px 30px rgba(0, 0, 0, 0.05)',
+                      p: isSmallScreen ? 3 : 5,
+                      transition: 'all 0.3s ease-in-out',
+                    }}
+                  >
+                    <Typography
+                      variant="h4"
+                      fontWeight="bold"
+                      sx={{
+                        mb: 2,
+                        color: '#1a202c',
+                        fontSize: isSmallScreen ? '1.6rem' : '2rem',
+                      }}
                     >
-                      <span style={{ marginRight: '8px', lineHeight: '1.6' }}>✔</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                      About Us | Nimitech IT – Driving Your Digital Transformation
+                    </Typography>
 
-                <Grid item xs={12} m={isSmallScreen ? 0 : 2}>
-                  <Fade in timeout={1500}>
-                    <Box className="zoomContainer" borderRadius={0} boxShadow={3}>
-                      <img
+                    <Typography
+                      color="text.secondary"
+                      lineHeight={1.8}
+                      sx={{ mb: 3, fontSize: '1rem' }}
+                    >
+                      At Nimitech IT, we&#39;re passionate about building not just software—but
+                      business-changing solutions. Our diverse team of engineers, security analysts,
+                      designers, and strategists work together to bring clarity and performance to
+                      every project.
+                    </Typography>
+
+                    <Typography color="text.secondary" sx={{ mb: 2 }}>
+                      Whether you&#39;re a startup aiming to disrupt your market or an enterprise
+                      undergoing digital transformation, our job is to turn your challenges into
+                      opportunities. We&#39;re transparent, agile, and laser-focused on delivering
+                      value through innovative technology.
+                    </Typography>
+
+                    {/* Business Link and Address */}
+                    <Box mt={4}>
+                      <Typography
+                        component="div"
+                        sx={{
+                          fontWeight: 500,
+                          color: '#333',
+                          mb: 0.5,
+                        }}
+                      >
+                        Website:{' '}
+                        <Typography
+                          component="a"
+                          href="https://www.nimitutor.com/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            ml: 1,
+                            color: '#1976d2',
+                            textDecoration: 'none',
+                            borderBottom: '1px solid #1976d2',
+                            transition: 'color 0.3s',
+                            '&:hover': {
+                              color: '#0d47a1',
+                            },
+                          }}
+                        >
+                          www.nimitutor.com
+                        </Typography>
+                      </Typography>
+
+                      <Typography sx={{ fontWeight: 500, color: '#555' }}>
+                        Location: 23 Digital Crescent, Victoria Island, Lagos, Nigeria
+                      </Typography>
+                    </Box>
+                  </Box>
+                  {/* Image with Layered Text */}
+                  <Box
+                    sx={{
+                      flex: isSmallScreen ? 'unset' : '0 0 45%',
+                      maxWidth: isSmallScreen ? '100%' : '45%',
+                      position: 'relative',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                      mt: isSmallScreen ? 4 : 0,
+                    }}
+                  >
+                    {/* Image */}
+                    <Box
+                      component="img"
+                      src={businessImages.branding2}
+                      alt="Team Working"
+                      sx={{
+                        width: '100%',
+                        height: 'auto',
+                        display: 'block',
+                        objectFit: 'cover',
+                      }}
+                    />
+
+                    {/* Overlay Content */}
+                    <Box
+                      position="absolute"
+                      top={0}
+                      left={0}
+                      width="100%"
+                      height="100%"
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                      sx={{
+                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))',
+                        color: '#fff',
+                        textAlign: 'center',
+                        px: 3,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          backgroundColor: 'rgba(255,255,255,0.1)',
+                          backdropFilter: 'blur(6px)',
+                          px: 3,
+                          py: 2,
+                          borderRadius: 2,
+                          mb: 2,
+                          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+                        }}
+                      >
+                        <Typography
+                          variant="h5"
+                          fontWeight="bold"
+                          sx={{
+                            fontSize: isSmallScreen ? '1.2rem' : '1.6rem',
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          Empowering Innovation,
+                          <br />
+                          One Line of Code at a Time
+                        </Typography>
+                      </Box>
+
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: isSmallScreen ? '0.9rem' : '1rem',
+                          maxWidth: '90%',
+                          color: '#e0e0e0',
+                          fontWeight: 400,
+                          backgroundColor: 'rgba(0,0,0,0.3)',
+                          px: 2,
+                          py: 1,
+                          borderRadius: 2,
+                          backdropFilter: 'blur(2px)',
+                        }}
+                      >
+                        We go beyond technology—fostering strategic growth through visionary
+                        innovation, seamless collaboration, and trusted expertise in every line of
+                        code we craft.
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box
+                  display="flex"
+                  flexDirection={isSmallScreen ? 'column' : 'row'}
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{
+                    px: isSmallScreen ? 2 : 6,
+                    py: 6,
+                    gap: 6,
+                    fontFamily: 'Montserrat, sans-serif',
+                    backgroundColor: '#ffffff',
+                    // flexWrap: 'wrap',
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection={isSmallScreen ? 'column' : 'row'}
+                    alignItems="flex-start"
+                    justifyContent="space-between"
+                    sx={{
+                      px: isSmallScreen ? 2 : 6,
+                      py: 8,
+                      gap: 6,
+                      backgroundColor: '#f9f9f9',
+                      fontFamily: 'Montserrat, sans-serif',
+                    }}
+                  >
+                    {/* Text Section */}
+                    <Box
+                      flex={isSmallScreen ? 'unset' : '0 0 50%'}
+                      maxWidth={isSmallScreen ? '100%' : '50%'}
+                      sx={{
+                        backgroundColor: '#fdfdfd',
+                        borderRadius: 4,
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
+                        p: isSmallScreen ? 3 : 4,
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        fontWeight="bold"
+                        sx={{
+                          mb: 2,
+                          color: '#1a202c',
+                          fontSize: isSmallScreen ? '1.4rem' : '1.6rem',
+                        }}
+                      >
+                        Building Tailored Solutions for Digital Success
+                      </Typography>
+
+                      <Typography
+                        color="text.secondary"
+                        lineHeight={1.8}
+                        sx={{ fontSize: '1rem', mb: 4, color: '#555' }}
+                      >
+                        Founded on a commitment to innovation and client success, our team of
+                        certified developers, security specialists, data scientists, and creative
+                        designers collaborates closely with you to craft solutions that:
+                      </Typography>
+
+                      {/* Animated List with Toggle */}
+                      <Box component="ul" sx={{ pl: 0, mb: 3 }}>
+                        {(showMore ? listItems : [listItems[0]]).map((text, index) => (
+                          <motion.li
+                            key={index}
+                            custom={index}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.3 }}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: (i) => ({
+                                opacity: 1,
+                                y: 0,
+                                transition: {
+                                  delay: i * 0.15,
+                                  duration: 0.5,
+                                  ease: 'easeOut',
+                                },
+                              }),
+                            }}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              marginBottom: '1.2rem',
+                              fontSize: '0.97rem',
+                              lineHeight: 1.75,
+                              color: '#333',
+                              listStyle: 'none',
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                minWidth: '1rem',
+                                height: '1rem',
+                                borderRadius: '50%',
+                                backgroundColor: '#1976d2',
+                                mr: 2,
+                                mt: '6px',
+                                flexShrink: 0,
+                              }}
+                            />
+                            <Typography component="span" sx={{ flex: 1 }}>
+                              {text}
+                            </Typography>
+                          </motion.li>
+                        ))}
+                      </Box>
+
+                      {/* View More / View Less Button */}
+                      <Button
+                        onClick={() => setShowMore(!showMore)}
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: '0.95rem',
+                          textTransform: 'none',
+                          color: '#1976d2',
+                          mt: 1,
+                          '&:hover': {
+                            textDecoration: 'underline',
+                          },
+                        }}
+                      >
+                        {showMore ? 'View Less' : 'View More'}
+                      </Button>
+                    </Box>
+
+                    {/* Image with Overlay */}
+                    <Box
+                      flex={isSmallScreen ? 'unset' : '0 0 45%'}
+                      maxWidth={isSmallScreen ? '100%' : '45%'}
+                      sx={{
+                        position: 'relative',
+                        borderRadius: 4,
+                        overflow: 'hidden',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                        height: isSmallScreen ? 'auto' : '100%',
+                      }}
+                    >
+                      <Box
+                        component="img"
                         src={businessImages.about_us_1}
                         alt="Services Visual"
-                        className="zoomImage"
+                        sx={{
+                          width: '100%',
+                          height: isSmallScreen ? 'auto' : '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                        }}
                       />
-                    </Box>
-                  </Fade>
-                </Grid>
 
-                <Typography
-                  mt={6}
-                  variant="body1"
-                  style={{
-                    fontSize: '1rem',
-                    padding: isSmallScreen ? '0 10px' : '10px 40px',
-                    lineHeight: '2',
-                    color: '#555',
-                    fontFamily: 'Montserrat, sans-serif',
-                  }}
-                >
-                  Based in Raleigh, North Carolina, and serving clients across the United States and
-                  beyond, Nimitech IT combines deep industry expertise with transparent
-                  communication and 24/7 support. We believe in one time development investments—no
-                  hidden subscriptions—so you retain full ownership and control of your technology.
-                  Partner with Nimitech IT for affordable, future ready IT solutions that transform
-                  challenges into opportunities. Let’s build your competitive edge together.
-                  Schedule a free consultation
-                </Typography>
+                      {/* Overlay Content */}
+                      <Box
+                        position="absolute"
+                        top={0}
+                        left={0}
+                        width="100%"
+                        height="100%"
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{
+                          background:
+                            'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))',
+                          color: '#fff',
+                          textAlign: 'center',
+                          px: 3,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            backgroundColor: 'rgba(255,255,255,0.12)',
+                            backdropFilter: 'blur(8px)',
+                            px: 3,
+                            py: 2,
+                            borderRadius: 3,
+                            mb: 2,
+                            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+                          }}
+                        >
+                          <Typography
+                            variant="h5"
+                            fontWeight="bold"
+                            sx={{ fontSize: isSmallScreen ? '1.2rem' : '1.6rem', lineHeight: 1.4 }}
+                          >
+                            We Build Digital Confidence
+                          </Typography>
+                        </Box>
+
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontSize: isSmallScreen ? '0.9rem' : '1rem',
+                            maxWidth: '90%',
+                            color: '#e0e0e0',
+                            fontWeight: 400,
+                            backgroundColor: 'rgba(0,0,0,0.3)',
+                            px: 2,
+                            py: 1,
+                            borderRadius: 2,
+                            backdropFilter: 'blur(2px)',
+                          }}
+                        >
+                          Every line of code we write is tailored to solve real business
+                          problems—securely, creatively, and with your long-term growth in mind.
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Fade>
+            {/* Image */}
+            <Grid
+              item
+              xs={12}
+              md={5}
+              sx={{
+                mt: isSmallScreen ? 4 : 0,
+                borderRadius: 4,
+                overflow: 'hidden',
+                boxShadow: '0 6px 30px rgba(0, 0, 0, 0.08)',
+                transition: 'transform 0.4s ease-in-out',
+                position: 'relative',
+                '&:hover': {
+                  transform: 'scale(1.02)',
+                },
+              }}
+            >
+              <Fade in timeout={1500}>
+                <Box position="relative">
+                  {/* Background Image */}
+                  <img
+                    src={businessImages.Cloud_comp2}
+                    alt="Services Visual"
+                    style={{
+                      width: '100%',
+                      height: '400px',
+                      display: 'block',
+                      objectFit: 'cover',
+                      borderRadius: 4,
+                    }}
+                  />
+
+                  {/* Purple Overlay Text */}
+                  <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    width="100%"
+                    height="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{
+                      background:
+                        'linear-gradient(to bottom, rgba(129, 128, 132, 0.55), rgba(63, 0, 102, 0.47))',
+                      color: '#fff',
+                      textAlign: 'center',
+                      px: 3,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: 'rgba(255,255,255,0.1)',
+                        backdropFilter: 'blur(6px)',
+                        px: 3,
+                        py: 2,
+                        borderRadius: 3,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        fontWeight="bold"
+                        sx={{
+                          fontSize: isSmallScreen ? '1.1rem' : '1.5rem',
+                          lineHeight: 1.4,
+                          color: '#fff',
+                          textShadow: '1px 1px 3px rgba(0,0,0,0.4)',
+                        }}
+                      >
+                        Empowering Businesses Through
+                        <br />
+                        Innovation and Technology
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Fade>
+            </Grid>
           </Grid>
+
+          <section>
+            <Typography
+              mt={6}
+              variant="body1"
+              sx={{
+                fontSize: isSmallScreen ? '0.98rem' : '1.05rem',
+                px: isSmallScreen ? 2 : 5,
+                mx: isSmallScreen ? 2 : 5,
+                lineHeight: 2,
+                color: '#444',
+                fontFamily: 'Montserrat, sans-serif',
+                letterSpacing: '0.3px',
+                backgroundColor: '#f9f9f9',
+                py: 4,
+                borderRadius: 3,
+                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              Based in <strong style={{ color: '#1976d2' }}>Raleigh, North Carolina</strong>, and
+              serving clients across the United States and beyond, <strong>Nimitech IT</strong>{' '}
+              combines deep industry expertise with transparent communication and{' '}
+              <strong>24/7 support</strong>.
+              <br />
+              <br />
+              We believe in{' '}
+              <strong style={{ color: '#1976d2' }}>one-time development investments</strong>—no
+              hidden subscriptions—so you retain full ownership and control of your technology.
+              <br />
+              <br />
+              Partner with <strong>Nimitech IT</strong> for affordable, future-ready IT solutions
+              that transform challenges into opportunities.
+              <br />
+              <br />
+              <span
+                style={{
+                  display: 'inline-block',
+                  background: '#1976d2',
+                  color: '#fff',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '0.95rem',
+                  marginTop: '10px',
+                  cursor: 'pointer',
+                  transition: 'background 0.3s',
+                }}
+                onMouseOver={(e) => (e.target.style.background = '#0d47a1')}
+                onMouseOut={(e) => (e.target.style.background = '#1976d2')}
+              >
+                Schedule a Free Consultation
+              </span>
+            </Typography>
+          </section>
 
           <section className={styles.donation}>
             <GradientCard imageSrc={donationImage2} imagePosition="left" />

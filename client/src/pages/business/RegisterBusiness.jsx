@@ -131,7 +131,7 @@ const BusinessRegisterPage = () => {
                   fontFamily: 'Montserrat, sans-serif',
                 }}
               >
-                Visit NimiTutor
+                Visit nimitutor.com
                 <ArrowBackIcon />
               </button>
             </a>

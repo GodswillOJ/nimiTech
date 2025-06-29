@@ -62,7 +62,7 @@ const CybersecurityContent = () => {
           </p>
         </div>
         <div className="ai-services-image-container">
-          <div className="zoom-wrapper">
+          <div className="zoom-wrapper" style={{ height: '400px' }}>
             <img src={businessImages.CBSC} alt="Cybersecurity Defense" />
           </div>
         </div>
