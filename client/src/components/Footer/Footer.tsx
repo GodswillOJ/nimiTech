@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FacebookIcon,
   YouTubeIcon,
   XIcon,
   InstagramIcon,
+  LinkedInIcon,
+  WhatsAppIcon,
 } from '../../assets/blog/icons/SocialIcons';
 import styles from './Footer.module.scss';
 
@@ -28,11 +30,12 @@ interface SocialLink {
 }
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
   const navigationData: NavigationItem[] = [
     {
       title: 'Resources',
       links: [
-        { text: 'Services', path: '/services' },
+        { text: 'Services', path: '/our-services' },
         { text: 'Blog', path: '/blogs' },
         { text: 'Case Studies', path: '/case-studies' },
         { text: 'FAQs', path: '/faqs' },
@@ -58,10 +61,24 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks: SocialLink[] = [
-    { icon: <XIcon />, href: '#', label: 'twitter' },
-    { icon: <InstagramIcon />, href: '#', label: 'instagram' },
-    { icon: <FacebookIcon />, href: '#', label: 'facebook' },
-    { icon: <YouTubeIcon />, href: '#', label: 'youtube' },
+    { icon: <XIcon />, href: 'https://x.com/nimi_techIT', label: 'twitter' },
+    { icon: <InstagramIcon />, href: 'https://www.instagram.com/nimi.techit/', label: 'instagram' },
+    {
+      icon: <FacebookIcon />,
+      href: 'https://www.facebook.com/profile.php?id=61577287182430',
+      label: 'facebook',
+    },
+    {
+      icon: <YouTubeIcon />,
+      href: 'https://www.youtube.com/@NimiTechITConsultantsLLC-IT',
+      label: 'youtube',
+    },
+    {
+      icon: <LinkedInIcon />,
+      href: 'https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true',
+      label: 'linkedin',
+    },
+    { icon: <WhatsAppIcon />, href: '#', label: 'whatsapp' },
   ];
 
   const footerLinks = [
@@ -69,6 +86,10 @@ const Footer: React.FC = () => {
     { text: 'Terms of Service', path: '/terms' },
     { text: 'Cookies Settings', path: '/cookies' },
   ];
+
+  const handleBookConsultation = () => {
+    navigate('/contact-us');
+  };
 
   return (
     <div className={styles['footer-wrapper']}>
@@ -81,7 +102,9 @@ const Footer: React.FC = () => {
             <p className={styles.cta__subtitle}>
               Discover why thousands trust our tech solutions to succeed
             </p>
-            <button className={styles.cta__ctaButton}>Book a free consultation now</button>
+            <button className={styles.cta__ctaButton} onClick={handleBookConsultation}>
+              Book a free consultation now
+            </button>
           </div>
         </div>
       </section>
@@ -96,10 +119,10 @@ const Footer: React.FC = () => {
               <img className={styles.brand__name} src={logoText} />
             </div>
             <p className={styles.brand__description}>
-              Nimitech IT is a global technology solutions provider specializing in cybersecurity,
+              {/* Nimitech IT is a global technology solutions provider specializing in cybersecurity,
               artificial intelligence, machine learning, digital marketing, software development,
               and graphic design. We empower businesses with innovative, secure, and scalable IT
-              solutions tailored to drive digital transformation and long-term success.
+              solutions tailored to drive digital transformation and long-term success. */}
             </p>
             <div className={styles.brand__social}>
               {socialLinks.map((social, index) => (

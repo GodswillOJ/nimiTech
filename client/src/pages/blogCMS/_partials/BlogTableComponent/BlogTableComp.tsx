@@ -130,7 +130,7 @@ export const BlogTableComp: React.FC<IBlogTableComp> = ({
                       aria-label={`Edit ${post.title}`}
                       className={styles.action__button}
                     >
-                      <EditIcon />
+                      <EditIcon size={18} />
                     </Button>
 
                     <Button
@@ -140,7 +140,7 @@ export const BlogTableComp: React.FC<IBlogTableComp> = ({
                       aria-label={`Preview ${post.title}`}
                       className={styles.action__button}
                     >
-                      <PreviewIcon />
+                      <PreviewIcon size={18} />
                     </Button>
 
                     <Button
@@ -150,7 +150,7 @@ export const BlogTableComp: React.FC<IBlogTableComp> = ({
                       aria-label={`Duplicate ${post.title}`}
                       className={styles.action__button}
                     >
-                      <DuplicateIcon />
+                      <DuplicateIcon size={18} />
                     </Button>
 
                     <Button
@@ -160,7 +160,7 @@ export const BlogTableComp: React.FC<IBlogTableComp> = ({
                       aria-label={`Delete ${post.title}`}
                       className={`${styles.action__button} ${styles.delete__button}`}
                     >
-                      <TrashIcon />
+                      <TrashIcon size={18} />
                     </Button>
                   </div>
                 </td>

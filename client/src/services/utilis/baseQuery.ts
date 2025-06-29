@@ -5,9 +5,12 @@ import { blogPosts, featuredPost } from '../../pages/blog/_partials/BlogPost.dat
 export const baseQueryWithAuth = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api',
   credentials: 'include',
-  prepareHeaders: (headers) => {
+  prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');
-    headers.set('Content-Type', 'application/json');
+    // Don't set Content-Type for FormData requests (let browser set it with boundary)
+    if (endpoint !== 'addEditBlogPost' && endpoint !== 'uploadBlogImage') {
+      headers.set('Content-Type', 'application/json');
+    }
     return headers;
   },
 });
@@ -18,7 +21,7 @@ export const secureBaseQuery = async (args: any, api: any, extraOptions: any) =>
   if (result.error?.status === 401) {
     clearAuthStatus();
     window.dispatchEvent(
-      new CustomEvent('auth:sessionExpired', { detail: { redirectTo: '/admin/login' } })
+      new CustomEvent('auth:sessionExpired', { detail: { redirectTo: '/auth' } })
     );
   }
 

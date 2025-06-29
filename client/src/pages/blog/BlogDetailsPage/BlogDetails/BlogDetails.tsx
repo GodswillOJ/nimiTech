@@ -7,6 +7,10 @@ import { Highlights } from '../../../../components/blog/Highlights/Highlights';
 import { VideoEmbed } from '../../../../components/blog/VideoEmbed/VideoEmbed';
 import Newsletter from '../../../../components/blog/Modal/NewsLetter/Newsletter';
 import {
+  shouldShowNewsletterModal,
+  markNewsletterModalShown,
+} from '../../../../utils/newsletterUtils';
+import {
   useGetBlogPostByIdQuery,
   useGetRelatedPostsQuery,
 } from '../../../../services/utilis/blogApiService';
@@ -54,14 +58,24 @@ const BlogDetails = () => {
     : relatedPosts.slice(currentIndex * postsPerPage, (currentIndex + 1) * postsPerPage);
 
   useEffect(() => {
+    // Check if we should show the newsletter modal
+    if (!shouldShowNewsletterModal()) {
+      return; // Don't set up modal triggers if user shouldn't see it
+    }
+
     const timeout = setTimeout(() => {
       const handleScroll = () => {
         if (window.scrollY >= window.innerHeight / 4) {
           setShowNewsletterModal(true);
+          markNewsletterModalShown();
           window.removeEventListener('scroll', handleScroll);
         }
       };
       window.addEventListener('scroll', handleScroll);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
     }, 12000);
 
     return () => clearTimeout(timeout);
@@ -147,7 +161,18 @@ const BlogDetails = () => {
 
   return (
     <div className={styles.blog_view}>
-      <Newsletter isOpen={showNewsletterModal} onClose={() => setShowNewsletterModal(false)} />
+      <Newsletter
+        isOpen={showNewsletterModal}
+        onClose={() => setShowNewsletterModal(false)}
+        onSuccess={() => {
+          // Modal will handle marking user as subscribed
+          setShowNewsletterModal(false);
+        }}
+        onDismiss={() => {
+          // Modal will handle marking as dismissed
+          setShowNewsletterModal(false);
+        }}
+      />
       <header className={styles.blog_view__header}>
         <Link to="/blogs" className={styles.blog_view__back_link}>
           <BackIcon className={styles.blog_view__back_icon} />

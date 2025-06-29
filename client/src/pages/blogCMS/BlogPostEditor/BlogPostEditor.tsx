@@ -1,22 +1,47 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { SaveIcon } from '../../../assets/blogCMS/icons/SaveIcon';
 import { Button } from '../../../components/blogCMS/Button/Button';
 import { Input, Textarea, Select } from '../../../components/blogCMS/Input/Input';
 import { ImageUploader } from './_partials/ImageUploader/ImageUploader';
 import { PostSettings } from './_partials/PostSettings/PostSettings';
-import { AuthorCard } from './_partials/AuthorCard/AuthorCard';
 import { MetadataCard } from './_partials/MetadataCard/MetadataCard';
 // import { SEOSettings } from './_partials/SEOSettings/SEOSettings';
 import { FormData, FieldUpdate } from './BlogPostEditor.types';
 import { PostStatus } from '../BlogEditorDashboard/BlogEditorDashboard.types';
 import { IContent } from '../../blog/blog.types';
+import { useToast } from '../../../hooks/useToast';
+import {
+  useAddEditBlogPostMutation,
+  useGetBlogPostByIdQuery,
+  useUploadBlogImageMutation,
+  useDeleteBlogPostMutation,
+} from '../../../services/utilis/blogApiService';
 import styles from './BlogPostEditor.module.scss';
 
-const BlogPostEditor = () => {
+const BlogPostEditor: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams();
+  const toast = useToast();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  // API hooks
+  const [addEditBlogPost] = useAddEditBlogPostMutation();
+  const [uploadBlogImage] = useUploadBlogImageMutation();
+  const [deleteBlogPost] = useDeleteBlogPostMutation();
+  const { data: existingPost, isLoading: isLoadingPost } = useGetBlogPostByIdQuery(id || '', {
+    skip: !id,
+  });
+
+  // Get default admin/author data (in a real app, this would come from auth context)
+  const getDefaultAuthor = () => ({
+    name: 'Admin User', // This should come from authenticated user data
+    avatar: '',
+    date: new Date().toISOString(),
+    bio: 'Blog Administrator',
+  });
 
   // Get post data from location state or use default empty post
   const defaultPost = {
@@ -25,12 +50,7 @@ const BlogPostEditor = () => {
     excerpt: '',
     status: PostStatus.DRAFT,
     category: 'Uncategorized',
-    author: {
-      name: 'Anonymous',
-      avatar: '',
-      date: new Date().toISOString(),
-      bio: '',
-    },
+    author: getDefaultAuthor(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     tags: [],
@@ -60,6 +80,12 @@ const BlogPostEditor = () => {
 
   const [formData, setFormData] = useState<FormData>(postFromState);
   const [featuredImage, setFeaturedImage] = useState<string | null>(postFromState?.image || null);
+  const [contentImage, setContentImage] = useState<string | null>(
+    postFromState?.contentImage || null
+  );
+  const [authorAvatar, setAuthorAvatar] = useState<string | null>(
+    typeof postFromState?.author === 'object' ? postFromState.author.avatar || null : null
+  );
   const [paragraphs, setParagraphs] = useState<Array<{ type: string; content: string }>>(
     postFromState?.content?.paragraphs || [{ type: 'text', content: '' }]
   );
@@ -69,22 +95,185 @@ const BlogPostEditor = () => {
   const [highlightTitle, setHighlightTitle] = useState<string>(
     postFromState?.content?.highlights?.title || ''
   );
+  const [isUploadingContentImage, setIsUploadingContentImage] = useState(false);
+  const [isUploadingAuthorAvatar, setIsUploadingAuthorAvatar] = useState(false);
 
-  // Initialize from location state if editing an existing post
-  useEffect(() => {
-    if (location.state?.post) {
-      setFormData(location.state.post);
-      setFeaturedImage(location.state.post.image || null);
+  // Calculate word count and reading time
+  const calculateWordCountAndReadingTime = () => {
+    try {
+      // Collect all text content with proper null/undefined checks
+      const allTextParts = [];
 
-      if (location.state.post.content?.paragraphs) {
-        setParagraphs(location.state.post.content.paragraphs);
+      // Add basic text fields
+      if (formData?.title?.trim()) allTextParts.push(formData.title);
+      if (formData?.excerpt?.trim()) allTextParts.push(formData.excerpt);
+      if (formData?.content?.subtitle?.trim()) allTextParts.push(formData.content.subtitle);
+      if (highlightTitle?.trim()) allTextParts.push(highlightTitle);
+
+      // Add all paragraph content (both text and quote types)
+      if (Array.isArray(paragraphs)) {
+        paragraphs.forEach((paragraph) => {
+          if (paragraph && typeof paragraph === 'object' && paragraph.content?.trim()) {
+            allTextParts.push(paragraph.content.trim());
+          }
+        });
       }
-      if (location.state.post.content?.highlights) {
-        setHighlights(location.state.post.content.highlights.benefits || []);
-        setHighlightTitle(location.state.post.content.highlights.title || '');
+
+      // Add all highlight benefits
+      if (Array.isArray(highlights)) {
+        highlights.forEach((highlight) => {
+          if (highlight && typeof highlight === 'string' && highlight.trim()) {
+            allTextParts.push(highlight.trim());
+          }
+        });
+      }
+
+      // Join all text and count words
+      const allText = allTextParts.join(' ').trim();
+
+      if (!allText) {
+        return { wordCount: 0, readingTime: '1 min read' };
+      }
+
+      // More robust word counting - handle various punctuation and spaces
+      const words = allText
+        .replace(/[^\w\s'"-]/g, ' ') // Replace most punctuation with spaces, keep contractions
+        .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+        .trim()
+        .split(' ')
+        .filter((word) => word.length > 0);
+
+      const wordCount = words.length;
+
+      // Average reading speed is 200-250 words per minute, we'll use 225
+      const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 225));
+      const readingTime =
+        readingTimeMinutes === 1 ? '1 min read' : `${readingTimeMinutes} min read`;
+
+      return { wordCount, readingTime };
+    } catch (error) {
+      console.error('Error calculating word count:', error);
+      return { wordCount: 0, readingTime: '1 min read' };
+    }
+  };
+
+  // Content image upload handler
+  const handleContentImageUpload = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast.error('Invalid file type', 'Please select a valid image file');
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error('File too large', 'Image size must be less than 8MB');
+      return;
+    }
+
+    setIsUploadingContentImage(true);
+
+    try {
+      const result = await uploadBlogImage({ image: file, type: 'content' }).unwrap();
+
+      if (result.success && result.imageUrl) {
+        setContentImage(result.imageUrl);
+        setFormData((prev) => ({
+          ...prev,
+          contentImage: result.imageUrl,
+        }));
+        toast.success('Content image uploaded', 'Content image uploaded successfully');
+      } else if (result.url) {
+        // Handle different response format
+        setContentImage(result.url);
+        setFormData((prev) => ({
+          ...prev,
+          contentImage: result.url,
+        }));
+        toast.success('Content image uploaded', 'Content image uploaded successfully');
+      } else {
+        throw new Error('Upload failed - no URL returned');
+      }
+    } catch (error: any) {
+      console.error('Content image upload error:', error);
+      toast.error(
+        'Upload failed',
+        error?.data?.message || 'Failed to upload content image. Please try again.'
+      );
+    } finally {
+      setIsUploadingContentImage(false);
+    }
+  };
+
+  // Author avatar upload handler
+  const handleAuthorAvatarUpload = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast.error('Invalid file type', 'Please select a valid image file');
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error('File too large', 'Image size must be less than 8MB');
+      return;
+    }
+
+    setIsUploadingAuthorAvatar(true);
+
+    try {
+      const result = await uploadBlogImage({ image: file, type: 'avatar' }).unwrap();
+
+      if (result.success && result.imageUrl) {
+        setAuthorAvatar(result.imageUrl);
+        handleAuthorChange('avatar', result.imageUrl);
+        toast.success('Avatar uploaded', 'Author avatar uploaded successfully');
+      } else if (result.url) {
+        setAuthorAvatar(result.url);
+        handleAuthorChange('avatar', result.url);
+        toast.success('Avatar uploaded', 'Author avatar uploaded successfully');
+      } else {
+        throw new Error('Upload failed - no URL returned');
+      }
+    } catch (error: any) {
+      console.error('Avatar upload error:', error);
+      toast.error(
+        'Upload failed',
+        error?.data?.message || 'Failed to upload avatar. Please try again.'
+      );
+    } finally {
+      setIsUploadingAuthorAvatar(false);
+    }
+  };
+
+  // Initialize from existing post if editing
+  useEffect(() => {
+    if (existingPost && !isLoadingPost) {
+      const post = existingPost.data || existingPost;
+      setFormData(post);
+      setFeaturedImage(post.image || null);
+      setContentImage(post.contentImage || null);
+      setAuthorAvatar(typeof post.author === 'object' ? post.author.avatar || null : null);
+
+      if (post.content?.paragraphs) {
+        setParagraphs(post.content.paragraphs);
+      }
+      if (post.content?.highlights) {
+        setHighlights(post.content.highlights.benefits || []);
+        setHighlightTitle(post.content.highlights.title || '');
+      }
+    } else if (location.state?.post) {
+      const post = location.state.post;
+      setFormData(post);
+      setFeaturedImage(post.image || null);
+      setContentImage(post.contentImage || null);
+      setAuthorAvatar(typeof post.author === 'object' ? post.author.avatar || null : null);
+
+      if (post.content?.paragraphs) {
+        setParagraphs(post.content.paragraphs);
+      }
+      if (post.content?.highlights) {
+        setHighlights(post.content.highlights.benefits || []);
+        setHighlightTitle(post.content.highlights.title || '');
       }
     }
-  }, [location.state]);
+  }, [existingPost, isLoadingPost, location.state]);
 
   const handleInputChange = (field: keyof FieldUpdate, value: string): void => {
     setFormData((prev) => ({
@@ -150,90 +339,187 @@ const BlogPostEditor = () => {
       newErrors.title = 'Title is required';
     }
 
-    if (paragraphs.length === 0 || !paragraphs.some((p) => p.content.trim())) {
-      newErrors.content = 'Content is required';
+    // if (!formData.excerpt?.trim()) {
+    //   newErrors.excerpt = 'Excerpt/Description is required';
+    // }
+
+    // if (!formData.category?.trim()) {
+    //   newErrors.category = 'Category is required';
+    // }
+
+    // if (!featuredImage) {
+    //   newErrors.featuredImage = 'Featured image is required';
+    // }
+
+    if (paragraphs.length === 0 || !paragraphs.some((p) => p && p.content && p.content.trim())) {
+      newErrors.content = 'At least one paragraph with content is required';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!validateForm()) {
+      toast.error('Some fields are still missing');
       return;
     }
 
-    // Process tags if they're a string
-    const processedTags =
-      typeof formData.tags === 'string'
-        ? formData.tags
-            .split(',')
-            .map((tag) => tag.trim())
-            .filter(Boolean)
-        : formData.tags || [];
+    setIsLoading(true);
+    setErrors({});
 
-    // Generate slug if not provided
-    const slug = formData.slug || formData.title.toLowerCase().replace(/\s+/g, '-');
+    try {
+      // Process tags if they're a string
+      const processedTags =
+        typeof formData.tags === 'string'
+          ? formData.tags
+              .split(',')
+              .map((tag) => tag.trim())
+              .filter(Boolean)
+          : formData.tags || [];
 
-    // Prepare content structure
-    const contentData: IContent = {
-      subtitle: formData.content?.subtitle || '',
-      paragraphs: paragraphs || [],
-      highlights: {
-        title: highlightTitle || '',
-        benefits: highlights || [],
-      },
-    };
+      // Generate slug if not provided
+      const slug = formData.slug || formData.title.toLowerCase().replace(/\s+/g, '-');
 
-    // Prepare data to save
-    const dataToSave = {
-      ...formData,
-      id: isNewPost ? Date.now().toString() : formData.id,
-      image: featuredImage || '',
-      tags: processedTags,
-      slug,
-      updatedAt: new Date().toISOString(),
-      publishDate:
-        formData.status === PostStatus.PUBLISHED ? new Date().toISOString() : formData.publishDate,
-      content: contentData,
-      youtubeUrl: formData.youtubeUrl || '',
-      contentImage: formData.contentImage || '',
-      contentImageTitle: formData.contentImageTitle || '',
-    };
+      // Prepare content structure
+      const contentData: IContent = {
+        subtitle: formData.content?.subtitle || '',
+        paragraphs: paragraphs.filter((p) => p && p.content && p.content.trim()) || [
+          { type: 'text', content: '' },
+        ],
+        highlights: {
+          title: highlightTitle || '',
+          benefits: highlights.filter((h) => h && h.trim()) || [],
+        },
+      };
 
-    // Get existing posts from localStorage
-    const savedPostsJson = localStorage.getItem('blogPosts');
-    let savedPosts = [];
+      // Calculate reading time based on content
+      const { readingTime } = calculateWordCountAndReadingTime();
 
-    if (savedPostsJson) {
-      try {
-        savedPosts = JSON.parse(savedPostsJson);
-      } catch (error) {
-        console.error('Error parsing saved posts:', error);
+      // Validate required fields according to backend schema
+      if (!formData.title?.trim()) {
+        throw new Error('Title is required');
       }
-    }
+      if (!formData.excerpt?.trim()) {
+        throw new Error('Excerpt/Description is required');
+      }
+      if (!formData.category?.trim()) {
+        throw new Error('Category is required');
+      }
+      if (!featuredImage) {
+        throw new Error('Featured image is required');
+      }
 
-    // Update or add the post
-    if (isNewPost) {
-      savedPosts.push(dataToSave);
-    } else {
-      const index = savedPosts.findIndex((post: any) => post.id === dataToSave.id);
-      if (index !== -1) {
-        savedPosts[index] = dataToSave;
+      // Prepare blog post data - map to backend expected fields
+      const blogPostData: any = {
+        ...(id && { id }), // Include ID only if updating
+        title: formData.title.trim(),
+        description: formData.excerpt.trim(), // Backend expects 'description' not 'excerpt'
+        content: contentData,
+        category: formData.category?.trim() || 'Uncategorized',
+        isPublished: formData.status === PostStatus.PUBLISHED, // Convert status to boolean
+        tags: processedTags,
+        slug: slug.trim(),
+        youtubeUrl: formData.youtubeUrl?.trim() || '',
+        contentImageTitle: formData.contentImageTitle?.trim() || '',
+        readTime: readingTime,
+        // Add author information
+        author: {
+          name:
+            typeof formData.author === 'object'
+              ? formData.author.name || 'Admin User'
+              : formData.author || 'Admin User',
+          bio:
+            typeof formData.author === 'object'
+              ? formData.author.bio || 'Blog Administrator'
+              : 'Blog Administrator',
+          avatar: authorAvatar || '',
+          date: new Date().toLocaleDateString(),
+        },
+      };
+
+      // Add image URLs only if they exist (they'll be included as strings, not files)
+      if (featuredImage) {
+        blogPostData.image = featuredImage;
+      }
+      if (contentImage) {
+        blogPostData.contentImage = contentImage;
+      }
+
+      console.log('Saving blog post data:', blogPostData);
+      console.log('Featured image URL:', featuredImage);
+      console.log('Content image URL:', contentImage);
+      console.log('Author avatar URL:', authorAvatar);
+
+      // Save the blog post
+      const result = await addEditBlogPost(blogPostData).unwrap();
+
+      if (result.success) {
+        toast.success(
+          id ? 'Post updated successfully!' : 'Post created successfully!',
+          `Your blog post "${formData.title}" has been ${id ? 'updated' : 'saved'}.`
+        );
+
+        // Navigate back to dashboard
+        navigate('/dashboard/posts');
       } else {
-        savedPosts.push(dataToSave);
+        throw new Error(result.message || 'Failed to save post');
       }
+    } catch (error: any) {
+      console.error('Error saving post:', error);
+      console.error('Error details:', {
+        status: error?.status,
+        data: error?.data,
+        message: error?.message,
+        originalStatus: error?.originalStatus,
+      });
+
+      let errorMessage = 'Please try again.';
+
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.data?.errors) {
+        errorMessage = Array.isArray(error.data.errors)
+          ? error.data.errors.join(', ')
+          : error.data.errors;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+
+      toast.error('Failed to save post', errorMessage);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    // Save back to localStorage
-    localStorage.setItem('blogPosts', JSON.stringify(savedPosts));
+  const handleDelete = async () => {
+    if (!id) return;
 
-    // Navigate back to dashboard
-    navigate('/dashboard');
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${formData.title}"? This action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    setIsLoading(true);
+
+    try {
+      const result = await deleteBlogPost(id).unwrap();
+
+      if (result.success) {
+        toast.success('Post deleted successfully', 'The blog post has been permanently deleted.');
+        navigate('/dashboard/posts');
+      }
+    } catch (error: any) {
+      console.error('Error deleting post:', error);
+      toast.error('Failed to delete post', error?.data?.message || 'Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
-    navigate('/dashboard');
+    navigate('/dashboard/posts');
   };
 
   return (
@@ -245,9 +531,18 @@ const BlogPostEditor = () => {
             <Button variant="secondary" onClick={handleCancel}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleSave} disabled={!formData?.title?.trim()}>
+            {id && (
+              <Button variant="danger" onClick={handleDelete} disabled={isLoading}>
+                Delete Post
+              </Button>
+            )}
+            <Button
+              variant="primary"
+              onClick={handleSave}
+              disabled={!formData?.title?.trim() || isLoading}
+            >
               <SaveIcon />
-              Save Post
+              {isLoading ? 'Saving...' : 'Save Post'}
             </Button>
           </div>
         </div>
@@ -273,6 +568,14 @@ const BlogPostEditor = () => {
               onChange={(e: any) => handleInputChange('excerpt', e.target.value)}
               rows={3}
               error={errors?.excerpt}
+            />
+
+            <Input
+              label="Category"
+              placeholder="Enter post category..."
+              value={formData?.category || ''}
+              onChange={(e: any) => handleInputChange('category', e.target.value)}
+              error={errors?.category}
             />
 
             <Input
@@ -378,6 +681,49 @@ const BlogPostEditor = () => {
                 }));
               }}
             />
+
+            <div className={styles.editor__content_section}>
+              <h3>Content Image</h3>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleContentImageUpload(file);
+                }}
+                style={{ marginBottom: '10px' }}
+                disabled={isUploadingContentImage}
+              />
+              {isUploadingContentImage && <p>Uploading content image...</p>}
+              {contentImage && (
+                <div style={{ marginTop: '10px' }}>
+                  <img
+                    src={contentImage}
+                    alt="Content preview"
+                    style={{ maxWidth: '200px', height: 'auto', borderRadius: '4px' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setContentImage(null);
+                      setFormData((prev) => ({ ...prev, contentImage: '' }));
+                      toast.info('Content image removed');
+                    }}
+                    style={{
+                      marginLeft: '10px',
+                      padding: '5px 10px',
+                      background: '#f44336',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <ImageUploader
@@ -386,10 +732,29 @@ const BlogPostEditor = () => {
               setFeaturedImage(url);
               handleInputChange('featuredImage', url || '');
             }}
+            error={errors?.featuredImage}
           />
         </div>
 
         <aside className={styles.editor__sidebar}>
+          <div className={styles.editor__word_count}>
+            <h3>Content Statistics</h3>
+            <div className={styles.editor__stats}>
+              <div className={styles.editor__stat}>
+                <span className={styles.editor__stat_label}>Word Count:</span>
+                <span className={styles.editor__stat_value}>
+                  {calculateWordCountAndReadingTime().wordCount}
+                </span>
+              </div>
+              <div className={styles.editor__stat}>
+                <span className={styles.editor__stat_label}>Reading Time:</span>
+                <span className={styles.editor__stat_value}>
+                  {calculateWordCountAndReadingTime().readingTime}
+                </span>
+              </div>
+            </div>
+          </div>
+
           <PostSettings formData={formData} onFieldChange={handleInputChange} errors={errors} />
 
           <div className={styles.editor__author_section}>
@@ -405,17 +770,59 @@ const BlogPostEditor = () => {
               onChange={(e: any) => handleAuthorChange('name', e.target.value)}
             />
             <Input
-              label="Author Avatar URL"
-              placeholder="Enter author avatar URL..."
-              value={typeof formData?.author === 'string' ? '' : formData?.author?.avatar || ''}
-              onChange={(e: any) => handleAuthorChange('avatar', e.target.value)}
-            />
-            <Input
               label="Author Bio"
               placeholder="Enter author bio..."
               value={typeof formData?.author === 'string' ? '' : formData?.author?.bio || ''}
               onChange={(e: any) => handleAuthorChange('bio', e.target.value)}
             />
+
+            <div className={styles.editor__content_section}>
+              <h3>Author Avatar Image</h3>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleAuthorAvatarUpload(file);
+                }}
+                style={{ marginBottom: '10px' }}
+                disabled={isUploadingAuthorAvatar}
+              />
+              {isUploadingAuthorAvatar && <p>Uploading avatar...</p>}
+              {authorAvatar && (
+                <div style={{ marginTop: '10px' }}>
+                  <img
+                    src={authorAvatar}
+                    alt="Author avatar preview"
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthorAvatar(null);
+                      handleAuthorChange('avatar', '');
+                      toast.info('Avatar removed');
+                    }}
+                    style={{
+                      marginLeft: '10px',
+                      padding: '5px 10px',
+                      background: '#f44336',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <MetadataCard
