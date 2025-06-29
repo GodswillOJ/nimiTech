@@ -10,7 +10,19 @@ export const api = createApi({
       query: () => '/business',
       providesTags: ['HomePage'],
     }),
+
+    // 👇 Contact form mutation
+    sendContactForm: builder.mutation({
+      query: (formData) => ({
+        url: '/contact-us',
+        method: 'POST',
+        body: formData,
+      }),
+    }),
   }),
 });
 
-export const { useGetBusinessPostsQuery } = api;
+export const {
+  useGetBusinessPostsQuery,
+  useSendContactFormMutation, // <-- export it
+} = api;

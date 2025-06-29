@@ -554,7 +554,7 @@ const HomePage = () => {
         >
           Support Our Mission
         </h2>
-        <p
+        {/* <p
           style={{
             fontSize: '16px',
             color: '#555',
@@ -567,7 +567,7 @@ const HomePage = () => {
           Nimitech IT is committed to providing impactful digital solutions and empowering
           businesses with the tools to succeed. Your support helps us grow and serve more
           communities. You can support us through the details below.
-        </p>
+        </p> */}
         {/* Additional Mission */}
         <div
           style={{

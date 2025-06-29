@@ -1,10 +1,21 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, TextField, Typography, useMediaQuery } from '@mui/material';
-import { useEffect } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Link as MuiLink,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSendContactFormMutation } from '../../services/api';
 import { businessImages } from '../../assets/images.js';
 import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
 import { BusinessPostItem } from '../../components/business/landing_page/BusinessItem';
+
 const BusinessRegisterPage = () => {
   const search = useLocation().search;
   const postId = parseInt(new URLSearchParams(search).get('id'), 10);
@@ -17,6 +28,44 @@ const BusinessRegisterPage = () => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    location: '',
+    consent: false,
+  });
+  const [sendContactForm] = useSendContactFormMutation();
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.consent) {
+      alert('Please agree to the consent disclaimer before submitting.');
+      return;
+    }
+    try {
+      await sendContactForm(formData).unwrap();
+      alert('Message sent successfully!');
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        location: '',
+        consent: false,
+      });
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send. Please try again later.');
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -288,38 +337,82 @@ const BusinessRegisterPage = () => {
             Contact us
           </Typography>
 
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+          >
             <TextField
-              className="text_area"
               label="Full Name"
-              fontFamily="Montserrat, sans-serif"
-              variant="outlined"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
               required
+              variant="outlined"
+              fullWidth
             />
             <TextField
-              className="text_area"
               label="Email"
-              variant="outlined"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               type="email"
-              fontFamily="Montserrat, sans-serif"
               required
+              variant="outlined"
+              fullWidth
             />
             <TextField
-              className="text_area"
-              fontFamily="Montserrat, sans-serif"
               label="Phone Number"
-              variant="outlined"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               required
+              variant="outlined"
+              fullWidth
             />
             <TextField
-              className="text_area"
-              fontFamily="Montserrat, sans-serif"
               label="Location"
-              variant="outlined"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
               required
+              variant="outlined"
+              fullWidth
             />
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="consent"
+                  checked={formData.consent}
+                  onChange={handleChange}
+                  required
+                />
+              }
+              label={
+                <Typography variant="body2" fontFamily="Montserrat, sans-serif">
+                  By checking this box, you agree to be contacted by Nimitech IT using the
+                  information provided in this form. Your information will be used in accordance
+                  with our{' '}
+                  <MuiLink
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener"
+                    sx={{ color: '#3b1647', textDecoration: 'underline' }}
+                  >
+                    Privacy Policy
+                  </MuiLink>
+                  . You may opt out at any time.
+                </Typography>
+              }
+              sx={{
+                alignItems: 'flex-start',
+                marginTop: '-10px',
+              }}
+            />
+
             <Button
               variant="contained"
+              type="submit"
               sx={{
                 backgroundColor: '#3b1647',
                 borderRadius: '30px',
@@ -331,7 +424,6 @@ const BusinessRegisterPage = () => {
                   backgroundColor: '#b71c1c',
                 },
               }}
-              type="submit"
             >
               Send
             </Button>
