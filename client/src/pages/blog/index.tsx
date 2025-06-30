@@ -16,6 +16,9 @@ import {
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
+const BlogDonateSections = lazy(
+  () => import('../../components/blog/BlogDonateSections/BlogDonateSections')
+);
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -99,78 +102,84 @@ const Blog = () => {
   };
 
   return (
-    <div className={styles.blogContainer}>
-      {/* Featured Post Section */}
-      <section
-        className={styles.featuredPost}
-        style={{ backgroundImage: `url(${featuredPostData.image})` }}
-      >
-        <Link to={`/blogs/${featuredPostData.id || featuredPostData._id}`}>
-          <div className={styles.featuredContent}>
-            <span className={styles.category}>{featuredPostData.category}</span>
-            <h1>{featuredPostData.title}</h1>
-            <p>{featuredPostData.description}</p>
-          </div>
-        </Link>
-      </section>
+    <>
+      <div className={styles.blogContainer}>
+        {/* Featured Post Section */}
+        <section
+          className={styles.featuredPost}
+          style={{ backgroundImage: `url(${featuredPostData.image})` }}
+        >
+          <Link to={`/blogs/${featuredPostData.id || featuredPostData._id}`}>
+            <div className={styles.featuredContent}>
+              <span className={styles.category}>{featuredPostData.category}</span>
+              <h1>{featuredPostData.title}</h1>
+              <p>{featuredPostData.description}</p>
+            </div>
+          </Link>
+        </section>
 
-      {/* Recent Blog Posts Section */}
-      <section className={styles.recentPosts}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
-          {/* <span className={styles.postCount}>
+        {/* Recent Blog Posts Section */}
+        <section className={styles.recentPosts}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
+            {/* <span className={styles.postCount}>
             Showing {displayedPosts.length} of {blogPosts.length} posts
           </span> */}
-        </div>
+          </div>
 
-        <div className={styles.postsGrid}>
-          {displayedPosts.map((post: any, index: number) => {
-            const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
-            return (
-              <article
-                key={postId}
-                className={styles.blogCard}
-                style={{
-                  animationDelay: `${(index % postsPerPage) * 100}ms`,
-                }}
-              >
-                <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
-                  <div className={styles.imageContainer}>
-                    <img src={post.image} alt={post.title} loading="lazy" />
-                  </div>
-                  <div className={styles.contentContainer}>
-                    <h3>{post.title}</h3>
-                    <p>{post.description}</p>
-                    <div className={styles.metaInfo}>
-                      <img
-                        src={authorAvatar}
-                        alt={post.author.name}
-                        className={styles.authorAvatar}
-                      />
-                      <span>{post.author.name}</span>
-                      <span>•</span>
-                      <span>{post.author.date}</span>
+          <div className={styles.postsGrid}>
+            {displayedPosts.map((post: any, index: number) => {
+              const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
+              return (
+                <article
+                  key={postId}
+                  className={styles.blogCard}
+                  style={{
+                    animationDelay: `${(index % postsPerPage) * 100}ms`,
+                  }}
+                >
+                  <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
+                    <div className={styles.imageContainer}>
+                      <img src={post.image} alt={post.title} loading="lazy" />
                     </div>
-                  </div>
-                </Link>
-              </article>
-            );
-          })}
-        </div>
+                    <div className={styles.contentContainer}>
+                      <h3>{post.title}</h3>
+                      <p>{post.description}</p>
+                      <div className={styles.metaInfo}>
+                        <img
+                          src={authorAvatar}
+                          alt={post.author.name}
+                          className={styles.authorAvatar}
+                        />
+                        <span>{post.author.name}</span>
+                        <span>•</span>
+                        <span>{post.author.date}</span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
 
-        {/* Action Buttons */}
-        <div className={styles.actionsContainer}>
-          {renderLoadMoreButton()}
-          {renderViewMoreButton()}
-        </div>
-      </section>
-
+          {/* Action Buttons */}
+          <div className={styles.actionsContainer}>
+            {renderLoadMoreButton()}
+            {renderViewMoreButton()}
+          </div>
+        </section>
+      </div>
       {/* Donation Section */}
-      <section className={styles.donation}>
-        <GradientCard imageSrc={donationImage5} imagePosition="left" />
-        <DonateSection images={[donationImage1, donationImage4, donationImage5]} />
+
+      <section className={styles.donationSection}>
+        <div className={styles.donation}>
+          {/* <GradientCard imageSrc={donationImage4} imagePosition="left" /> */}
+
+          {/* <DonateSection images={[donationImage1, donationImage4, donationImage5]} /> */}
+          <BlogDonateSections />
+        </div>
       </section>
-    </div>
+    </>
   );
 };
 

@@ -15,8 +15,10 @@ import NotFound from './components/NotFound/NotFound';
 import Navbar from './components/navbar';
 import Footer from './components/Footer/Footer';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import UserDashboard from './pages/dashboard/UserDashboard';
+import { ToastProvider } from './hooks/useToast';
+
 import './App.css';
-import AdminAuth from './components/admin/AdminAuth/AdminAuth';
 import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
 
 // define other static routes
@@ -32,25 +34,28 @@ const baseRoutes = [
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },
   { path: '/register', element: <RegisterPage /> },
-  { path: '/auth', element: <AdminAuth /> },
-  { path: '/authe', element: <AuthPage /> },
+  // { path: '/auth', element: <AdminAuth /> },
+  { path: '/auth', element: <AuthPage /> },
+  { path: '/dashboard/*', element: <UserDashboard /> },
   { path: '/admin/*', element: <AdminDashboard /> },
   { path: '*', element: <NotFound /> },
 ];
 
 function App() {
   return (
-    <div className="app-container">
-      <Router>
-        <Navbar />
-        <ScrollToTop />
-        <ConditionalNavbar />
-        <div className="app-content">
-          <AppRoutes />
-        </div>
-        <ConditionalFooter />
-      </Router>
-    </div>
+    <ToastProvider>
+      <div className="app-container">
+        <Router>
+          <Navbar />
+          <ScrollToTop />
+          <ConditionalNavbar />
+          <div className="app-content">
+            <AppRoutes />
+          </div>
+          <ConditionalFooter />
+        </Router>
+      </div>
+    </ToastProvider>
   );
 }
 
@@ -72,12 +77,12 @@ function ConditionalNavbar() {
 function ConditionalFooter() {
   const location = useLocation();
 
-  // Don't show footer on homepage or admin pages
+  // Don't show footer on homepage, admin pages, auth pages, or dashboard pages
   if (
     location.pathname === '/' ||
     location.pathname.startsWith('/admin') ||
     location.pathname.startsWith('/auth') ||
-    location.pathname.startsWith('/authe')
+    location.pathname.startsWith('/dashboard')
   ) {
     return null;
   }

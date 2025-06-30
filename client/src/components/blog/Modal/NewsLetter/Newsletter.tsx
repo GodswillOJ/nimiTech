@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../Modal';
 import styles from './Newsletter.module.scss';
 import { useSubscribeToNewsletterMutation } from '../../../../services/utilis/newsletterApiService';
+import {
+  markUserSubscribed,
+  markNewsletterModalDismissed,
+} from '../../../../utils/newsletterUtils';
+import { useToast } from '../../../../hooks/useToast';
 
 export interface NewsletterProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
+  onDismiss?: () => void;
 }
 
-const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
+const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose, onSuccess, onDismiss }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; firstName?: string }>({});
 
   const [subscribeToNewsletter, { isLoading: isSubmitting }] = useSubscribeToNewsletterMutation();
+  const toast = useToast();
 
   const tempEmailDomains = [
     '10minutemail.com',
@@ -62,20 +70,38 @@ const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
     }
 
     setErrors({});
-
     try {
-      await subscribeToNewsletter({
+      const result = await subscribeToNewsletter({
         firstName: firstName.trim(),
         email: email.trim().toLowerCase(),
         subscriptionSource: 'modal',
       }).unwrap();
 
+      // Mark user as subscribed in localStorage
+      markUserSubscribed(email.trim().toLowerCase());
+
       setShowThankYou(true);
+      toast.success('Successfully subscribed!', 'Welcome to our newsletter community!');
+      onSuccess?.();
     } catch (error: any) {
       console.error('Newsletter subscription error:', error);
+
+      let errorMessage = 'Subscription failed. Please try again.';
+
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+        // If user is already subscribed, mark them as such
+        if (error.data.message.includes('already subscribed')) {
+          markUserSubscribed(email.trim().toLowerCase());
+          toast.info('Already subscribed', 'You are already part of our newsletter community!');
+          return;
+        }
+      }
+
       setErrors({
-        email: error?.data?.message || 'Subscription failed. Please try again.',
+        email: errorMessage,
       });
+      toast.error('Subscription failed', errorMessage);
     }
   };
 
@@ -84,6 +110,13 @@ const Newsletter: React.FC<NewsletterProps> = ({ isOpen, onClose }) => {
     setFirstName('');
     setErrors({});
     setShowThankYou(false);
+
+    // Mark modal as dismissed if user closed without subscribing
+    if (!showThankYou) {
+      markNewsletterModalDismissed();
+      onDismiss?.();
+    }
+
     onClose();
   };
 

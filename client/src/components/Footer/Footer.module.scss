@@ -10,11 +10,11 @@
   justify-content: center;
   align-items: flex-start;
   position: relative;
+  width: 100%;
 
   &__container {
     width: 100%;
     height: 500px;
-    max-width: 100%;
     // background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
     background: url('../../assets/blog/images/background1.jpg') no-repeat center center;
     border-radius: 24px;
@@ -52,7 +52,8 @@
 
   &__ctaButton {
     background: #ffffff;
-    color: #1a1a1a;
+    // color: #1a1a1a;
+    color: #88199a;
     border: none;
     padding: 16px 32px;
     border-radius: 12px;
@@ -113,7 +114,7 @@
 
   &__icon {
     width: auto;
-    height: 45px;
+    height: 55px;
 
     display: flex;
     align-items: center;
@@ -121,8 +122,8 @@
   }
 
   &__name {
-    width: 140px;
-    height: 40px;
+    width: 155px;
+    height: 45px;
   }
 
   &__description {
@@ -136,20 +137,20 @@
 
   &__social {
     display: flex;
-    gap: 17px;
+    gap: 10px;
     // background: white;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
+    height: 30px;
     width: fit-content;
     padding: 0px 10px;
   }
 
   &__socialLink {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background: #f3f4f6fd;
     border-radius: 8px;
     display: flex;
@@ -275,6 +276,7 @@
 @media (max-width: 768px) {
   .cta {
     padding: 40px 16px 0px;
+    width: 100%;
 
     &__container {
       padding: 60px 32px;
