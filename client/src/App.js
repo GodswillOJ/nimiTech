@@ -19,6 +19,7 @@ import UserDashboard from './pages/dashboard/UserDashboard';
 import { ToastProvider } from './hooks/useToast';
 
 import './App.css';
+import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
 
 // define other static routes
 const baseRoutes = [
@@ -29,6 +30,7 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
+  { path: '/privacy-policy', element: <PrivacyPolicyPage /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },
   { path: '/register', element: <RegisterPage /> },

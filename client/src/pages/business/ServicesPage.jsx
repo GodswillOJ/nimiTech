@@ -1,6 +1,7 @@
-import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
-import Fade from '@mui/material/Fade';
+import { Box, Button, Link, Typography, useMediaQuery } from '@mui/material';
+import { motion } from 'framer-motion';
 import { lazy } from 'react';
+
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
@@ -9,36 +10,71 @@ import styles from '../blog/blog.module.scss';
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 
-const servicesSummary = [
-  {
-    title: 'Digital Marketing',
-    text: 'Boost your online presence with SEO, social media, and targeted campaigns that drive real results.',
-    img: businessImages.hero2,
-  },
-  {
-    title: 'Cybersecurity',
-    text: 'Protect your data with tailored, affordable security solutions for all industries.',
-    img: businessImages.hero3,
-  },
-  {
-    title: 'AI & Machine Learning',
-    text: 'Leverage AI/ML to automate processes, gain insights, and power smarter decisions.',
-    img: businessImages.hero4,
-  },
-  {
-    title: 'Custom Software & Web Development',
-    text: 'Build scalable apps and websites tailored to your business—no subscriptions required.',
-    img: businessImages.hero1,
-  },
-];
-
 const Services = () => {
-  const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
-  const isMediumScreen = useMediaQuery('(max-width:900px)');
+
+  const listItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    }),
+  };
+
+  const renderList = (items) => (
+    <Box
+      sx={{
+        p: 3,
+        background: '#ffffff',
+        borderRadius: 4,
+        boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+        mt: 3,
+        mb: 4,
+      }}
+    >
+      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {items.map((item, idx) => (
+          <motion.li
+            key={idx}
+            custom={idx}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={listItemVariants}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              color: '#333',
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '1rem',
+              lineHeight: 1.8,
+              marginBottom: '1rem',
+            }}
+          >
+            <Box
+              sx={{
+                minWidth: '10px',
+                height: '10px',
+                backgroundColor: '#1976d2',
+                borderRadius: '50%',
+                mr: 2,
+                mt: '8px',
+              }}
+            />
+            <Typography component="span">{item}</Typography>
+          </motion.li>
+        ))}
+      </ul>
+    </Box>
+  );
 
   return (
-    <Box>
+    <Box sx={{ fontFamily: 'Montserrat, sans-serif', backgroundColor: '#f9f9f9' }}>
       {/* Hero Section */}
       <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
         <video
@@ -60,442 +96,220 @@ const Services = () => {
         <Box
           position="absolute"
           top="60%"
-          left="40%"
+          left="50%"
           sx={{
             transform: 'translate(-50%, -50%)',
             color: '#fff',
-            px: 1,
-            textAlign: isSmallScreen ? 'normal' : 'left',
+            px: 2,
+            textAlign: 'center',
           }}
         >
-          <Typography
-            variant={isSmallScreen ? 'h4' : 'h2'}
-            fontWeight="bold"
-            sx={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
+          <Typography variant={isSmallScreen ? 'h4' : 'h2'} fontWeight="bold">
             Explore Our Expert Services
           </Typography>
-          <Typography
-            mt={2}
-            fontSize={isSmallScreen ? '1rem' : '1.25rem'}
-            sx={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            From marketing and security to AI and custom development — tailored solutions to help
-            your business thrive.
+          <Typography mt={2} fontSize={isSmallScreen ? '1rem' : '1.25rem'}>
+            From marketing and security to AI and development — tailored solutions to help your
+            business grow.
           </Typography>
         </Box>
       </Box>
 
-      {/* Why Choose Us */}
-      <Box py={8} px={isSmallScreen ? 0 : isMediumScreen ? 0 : 0} bgcolor="#f9f9f9">
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Fade in timeout={1000}>
-              <Box>
+      {/* Services Section */}
+      <Box py={8} px={isSmallScreen ? 2 : 6}>
+        {[
+          {
+            title: 'Custom Software & Web Development',
+            items: [
+              'ERP & CRM Platforms for unified resource and customer management',
+              'Workflow Automation Apps to eliminate manual tasks',
+              'Responsive Web & Mobile Apps built with modern frameworks',
+              'One Time Development—full ownership, zero recurring fees',
+            ],
+            image: businessImages.WD_image1,
+            alt: 'Web Development',
+          },
+          {
+            title: 'Digital Marketing',
+            items: [
+              'SEO & Content Strategy to boost organic search rankings',
+              'PPC & Targeted Advertising on Google, Facebook, LinkedIn',
+              'Social Media Management for consistent brand engagement',
+              'Email Marketing & Automation to nurture leads and retain customers',
+              'Analytics & Reporting with clear ROI metrics',
+            ],
+            image: businessImages.DM_image,
+            alt: 'Digital Marketing',
+          },
+          {
+            title: 'Cybersecurity Solutions',
+            items: [
+              '24/7 Threat Detection & Monitoring',
+              'Vulnerability Assessments & Pen Testing',
+              'Network Security (firewalls, VPNs, intrusion prevention)',
+              'Compliance & Risk Management (HIPAA, PCI, GDPR)',
+              'Incident Response & Recovery',
+            ],
+            image: businessImages.CS_image2,
+            alt: 'Cybersecurity',
+          },
+          {
+            title: 'AI & Machine Learning',
+            items: [
+              'Custom ML Model Development (classification, regression, deep learning)',
+              'Predictive Analytics & Data Visualization',
+              'Computer Vision & NLP for image, video, and text automation',
+              'Seamless Integration with your existing systems and cloud platforms',
+            ],
+            image: businessImages.AI_image1,
+            alt: 'AI & ML',
+          },
+          {
+            title: 'Graphic Design & Branding',
+            items: [
+              'Logo & Brand Identity Development',
+              'Brand Style Guides & Templates for consistency',
+              'Marketing Collateral (business cards, brochures, digital graphics)',
+              'Social Media Graphics & Ad Creatives',
+              'Fast Turnaround & Competitive Pricing',
+            ],
+            image: businessImages.branding2,
+            alt: 'Branding',
+          },
+          {
+            title: 'Cloud Infrastructure & Solutions',
+            items: [
+              'Cloud Migration & Management (AWS, Azure, Google Cloud)',
+              'Infrastructure as Code for automated, repeatable deployments',
+              'Backup & Disaster Recovery to protect critical data',
+              'Cost Optimization to maximize your IT budget',
+            ],
+            image: businessImages.cloud2,
+            alt: 'Cloud',
+          },
+          {
+            title: 'Remote IT Support & Help Desk',
+            items: [
+              'Remote Troubleshooting for software, networks, and devices',
+              '24/7 Help Desk via phone, email, and chat',
+              'Certified Technicians skilled in Windows, macOS, Linux, and more',
+              'Service Level Agreements guaranteeing timely response',
+            ],
+            image: businessImages.IT_image,
+            alt: 'IT Support',
+          },
+        ].map((section, index) => (
+          <Box
+            key={index}
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: 6,
+              p: isSmallScreen ? 2 : 4,
+              mb: 6,
+              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
+            }}
+          >
+            <Typography variant="h5" fontWeight="bold" mb={2} color="primary">
+              {section.title}
+            </Typography>
+
+            {renderList(section.items)}
+
+            <Box
+              sx={{
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: 4,
+                mt: 3,
+              }}
+            >
+              <img
+                src={section.image}
+                alt={section.alt}
+                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'inherit' }}
+              />
+              <Box
+                position="absolute"
+                top={0}
+                left={0}
+                width="100%"
+                height="100%"
+                sx={{
+                  background: 'linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.7))',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  p: 2,
+                }}
+              >
                 <Typography
-                  variant="h4"
-                  style={{ fontWeight: '600', fontFamily: 'Montserrat, sans-serif' }}
-                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  gutterBottom
-                  className="text-order"
+                  variant="h6"
+                  fontWeight={600}
+                  sx={{
+                    background: 'rgba(255,255,255,0.1)',
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    backdropFilter: 'blur(4px)',
+                    fontSize: isSmallScreen ? '1rem' : '1.25rem',
+                  }}
                 >
-                  Our Comprehensive Services | Nimitech IT
+                  {section.title} at Nimitech IT
                 </Typography>
-                <Typography
-                  lineHeight={1.7}
-                  mb={4}
-                  px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  color="textSecondary"
-                  className="text-order"
-                  sx={{ fontFamily: 'Montserrat, sans-serif' }}
-                >
-                  At Nimitech IT, we offer end to end technology and marketing solutions designed to
-                  help your business thrive. From building bespoke software and securing your
-                  infrastructure to driving growth through digital marketing and crafting standout
-                  brand experiences, our expert team delivers scalable, affordable services you own
-                  outright—no subscriptions, no surprises.
-                </Typography>
-                {/* Web Dev */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={3}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Custom Software & Web Development
-                    </strong>
-                    <br />
-                    Craft powerful, user friendly applications that streamline workflows and boost
-                    productivity:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>ERP & CRM Platforms for unified resource and customer management</li>
-                    <li>Workflow Automation Apps to eliminate manual tasks</li>
-                    <li>Responsive Web & Mobile Apps built with modern frameworks</li>
-                    <li>One Time Development—full ownership, zero recurring fees</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.WD_image1}
-                        alt="Services Visual"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-                {/* Digital Marketing */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={2}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    fontFamily="Montserrat, sans-serif"
-                    sx={{ fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Digital Marketing
-                    </strong>
-                    <br />
-                    Accelerate online growth with data driven campaigns that convert:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>SEO & Content Strategy to boost organic search rankings</li>
-                    <li>PPC & Targeted Advertising on Google, Facebook, LinkedIn</li>
-                    <li>Social Media Management for consistent brand engagement</li>
-                    <li>Email Marketing & Automation to nurture leads and retain customers</li>
-                    <li>Analytics & Reporting with clear ROI metrics</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.DM_image}
-                        alt="Services Visual"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-                {/* CYBER SECURITY */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={2}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    sx={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Cybersecurity Solutions
-                    </strong>
-                    <br />
-                    Protect your data and maintain business continuity with enterprise grade
-                    security:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>24/7 Threat Detection & Monitoring</li>
-                    <li>Vulnerability Assessments & Pen Testing</li>
-                    <li>Network Security (firewalls, VPNs, intrusion prevention)</li>
-                    <li>Compliance & Risk Management (HIPAA, PCI, GDPR)</li>
-                    <li>Incident Response & Recovery</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.CS_image2}
-                        alt="Services Visual"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-                {/* AI & Machine Learning */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={6}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      AI & Machine Learning
-                    </strong>
-                    <br />
-                    Turn raw data into actionable insights and automate complex processes:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1.2rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Custom ML Model Development (classification, regression, deep learning)</li>
-                    <li>Predictive Analytics & Data Visualization</li>
-                    <li>Computer Vision & NLP for image, video, and text automation</li>
-                    <li>Seamless Integration with your existing systems and cloud platforms</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.AI_image1} // replace with correct image
-                        alt="AI & ML"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-
-                {/* Graphic Design & Branding */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={6}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Graphic Design & Branding
-                    </strong>
-                    <br />
-                    Create a memorable visual identity that resonates with your audience:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Logo & Brand Identity Development</li>
-                    <li>Brand Style Guides & Templates for consistency</li>
-                    <li>Marketing Collateral (business cards, brochures, digital graphics)</li>
-                    <li>Social Media Graphics & Ad Creatives</li>
-                    <li>Fast Turnaround & Competitive Pricing</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.branding2} // replace with correct image
-                        alt="Graphic Design"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-
-                {/* Cloud Infrastructure & Solutions */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={6}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Cloud Infrastructure & Solutions
-                    </strong>
-                    <br />
-                    Scale efficiently with secure, cost-effective cloud services:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      fontFamily: 'Montserrat, sans-serif',
-                      color: '#555',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Cloud Migration & Management (AWS, Azure, Google Cloud)</li>
-                    <li>Infrastructure as Code for automated, repeatable deployments</li>
-                    <li>Backup & Disaster Recovery to protect critical data</li>
-                    <li>Cost Optimization to maximize your IT budget</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.cloud2} // replace with correct image
-                        alt="Cloud Infrastructure"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-
-                {/* Remote IT Support & Help Desk */}
-                <div>
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={6}
-                    fontSize={'1rem'}
-                    color="textSecondary"
-                    className="text-order"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontStyle: 'italic' }}
-                    px={isSmallScreen ? 2 : isMediumScreen ? 8 : 8}
-                  >
-                    <strong style={{ fontSize: '2rem', color: '#2e0135', fontStyle: 'normal' }}>
-                      Remote IT Support & Help Desk
-                    </strong>
-                    <br />
-                    Keep your operations running smoothly with expert assistance:
-                  </Typography>
-                  <ul
-                    style={{
-                      fontSize: '1rem',
-                      lineHeight: '2',
-                      marginLeft: 20,
-                      marginBottom: 30,
-                      color: '#555',
-                      fontFamily: 'Montserrat, sans-serif',
-                      padding: isSmallScreen ? '20px' : isMediumScreen ? '60px' : '60px',
-                    }}
-                    className="text-order"
-                  >
-                    <li>Remote Troubleshooting for software, networks, and devices</li>
-                    <li>24/7 Help Desk via phone, email, and chat</li>
-                    <li>Certified Technicians skilled in Windows, macOS, Linux, and more</li>
-                    <li>Service Level Agreements guaranteeing timely response</li>
-                  </ul>
-                  <Grid item xs={12} md={6}>
-                    <Fade in timeout={1500}>
-                      <Box
-                        component="img"
-                        src={businessImages.IT_image} // replace with correct image
-                        alt="IT Support"
-                        width="100%"
-                        borderRadius={isSmallScreen ? 0 : 2}
-                        boxShadow={3}
-                      />
-                    </Fade>
-                  </Grid>
-                </div>
-                <div
-                  className="text-order"
-                  style={{ fontFamily: 'Montserrat, sans-serif', padding: '40px' }}
-                >
-                  <Typography
-                    lineHeight={1.7}
-                    mb={4}
-                    mt={6}
-                    fontSize={'1.2rem'}
-                    fontFamily="Montserrat, sans-serif"
-                  >
-                    Ready to Elevate Your Business? Partner with Nimitech IT for fully managed
-                    technology and marketing solutions that deliver measurable results.
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fontFamily="Montserrat, sans-serif"
-                  >
-                    <Link href="/contact-us" sx={{ color: '#fff' }}>
-                      Contact Us
-                    </Link>
-                  </Button>
-                </div>
               </Box>
-            </Fade>
-          </Grid>
-          <section className={styles.donation}>
-            <GradientCard imageSrc={donationImage2} imagePosition="left" />
-            <DonateSection
-              images={[donationImage1, donationImage2, donationImage1]}
-              onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
-            />
-          </section>
-        </Grid>
+            </Box>
+          </Box>
+        ))}
+
+        {/* CTA Section */}
+        <Box
+          textAlign="center"
+          sx={{
+            background: 'linear-gradient(to right, #1976d2, #0d47a1)',
+            color: '#fff',
+            py: 6,
+            px: isSmallScreen ? 2 : 6,
+            borderRadius: 6,
+            mt: 10,
+          }}
+        >
+          <Typography variant="h5" fontWeight="bold" mb={2}>
+            Ready to Elevate Your Business?
+          </Typography>
+          <Typography fontSize="1.1rem" mb={4}>
+            Partner with Nimitech IT for scalable, future-ready tech solutions tailored to your
+            goals.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: '#fff',
+              color: '#1976d2',
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              borderRadius: 10,
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#e3f2fd' },
+            }}
+          >
+            <Link href="/contact-us" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Contact Us
+            </Link>
+          </Button>
+        </Box>
       </Box>
+
+      {/* Donation Section */}
+      <section className={styles.donation}>
+        <GradientCard imageSrc={donationImage2} imagePosition="left" />
+        <DonateSection
+          images={[donationImage1, donationImage2, donationImage1]}
+          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+        />
+      </section>
     </Box>
   );
 };

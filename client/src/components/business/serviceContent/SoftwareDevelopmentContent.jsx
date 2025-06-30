@@ -1,81 +1,90 @@
 import { businessImages } from '../../../assets/images';
-import './services.css'; // Reuse global styles
+import './services.css'; // Shared advanced styles
 
 const SoftwareDevelopmentContent = () => {
   return (
     <div
-      className="services_block"
-      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Apply Montserrat here
+      className="services_block animate-glide-in"
+      style={{ fontFamily: 'Montserrat, sans-serif' }}
     >
-      <p>
-        At Nimitech IT, we specialize in building custom software and web solutions designed to
-        streamline your business operations and boost productivity. From enterprise resource
-        planning (ERP) systems, inventory management, CRM platforms, workflow optimization apps, and
-        much more—we create powerful tools tailored to your unique needs, built from scratch, with
-        no monthly or yearly subscription fees.
-      </p>
-
-      <p>
-        Our expert developers combine the latest technologies to deliver secure, scalable, and
-        user-friendly software that integrates seamlessly with your existing systems. Whether you
-        need a custom website, mobile app, or comprehensive business management software, Nimitech
-        IT offers affordable, one-time development solutions that help you save costs while gaining
-        full control.
-      </p>
-
-      <div className="image-container">
-        <img src={businessImages.ST_image1} alt="Software Development Visual" />
+      {/* Hero Image with Overlay */}
+      <div className="image-with-overlay">
+        <img src={businessImages.ST_image1} alt="Custom Software Hero" />
+        <div className="overlay-text">
+          <h3>Smart Software for Smarter Businesses</h3>
+          <p>Build once. Own forever. No subscriptions.</p>
+        </div>
       </div>
 
-      <div>
-        <p style={{ fontSize: '20px' }}>
-          Why Trust Nimitech IT with Your Custom Software and Web Development Needs?
+      {/* Intro with Branding */}
+      <div
+        className="marketing-intro"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.85), rgba(46,1,53,0.75)), url(${businessImages.WD_image})`,
+        }}
+      >
+        <h1>Custom Software & Web Solutions</h1>
+        <p>
+          Nimitech IT builds powerful, affordable business software—from ERP and CRM to mobile and
+          web apps—with no monthly fees. Total ownership. Total control.
         </p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>
-            Tailor-Made Apps: We build custom ERP, CRM, inventory systems, and much more, designed
-            to optimize your workflow and business processes.
-          </li>
-          <li>
-            No Subscription Required: Enjoy full ownership of your software with no hidden monthly
-            or yearly fees.
-          </li>
-          <li>
-            Experienced Developers: Skilled in modern languages and frameworks including React,
-            Python, Java, .NET, and others.
-          </li>
-          <li>
-            Mobile-Responsive & Scalable: Solutions built for seamless use on any device and
-            growth-ready for the future.
-          </li>
-          <li>
-            Transparent Pricing: Affordable, one-time development costs with clear communication
-            every step of the way.
-          </li>
-        </ul>
       </div>
 
-      <div className="image-container">
-        <img src={businessImages.WD_image} alt="Software Development Visual" />
+      {/* Why Choose Us */}
+      <div className="dm-flex-block">
+        <div className="dm-image-container">
+          <img src={businessImages.Developers} alt="Software Integration Visual" />
+        </div>
+        <div className="dm-text-content">
+          <p className="dm-title">Why Trust Nimitech IT?</p>
+          <ul className="dm-fancy-list">
+            <li>Tailor-made ERP, CRM, inventory systems, and workflow apps</li>
+            <li>No subscriptions — you own the software outright</li>
+            <li>Expert developers in React, Python, .NET, Java, and more</li>
+            <li>Mobile-responsive and scalable for growth</li>
+            <li>Transparent, one-time pricing with full support</li>
+          </ul>
+          <p className="dm-cta">
+            Build solutions as unique as your business—without recurring costs.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <p style={{ fontSize: '20px' }}>Our Development Services Include:</p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Custom Web Applications & Websites</li>
-          <li>Mobile App Development (iOS & Android)</li>
-          <li>ERP & CRM Software Development</li>
-          <li>Workflow & Inventory Management Systems</li>
-          <li>API Integrations & Software Maintenance</li>
-          <li>Software Modernization & Support</li>
-          <li>And much more</li>
-        </ul>
+      {/* What We Build */}
+      <div className="ai-services-flex-container">
+        <div className="ai-services-text">
+          <p className="section-title">Our Development Services Include:</p>
+          <ul className="dm-fancy-list">
+            <li>Custom Web Applications & Websites</li>
+            <li>Mobile App Development (iOS & Android)</li>
+            <li>ERP & CRM Software Development</li>
+            <li>Workflow & Inventory Management Systems</li>
+            <li>API Integrations & Backend Architecture</li>
+            <li>Software Modernization & Long-Term Support</li>
+          </ul>
+          <p className="ai-services-summary">
+            We build secure, scalable, and user-friendly tools that adapt to your business — not the
+            other way around.
+          </p>
+        </div>
+        <div className="ai-services-image-container">
+          <div className="zoom-wrapper">
+            <img src={businessImages.Developers2} alt="Software Showcase Visual" />
+          </div>
+        </div>
       </div>
 
-      <p className="font-medium text-gray-900">
-        Let Nimitech IT help you build the exact software your business needs to operate smarter,
-        not harder—without recurring fees or subscriptions.
-      </p>
+      {/* Final CTA */}
+      <div className="text-content" style={{ padding: '40px 20px', textAlign: 'center' }}>
+        <p className="dm-title">Own Your Software. Control Your Future.</p>
+        <p className="font-medium text-gray-900">
+          Get fully customized software built to your needs — one-time payment, full source code,
+          and no hidden fees.
+        </p>
+        <a href="/contact-us" className="contact-button" style={{ marginTop: '20px' }}>
+          Let&#39;s Build Together
+        </a>
+      </div>
     </div>
   );
 };

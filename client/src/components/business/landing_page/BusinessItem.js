@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { businessImages } from '../../../assets/images';
@@ -104,7 +104,7 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://youtube.com/yourchannel',
+      url: 'https://www.youtube.com/@NimiTechITConsultantsLLC-IT',
     },
     {
       icon: (
@@ -114,7 +114,7 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://instagram.com/yourprofile',
+      url: 'https://instagram.com/nimi.techit/',
     },
     {
       icon: (
@@ -124,17 +124,27 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://facebook.com/yourpage',
+      url: 'https://www.facebook.com/profile.php?id=61577287182430',
+    },
+    {
+      icon: (
+        <FaLinkedin
+          style={{
+            color: '#2e52f5',
+          }}
+        />
+      ),
+      url: 'https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true',
     },
     {
       icon: (
         <FaXTwitter
           style={{
-            color: '#000',
+            color: '#cc9af0',
           }}
         />
       ),
-      url: 'https://twitter.com/yourhandle',
+      url: 'https://x.com/nimi_techIT',
     },
     {
       icon: (
@@ -144,7 +154,7 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://twitter.com/yourhandle',
+      url: 'https://wa.me/12529039651',
     },
   ];
 
@@ -289,7 +299,7 @@ const PartnerWithUs = ({ services }) => {
             }}
           >
             <img
-              src={businessImages.hero2}
+              src={businessImages.OurSuccess}
               alt="Partner with us"
               className="image-hover"
               style={{
@@ -307,7 +317,7 @@ const PartnerWithUs = ({ services }) => {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 color: 'white',
-                padding: '30px',
+                padding: isSmallScreen ? '10px' : '30px',
                 textAlign: 'left',
                 borderRadius: '0',
                 width: '90%',
@@ -367,15 +377,15 @@ export const testimonials = [
   },
 ];
 
-const ClientReview = ({ image, course, name, review }) => {
+const ClientReview = ({ course, name, review }) => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:1024px)');
+  const initial = name?.charAt(0).toUpperCase() || '?';
 
   return (
     <Box
       sx={{
         width: '100%',
-        // maxWidth: 400,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -392,19 +402,28 @@ const ClientReview = ({ image, course, name, review }) => {
         },
       }}
     >
+      {/* Styled initial instead of image */}
       <Box
-        component="img"
-        src={image}
-        alt={name}
         sx={{
           width: '120px',
           height: '120px',
           borderRadius: '50%',
-          objectFit: 'cover',
-          border: '4px solid #ccc',
+          background: 'linear-gradient(135deg,rgb(1, 36, 55),rgb(19, 0, 22))',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '4rem',
+          fontStyle: 'italic',
+          color: '#fff',
+          fontWeight: '400px',
+          textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          fontFamily: 'Poiret One sans-serif',
+          textTransform: 'uppercase',
         }}
-      />
+      >
+        {initial}
+      </Box>
 
       <Box>
         <Typography
@@ -481,7 +500,7 @@ const ServiceHighlights = () => {
     position: 'absolute',
     left: '0',
     top: '2px',
-    color: '#333', // green
+    color: '#333',
     fontSize: '1.1rem',
     lineHeight: 1,
   };

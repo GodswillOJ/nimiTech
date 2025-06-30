@@ -1,7 +1,18 @@
-import { WhatsApp } from '@mui/icons-material';
-import { Box, Button, Divider, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
+import { LinkedIn, WhatsApp } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Link as MuiLink,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import Fade from '@mui/material/Fade';
-import { lazy } from 'react';
+import { lazy, useState } from 'react';
 import { FiClock, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import {
   FacebookIcon,
@@ -12,6 +23,7 @@ import {
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
+import { useSendServiceInquiryMutation } from '../../services/api';
 import styles from '../blog/blog.module.scss';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
@@ -20,6 +32,41 @@ const DonateSection = lazy(() => import('../../components/blog/DonateSection/Don
 const ContactUs = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
+    consent: false,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const [sendServiceInquiry] = useSendServiceInquiryMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.fullName || !formData.email || !formData.service || !formData.message) {
+      alert('Please complete all required fields.');
+      return;
+    }
+
+    try {
+      await sendServiceInquiry(formData).unwrap();
+      alert('Inquiry sent successfully!');
+      setFormData({ fullName: '', email: '', phone: '', service: '', message: '' });
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send. Please try again later.');
+    }
+  };
 
   return (
     <Box>
@@ -146,7 +193,20 @@ const ContactUs = () => {
                     <FiPhone size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Phone</Typography>
-                      <Typography color="text.secondary">+1 252-903-9651</Typography>
+                      <Typography color="text.secondary">
+                        <a
+                          href="tel:+12529039651"
+                          className="phone-link"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            textDecoration: 'underline',
+                            transition: 'color 0.3s ease',
+                          }}
+                        >
+                          +1 (252) 903-9651
+                        </a>
+                      </Typography>
                     </Box>
                   </Box>
 
@@ -161,8 +221,21 @@ const ContactUs = () => {
                     <FiMail size={24} style={{ color: '#333', marginTop: 4 }} />
                     <Box>
                       <Typography fontWeight="bold">Email</Typography>
-                      <Typography color="text.secondary">
-                        <a href="mailto:info@nimitechit.com">info@nimitechit.com</a>
+                      <Typography
+                        color="text.secondary"
+                        sx={{ fontFamily: 'Montserrat, sans-serif' }}
+                      >
+                        <a
+                          href="mailto:info@nimitechit.com"
+                          style={{
+                            color: '#3b1647',
+                            textDecoration: 'underline',
+                            fontWeight: 500,
+                            transition: 'color 0.3s ease',
+                          }}
+                        >
+                          info@nimitechit.com
+                        </a>
                       </Typography>
                     </Box>
                   </Box>
@@ -198,7 +271,7 @@ const ContactUs = () => {
                   </Typography>
                   <Box display="flex" gap={3} mt={1}>
                     <a
-                      href="https://twitter.com/nimitech"
+                      href="https://x.com/nimi_techIT'"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="X"
@@ -206,7 +279,7 @@ const ContactUs = () => {
                       <XIcon />
                     </a>
                     <a
-                      href="https://instagram.com"
+                      href="https://instagram.com/nimi.techit/"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Instagram"
@@ -214,7 +287,7 @@ const ContactUs = () => {
                       <InstagramIcon />
                     </a>
                     <a
-                      href="https://facebook.com"
+                      href="https://www.facebook.com/profile.php?id=61577287182430"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Facebook"
@@ -222,7 +295,7 @@ const ContactUs = () => {
                       <FacebookIcon />
                     </a>
                     <a
-                      href="https://youtube.com"
+                      href="https://www.youtube.com/@NimiTechITConsultantsLLC-IT"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="YouTube"
@@ -230,16 +303,20 @@ const ContactUs = () => {
                       <YouTubeIcon />
                     </a>
                     <a
-                      href="https://youtube.com"
+                      href="https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="YouTube"
                     >
-                      <WhatsApp
-                        style={{
-                          color: '#1bcc2a',
-                        }}
-                      />
+                      <LinkedIn />
+                    </a>
+                    <a
+                      href="https://wa.me/12529039651"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WhatsApp"
+                    >
+                      <WhatsApp style={{ color: '#1bcc2a' }} />
                     </a>
                   </Box>
                 </Box>
@@ -268,40 +345,104 @@ const ContactUs = () => {
                       to you within one business day.
                     </Typography>
 
-                    <form noValidate autoComplete="off">
-                      <TextField fullWidth label="Your Name" variant="outlined" margin="normal" />
-                      <TextField fullWidth label="Your Email" variant="outlined" margin="normal" />
+                    <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                       <TextField
                         fullWidth
-                        label="Phone number"
+                        label="Your Name"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
                         variant="outlined"
                         margin="normal"
+                        required
+                      />
+                      <TextField
+                        fullWidth
+                        label="Your Email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                      />
+                      <TextField
+                        fullWidth
+                        label="Phone Number"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        variant="outlined"
+                        margin="normal"
+                        required
                       />
                       <TextField
                         fullWidth
                         label="Service you are inquiring about"
+                        name="service"
+                        value={formData.service}
+                        onChange={handleChange}
                         variant="outlined"
                         margin="normal"
+                        required
                       />
                       <TextField
                         fullWidth
                         label="Message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
                         variant="outlined"
                         multiline
                         rows={5}
                         margin="normal"
+                        required
                       />
+
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="consent"
+                            checked={formData.consent}
+                            onChange={handleChange}
+                            required
+                          />
+                        }
+                        label={
+                          <Typography variant="body2" fontFamily="Montserrat, sans-serif">
+                            By checking this box, you agree to be contacted by Nimitech IT using the
+                            information provided in this form. Your information will be used in
+                            accordance with our{' '}
+                            <MuiLink
+                              href="/privacy-policy"
+                              target="_blank"
+                              rel="noopener"
+                              sx={{ color: '#3b1647', textDecoration: 'underline' }}
+                            >
+                              Privacy Policy
+                            </MuiLink>
+                            . You may opt out at any time.
+                          </Typography>
+                        }
+                        sx={{ alignItems: 'flex-start', mt: 1 }}
+                      />
+
                       <Button
+                        type="submit"
                         variant="contained"
-                        color="primary"
                         sx={{
-                          mt: 2,
+                          mt: 3,
                           px: 4,
                           py: 1.5,
                           fontWeight: 'bold',
                           backgroundColor: '#9b07ad',
                           borderRadius: 2,
                           textTransform: 'none',
+                          fontFamily: 'Montserrat, sans-serif',
+                          '&:hover': {
+                            backgroundColor: '#7c0691',
+                          },
                         }}
                       >
                         Submit

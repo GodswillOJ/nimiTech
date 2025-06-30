@@ -1,42 +1,85 @@
-// controllers/businessController.js
+const nodemailer = require("nodemailer");
 
-// Dummy in-memory data store
-let businessPosts = [
-  {
-    id: 1,
-    title: 'Boost Your Local Business with These 5 Tips',
-    content: 'Learn how to attract more customers and grow your local business effectively...',
-  },
-  {
-    id: 2,
-    title: 'Effective Marketing Strategies for Startups',
-    content: 'Explore practical marketing tactics tailored for startup success...',
-  },
-];
+const contactBusiness = async (req, res) => {
+  const { fullName, email, phone, location } = req.body;
 
-// GET all business posts
-const getAllBusinessPosts = (req, res) => {
-  res.status(200).json(businessPosts);
-};
-
-// POST create a new business post
-const createBusinessPost = (req, res) => {
-  const { title, content } = req.body;
-  if (!title || !content) {
-    return res.status(400).json({ message: 'Title and content are required' });
+  if (!fullName || !email || !phone || !location) {
+    return res.status(400).json({ message: "All fields are required." });
   }
 
-  const newPost = {
-    id: businessPosts.length + 1,
-    title,
-    content,
-  };
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EmailUser,
+        pass: process.env.EmailPassword,
+      },
+    });
 
-  businessPosts.push(newPost);
-  res.status(201).json(newPost);
+    const mailOptions = {
+      from: `"Nimitech IT Contact Form" <${process.env.EmailUser}>`,
+      to: "godswill.ogono11@gmail.com",
+      subject: "New Contact Form Submission",
+      html: `
+        <h2>Contact Form Submission</h2>
+        <p><strong>Full Name:</strong> ${fullName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Location:</strong> ${location}</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Message sent successfully." });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    res.status(500).json({ message: "Failed to send message. Try again later." });
+  }
+};
+
+const inquireService = async (req, res) => {
+  const { fullName, email, phone, service, message } = req.body;
+
+  if (!fullName || !email || !phone || !service || !message) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EmailUser,
+        pass: process.env.EmailPassword,
+      },
+    });
+
+    const mailOptions = {
+      from: `"Nimitech IT Services Form" <${process.env.EmailUser}>`,
+      to: 'godswill.ogono11@gmail.com',
+      subject: 'New Service Inquiry Submission',
+      html: `
+        <h2>Service Inquiry</h2>
+        <p><strong>Full Name:</strong> ${fullName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Message:</strong><br/>${message}</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Inquiry sent successfully.' });
+  } catch (error) {
+    console.error('Error sending inquiry:', error);
+    res.status(500).json({ message: 'Failed to send inquiry. Please try again later.' });
+  }
 };
 
 module.exports = {
-  getAllBusinessPosts,
-  createBusinessPost,
-};
+  contactBusiness,
+  inquireService
+}

@@ -1,66 +1,89 @@
 import { businessImages } from '../../../assets/images';
-import './services.css'; // Reused styles for consistent layout
+import './services.css'; // Reused shared styles
 
 const RemoteTrainingContent = () => {
   return (
     <div
-      className="services_block"
-      style={{ fontFamily: 'Montserrat, sans-serif' }} // ✅ Apply Montserrat here
+      className="services_block animate-glide-in"
+      style={{ fontFamily: 'Montserrat, sans-serif' }}
     >
-      <p>
-        <em>Learn Today. Lead Tomorrow.</em>
-        <br />
-        At Nimitech, we’re shaping the next generation of tech professionals through cutting-edge
-        remote IT training, delivered in partnership with NimiTutor.com. Our platform offers
-        flexible, expert-led tutoring that empowers individuals and businesses to master essential
-        digital skills—anytime, anywhere.
-      </p>
-
-      <div className="image-container">
-        <img src={businessImages.RM_training} alt="Remote Training Visual" />
+      {/* Hero Section with Overlay */}
+      <div className="image-with-overlay">
+        <img src={businessImages.online2} alt="Remote Training Hero" />
+        <div className="overlay-text">
+          <h3>Learn Today, Lead Tomorrow</h3>
+          <p>Empowering digital minds through hands-on IT training</p>
+        </div>
       </div>
 
-      <p>
-        Whether you’re starting a new tech career or expanding your current capabilities, our
-        training programs are built to help you grow, earn certifications, and gain real-world
-        experience through hands-on learning.
-      </p>
-
-      <div>
-        <p style={{ fontSize: '20px' }}>What We Offer</p>
+      {/* Introduction Section */}
+      <div
+        className="marketing-intro"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(19, 0, 0, 0.85), rgb(35, 1, 40)), url(${businessImages.Training3})`,
+        }}
+      >
+        <h1>Empower Your Future with Remote IT Training</h1>
         <p>
-          Our personalized tutoring services cover a wide range of in-demand IT and business skills,
-          including:
+          At Nimitech, in collaboration with NimiTutor.com, we deliver cutting-edge remote IT
+          training to individuals and businesses. Learn at your pace with expert-led, real-world
+          focused content that builds your career from the ground up.
         </p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Cybersecurity: Learn how to protect systems, detect threats, and secure data.</li>
-          <li>
-            Artificial Intelligence & Machine Learning (AI/ML): Build intelligent solutions using
-            real-world tools.
-          </li>
-          <li>Coding: Master programming languages like Python, JavaScript, and more.</li>
-          <li>Business Analysis: Understand processes, drive efficiency, and deliver results.</li>
-          <li>Data Analysis: Turn raw data into actionable insights using industry tools.</li>
-          <li>
-            And Much More: Including cloud computing, IT support, project management, and
-            certification prep.
-          </li>
-        </ul>
       </div>
 
-      <div className="image-container">
-        <img src={businessImages.RM_training1} alt="Remote Training Visual" />
+      {/* Training Highlights */}
+      <div className="dm-flex-block">
+        <div className="dm-image-container">
+          <img src={businessImages.Training} alt="Remote Training Platform" />
+        </div>
+        <div className="dm-text-content">
+          <p className="dm-title">What We Offer</p>
+          <ul className="dm-fancy-list">
+            <li>Cybersecurity: Learn to secure systems and data from threats</li>
+            <li>AI & Machine Learning: Develop intelligent applications with real tools</li>
+            <li>Coding: Learn Python, JavaScript, and more from scratch</li>
+            <li>Business Analysis: Improve business operations and decision-making</li>
+            <li>Data Analysis: Analyze and visualize data like a pro</li>
+            <li>+ Cloud, IT Support, Project Management, Certification Prep & More</li>
+          </ul>
+          <p className="dm-cta">
+            Wherever you are in your career — we help you level up with confidence.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <p style={{ fontSize: '20px' }}>Why Train with Nimitech & NimiTutor?</p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Live & On-Demand Sessions — Learn at your pace, on your schedule.</li>
-          <li>Industry-Certified Instructors — Get coached by experienced professionals.</li>
-          <li>Hands-On Learning — Practical labs and real-world scenarios.</li>
-          <li>Career-Focused Curriculum — Designed to help you get hired or promoted.</li>
-          <li>Affordable & Accessible — High-quality training without high costs.</li>
-        </ul>
+      {/* Why Choose Us */}
+      <div className="ai-services-flex-container">
+        <div className="ai-services-text">
+          <p className="section-title">Why Train with Nimitech & NimiTutor?</p>
+          <ul className="dm-fancy-list">
+            <li>Live & On-Demand Sessions — Learn on your schedule</li>
+            <li>Industry-Certified Instructors — Learn from real experts</li>
+            <li>Hands-On Labs — Apply skills in real-world environments</li>
+            <li>Career-Focused Curriculum — Skills that employers demand</li>
+            <li>Affordable & Accessible — Quality education without the price tag</li>
+          </ul>
+          <p className="ai-services-summary">
+            Training that transforms — from the comfort of your device.
+          </p>
+        </div>
+        <div className="ai-services-image-container">
+          <div className="zoom-wrapper">
+            <img src={businessImages.HelpDesk} alt="Live Virtual Training" />
+          </div>
+        </div>
+      </div>
+
+      {/* Final CTA */}
+      <div className="text-content" style={{ padding: '40px 20px', textAlign: 'center' }}>
+        <p className="dm-title">Start Learning. Start Leading.</p>
+        <p className="font-medium text-gray-900">
+          Gain the knowledge and confidence to build your future in tech. Join thousands who trust
+          Nimitech & NimiTutor to transform their careers.
+        </p>
+        <a href="/contact-us" className="contact-button" style={{ marginTop: '20px' }}>
+          Enroll Now
+        </a>
       </div>
     </div>
   );
