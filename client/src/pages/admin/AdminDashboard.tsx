@@ -1,9 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from '../../components/admin/ProtectedRoute/ProtectedRoute';
-import AdminAuth from '../../components/admin/AdminAuth/AdminAuth';
+import AuthFlow from '../../components/Auth/AuthFlow';
 import BlogEditor from '../../components/blog/BlogEditor/BlogEditor';
-import BlogList from '../../components/admin/BlogList/BlogList';
 import NewsletterManager from '../../components/admin/NewsletterManager/NewsletterManager';
 import AdminProfile from '../../components/admin/AdminProfile/AdminProfile';
 
@@ -31,8 +30,8 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={<AdminAuth mode="login" />} />
-      <Route path="/register" element={<AdminAuth mode="register" />} />
+      <Route path="/login" element={<AuthFlow />} />
+      <Route path="/register" element={<AuthFlow />} />
 
       <Route
         path="/dashboard"
@@ -74,7 +73,6 @@ const AdminDashboard: React.FC = () => {
                     <Route index element={<AdminOverview />} />
                     <Route path="create-blog" element={<BlogEditor />} />
                     <Route path="edit-blog/:id" element={<BlogEditor />} />
-                    <Route path="blogs" element={<BlogList />} />
                     <Route path="newsletter" element={<NewsletterManager />} />
                     <Route path="profile" element={<AdminProfile />} />
                     <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />

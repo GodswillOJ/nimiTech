@@ -26,6 +26,25 @@
     &:hover {
       border-color: #88199a;
     }
+
+    &.uploading {
+      border-color: #88199a;
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    &.error {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
+  }
+
+  &__error {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: 500;
   }
 
   &__preview {

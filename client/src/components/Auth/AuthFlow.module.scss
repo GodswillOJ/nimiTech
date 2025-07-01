@@ -138,6 +138,7 @@
   &__eye_icon {
     width: 1.25rem;
     height: 1.25rem;
+    color: #000;
   }
 
   &__options {
@@ -231,4 +232,20 @@
       color: white;
     }
   }
+  &__error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 4px;
+
+    &--general {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  }
+
 }

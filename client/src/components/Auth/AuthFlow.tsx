@@ -108,8 +108,8 @@ export default function AuthFlow() {
           if (token) {
             setAuthToken(true); // Set authentication status to true
           }
-          // Navigate to dashboard on successful login
-          navigate('/admin/dashboard');
+          // Navigate to user dashboard on successful login
+          navigate('/dashboard');
         }
       } else {
         const result = await registerAdmin({
@@ -160,7 +160,7 @@ export default function AuthFlow() {
     if (pendingToken) {
       setAuthToken(true); // Set authentication status to true
       sessionStorage.removeItem('pendingAuthToken');
-      navigate('/admin/dashboard');
+      navigate('/dashboard');
     }
     setShowSuccessModal(false);
   };

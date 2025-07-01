@@ -64,25 +64,41 @@ export const blogApi = createApi({
     addEditBlogPost: builder.mutation<any, any>({
       query: (blogData) => {
         const formData = new FormData();
+
+        // Add all fields except file fields to FormData
         Object.entries(blogData).forEach(([key, value]) => {
           if (
             !['featuredImage', 'contentImage', 'authorAvatar'].includes(key) &&
-            value !== undefined
+            value !== undefined &&
+            value !== null
           ) {
-            formData.append(
-              key,
-              value !== null && typeof value === 'object' ? JSON.stringify(value) : String(value)
-            );
+            if (typeof value === 'object') {
+              formData.append(key, JSON.stringify(value));
+            } else {
+              formData.append(key, String(value));
+            }
           }
         });
-        if (blogData.featuredImage instanceof File)
+
+        // Add file fields if they exist and are File objects
+        if (blogData.featuredImage instanceof File) {
           formData.append('featuredImage', blogData.featuredImage);
-        if (blogData.contentImage instanceof File)
+        }
+        if (blogData.contentImage instanceof File) {
           formData.append('contentImage', blogData.contentImage);
-        if (blogData.authorAvatar instanceof File)
+        }
+        if (blogData.authorAvatar instanceof File) {
           formData.append('authorAvatar', blogData.authorAvatar);
+        }
 
         const blogId = blogData.id || blogData._id;
+
+        // Log for debugging
+        console.log('FormData contents:');
+        formData.forEach((value, key) => {
+          console.log(key, value);
+        });
+
         return {
           url: blogId ? `/blogs/${blogId}` : '/blogs',
           method: blogId ? 'PUT' : 'POST',
