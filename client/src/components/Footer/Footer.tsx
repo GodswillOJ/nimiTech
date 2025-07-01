@@ -3,13 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   FacebookIcon,
   InstagramIcon,
-<<<<<<< HEAD
   XIcon,
   YouTubeIcon,
-=======
   LinkedInIcon,
   WhatsAppIcon,
->>>>>>> 660114ea5283dcf4aebf2e0b2c4a9f87afc5cd91
 } from '../../assets/blog/icons/SocialIcons';
 import styles from './Footer.module.scss';
 
@@ -65,11 +62,7 @@ const Footer: React.FC = () => {
 
   const socialLinks: SocialLink[] = [
     { icon: <XIcon />, href: 'https://x.com/nimi_techIT', label: 'twitter' },
-<<<<<<< HEAD
-    { icon: <InstagramIcon />, href: 'https://instagram.com/nimi.techit/', label: 'instagram' },
-=======
     { icon: <InstagramIcon />, href: 'https://www.instagram.com/nimi.techit/', label: 'instagram' },
->>>>>>> 660114ea5283dcf4aebf2e0b2c4a9f87afc5cd91
     {
       icon: <FacebookIcon />,
       href: 'https://www.facebook.com/profile.php?id=61577287182430',
@@ -80,15 +73,12 @@ const Footer: React.FC = () => {
       href: 'https://www.youtube.com/@NimiTechITConsultantsLLC-IT',
       label: 'youtube',
     },
-<<<<<<< HEAD
-=======
     {
       icon: <LinkedInIcon />,
       href: 'https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true',
       label: 'linkedin',
     },
     { icon: <WhatsAppIcon />, href: '#', label: 'whatsapp' },
->>>>>>> 660114ea5283dcf4aebf2e0b2c4a9f87afc5cd91
   ];
 
   const footerLinks = [
