@@ -20,6 +20,8 @@ import branding2 from './business/images/branding2__.jpg';
 import branding1 from './business/images/branding4__.jpg';
 import RM_image from './business/images/Branding_support.jpg';
 import CS_image from './business/images/CberSecurity.jpg';
+import nimi_hero1 from './business/images/nimi_pic2.jpg';
+import nimi_hero2 from './business/images/nimi_hero_pic.jpg';
 import CBSC from './business/images/CBSC.jpg';
 import CEO_image from './business/images/ceo.jpg';
 import CLD from './business/images/CLD.jpg';
@@ -68,6 +70,8 @@ import client4 from './business/images/white_lady.jpg';
 import logo from './NimiTechLogo1.png';
 
 export const businessImages = {
+  nimi_hero1,
+  nimi_hero2,
   Soft_Web,
   IT_2,
   AI_image7,

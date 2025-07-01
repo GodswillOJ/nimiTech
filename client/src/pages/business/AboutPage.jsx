@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import { motion } from 'framer-motion';
 import { lazy, useState } from 'react';
+import { Link } from 'react-router-dom';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
@@ -610,24 +611,26 @@ const About = () => {
               that transform challenges into opportunities.
               <br />
               <br />
-              <span
-                style={{
-                  display: 'inline-block',
-                  background: '#1976d2',
-                  color: '#fff',
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  fontSize: '0.95rem',
-                  marginTop: '10px',
-                  cursor: 'pointer',
-                  transition: 'background 0.3s',
-                }}
-                onMouseOver={(e) => (e.target.style.background = '#0d47a1')}
-                onMouseOut={(e) => (e.target.style.background = '#1976d2')}
-              >
-                Schedule a Free Consultation
-              </span>
+              <Link to="/contact-us">
+                <span
+                  style={{
+                    display: 'inline-block',
+                    background: '#1976d2',
+                    color: '#fff',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    fontWeight: '600',
+                    fontSize: '0.95rem',
+                    marginTop: '10px',
+                    cursor: 'pointer',
+                    transition: 'background 0.3s',
+                  }}
+                  onMouseOver={(e) => (e.target.style.background = '#0d47a1')}
+                  onMouseOut={(e) => (e.target.style.background = '#1976d2')}
+                >
+                  Schedule a Free Consultation
+                </span>
+              </Link>
             </Typography>
           </section>
 

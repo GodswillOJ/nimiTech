@@ -25,6 +25,7 @@ import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
 import { useSendServiceInquiryMutation } from '../../services/api';
 import styles from '../blog/blog.module.scss';
+import { useLocation } from 'react-router-dom';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
@@ -40,6 +41,7 @@ const ContactUs = () => {
     message: '',
     consent: false,
   });
+  const location = useLocation();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -415,7 +417,7 @@ const ContactUs = () => {
                             information provided in this form. Your information will be used in
                             accordance with our{' '}
                             <MuiLink
-                              href="/privacy-policy"
+                              href={`/privacy-policy?from=${encodeURIComponent(location.pathname)}`}
                               target="_blank"
                               rel="noopener"
                               sx={{ color: '#3b1647', textDecoration: 'underline' }}

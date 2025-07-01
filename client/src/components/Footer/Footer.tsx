@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   FacebookIcon,
-  YouTubeIcon,
-  XIcon,
   InstagramIcon,
+  XIcon,
+  YouTubeIcon,
 } from '../../assets/blog/icons/SocialIcons';
 import styles from './Footer.module.scss';
 
@@ -43,8 +43,8 @@ const Footer: React.FC = () => {
       links: [
         { text: 'About', path: '/about' },
         { text: 'Careers', path: '/careers' },
-        { text: 'Contact', path: '/contact' },
-        { text: 'Training', path: '/training' },
+        { text: 'Contact', path: '/contact-us' },
+        { text: 'Training', path: 'https://www.nimitutor.com/' },
         { text: 'Subscribe', path: '/subscribe' },
       ],
     },
@@ -58,14 +58,22 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks: SocialLink[] = [
-    { icon: <XIcon />, href: '#', label: 'twitter' },
-    { icon: <InstagramIcon />, href: '#', label: 'instagram' },
-    { icon: <FacebookIcon />, href: '#', label: 'facebook' },
-    { icon: <YouTubeIcon />, href: '#', label: 'youtube' },
+    { icon: <XIcon />, href: 'https://x.com/nimi_techIT', label: 'twitter' },
+    { icon: <InstagramIcon />, href: 'https://instagram.com/nimi.techit/', label: 'instagram' },
+    {
+      icon: <FacebookIcon />,
+      href: 'https://www.facebook.com/profile.php?id=61577287182430',
+      label: 'facebook',
+    },
+    {
+      icon: <YouTubeIcon />,
+      href: 'https://www.youtube.com/@NimiTechITConsultantsLLC-IT',
+      label: 'youtube',
+    },
   ];
 
   const footerLinks = [
-    { text: 'Privacy Policy', path: '/privacy' },
+    { text: 'Privacy Policy', path: '/privacy-policy' },
     { text: 'Terms of Service', path: '/terms' },
     { text: 'Cookies Settings', path: '/cookies' },
   ];

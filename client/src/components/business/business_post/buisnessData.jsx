@@ -106,10 +106,7 @@ export const ceoMessage = [
 
 export const introTitle = 'From the CEO';
 export const introSubtitle = 'We Offer a Wide Range of Services Tailored to Your Business Needs.';
-export const introText = `At Nimitech IT, we specialize in delivering affordable, expert IT service and support that helps your business operate smarter and more efficiently. We know that you want to reduce IT costs without sacrificing quality—and we make that possible by leveraging a global network of certified IT professionals. This allows us to offer world-class support, fast response times, and scalable solutions at a price that fits your budget.
-From 24/7 technical support to customized IT strategies, we’re committed to keeping your systems secure, your data protected, and your business running without interruptions. Trusted by businesses of all sizes, Nimitech is your partner in reliable, cost-effective technology.
-Get expert IT support—without the high cost. Choose Nimitech.
-`;
+export const introText = `Nimitech IT offers expert, affordable IT support and solutions, ensuring secure systems, reduced costs, and uninterrupted business operations through a trusted global network of certified professionals.`;
 
 // prettier fix
 // npx prettier src/pages/business/home.js --write

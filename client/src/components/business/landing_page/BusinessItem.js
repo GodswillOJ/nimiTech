@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, CardMedia, Typography, useMediaQuery } from '@mui/material';
+import { motion } from 'framer-motion';
 import React from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
@@ -252,7 +253,7 @@ const PartnerWithUs = ({ services }) => {
                 fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
                 marginBottom: '20px',
                 marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
-                color: '#433c4c',
+                color: '#88199a',
                 textAlign: isSmallScreen ? 'left' : 'left',
               }}
             >
@@ -277,12 +278,48 @@ const PartnerWithUs = ({ services }) => {
                 fontSize: isSmallScreen ? '0.95rem' : '1rem',
                 lineHeight: '1.6',
                 color: '#333',
-                listStyleType: 'disc',
-                textAlign: isSmallScreen ? 'left' : 'left',
+                listStyle: 'none',
+                margin: 0,
               }}
             >
               {services.slice(0, 6).map((item, index) => (
-                <li key={index}>{item}</li>
+                <motion.li
+                  key={index}
+                  custom={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: (i) => ({
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        delay: i * 0.15,
+                        duration: 0.5,
+                        ease: 'easeOut',
+                      },
+                    }),
+                  }}
+                  style={{
+                    position: 'relative',
+                    paddingLeft: '28px',
+                    marginBottom: '14px',
+                  }}
+                >
+                  <span
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: '5px',
+                      width: '8px',
+                      height: '8px',
+                      backgroundColor: '#88199a',
+                      borderRadius: '50%',
+                    }}
+                  />
+                  {item}
+                </motion.li>
               ))}
             </ul>
           </div>
@@ -385,6 +422,7 @@ const ClientReview = ({ course, name, review }) => {
   return (
     <Box
       sx={{
+        position: 'relative',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -392,9 +430,9 @@ const ClientReview = ({ course, name, review }) => {
         gap: 2,
         padding: '25px',
         borderRadius: '16px',
-        backgroundColor: '#fff',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+        overflow: 'hidden',
         textAlign: 'center',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
         '&:hover': {
           transform: 'translateY(-10px) scale(1.02)',
@@ -402,30 +440,50 @@ const ClientReview = ({ course, name, review }) => {
         },
       }}
     >
-      {/* Styled initial instead of image */}
+      {/* Blurry Background Image */}
       <Box
+        component="img"
+        src={businessImages.HelpDesk} // replace with your actual image path
+        alt="Background"
         sx={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg,rgb(1, 36, 55),rgb(19, 0, 22))',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '4rem',
-          fontStyle: 'italic',
-          color: '#fff',
-          fontWeight: '400px',
-          textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          fontFamily: 'Poiret One sans-serif',
-          textTransform: 'uppercase',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          filter: 'blur(8px)',
+          zIndex: 0,
+          opacity: 0.5,
         }}
-      >
-        {initial}
-      </Box>
+      />
 
-      <Box>
+      {/* Content on Top of Image */}
+      <Box sx={{ position: 'relative', zIndex: 1 }}>
+        <Box
+          sx={{
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg,rgb(1, 36, 55),rgb(19, 0, 22))',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            justifySelf: 'center',
+            fontSize: '4rem',
+            fontStyle: 'italic',
+            color: '#fff',
+            fontWeight: '400',
+            textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            fontFamily: 'Poiret One, sans-serif',
+            textTransform: 'uppercase',
+            marginBottom: '16px',
+          }}
+        >
+          {initial}
+        </Box>
+
         <Typography
           variant="h6"
           sx={{
@@ -440,7 +498,12 @@ const ClientReview = ({ course, name, review }) => {
         </Typography>
         <Typography
           variant="subtitle1"
-          sx={{ fontWeight: 600, fontFamily: 'Montserrat, sans-serif', color: '#222', mb: 1 }}
+          sx={{
+            fontWeight: 600,
+            fontFamily: 'Montserrat, sans-serif',
+            color: '#222',
+            mb: 1,
+          }}
         >
           {name}
         </Typography>
@@ -450,7 +513,7 @@ const ClientReview = ({ course, name, review }) => {
             fontSize: '1rem',
             fontFamily: 'Montserrat, sans-serif',
             lineHeight: 1.6,
-            color: '#555',
+            color: '#271818',
           }}
         >
           &ldquo;{review}&rdquo;
@@ -469,7 +532,6 @@ const ServiceHighlights = () => {
     gap: '20px',
     justifyContent: 'space-between',
     marginTop: '40px',
-    padding: '0 20px',
   };
 
   const cardStyle = {
@@ -494,52 +556,68 @@ const ServiceHighlights = () => {
     position: 'relative',
     paddingLeft: '32px',
     marginBottom: '12px',
+    display: 'flex',
+    alignItems: 'flex-start',
   };
 
   const checkMarkStyle = {
     position: 'absolute',
     left: '0',
-    top: '2px',
-    color: '#333',
+    top: '3px',
+    color: '#1976d2',
     fontSize: '1.1rem',
-    lineHeight: 1,
+    fontWeight: 'bold',
   };
+
+  const listVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    }),
+  };
+
+  const firstList = [
+    'Digital Marketing Services',
+    'Software Development Solutions',
+    'Website Design & Development',
+    'AI & Machine Learning',
+  ];
+
+  const secondList = [
+    'Cloud Infrastructure & IT Solutions',
+    'Remote IT Support & Helpdesk',
+    'Graphic Design – Logos, Branding & Identity',
+    'Cybersecurity Services & Risk Protection',
+  ];
 
   return (
     <div style={sectionStyle}>
-      {/* First List */}
-      <div style={cardStyle}>
-        <ul style={listStyle}>
-          {[
-            'Digital Marketing Services',
-            'Software Development Solutions',
-            'Website Design & Development',
-            'AI & Machine Learning',
-          ].map((item, index) => (
-            <li style={listItemStyle} key={index}>
-              <span style={checkMarkStyle}>✔</span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Second List */}
-      <div style={cardStyle}>
-        <ul style={listStyle}>
-          {[
-            'Cloud Infrastructure & IT Solutions',
-            'Remote IT Support & Helpdesk',
-            'Graphic Design – Logos, Branding & Identity',
-            'Cybersecurity Services & Risk Protection',
-          ].map((item, index) => (
-            <li style={listItemStyle} key={index}>
-              <span style={checkMarkStyle}>✔</span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {[firstList, secondList].map((list, i) => (
+        <div style={cardStyle} key={i}>
+          <ul style={listStyle}>
+            {list.map((item, index) => (
+              <motion.li
+                key={index}
+                custom={index}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={listVariants}
+                style={listItemStyle}
+              >
+                <span style={checkMarkStyle}>✔</span>
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };

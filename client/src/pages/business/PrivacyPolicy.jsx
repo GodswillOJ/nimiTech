@@ -1,3 +1,4 @@
+import { ArrowLeft } from '@mui/icons-material';
 import CircleIcon from '@mui/icons-material/Circle';
 import DevicesIcon from '@mui/icons-material/Devices';
 import EmailIcon from '@mui/icons-material/Email';
@@ -20,11 +21,23 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Link } from 'react-router-dom'; // assuming you're using React Router
+import { useLocation, useNavigate } from 'react-router-dom'; // assuming you're using React Router
 
 const PrivacyPolicyPage = () => {
   const isMobile = useMediaQuery('(max-width:768px)');
   const Bullet = () => <CircleIcon sx={{ fontSize: 8, color: '#333', mt: '6px' }} />;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const from = params.get('from');
+
+  const handleBack = () => {
+    if (from) {
+      navigate(from);
+    } else {
+      navigate(-1);
+    }
+  };
 
   return (
     <Box
@@ -375,8 +388,7 @@ const PrivacyPolicyPage = () => {
         <Button
           variant="contained"
           color="primary"
-          component={Link}
-          to="/contact" // Adjust the route to your actual contact form path
+          onClick={handleBack}
           sx={{
             fontFamily: 'Montserrat, sans-serif',
             textTransform: 'none',
@@ -386,7 +398,7 @@ const PrivacyPolicyPage = () => {
             fontSize: '16px',
           }}
         >
-          Back to Contact Form
+          <ArrowLeft sx={{ mr: 1 }} /> Back
         </Button>
       </Box>
     </Box>
