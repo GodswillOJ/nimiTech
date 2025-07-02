@@ -30,9 +30,9 @@ const Services = () => {
     <Box
       sx={{
         p: 3,
-        background: '#ffffff',
+        background: 'linear-gradient(135deg, #0f1c48, #5c2b93)',
         borderRadius: 4,
-        boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+        boxShadow: '0 12px 28px rgba(0, 0, 0, 0.15)',
         mt: 3,
         mb: 4,
       }}
@@ -49,21 +49,23 @@ const Services = () => {
             style={{
               display: 'flex',
               alignItems: 'flex-start',
-              color: '#333',
+              color: '#ffffff',
               fontFamily: 'Montserrat, sans-serif',
-              fontSize: '1rem',
+              fontSize: '1.05rem',
               lineHeight: 1.8,
               marginBottom: '1rem',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)',
             }}
           >
             <Box
               sx={{
                 minWidth: '10px',
                 height: '10px',
-                backgroundColor: '#1976d2',
+                backgroundColor: '#90caf9', // light accent blue
                 borderRadius: '50%',
                 mr: 2,
                 mt: '8px',
+                boxShadow: '0 0 6px rgba(144, 202, 249, 0.6)',
               }}
             />
             <Typography component="span">{item}</Typography>
