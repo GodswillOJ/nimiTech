@@ -9,7 +9,6 @@ import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images.js';
 import {
-  ceoMessage,
   dummyBusinessPosts,
   introSubtitle,
   introText,
@@ -25,8 +24,10 @@ import {
 } from '../../components/business/landing_page/BusinessItem';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
+import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
 import Footer from '../../components/Footer/Footer';
 import { useGetBusinessPostsQuery } from '../../services/api';
+import Faq from '../../components/Faqs/Faq';
 import styles from '../blog/blog.module.scss';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
@@ -459,91 +460,33 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* message from the ceo */}
-      <div
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          borderRadius: '16px',
-          margin: '40px 20px',
-        }}
-      >
-        {/* Foreground Content */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            background: 'rgba(255, 255, 255, 0.8)',
-            padding: '40px 30px',
-            borderRadius: '16px',
-            maxWidth: '1000px',
-            margin: '0 auto',
-            textAlign: 'center',
-            fontFamily: 'Montserrat, sans-serif',
-          }}
-        >
-          <img
-            src={businessImages.CEO_image}
-            alt="CEO Busay Bright"
-            style={{
-              width: '120px',
-              height: '120px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginBottom: '20px',
-              border: '3px solid #4a4a4a',
-            }}
-          />
-          <h2
-            style={{
-              fontSize: '24px',
-              marginBottom: '10px',
-              color: '#333',
-              fontFamily: 'Montserrat, sans-serif',
-            }}
-          >
-            A Message from Our CEO
-          </h2>
+      {/* CEO Message Section */}
+      <CeoMessage />
 
-          {ceoMessage.map((text, index) => (
-            <p
-              key={index}
-              style={{
-                fontSize: '16px',
-                lineHeight: '1.6',
-                color: index === 2 ? '#444' : '#222',
-                maxWidth: '800px',
-                fontFamily: 'Montserrat, sans-serif',
-                margin: index === 2 ? '30px auto 0' : '20px auto 0',
-                fontWeight: index === 2 ? 'bold' : 'normal',
-              }}
-            >
-              {text}
-            </p>
-          ))}
-        </div>
-      </div>
+      <section id="faq">
+        <Faq />
+      </section>
       {/* donate */}
       <section className={styles.donation}>
         <GradientCard imageSrc={donationImage2} imagePosition="left" />
         <DonateSection
           images={[donationImage1, donationImage2, donationImage1]}
-          onDonateClick={() => window.open('https://www.example.com/donate', '_blank')}
+          onDonateClick={() => window.open('https://gofund.me/a95d2b08', '_blank')}
         />
       </section>
       {/* Support Our Mission Section */}
       <div
-        style={{
-          backgroundColor: '#f5f5f5',
-          padding: '60px 20px',
-          borderRadius: '16px',
-          margin: '40px auto',
-          maxWidth: '1000px',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-          textAlign: 'center',
-        }}
+      // style={{
+      //   backgroundColor: '#f5f5f5',
+      //   padding: '60px 20px',
+      //   borderRadius: '16px',
+      //   margin: '40px auto',
+      //   maxWidth: '1000px',
+      //   boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+      //   textAlign: 'center',
+      // }}
       >
-        <h2
+        {/* <h2
           style={{
             fontSize: '28px',
             fontWeight: 'bold',
@@ -553,7 +496,7 @@ const HomePage = () => {
           }}
         >
           Support Our Mission
-        </h2>
+        </h2> */}
         {/* <p
           style={{
             fontSize: '16px',
@@ -569,7 +512,7 @@ const HomePage = () => {
           communities. You can support us through the details below.
         </p> */}
         {/* Additional Mission */}
-        <div
+        {/* <div
           style={{
             position: 'relative',
             backgroundColor: '#fff',
@@ -640,7 +583,7 @@ const HomePage = () => {
               Donate today and be a part of the change. Every dollar counts!
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
       {/* Testimonials Slider */}
       <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>

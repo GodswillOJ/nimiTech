@@ -9,7 +9,7 @@ interface DonateSectionProps {
 
 const DonateSection: React.FC<DonateSectionProps> = ({
   images,
-  gofundmeUrl = 'https://gofundme.com/your-campaign', // Default URL, replace with actual
+  gofundmeUrl = 'https://gofund.me/a95d2b08', // Default URL, replace with actual
 }) => {
   const [animate, setAnimate] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +48,9 @@ const DonateSection: React.FC<DonateSectionProps> = ({
     setIsModalOpen(false);
   };
 
+  //check if pathname is home
+  const isHome = window.location.pathname === '/';
+
   return (
     <>
       <section className={styles['donate-section']}>
@@ -56,13 +59,31 @@ const DonateSection: React.FC<DonateSectionProps> = ({
             animate ? styles['donate-section__content--visible'] : ''
           }`}
         >
-          <div className={styles['donate-section__text']}>
-            Millions of children in Africa face hunger daily. Here, your $1 makes all the
-            difference.
-            <p className={styles['donate-section__subText']}>
-              Join Nimitech IT in turning technology into hope, one nutritious meal at a time.
-            </p>
-          </div>
+          {isHome ? (
+            <div className={styles['donate-section__text']}>
+              Help Feed Hungry Kids in Africa — Support Nimitech&apos;s Fight Against Malnutrition.
+              <p className={styles['donate-section__subText']}>
+                At Nimitech IT, we believe in using technology and community to make a real
+                difference. Every day, millions of children in Africa suffer from hunger and
+                malnutrition, threatening their health and future. By donating as little as $1 a
+                day, you can help provide nutritious meals and essential support to vulnerable kids,
+                giving them a chance to thrive.
+              </p>
+              <p className={styles['donate-section__subText']}>
+                Join us in this vital mission—your small contribution can create a big impact.
+                Together, we can fight hunger, nourish hope, and build brighter futures. Donate
+                today and be a part of the change. Every dollar counts!
+              </p>
+            </div>
+          ) : (
+            <div className={styles['donate-section__text']}>
+              Millions of children in Africa face hunger daily. Here, your $1 makes all the
+              difference.
+              <p className={styles['donate-section__subText']}>
+                Join Nimitech IT in turning technology into hope, one nutritious meal at a time.
+              </p>
+            </div>
+          )}
           <button onClick={handleDonateClick} className={styles['donate-section__button']}>
             Make a donation
           </button>

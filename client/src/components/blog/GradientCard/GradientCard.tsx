@@ -11,7 +11,7 @@ interface GradientCardProps {
 const GradientCard: React.FC<GradientCardProps> = ({
   imageSrc,
   imagePosition = 'right',
-  gofundmeUrl = 'https://gofundme.com/your-campaign',
+  gofundmeUrl = 'https://gofund.me/a95d2b08',
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'confirmation' | 'success'>('confirmation');
