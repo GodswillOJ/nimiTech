@@ -15,7 +15,8 @@ import logoText from '../../assets/NimiTechLogo2.png';
 
 interface NavigationItem {
   title: string;
-  links: NavigationLink[];
+  links?: NavigationLink[];
+  socialLinks?: SocialLink[];
 }
 
 interface NavigationLink {
@@ -31,34 +32,6 @@ interface SocialLink {
 
 const Footer: React.FC = () => {
   const navigate = useNavigate();
-  const navigationData: NavigationItem[] = [
-    {
-      title: 'Resources',
-      links: [
-        { text: 'Services', path: '/our-services' },
-        { text: 'Blog', path: '/blogs' },
-        { text: 'Case Studies', path: '/case-studies' },
-        { text: 'FAQs', path: '/faqs' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { text: 'About', path: '/about' },
-        { text: 'Careers', path: '/careers' },
-        { text: 'Contact', path: '/contact-us' },
-        { text: 'Training', path: 'https://www.nimitutor.com/' },
-        { text: 'Subscribe', path: '/subscribe' },
-      ],
-    },
-    {
-      title: 'Support',
-      links: [
-        { text: 'Customer Support', path: '/support' },
-        { text: 'Help Desk', path: '/help-desk' },
-      ],
-    },
-  ];
 
   const socialLinks: SocialLink[] = [
     { icon: <XIcon />, href: 'https://x.com/nimi_techIT', label: 'twitter' },
@@ -78,7 +51,40 @@ const Footer: React.FC = () => {
       href: 'https://www.linkedin.com/company/nimi-tech-consultants-llc/?viewAsMember=true',
       label: 'linkedin',
     },
-    { icon: <WhatsAppIcon />, href: '#', label: 'whatsapp' },
+    { icon: <WhatsAppIcon />, href: 'https://wa.me/2529039651', label: 'whatsapp' },
+  ];
+
+  const navigationData: NavigationItem[] = [
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Services', path: '/our-services' },
+        { text: 'Blog', path: '/blogs' },
+        // { text: 'Case Studies', path: '/case-studies' },
+        { text: 'FAQs', path: '/#faq' }, //redirects to the faq section of the homepage
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { text: 'About', path: '/about' },
+        // { text: 'Careers', path: '/careers' },
+        { text: 'Contact', path: '/contact-us' },
+        { text: 'Training', path: 'https://nimitutor.com' },
+        { text: 'Subscribe', path: '/subscribe' }, //trigger the newsletter subscription modal
+      ],
+    },
+    {
+      title: 'Support',
+      links: [
+        // { text: 'Customer Support', path: '/support' },
+        { text: 'Help Desk', path: '/contact-us' },
+      ],
+    },
+    {
+      title: 'Follow us on:',
+      socialLinks: socialLinks,
+    },
   ];
 
   const footerLinks = [
@@ -89,6 +95,44 @@ const Footer: React.FC = () => {
 
   const handleBookConsultation = () => {
     navigate('/contact-us');
+  };
+
+  const handleSubscribeClick = () => {
+    // Trigger newsletter modal - you can customize this based on your modal implementation
+    const event = new CustomEvent('openNewsletterModal');
+    window.dispatchEvent(event);
+  };
+
+  const handleFAQClick = () => {
+    // Navigate to homepage and scroll to FAQ section
+    if (window.location.pathname === '/') {
+      // Already on homepage, just scroll
+      const faqSection = document.getElementById('faq');
+      if (faqSection) {
+        faqSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Navigate to homepage first, then scroll
+      navigate('/', { replace: true });
+      setTimeout(() => {
+        const faqSection = document.getElementById('faq');
+        if (faqSection) {
+          faqSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
+  const handleLinkClick = (link: NavigationLink) => {
+    if (link.path === '/subscribe') {
+      handleSubscribeClick();
+    } else if (link.path === '/#faq') {
+      handleFAQClick();
+    } else if (link.path.startsWith('http')) {
+      window.open(link.path, '_blank', 'noopener,noreferrer');
+    } else {
+      navigate(link.path);
+    }
   };
 
   return (
@@ -118,24 +162,6 @@ const Footer: React.FC = () => {
               <img className={styles.brand__icon} src={logoIcon} />
               <img className={styles.brand__name} src={logoText} />
             </div>
-            <p className={styles.brand__description}>
-              {/* Nimitech IT is a global technology solutions provider specializing in cybersecurity,
-              artificial intelligence, machine learning, digital marketing, software development,
-              and graphic design. We empower businesses with innovative, secure, and scalable IT
-              solutions tailored to drive digital transformation and long-term success. */}
-            </p>
-            <div className={styles.brand__social}>
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className={styles.brand__socialLink}
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Navigation */}
@@ -143,15 +169,48 @@ const Footer: React.FC = () => {
             {navigationData.map((section, index) => (
               <div key={index} className={styles.navigation__column}>
                 <h3 className={styles.navigation__title}>{section.title}</h3>
-                <ul className={styles.navigation__list}>
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex} className={styles.navigation__item}>
-                      <Link to={link.path} className={styles.navigation__link}>
-                        {link.text}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+
+                {/* Render regular links */}
+                {section.links && (
+                  <ul className={styles.navigation__list}>
+                    {section.links.map((link, linkIndex) => (
+                      <li key={linkIndex} className={styles.navigation__item}>
+                        <button
+                          onClick={() => handleLinkClick(link)}
+                          className={styles.navigation__link}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            padding: 0,
+                            font: 'inherit',
+                          }}
+                        >
+                          {link.text}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Render social links */}
+                {section.socialLinks && (
+                  <div className={styles.navigation__socialGrid}>
+                    {section.socialLinks.map((social, socialIndex) => (
+                      <a
+                        key={socialIndex}
+                        href={social.href}
+                        className={styles.navigation__socialLink}
+                        aria-label={social.label}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </nav>

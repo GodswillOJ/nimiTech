@@ -62,6 +62,7 @@
   }
   &__subText {
     font-size: 1rem;
+    line-height: 1.6;
     color: #6b7280;
     font-family: 'Montserrat', sans-serif;
     margin: 1rem 0;
@@ -87,11 +88,11 @@
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: center;
-    padding: 2rem 2.5rem;
+    padding: 3rem 2.5rem;
 
     &__bento {
-      max-width: 320px;
-      grid-template-columns: repeat(2, 140px);
+      max-width: 500px;
+      grid-template-columns: repeat(2, 200px);
     }
 
     &__content {
