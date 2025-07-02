@@ -172,6 +172,7 @@ const Footer: React.FC = () => {
                   {/* {index < footerLinks.length - 1 && (
                     <span className={styles.footer__separator}>•</span>
                   )} */}
+                  {/* new */}
                 </div>
               ))}
             </div>
