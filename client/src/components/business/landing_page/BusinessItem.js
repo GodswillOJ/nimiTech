@@ -233,95 +233,133 @@ const PartnerWithUs = ({ services }) => {
             alignItems: 'stretch',
           }}
         >
-          {/* Text container */}
+          {/* Text container with background image and overlay */}
           <div
             style={{
               flex: 1,
               minWidth: '300px',
-              backgroundColor: '#f9f9f9',
+              position: 'relative',
               borderRadius: '16px',
-              padding: isSmallScreen ? '20px 16px' : isMediumScreen ? '30px 24px' : '40px 30px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              overflow: 'hidden',
+              height: isSmallScreen ? 'auto' : '500px',
               fontFamily: 'Montserrat, sans-serif',
-              height: isSmallScreen ? 'auto' : '500px', // Let it expand naturally on mobile
+              display: 'flex',
+              justifyContent: 'center',
+              padding: isSmallScreen ? '20px 16px' : isMediumScreen ? '30px 24px' : '40px 30px',
+              alignItems: 'center',
+              zIndex: 1,
             }}
           >
-            <h4
+            {/* Background Image Layer (blurry) */}
+            <div
               style={{
-                fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
-                marginBottom: '20px',
-                marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
-                color: '#88199a',
-                textAlign: isSmallScreen ? 'left' : 'left',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.7)), url(${businessImages.AI_image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'blur(10px)',
+                zIndex: 0,
+                transform: 'scale(1.1)', // prevent blur edge clipping
               }}
-            >
-              Unlock Limitless Potential
-            </h4>
-            <p
+            />
+
+            {/* Overlay for slight darkening (optional) */}
+            <div
               style={{
-                fontSize: isSmallScreen ? '1rem' : '1.1rem',
-                lineHeight: '1.7',
-                fontStyle: 'italic',
-                marginBottom: '20px',
-                color: '#433c4c',
-                textAlign: isSmallScreen ? 'left' : 'left',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                zIndex: 0,
               }}
-            >
-              Partnering with us means gaining access to a dedicated team of professionals who
-              provide:
-            </p>
-            <ul
-              style={{
-                paddingLeft: isSmallScreen ? '16px' : '20px',
-                fontSize: isSmallScreen ? '0.95rem' : '1rem',
-                lineHeight: '1.6',
-                color: '#333',
-                listStyle: 'none',
-                margin: 0,
-              }}
-            >
-              {services.slice(0, 6).map((item, index) => (
-                <motion.li
-                  key={index}
-                  custom={index}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: (i) => ({
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: i * 0.15,
-                        duration: 0.5,
-                        ease: 'easeOut',
-                      },
-                    }),
-                  }}
-                  style={{
-                    position: 'relative',
-                    paddingLeft: '28px',
-                    marginBottom: '14px',
-                  }}
-                >
-                  <span
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: '5px',
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: '#88199a',
-                      borderRadius: '50%',
+            />
+
+            {/* Content Layer */}
+            <div style={{ position: 'relative', zIndex: 2, color: '#fff' }}>
+              <h4
+                style={{
+                  fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
+                  marginBottom: '20px',
+                  marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
+                  textAlign: 'left',
+                  textShadow: '0 2px 6px rgba(0,0,0,0.6)',
+                }}
+              >
+                Unlock Limitless Potential
+              </h4>
+
+              <p
+                style={{
+                  fontSize: isSmallScreen ? '1rem' : '1.1rem',
+                  lineHeight: '1.7',
+                  fontStyle: 'italic',
+                  marginBottom: '20px',
+                  color: '#f0f0f0',
+                  textAlign: 'left',
+                  textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+                }}
+              >
+                Partnering with us means gaining access to a dedicated team of professionals who
+                provide:
+              </p>
+
+              <ul
+                style={{
+                  paddingLeft: isSmallScreen ? '16px' : '20px',
+                  fontSize: isSmallScreen ? '0.95rem' : '1rem',
+                  lineHeight: '1.6',
+                  color: '#ffffff',
+                  listStyle: 'none',
+                  margin: 0,
+                }}
+              >
+                {services.slice(0, 6).map((item, index) => (
+                  <motion.li
+                    key={index}
+                    custom={index}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: (i) => ({
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          delay: i * 0.15,
+                          duration: 0.5,
+                          ease: 'easeOut',
+                        },
+                      }),
                     }}
-                  />
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
+                    style={{
+                      position: 'relative',
+                      paddingLeft: '28px',
+                      marginBottom: '14px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: '5px',
+                        width: '8px',
+                        height: '8px',
+                        backgroundColor: '#ffffff',
+                        borderRadius: '50%',
+                      }}
+                    />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
           </div>
           {/* Image container with overlay text */}
           <div
@@ -332,7 +370,6 @@ const PartnerWithUs = ({ services }) => {
               position: 'relative',
               borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
               overflow: 'hidden',
-              height: '500px',
             }}
           >
             <img
@@ -340,6 +377,8 @@ const PartnerWithUs = ({ services }) => {
               alt="Partner with us"
               className="image-hover"
               style={{
+                top: 0,
+                bottom: 0,
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
