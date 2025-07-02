@@ -93,8 +93,10 @@ h2 .my-domine1 {
   text-decoration: none;
   padding: 10px 30px;
   border-radius: 50px;
-  border: 2px solid rgb(67, 72, 76);
-  color: #000;
+  /* border: 2px solid rgb(67, 72, 76); */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  color: #f2f2f2;
+  background: rgb(164, 7, 178);
   margin: 25px;
   font-weight: bold;
   text-align: center;

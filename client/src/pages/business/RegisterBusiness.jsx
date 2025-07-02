@@ -11,10 +11,10 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSendContactFormMutation } from '../../services/api';
 import { businessImages } from '../../assets/images.js';
 import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
 import { BusinessPostItem } from '../../components/business/landing_page/BusinessItem';
+import { useSendContactFormMutation } from '../../services/api';
 
 const BusinessRegisterPage = () => {
   const search = useLocation().search;
@@ -28,6 +28,7 @@ const BusinessRegisterPage = () => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+  const location = useLocation();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -394,7 +395,7 @@ const BusinessRegisterPage = () => {
                   information provided in this form. Your information will be used in accordance
                   with our{' '}
                   <MuiLink
-                    href="/privacy-policy"
+                    href={`/privacy-policy?from=${encodeURIComponent(location.pathname + location.search)}`}
                     target="_blank"
                     rel="noopener"
                     sx={{ color: '#3b1647', textDecoration: 'underline' }}

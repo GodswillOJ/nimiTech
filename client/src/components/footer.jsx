@@ -35,16 +35,16 @@ const Footer = () => {
             <h2>Courses</h2>
             <ul>
               <li>
-                <a href="/courses/cybersecurity">Cybersecurity</a>
+                <a href="/our-services">Cybersecurity</a>
               </li>
               <li>
-                <a href="/courses/web-dev">Web Development</a>
+                <a href="/our-services">Web Development</a>
               </li>
               <li>
-                <a href="/courses/ai">Artificial Intelligence</a>
+                <a href="/our-services">Artificial Intelligence</a>
               </li>
               <li>
-                <a href="/courses/ml">Machine Learning</a>
+                <a href="/our-services">Machine Learning</a>
               </li>
             </ul>
           </div>

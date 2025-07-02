@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FacebookIcon,
-  YouTubeIcon,
-  XIcon,
   InstagramIcon,
+  XIcon,
+  YouTubeIcon,
   LinkedInIcon,
   WhatsAppIcon,
 } from '../../assets/blog/icons/SocialIcons';
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
   ];
 
   const footerLinks = [
-    { text: 'Privacy Policy', path: '/privacy' },
+    { text: 'Privacy Policy', path: '/privacy-policy' },
     { text: 'Terms of Service', path: '/terms' },
     { text: 'Cookies Settings', path: '/cookies' },
   ];

@@ -47,7 +47,7 @@ const HomePage = () => {
     ? postsToShow
     : showAllPosts
       ? postsToShow
-      : postsToShow.slice(0, 4);
+      : postsToShow.slice(0, 2);
 
   // Testimonials Carousel Settings
   const testimonialSettings = {
@@ -228,6 +228,202 @@ const HomePage = () => {
         >
           Our Services
         </h1>
+
+        <div
+          style={{
+            position: 'relative',
+            height: isSmallScreen ? '480px' : '580px',
+            width: '100%',
+            margin: '40px 0',
+            overflow: 'hidden',
+            borderRadius: '24px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+          }}
+        >
+          {/* Animated Background */}
+          <img
+            src={businessImages.nimi_hero1} // Replace with your image path
+            alt="Background"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              animation: 'slowZoom 18s ease-in-out infinite',
+              transition: 'transform 0.8s ease-in-out',
+            }}
+            className="animated-bg-image"
+          />
+
+          {/* Hover Scale Animation */}
+          <style>
+            {`
+              .animated-bg-image:hover {
+                transform: scale(1.05);
+              }
+
+              @keyframes slowZoom {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.03); }
+              }
+
+              .diamond {
+                width: 220px;
+                height: 220px;
+                background: linear-gradient(135deg, #5e004f, #220038);
+                transform: rotate(45deg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                transition: transform 0.3s ease-in-out;
+              }
+
+              .diamond:hover {
+                transform: rotate(45deg) scale(1.05);
+              }
+
+              .diamond-text {
+                transform: rotate(-45deg);
+                color: white;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.6rem;
+                font-weight: bold;
+                text-align: center;
+                padding: 10px;
+              }
+            `}
+          </style>
+
+          {/* Foreground Content */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '20px',
+              backdropFilter: 'blur(2px)',
+            }}
+          >
+            <div
+              style={{
+                margin: '40px 0',
+                padding: isSmallScreen ? '20px' : '40px',
+                background: 'linear-gradient(135deg, #f6f0ff,rgba(237, 226, 250, 0.17))', // A light purple/pink blend
+                borderRadius: '24px',
+                boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                textAlign: 'center',
+                fontFamily: 'Montserrat, sans-serif',
+                transition: 'transform 0.4s ease-in-out',
+                cursor: 'default',
+              }}
+            >
+              {/* Expansion on hover */}
+              <style>
+                {`
+                  .diamond-container:hover {
+                    transform: scale(1.02);
+                  }
+
+                  .diamond {
+                    width: 200px;
+                    height: 200px;
+                    background: linear-gradient(135deg, #590263, #2b0040);
+                    transform: rotate(45deg);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                    transition: transform 0.3s ease-in-out;
+                  }
+
+                  .diamond:hover {
+                    transform: rotate(45deg) scale(1.05);
+                  }
+
+                  .diamond-text {
+                    transform: rotate(-45deg);
+                    color: #fff;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    text-align: center;
+                    padding: 12px;
+                  }
+                `}
+              </style>
+
+              <div
+                style={{
+                  margin: '40px 0',
+                  padding: isSmallScreen ? '20px' : '40px',
+                  background: 'none', // Catchy pink/purple blend
+                  borderRadius: '24px',
+                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                  fontFamily: 'Montserrat, sans-serif',
+                  transition: 'transform 0.4s ease-in-out',
+                  cursor: 'default',
+                }}
+                className="rectangle-container"
+              >
+                <style>
+                  {`
+                  .rectangle-container:hover {
+                    transform: scale(1.02);
+                  }
+
+                  .headline-box {
+                    background: linear-gradient(135deg,rgb(56, 5, 62),rgb(217, 0, 255));
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    color: white;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                    display: inline-block;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                    font-family: 'Montserrat', sans-serif;
+                    text-align: center;
+                    transition: transform 0.3s ease-in-out;
+                  }
+
+                  .headline-box:hover {
+                    transform: scale(1.05);
+                  }
+                `}
+                </style>
+
+                {/* Rectangular Styled Subtitle */}
+                <div className="headline-box">{introSubtitle}</div>
+
+                {/* Supporting Paragraph */}
+                <p
+                  style={{
+                    fontSize: isSmallScreen ? '1rem' : '1.1rem',
+                    color: '#4b004e',
+                    marginTop: '30px',
+                    lineHeight: '1.8',
+                    maxWidth: '700px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  {introText}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
           style={{
             display: 'flex',
@@ -270,8 +466,8 @@ const HomePage = () => {
                 <button
                   onClick={() => setShowAllPosts(!showAllPosts)}
                   style={{
-                    background: '#88199a',
-                    color: '#FFF',
+                    background: 'none',
+                    color: '#88199a',
                     border: 'none',
                     cursor: 'pointer',
                     fontSize: '1rem',
@@ -279,6 +475,7 @@ const HomePage = () => {
                     marginTop: '16px',
                     fontWeight: 'bold',
                     textDecoration: 'none',
+                    boxShadow: 'none',
                     borderRadius: '16px',
                   }}
                   className="contact-btn"
@@ -290,40 +487,6 @@ const HomePage = () => {
           </div>
           {/* 📌 Left Side: Text & List Block */}
           <div style={{ width: '100%' }}>
-            {/* <h2
-              style={{
-                fontSize: isSmallScreen ? '1.4rem' : '2rem',
-                padding: isSmallScreen ? '20px' : '20px',
-                color: '#7b7979',
-                marginTop: '20px',
-                marginBottom: '10px',
-              }}
-            >
-              {introTitle}
-            </h2> */}
-            <h1
-              style={{
-                fontSize: isSmallScreen ? '1.8rem' : '2.4rem',
-                padding: isSmallScreen ? '20px' : '0',
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: '400',
-                color: '#2e0135',
-                marginBottom: '20px',
-              }}
-            >
-              {introSubtitle}
-            </h1>
-            <p
-              style={{
-                fontSize: isSmallScreen ? '1rem' : '1.2rem',
-                padding: isSmallScreen ? '20px 20px 0 20px' : '20px 0 0 0',
-                lineHeight: '1.7',
-                color: '#444',
-                fontFamily: 'Montserrat, sans-serif',
-              }}
-            >
-              {introText}
-            </p>
             <div style={{ padding: isSmallScreen ? '20px' : '0' }}>
               <ServiceHighlights />
             </div>
@@ -474,6 +637,7 @@ const HomePage = () => {
           onDonateClick={() => window.open('https://gofund.me/a95d2b08', '_blank')}
         />
       </section>
+
       {/* Support Our Mission Section */}
       <div
       // style={{
@@ -585,6 +749,7 @@ const HomePage = () => {
           </div>
         </div> */}
       </div>
+
       {/* Testimonials Slider */}
       <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
         <Swiper
@@ -609,6 +774,7 @@ const HomePage = () => {
           ))}
         </Swiper>
       </div>
+
       {/* Footer */}
       <Footer />
     </div>
