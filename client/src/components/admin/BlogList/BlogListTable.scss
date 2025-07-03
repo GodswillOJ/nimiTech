@@ -183,6 +183,10 @@
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #e5e7eb;
+  
+  // Prevent table overflow
+  overflow-x: auto;
+  min-width: 0; // Allow flex shrinking
 
   &__header {
     background: #f9fafb;
@@ -191,8 +195,8 @@
 
   &__row {
     display: grid;
-    grid-template-columns: 60px 1fr 100px 120px 150px 100px 120px;
-    gap: 16px;
+    grid-template-columns: 60px 1fr 100px 120px 150px 100px 110px;
+    gap: 12px;
     align-items: center;
     transition: background-color 0.2s ease;
 
@@ -215,6 +219,8 @@
 
     &--actions {
       padding-right: 16px;
+      width: 110px;
+      text-align: center;
     }
   }
 
@@ -301,6 +307,25 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    
+    // Compact table action buttons
+    .btn--icon {
+      min-width: 30px;
+      min-height: 30px;
+      padding: 8px;
+      border-radius: 6px;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+      
+      &:hover {
+        transform: translateY(-1px) scale(1.05);
+      }
+    }
   }
 }
 
@@ -441,78 +466,181 @@
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+
+    .btn {
+      flex: 1;
+      justify-content: center;
+      min-height: 40px;
+      font-weight: 500;
+
+      &:first-child {
+        margin-right: 4px;
+      }
+
+      &:last-child {
+        margin-left: 4px;
+      }
+    }
   }
 }
 
-// Button Styles
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 8px 16px;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  white-space: nowrap;
 
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  } 
+  &--icon {
+    padding: 10px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    position: relative;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    
+    &:hover:not(:disabled) svg {
+      transform: scale(1.1);
+    }
+    
+    &:focus {
+      outline: 2px solid transparent;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+    
+    // Tooltip on hover
+    &[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 1000;
+      pointer-events: none;
+    }
+  }
+
+  // Primary button
   &--primary {
     background: #3b82f6;
     color: white;
 
     &:hover:not(:disabled) {
       background: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
     }
   }
 
+  // Secondary button
   &--secondary {
-    background: #f3f4f6;
-    color: #374151;
-    border: 1px solid #d1d5db;
-
-    &:hover:not(:disabled) {
-      background: #e5e7eb;
-      border-color: #9ca3af;
-    }
-  }
-
-  &--outline-danger {
-    background: transparent;
-    color: #dc2626;
-    border: 1px solid #dc2626;
-
-    &:hover:not(:disabled) {
-      background: #dc2626;
-      color: white;
-    }
-  }
-
-  &--danger {
-    background: #dc2626;
+    background: #6b7280;
     color: white;
 
     &:hover:not(:disabled) {
-      background: #b91c1c;
+      background: #4b5563;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(107, 114, 128, 0.3);
     }
   }
 
-  &--icon {
-    padding: 8px;
-    width: 36px;
-    height: 36px;
+  // Danger button
+  &--danger {
+    background: #ef4444;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
   }
 
+  // Outline danger button
+  &--outline-danger {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+
+    &:hover:not(:disabled) {
+      background: #ef4444;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
+  }
+
+  // Success button
+  &--success {
+    background: #10b981;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    }
+  }
+
+  // Small size
   &--small {
     padding: 6px 12px;
-    font-size: 13px;
+    font-size: 12px;
+
+    &.btn--icon {
+      padding: 6px;
+      min-width: 28px;
+      min-height: 28px;
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
   }
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  // Large size
+  &--large {
+    padding: 12px 24px;
+    font-size: 16px;
+
+    &.btn--icon {
+      padding: 14px;
+      min-width: 40px;
+      min-height: 40px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
   }
 }
 
@@ -520,21 +648,45 @@
 @media (max-width: 1200px) {
   .blog-table__row {
     grid-template-columns: 60px 1fr 100px 100px 120px 80px 100px;
+    gap: 10px;
   }
 
   .blog-table__cell {
-    padding: 12px 8px;
+    padding: 12px 6px;
     font-size: 13px;
+  }
+  
+  .blog-table__actions .btn--icon {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 6px;
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 }
 
 @media (max-width: 992px) {
   .blog-table__row {
-    grid-template-columns: 50px 1fr 80px 80px 100px 80px;
+    grid-template-columns: 50px 1fr 80px 80px 100px 75px;
+    gap: 8px;
   }
 
   .blog-table__cell--date {
     display: none;
+  }
+  
+  .blog-table__actions .btn--icon {
+    min-width: 28px;
+    min-height: 28px;
+    padding: 5px;
+    
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 }
 
@@ -584,10 +736,22 @@
     &__actions {
       flex-direction: column;
       gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
 
       .btn {
         width: 100%;
         justify-content: center;
+        min-height: 36px;
+        font-weight: 500;
+
+        &:first-child {
+          margin-right: 4px;
+        }
+
+        &:last-child {
+          margin-left: 4px;
+        }
       }
     }
   }

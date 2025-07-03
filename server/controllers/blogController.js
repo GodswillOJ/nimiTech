@@ -213,6 +213,7 @@ const addEditBlogPost = async (req, res) => {
     if (req.body.youtubeUrl) sanitizedData.youtubeUrl = sanitizeInput(req.body.youtubeUrl);
     if (req.body.contentImageTitle)
       sanitizedData.contentImageTitle = sanitizeInput(req.body.contentImageTitle);
+    if (req.body.slug) sanitizedData.slug = sanitizeInput(req.body.slug);
     if (req.body.isFeatured !== undefined)
       sanitizedData.isFeatured = req.body.isFeatured === "true";
     if (req.body.isPublished !== undefined)
@@ -244,6 +245,14 @@ const addEditBlogPost = async (req, res) => {
     // Add admin ID for tracking
     if (req.admin) {
       sanitizedData.authorId = req.admin.id;
+    }
+
+    // Generate slug if not provided
+    if (!sanitizedData.slug && sanitizedData.title) {
+      sanitizedData.slug = sanitizedData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
     }
 
     let blog;
@@ -285,18 +294,7 @@ const addEditBlogPost = async (req, res) => {
         });
       }
     } else {
-      // Validate required fields for new blog
-      const requiredFields = ["title", "description", "category", "readTime"];
-      const missingFields = requiredFields.filter(field => !sanitizedData[field]);
-
-      if (missingFields.length > 0) {
-        return res.status(400).json({
-          success: false,
-          message: `Missing required fields: ${missingFields.join(", ")}`,
-        });
-      }
-
-      // Create new blog
+      // Create new blog - no required field validation since model handles defaults
       blog = new Blog(sanitizedData);
       await blog.save();
     }
@@ -419,6 +417,8 @@ const uploadBlogImage = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Image uploaded successfully",
+      imageUrl: imagePath, // Frontend expects imageUrl
+      url: imagePath, // Alternative field name for compatibility
       data: {
         imagePath,
         originalName: req.file.originalname,
@@ -481,6 +481,54 @@ const getBlogStats = async (req, res) => {
   }
 };
 
+// Get all blogs for admin (includes both published and draft posts)
+const getAllBlogsAdmin = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const category = req.query.category;
+    const search = req.query.search;
+
+    // Build query - NO isPublished filter for admin
+    let query = {};
+
+    if (category && category !== "all") {
+      query.category = category;
+    }
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const posts = await Blog.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+    const totalPosts = await Blog.countDocuments(query);
+    const totalPages = Math.ceil(totalPosts / limit);
+
+    res.status(200).json({
+      posts,
+      currentPage: page,
+      totalPages,
+      totalPosts,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+    });
+  } catch (error) {
+    console.error("Error fetching admin blogs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch blog posts",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   getAllBlogsPaginated,
   getFeaturedPost,
@@ -491,4 +539,5 @@ module.exports = {
   uploadBlogImage,
   getBlogCategories,
   getBlogStats,
+  getAllBlogsAdmin,
 };

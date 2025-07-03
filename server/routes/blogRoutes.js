@@ -10,6 +10,7 @@ const {
   uploadBlogImage,
   getBlogCategories,
   getBlogStats,
+  getAllBlogsAdmin,
 } = require("../controllers/blogController");
 const {
   upload,
@@ -33,6 +34,9 @@ router.get("/:id/related", getRelatedPosts);
 // Protected routes (admin only)
 router.use(protect); // All routes below require authentication
 router.use(authorize("admin", "super_admin")); // Only admins can create/edit/delete
+
+// Admin-specific route to get all posts (including drafts)
+router.get("/admin/all", getAllBlogsAdmin); // GET /api/blogs/admin/all
 
 router.post("/", cleanupOnError, uploadMultiple, handleMulterError, addEditBlogPost); // POST /api/blogs
 router.put("/:id", cleanupOnError, uploadMultiple, handleMulterError, addEditBlogPost); // PUT /api/blogs/:id

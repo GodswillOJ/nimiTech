@@ -89,9 +89,9 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
     });
   };
 
-  const subscriptions = subscriptionsData?.subscriptions || [];
-  const pagination = subscriptionsData;
-  const stats = statsData?.stats || {};
+  const subscriptions = subscriptionsData?.data?.subscriptions || [];
+  const pagination = subscriptionsData?.data?.pagination;
+  const stats = statsData?.data || {};
 
   return (
     <div className="newsletter-manager">
@@ -100,6 +100,15 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
         <div className="header-actions">
           <button onClick={handleExport} disabled={isExporting} className="btn btn--secondary">
             {isExporting ? 'Exporting...' : 'Export CSV'}
+          </button>
+          <button
+            onClick={() => {
+              console.log('Testing API call...');
+              refetchSubscriptions();
+            }}
+            className="btn btn--primary"
+          >
+            Refresh Data
           </button>
         </div>
       </div>
@@ -189,6 +198,9 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
       ) : subscriptionsError ? (
         <div className="newsletter-manager__error">
           <p>Failed to load subscriptions</p>
+          <p style={{ fontSize: '0.8em', color: '#666' }}>
+            Error: {JSON.stringify(subscriptionsError, null, 2)}
+          </p>
           <button onClick={() => refetchSubscriptions()} className="btn btn--primary">
             Try Again
           </button>
@@ -275,8 +287,8 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
               </button>
 
               <span className="pagination-info">
-                Page {pagination.currentPage} of {pagination.totalPages}({pagination.totalItems}{' '}
-                total subscribers)
+                Page {pagination.currentPage} of {pagination.totalPages}(
+                {pagination.totalSubscriptions} total subscribers)
               </span>
 
               <button

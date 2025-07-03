@@ -36,6 +36,32 @@ export const blogApi = createApi({
           : [{ type: 'Blogs', id: 'LIST' }],
     }),
 
+    // Admin-only query to get all posts (published + draft)
+    getAllBlogPostAdminPaginated: builder.query<
+      any,
+      { page?: number; limit?: number; category?: string; search?: string }
+    >({
+      query: ({ page = 1, limit = 10, category, search } = {}) => {
+        const params = new URLSearchParams({
+          page: page.toString(),
+          limit: limit.toString(),
+          ...(category && category !== 'all' && { category }),
+          ...(search && { search }),
+        });
+        return `/blogs/admin/all?${params.toString()}`;
+      },
+      providesTags: (result) =>
+        result?.posts
+          ? [
+              ...result.posts.map(({ _id, id }: any) => ({
+                type: 'Blogs' as const,
+                id: _id || id,
+              })),
+              { type: 'Blogs', id: 'ADMIN_LIST' },
+            ]
+          : [{ type: 'Blogs', id: 'ADMIN_LIST' }],
+    }),
+
     getFeaturedPost: builder.query<any, void>({
       query: () => '/blogs/featured',
       providesTags: ['FeaturedPost'],
@@ -159,4 +185,5 @@ export const {
   useDeleteBlogPostMutation,
   useUploadBlogImageMutation,
   useGetBlogEditorQuery,
+  useGetAllBlogPostAdminPaginatedQuery,
 } = blogApi;

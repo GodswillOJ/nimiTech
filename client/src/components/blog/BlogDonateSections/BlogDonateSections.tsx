@@ -1,4 +1,3 @@
-// DonationSection.tsx
 import React, { useState, useEffect } from 'react';
 import styles from './BlogDonateSections.module.scss';
 import { Button } from '../../../components/blogCMS/Button/Button';
@@ -74,7 +73,6 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
     if (urlParams.get('donation') === 'success') {
       setModalType('success');
       setIsModalOpen(true);
-      // Clean up URL
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
@@ -98,7 +96,10 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
   return (
     <section className={`${styles.donationSection} ${className}`}>
       <div className={styles.donationSection__container}>
-        <h2 className={styles.donationSection__title}>{title}</h2>
+        <h2 className={styles.donationSection__title}>
+          {title}
+          Help Feed Hungry Kids in Africa — Support Nimitech&apos;s Fight Against Malnutrition.
+        </h2>
 
         <div className={styles.donationSection__content}>
           <div className={styles.donationSection__info}>

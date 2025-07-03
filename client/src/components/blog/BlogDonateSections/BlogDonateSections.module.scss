@@ -1,9 +1,12 @@
-
 .donationSection {
   padding: 2rem 1rem;
-  background: url('../../../assets/blog/images/fluidBackground.jpg');
+  // background: url('../../../assets/blog/images/fluidBackground.jpg');
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('../../../assets/blog/images/donationBg1.jpg') no-repeat center center;
+  background-size: cover;
   width: 100%;
-  // border-radius: 12px;
+  border-radius: 12px;
 
   @media (min-width: 768px) {
     padding: 3rem 3rem;
@@ -22,8 +25,9 @@
   &__title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #1a1a1a;
-    //   margin-bottom: 2rem;
+    // color: #1a1a1a;
+    color: white;
+    // margin-bottom: 2rem;
     line-height: 1.3;
     text-align: center;
 
@@ -125,7 +129,14 @@
   }
 
   &__perks {
+    margin-top: 2rem;
     // Block: perks section
+    @media (min-width: 768px) {
+      margin-top: 3rem;
+    }
+    @media (min-width: 1024px) {
+      margin-top: 4rem;
+    }
   }
 
   &__perksTitle {
@@ -154,8 +165,10 @@
 
   &__perkItem {
     font-size: 1.2rem;
+    font-weight: 600;
     line-height: 1.6;
-    color: #374151;
+    // color: #374151;
+    color: white;
 
     @media (min-width: 768px) {
       font-size: 1.125rem;
@@ -163,8 +176,9 @@
   }
 
   &__perkTitle {
-    font-weight: 600;
-    color: #1f2937;
+    font-weight: 700;
+    // color: #1f2937;
+    color: white;
   }
 
   &__perkDescription {
@@ -196,7 +210,7 @@
   &__statNumber {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #1f2937;
+    color: white;
     line-height: 1;
     margin-bottom: 0.25rem;
 
@@ -211,8 +225,9 @@
 
   &__statLabel {
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #6b7280;
+    font-weight: 600;
+    // color: #6b7280;
+    color: rgb(199, 185, 185);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 
@@ -222,6 +237,7 @@
   }
 
   &__donateButton {
+    font-weight: 600;
     font-size: 'Montserrat', sans-serif;
     background-color: #88199a;
     color: white;
@@ -237,8 +253,8 @@
 
     @media (min-width: 768px) {
       width: auto;
-      padding: 1.5rem 3.0rem;
-      font-size: 1.25rem;
+      padding: 1.5rem 3rem;
+      font-size: 1.4rem !important;
     }
 
     &:hover {
