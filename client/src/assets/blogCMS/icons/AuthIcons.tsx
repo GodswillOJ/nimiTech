@@ -94,10 +94,29 @@ export const Lock: React.FC<IconProps> = ({ size = 24, strokeWidth = 2, ...props
   </svg>
 );
 
+// Arrow Left Icon Component
+export const ArrowLeft: React.FC<IconProps> = ({ size = 24, strokeWidth = 2, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M19 12H5" />
+    <path d="M12 19l-7-7 7-7" />
+  </svg>
+);
+
 export default {
   Eye,
   EyeOff,
   User,
   Mail,
   Lock,
+  ArrowLeft,
 };

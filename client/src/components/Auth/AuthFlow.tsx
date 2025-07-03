@@ -317,8 +317,12 @@ export default function AuthFlow() {
                     </div>
                     <span className={styles.auth__remember_text}>Remember me</span>
                   </button>
-                  <button type="button" className={styles.auth__forgot_password}>
-                    I forgot password
+                  <button
+                    type="button"
+                    className={styles.auth__forgot_password}
+                    onClick={() => navigate('/auth/forgot-password')}
+                  >
+                    Forgot password
                   </button>
                 </div>
               )}

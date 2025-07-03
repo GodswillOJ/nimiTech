@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import BlogPostEditor from '../blogCMS/BlogPostEditor/BlogPostEditor';
 import BlogListTable from '../../components/admin/BlogList/BlogListTable';
@@ -79,19 +79,22 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 // Dashboard Overview Component
 // Profile/Admin Header Component
-const AdminProfileHeader: React.FC = () => {
+const AdminProfileHeader: React.FC = React.memo(() => {
   const { data: profile } = useGetAdminProfileQuery({});
-  const adminData = {
-    name: `${profile?.data?.admin?.firstName} ${profile?.data?.admin?.lastName}` || 'Admin',
-    email: profile?.data?.admin?.email || 'admin@nimitech.com',
-    avatar: profile?.data?.admin?.avatar || null,
-  };
+  const adminData = useMemo(
+    () => ({
+      name: `${profile?.data?.admin?.firstName} ${profile?.data?.admin?.lastName}` || 'Admin',
+      email: profile?.data?.admin?.email || 'admin@nimitech.com',
+      avatar: profile?.data?.admin?.avatar || null,
+    }),
+    [profile]
+  );
 
   return (
     <div className={styles.admin__profile}>
       <div className={styles.admin__avatar}>
         {adminData.avatar ? (
-          <img src={adminData.avatar} alt={adminData.name} />
+          <img src={adminData.avatar} alt={adminData.name} loading="lazy" decoding="async" />
         ) : (
           <div className={styles.admin__avatar_placeholder}>
             <svg
@@ -114,7 +117,9 @@ const AdminProfileHeader: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+AdminProfileHeader.displayName = 'AdminProfileHeader';
 
 const DashboardOverview: React.FC = () => {
   const { data: blogStats, isLoading: statsLoading } = useGetBlogStatsQuery();
@@ -124,7 +129,7 @@ const DashboardOverview: React.FC = () => {
       <AdminProfileHeader />
 
       <div className={styles.overview__header}>
-        <h1>Welcome to Nimitech&pos;s Blog Dashboard</h1>
+        <h1>Welcome to Nimitech&apos;s Blog Dashboard</h1>
         <p>Manage your blog posts and content from here.</p>
       </div>
 
@@ -188,22 +193,25 @@ const UserDashboard: React.FC = () => {
   const toast = useToast();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     clearAuthToken();
     toast.success('Logged out successfully');
     window.location.href = '/auth';
-  };
+  }, [toast]);
 
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
+  const toggleSidebar = useCallback(() => {
+    setSidebarCollapsed((prev) => !prev);
+  }, []);
 
-  const navItems = [
-    { path: '/dashboard', icon: <DashboardIcon />, label: 'Dashboard', exact: true },
-    { path: '/dashboard/posts', icon: <PostsIcon />, label: 'All Posts' },
-    { path: '/dashboard/create', icon: <CreateIcon />, label: 'Create Post' },
-    { path: '/dashboard/newsletter', icon: <NewsletterIcon />, label: 'Newsletter' },
-  ];
+  const navItems = useMemo(
+    () => [
+      { path: '/dashboard', icon: <DashboardIcon />, label: 'Dashboard', exact: true },
+      { path: '/dashboard/posts', icon: <PostsIcon />, label: 'All Posts' },
+      { path: '/dashboard/create', icon: <CreateIcon />, label: 'Create Post' },
+      { path: '/dashboard/newsletter', icon: <NewsletterIcon />, label: 'Newsletter' },
+    ],
+    []
+  );
 
   return (
     <ProtectedRoute>

@@ -96,7 +96,7 @@
     transform: translateY(-50%);
     width: 1.25rem;
     height: 1.25rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #88199a;
   }
 
   &__input {
@@ -138,7 +138,7 @@
   &__eye_icon {
     width: 1.25rem;
     height: 1.25rem;
-    color: #000;
+    color: #88199a;
   }
 
   &__options {
@@ -248,4 +248,47 @@
     }
   }
 
+  &__back_button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+  }
+
+  &__back_icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+  }
+
+  &__title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+  }
 }

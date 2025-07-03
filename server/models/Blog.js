@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const authorSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Author name is required"],
+    required: [true, "Author name is required"], // Keep this required as it's the only one we want
     trim: true,
     maxlength: [100, "Author name must be less than 100 characters"],
   },
@@ -14,10 +14,13 @@ const authorSchema = new mongoose.Schema({
   },
   date: {
     type: String,
-    required: [true, "Author date is required"],
+    required: false, // Made optional
+    default: () => new Date().toLocaleDateString(),
   },
   bio: {
     type: String,
+    required: false, // Made optional
+    default: "Blog Administrator",
     maxlength: [500, "Bio must be less than 500 characters"],
   },
 });
@@ -25,21 +28,23 @@ const authorSchema = new mongoose.Schema({
 const paragraphSchema = new mongoose.Schema({
   type: {
     type: String,
-    required: [true, "Paragraph type is required"],
+    required: false, // Made optional
     enum: ["text", "quote"],
     default: "text",
   },
   content: {
     type: String,
-    required: [true, "Paragraph content is required"],
+    required: false, // Made optional
     maxlength: [2000, "Paragraph content must be less than 2000 characters"],
+    default: "",
   },
 });
 
 const highlightsSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, "Highlights title is required"],
+    required: false, // Made optional
+    default: "Key Benefits",
     maxlength: [200, "Highlights title must be less than 200 characters"],
   },
   benefits: [
@@ -56,43 +61,54 @@ const contentSchema = new mongoose.Schema({
     maxlength: [300, "Subtitle must be less than 300 characters"],
   },
   paragraphs: [paragraphSchema],
-  highlights: highlightsSchema,
+  highlights: {
+    type: highlightsSchema,
+    required: false, // Made optional
+  },
 });
 
 const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Blog title is required"],
+      required: [true, "Blog title is required"], // Keep this required
       trim: true,
       maxlength: [200, "Title must be less than 200 characters"],
       minlength: [5, "Title must be at least 5 characters"],
     },
     description: {
       type: String,
-      required: [true, "Blog description is required"],
+      required: false, // Made optional
       trim: true,
       maxlength: [500, "Description must be less than 500 characters"],
-      minlength: [10, "Description must be at least 10 characters"],
+      default: "",
     },
     category: {
       type: String,
-      required: [true, "Category is required"],
+      required: false, // Made optional
       trim: true,
+      default: "Technology",
       maxlength: [50, "Category must be less than 50 characters"],
     },
     readTime: {
       type: String,
-      required: [true, "Read time is required"],
+      required: false, // Made optional
+      default: "1 min read",
       match: [/^\d+\s*(min|minute|minutes)\s*read$/i, 'Read time must be in format "X min read"'],
     },
     author: {
       type: authorSchema,
-      required: [true, "Author information is required"],
+      required: false, // Made optional
+      default: () => ({
+        name: "Admin User",
+        date: new Date().toLocaleDateString(),
+        bio: "Blog Administrator",
+      }),
     },
     image: {
       type: String, // File path to uploaded featured image
-      required: [true, "Featured image is required"],
+      required: false, // Made optional
+      default: "/uploads/blog/featured/default-blog-image.jpg",
     },
     content: contentSchema,
     youtubeUrl: {
@@ -158,9 +174,6 @@ const blogSchema = new mongoose.Schema(
   }
 );
 
-// Note: Explicit indexes removed to prevent duplicate index warnings
-// Mongoose automatically creates indexes for unique fields (slug)
-// Additional indexes can be added back selectively if needed for performance
 
 // Virtual for URL-friendly slug
 blogSchema.virtual("url").get(function () {

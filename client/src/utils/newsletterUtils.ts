@@ -1,5 +1,3 @@
-// Newsletter utility functions
-
 export const NEWSLETTER_STORAGE_KEYS = {
   SUBSCRIBED: 'newsletter_subscribed',
   EMAIL: 'newsletter_email',

@@ -43,8 +43,22 @@ const Navbar = () => {
       <div className="navbar-left">
         <div className="logo_wrapper">
           <Link to="/" className="logo-link">
-            <img src={logo} alt="NimiTechIT Logo" className="logo" />
-            <img src={logo2} alt="NimiTechIT Logo2" className="logo_2" />
+            <img
+              src={logo}
+              alt="NimiTechIT Logo"
+              className="logo"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+            <img
+              src={logo2}
+              alt="NimiTechIT Logo2"
+              className="logo_2"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
           </Link>
         </div>
 
