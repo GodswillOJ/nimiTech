@@ -9,7 +9,7 @@ const RemoteITSupportContent = () => {
     >
       {/* Hero Image with Overlay */}
       <div className="image-with-overlay">
-        <img src={businessImages.IT_image1} alt="Remote IT Hero" />
+        <img src={businessImages.nimi_hero2} alt="Remote IT Hero" />
         <div className="overlay-text">
           <h3>Reliable Remote IT Support</h3>
           <p>Fast, expert help — right when you need it</p>

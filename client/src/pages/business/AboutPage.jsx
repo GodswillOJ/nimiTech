@@ -105,6 +105,95 @@ const About = () => {
           <Grid item xs={12} md={6}>
             <Fade in timeout={1000}>
               <Box>
+                {/* Image with Zooming Effect and Overlay */}
+                <Box
+                  flex={isSmallScreen ? 'unset' : '0 0 45%'}
+                  maxWidth={isSmallScreen ? '100%' : '100%'}
+                  sx={{
+                    position: 'relative',
+                    borderRadius: 4,
+                    overflow: 'hidden',
+                    background: '#f5f7fa',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                    height: isSmallScreen ? 'auto' : '100%',
+                    margin: isSmallScreen ? 'auto' : '0 4rem 0 4rem',
+                  }}
+                >
+                  {/* Zooming Background Image */}
+                  <Box
+                    component="img"
+                    src={businessImages.nimi_hero2}
+                    alt="About Nimitech"
+                    sx={{
+                      width: '100%',
+                      height: '400px',
+                      objectFit: 'cover',
+                      transition: 'transform 10s ease-in-out',
+                      animation: 'zoomInOut 20s infinite alternate',
+                    }}
+                  />
+
+                  {/* Overlay with Gradient */}
+                  <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    width="100%"
+                    height="100%"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{
+                      background:
+                        'linear-gradient(to bottom right, rgba(1, 40, 65, 0.6), rgba(72, 2, 72, 0.6))',
+                      color: '#fff',
+                      textAlign: 'center',
+                      px: 3,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: 'rgba(255,255,255,0.1)',
+                        backdropFilter: 'blur(6px)',
+                        px: 3,
+                        py: 2,
+                        borderRadius: 3,
+                        mb: 2,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        fontWeight="bold"
+                        sx={{
+                          fontSize: isSmallScreen ? '1.2rem' : '1.6rem',
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        Who We Are at Nimitech
+                      </Typography>
+                    </Box>
+
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: isSmallScreen ? '0.9rem' : '1rem',
+                        maxWidth: '90%',
+                        color: '#f5f5f5',
+                        fontWeight: 400,
+                        backgroundColor: 'rgba(0,0,0,0.3)',
+                        px: 2,
+                        py: 1,
+                        borderRadius: 2,
+                        backdropFilter: 'blur(2px)',
+                      }}
+                    >
+                      We craft tailored, secure, and scalable digital experiences—designed to help
+                      your business thrive in a fast-changing world.
+                    </Typography>
+                  </Box>
+                </Box>
                 <Box
                   display="flex"
                   flexDirection={isSmallScreen ? 'column' : 'row'}
@@ -127,6 +216,7 @@ const About = () => {
                       boxShadow: '0px 6px 30px rgba(0, 0, 0, 0.05)',
                       p: isSmallScreen ? 3 : 5,
                       transition: 'all 0.3s ease-in-out',
+                      height: '500px',
                     }}
                   >
                     <Typography
@@ -191,7 +281,7 @@ const About = () => {
                       </Typography>
 
                       <Typography sx={{ fontWeight: 500, color: '#555' }}>
-                        Location: 23 Digital Crescent, Victoria Island, Lagos, Nigeria
+                        Location: 8024 Glenwood Ave, Suite 305, Raleigh, North Carolina 27612
                       </Typography>
                     </Box>
                   </Box>
@@ -205,6 +295,7 @@ const About = () => {
                       overflow: 'hidden',
                       boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
                       mt: isSmallScreen ? 4 : 0,
+                      height: '500px',
                     }}
                   >
                     {/* Image */}
@@ -284,6 +375,94 @@ const About = () => {
                     </Box>
                   </Box>
                 </Box>
+                {/* Creative Animated Section */}
+                <Box
+                  sx={{
+                    position: 'relative',
+                    borderRadius: 4,
+                    overflow: 'hidden',
+
+                    margin: isSmallScreen ? 'auto' : '0 4rem 0 4rem',
+                    boxShadow: '0 12px 36px rgba(0,0,0,0.15)',
+                    height: isSmallScreen ? '300px' : '450px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  {/* Zooming Image */}
+                  <Box
+                    component="img"
+                    src={businessImages.hero2}
+                    alt="Creative Team"
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      animation: 'zoomInOut 18s ease-in-out infinite alternate',
+                      transition: 'transform 0.5s ease-in-out',
+                    }}
+                  />
+
+                  {/* Gradient Overlay + Motion Text */}
+                  <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    width="100%"
+                    height="100%"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{
+                      background:
+                        'linear-gradient(to top right, rgba(1, 24, 39, 0.55), rgba(138,43,226,0.55))',
+                      textAlign: 'center',
+                      px: 3,
+                      color: '#fff',
+                      backdropFilter: 'blur(3px)',
+                    }}
+                  >
+                    {/* Floating Title */}
+                    <motion.div
+                      initial={{ opacity: 0, y: -30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1 }}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight="bold"
+                        sx={{
+                          mb: 1,
+                          fontSize: isSmallScreen ? '1.4rem' : '2rem',
+                          letterSpacing: '1px',
+                          textShadow: '2px 2px 8px rgba(0,0,0,0.3)',
+                        }}
+                      >
+                        Passion Meets Precision
+                      </Typography>
+                    </motion.div>
+
+                    {/* Animated Subtitle */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 1 }}
+                    >
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isSmallScreen ? '0.95rem' : '1.1rem',
+                          maxWidth: '90%',
+                          color: '#f0f0f0',
+                          textShadow: '1px 1px 4px rgba(0,0,0,0.3)',
+                        }}
+                      >
+                        At Nimitech, innovation isn’t just our goal — it’s our culture.
+                      </Typography>
+                    </motion.div>
+                  </Box>
+                </Box>
+
                 <Box
                   display="flex"
                   flexDirection={isSmallScreen ? 'column' : 'row'}
@@ -320,6 +499,7 @@ const About = () => {
                         borderRadius: 4,
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
                         p: isSmallScreen ? 3 : 4,
+                        height: '500px',
                       }}
                     >
                       <Typography
@@ -420,7 +600,7 @@ const About = () => {
                         borderRadius: 4,
                         overflow: 'hidden',
                         boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-                        height: isSmallScreen ? 'auto' : '100%',
+                        height: isSmallScreen ? 'auto' : '500px',
                       }}
                     >
                       <Box
@@ -503,7 +683,9 @@ const About = () => {
               xs={12}
               md={5}
               sx={{
-                mt: isSmallScreen ? 4 : 0,
+                mt: isSmallScreen ? 4 : 4,
+                ml: isSmallScreen ? 4 : 8,
+                mr: isSmallScreen ? 4 : 8,
                 borderRadius: 4,
                 overflow: 'hidden',
                 boxShadow: '0 6px 30px rgba(0, 0, 0, 0.08)',
@@ -615,7 +797,7 @@ const About = () => {
                 <span
                   style={{
                     display: 'inline-block',
-                    background: '#1976d2',
+                    background: '#88199a',
                     color: '#fff',
                     padding: '8px 16px',
                     borderRadius: '8px',
@@ -625,8 +807,8 @@ const About = () => {
                     cursor: 'pointer',
                     transition: 'background 0.3s',
                   }}
-                  onMouseOver={(e) => (e.target.style.background = '#0d47a1')}
-                  onMouseOut={(e) => (e.target.style.background = '#1976d2')}
+                  onMouseOver={(e) => (e.target.style.background = '#51035e')}
+                  onMouseOut={(e) => (e.target.style.background = '#2e0335')}
                 >
                   Schedule a Free Consultation
                 </span>
