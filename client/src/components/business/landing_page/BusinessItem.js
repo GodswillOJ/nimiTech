@@ -230,7 +230,7 @@ const PartnerWithUs = ({ services }) => {
             flexWrap: 'wrap',
             gap: '20px',
             justifyContent: 'center',
-            alignItems: 'stretch',
+            alignItems: 'center', // Makes children take equal height
           }}
         >
           {/* Text container with background image and overlay */}
@@ -241,16 +241,15 @@ const PartnerWithUs = ({ services }) => {
               position: 'relative',
               borderRadius: '16px',
               overflow: 'hidden',
-              height: isSmallScreen ? 'auto' : '500px',
+              height: isSmallScreen ? 'auto' : '500px', // Same height logic
               fontFamily: 'Montserrat, sans-serif',
+              padding: '',
               display: 'flex',
               justifyContent: 'center',
-              padding: isSmallScreen ? '20px 16px' : isMediumScreen ? '30px 24px' : '40px 30px',
               alignItems: 'center',
-              zIndex: 1,
             }}
           >
-            {/* Background Image Layer (blurry) */}
+            {/* Background Image Layer */}
             <div
               style={{
                 position: 'absolute',
@@ -263,11 +262,11 @@ const PartnerWithUs = ({ services }) => {
                 backgroundPosition: 'center',
                 filter: 'blur(10px)',
                 zIndex: 0,
-                transform: 'scale(1.1)', // prevent blur edge clipping
+                transform: 'scale(1.1)',
               }}
             />
 
-            {/* Overlay for slight darkening (optional) */}
+            {/* Overlay */}
             <div
               style={{
                 position: 'absolute',
@@ -280,14 +279,22 @@ const PartnerWithUs = ({ services }) => {
               }}
             />
 
-            {/* Content Layer */}
-            <div style={{ position: 'relative', zIndex: 2, color: '#fff' }}>
+            {/* Content */}
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 2,
+                color: '#fff',
+                textAlign: 'normal',
+                padding: '40px',
+              }}
+            >
               <h4
                 style={{
                   fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
                   marginBottom: '20px',
-                  marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '7rem',
-                  textAlign: 'left',
+                  marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '40px',
+                  color: '#ac00d6',
                   textShadow: '0 2px 6px rgba(0,0,0,0.6)',
                 }}
               >
@@ -361,6 +368,7 @@ const PartnerWithUs = ({ services }) => {
               </ul>
             </div>
           </div>
+
           {/* Image container with overlay text */}
           <div
             className="image-container"
@@ -368,8 +376,12 @@ const PartnerWithUs = ({ services }) => {
               flex: 1,
               minWidth: '300px',
               position: 'relative',
-              borderRadius: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
+              borderRadius: '16px',
               overflow: 'hidden',
+              height: isSmallScreen ? 'auto' : '500px', // Match height here
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <img
@@ -377,25 +389,24 @@ const PartnerWithUs = ({ services }) => {
               alt="Partner with us"
               className="image-hover"
               style={{
+                position: 'absolute',
                 top: 0,
-                bottom: 0,
+                left: 0,
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
                 filter: 'brightness(0.6)',
+                zIndex: 0,
               }}
             />
 
             <div
               style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: 'relative',
+                zIndex: 2,
                 color: 'white',
-                padding: isSmallScreen ? '10px' : '30px',
+                padding: isSmallScreen ? '30px' : '30px',
                 textAlign: 'left',
-                borderRadius: '0',
                 width: '90%',
                 maxWidth: '500px',
                 fontFamily: 'Montserrat, sans-serif',
@@ -427,29 +438,26 @@ export const testimonials = [
     image: cyberImage,
     course: 'Cybersecurity – United States',
     name: 'Jessica Moore, New York, USA',
-    review:
-      'Nimitech IT has been a game changer for our cybersecurity infrastructure. We were struggling with outdated protocols and frequent threats, but their team swiftly implemented advanced security measures and 24/7 monitoring. Since onboarding them, we’ve experienced zero breaches and complete peace of mind. Their professionalism and expertise are unmatched!',
+    review: `Nimitech IT has been a game changer for our cybersecurity infrastructure. We were struggling with outdated protocols and frequent threats, but their team swiftly implemented advanced security measures and 24/7 monitoring. Since onboarding them, we’ve experienced zero breaches and complete peace of mind. Their professionalism and expertise are unmatched!`,
   },
   {
     image: aiImage,
     course: 'AI & Machine Learning – Germany',
     name: 'Lukas Fischer, Berlin, Germany',
     review:
-      'We partnered with Nimitech IT to integrate AI and machine learning into our logistics platform, and the results have been phenomenal. Their solutions have improved our forecasting accuracy and reduced delivery times. Their technical team was collaborative, agile, and truly understood our business needs. Highly recommended for innovation-driven projects!',
+      '“We partnered with Nimitech IT to integrate AI and machine learning into our logistics platform, and the results have been phenomenal. Their solutions have improved our forecasting accuracy and reduced delivery times. Their technical team was collaborative, agile, and truly understood our business needs. Highly recommended for innovation-driven projects!“',
   },
   {
     image: marketingImage,
     course: 'Digital Marketing – Nigeria',
     name: 'Amaka Okonkwo, Lagos, Nigeria',
-    review:
-      'I cannot thank Nimitech IT enough for revamping our digital marketing strategy. From SEO to social media campaigns, their targeted efforts helped us reach new audiences and boost online sales by over 40% in just three months. Their analytics-driven approach really sets them apart from other agencies we’ve worked with.',
+    review: `I cannot thank Nimitech IT enough for revamping our digital marketing strategy. From SEO to social media campaigns, their targeted efforts helped us reach new audiences and boost online sales by over 40% in just three months. Their analytics-driven approach really sets them apart from other agencies we’ve worked with.`,
   },
   {
     image: softwareImage,
     course: 'Software Development & Graphic Design – Australia',
     name: 'Ethan Roberts, Sydney, Australia',
-    review:
-      'Nimitech developed a custom software solution for our real estate platform and provided end-to-end branding and graphic design. Their UI/UX work was stunning, and the software functions seamlessly. They delivered on time, within budget, and exceeded expectations at every turn. We’re already planning our next project with them.',
+    review: `Nimitech developed a custom software solution for our real estate platform and provided end-to-end branding and graphic design. Their UI/UX work was stunning, and the software functions seamlessly. They delivered on time, within budget, and exceeded expectations at every turn. We’re already planning our next project with them.`,
   },
 ];
 
@@ -553,9 +561,28 @@ const ClientReview = ({ course, name, review }) => {
             fontFamily: 'Montserrat, sans-serif',
             lineHeight: 1.6,
             color: '#271818',
+            fontStyle: 'italic',
+            position: 'relative',
+            px: 3,
+            '&::before': {
+              content: '"\\201C"', // Unicode “
+              position: 'absolute',
+              left: 0,
+              top: -10,
+              fontSize: '2rem',
+              color: '#c02df1',
+            },
+            '&::after': {
+              content: '"\\201D"', // Unicode ”
+              position: 'absolute',
+              right: 30,
+              bottom: -10,
+              fontSize: '2rem',
+              color: '#c02df1',
+            },
           }}
         >
-          &ldquo;{review}&rdquo;
+          {review}
         </Typography>
       </Box>
     </Box>

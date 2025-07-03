@@ -14,6 +14,7 @@ import {
 import Fade from '@mui/material/Fade';
 import { lazy, useState } from 'react';
 import { FiClock, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
+import { useLocation } from 'react-router-dom';
 import {
   FacebookIcon,
   InstagramIcon,
@@ -25,7 +26,6 @@ import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
 import { useSendServiceInquiryMutation } from '../../services/api';
 import styles from '../blog/blog.module.scss';
-import { useLocation } from 'react-router-dom';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
 const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
@@ -179,7 +179,7 @@ const ContactUs = () => {
                     <Box sx={{ fontFamily: 'Montserrat, sans-serif' }}>
                       <Typography fontWeight="bold">Our Office (Raleigh, NC)</Typography>
                       <Typography color="text.secondary">
-                        Nimitech IT, Raleigh, NC 27601, USA
+                        8024 Glenwood Ave, Suite 305, Raleigh, North Carolina 27612
                       </Typography>
                     </Box>
                   </Box>

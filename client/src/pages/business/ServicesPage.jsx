@@ -237,7 +237,7 @@ const Services = () => {
                 height="100%"
                 sx={{
                   background: 'linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.7))',
-                  color: '#fff',
+                  color: '#fc07fb',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -250,14 +250,14 @@ const Services = () => {
                   fontWeight={600}
                   sx={{
                     background: 'rgba(255,255,255,0.1)',
-                    px: 3,
-                    py: 1,
+                    px: 6,
+                    py: 4,
                     borderRadius: 2,
                     backdropFilter: 'blur(4px)',
                     fontSize: isSmallScreen ? '1rem' : '1.25rem',
                   }}
                 >
-                  {section.title} at Nimitech IT
+                  {section.title}
                 </Typography>
               </Box>
             </Box>
