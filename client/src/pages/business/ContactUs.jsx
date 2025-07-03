@@ -15,6 +15,7 @@ import Fade from '@mui/material/Fade';
 import { lazy, useState } from 'react';
 import { FiClock, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import { useLocation } from 'react-router-dom';
+import validator from 'validator';
 import {
   FacebookIcon,
   InstagramIcon,
@@ -55,15 +56,52 @@ const ContactUs = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.email || !formData.service || !formData.message) {
-      alert('Please complete all required fields.');
+
+    const sanitizedData = {
+      fullName: validator.trim(validator.escape(formData.fullName)),
+      email: validator.normalizeEmail(formData.email || ''),
+      phone: validator.trim(validator.escape(formData.phone)),
+      service: validator.trim(validator.escape(formData.service)),
+      message: validator.trim(validator.escape(formData.message)),
+      consent: formData.consent,
+    };
+
+    // Basic validation
+    if (
+      !sanitizedData.fullName ||
+      !sanitizedData.email ||
+      !sanitizedData.phone ||
+      !sanitizedData.service ||
+      !sanitizedData.message ||
+      !sanitizedData.consent
+    ) {
+      alert('Please complete all required fields and accept the consent.');
+      return;
+    }
+
+    // Email format validation
+    if (!validator.isEmail(sanitizedData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Phone number validation (basic)
+    if (!validator.isMobilePhone(sanitizedData.phone, 'any')) {
+      alert('Please enter a valid phone number.');
       return;
     }
 
     try {
-      await sendServiceInquiry(formData).unwrap();
+      await sendServiceInquiry(sanitizedData).unwrap();
       alert('Inquiry sent successfully!');
-      setFormData({ fullName: '', email: '', phone: '', service: '', message: '' });
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        service: '',
+        message: '',
+        consent: false,
+      });
     } catch (err) {
       console.error(err);
       alert('Failed to send. Please try again later.');

@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import validator from 'validator';
 import { businessImages } from '../../assets/images.js';
 import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
 import { BusinessPostItem } from '../../components/business/landing_page/BusinessItem';
@@ -48,12 +49,42 @@ const BusinessRegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.consent) {
-      alert('Please agree to the consent disclaimer before submitting.');
+
+    // Sanitize input
+    const sanitizedData = {
+      fullName: validator.trim(validator.escape(formData.fullName)),
+      email: validator.normalizeEmail(formData.email || ''),
+      phone: validator.trim(validator.escape(formData.phone)),
+      location: validator.trim(validator.escape(formData.location)),
+      consent: formData.consent,
+    };
+
+    // Validate required fields
+    if (
+      !sanitizedData.fullName ||
+      !sanitizedData.email ||
+      !sanitizedData.phone ||
+      !sanitizedData.location ||
+      !sanitizedData.consent
+    ) {
+      alert('Please complete all fields and accept the consent disclaimer.');
       return;
     }
+
+    // Validate email format
+    if (!validator.isEmail(sanitizedData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Validate phone format (can be adjusted for country-specific format)
+    if (!validator.isMobilePhone(sanitizedData.phone, 'any')) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+
     try {
-      await sendContactForm(formData).unwrap();
+      await sendContactForm(sanitizedData).unwrap();
       alert('Message sent successfully!');
       setFormData({
         fullName: '',

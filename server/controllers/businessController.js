@@ -9,18 +9,18 @@ const contactBusiness = async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "mail.nimitechit.com", // ✅ your correct cPanel SMTP server
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EmailUser,
-        pass: process.env.EmailPassword,
+        user: process.env.EmailUser, // info@nimitechit.com
+        pass: process.env.EmailPassword, // Your email's actual password
       },
     });
 
     const mailOptions = {
       from: `"Nimitech IT Contact Form" <${process.env.EmailUser}>`,
-      to: "godswill.ogono11@gmail.com",
+      to: ["busay.bright@nimitechit.com", "info@nimitechit.com"],
       subject: "New Contact Form Submission",
       html: `
         <h2>Contact Form Submission</h2>
@@ -43,24 +43,24 @@ const inquireService = async (req, res) => {
   const { fullName, email, phone, service, message } = req.body;
 
   if (!fullName || !email || !phone || !service || !message) {
-    return res.status(400).json({ message: 'All fields are required.' });
+    return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: "mail.nimitechit.com", // ✅ your correct cPanel SMTP server
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EmailUser,
-        pass: process.env.EmailPassword,
+        user: process.env.EmailUser, // info@nimitechit.com
+        pass: process.env.EmailPassword, // Your email's actual password
       },
     });
 
     const mailOptions = {
       from: `"Nimitech IT Services Form" <${process.env.EmailUser}>`,
-      to: 'godswill.ogono11@gmail.com',
-      subject: 'New Service Inquiry Submission',
+      to: ["busay.bright@nimitechit.com", "info@nimitechit.com"],
+      subject: "New Service Inquiry Submission",
       html: `
         <h2>Service Inquiry</h2>
         <p><strong>Full Name:</strong> ${fullName}</p>
@@ -72,14 +72,14 @@ const inquireService = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Inquiry sent successfully.' });
+    res.status(200).json({ message: "Inquiry sent successfully." });
   } catch (error) {
-    console.error('Error sending inquiry:', error);
-    res.status(500).json({ message: 'Failed to send inquiry. Please try again later.' });
+    console.error("Error sending inquiry:", error);
+    res.status(500).json({ message: "Failed to send inquiry. Please try again later." });
   }
 };
 
 module.exports = {
   contactBusiness,
-  inquireService
-}
+  inquireService,
+};
