@@ -97,7 +97,6 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
     <section className={`${styles.donationSection} ${className}`}>
       <div className={styles.donationSection__container}>
         <h2 className={styles.donationSection__title}>
-          {title}
           Help Feed Hungry Kids in Africa — Support Nimitech&apos;s Fight Against Malnutrition.
         </h2>
 
