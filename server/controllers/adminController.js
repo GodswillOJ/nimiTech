@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 
-// Generate JWT token
+// Generate JWT token with extended expiry
 const generateToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE || "7d",
@@ -153,7 +153,7 @@ const createAdminUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 1 * 60 * 60 * 1000, // 1 hour for better persistence
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -270,7 +270,7 @@ const adminLogin = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours for better persistence
     });
 
     res.cookie("refreshToken", refreshToken, {

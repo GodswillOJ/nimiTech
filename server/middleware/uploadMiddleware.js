@@ -82,12 +82,6 @@ const fileFilter = (req, file, cb) => {
     return cb(new Error("Only JPEG, PNG, and WebP images are allowed"), false);
   }
 
-  // Check filename for security
-  const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "");
-  if (sanitizedName !== file.originalname) {
-    return cb(new Error("Filename contains invalid characters"), false);
-  }
-
   cb(null, true);
 };
 
