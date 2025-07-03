@@ -128,14 +128,14 @@ const Blog = () => {
             {/* {renderViewMoreButton()} */}
           </div>
         </section>
-      </div>
-      {/* Donation Section */}
+        {/* Donation Section */}
 
-      <section className={styles.donationSection}>
-        <div className={styles.donation}>
-          <BlogDonateSections />
-        </div>
-      </section>
+        <section className={styles.donationSection}>
+          <div className={styles.donation}>
+            <BlogDonateSections />
+          </div>
+        </section>
+      </div>
     </>
   );
 };

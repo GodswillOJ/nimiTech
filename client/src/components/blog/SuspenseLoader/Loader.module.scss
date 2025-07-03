@@ -1,21 +1,33 @@
 .loader {
   display: flex;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
-  margin: 50% auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 9999;
+}
+
+.spinner {
   width: 65px;
-  aspect-ratio: 1;
+  height: 65px;
   position: relative;
 }
-.loader:before,
-.loader:after {
+
+.spinner::before,
+.spinner::after {
   content: '';
   position: absolute;
   border-radius: 50px;
   box-shadow: 0 0 0 3px inset #88199a;
   animation: l4 2.5s infinite;
+  width: 65px;
+  height: 65px;
 }
-.loader:after {
+.spinner::after {
   animation-delay: -1.25s;
 }
 @keyframes l4 {
