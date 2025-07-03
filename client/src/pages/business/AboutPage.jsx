@@ -13,7 +13,7 @@ const DonateSection = lazy(() => import('../../components/blog/DonateSection/Don
 
 const About = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
-  // const isMediumScreen = useMediaQuery('(max-width:900px)');
+  const isMediumScreen = useMediaQuery('(max-width:900px)');
   // const listVariants = {
   //   hidden: { opacity: 0, y: 30 },
   //   visible: (i) => ({
@@ -499,7 +499,7 @@ const About = () => {
                         borderRadius: 4,
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
                         p: isSmallScreen ? 3 : 4,
-                        height: '500px',
+                        height: isSmallScreen ? 'auto' : isMediumScreen ? 'auto' : '500px',
                       }}
                     >
                       <Typography
