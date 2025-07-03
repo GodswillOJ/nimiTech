@@ -6,6 +6,7 @@ import { Input, Textarea, Select } from '../../../components/blogCMS/Input/Input
 import { ImageUploader } from './_partials/ImageUploader/ImageUploader';
 import { PostSettings } from './_partials/PostSettings/PostSettings';
 import { MetadataCard } from './_partials/MetadataCard/MetadataCard';
+import { BlogPreviewModal } from '../../../components/blog/BlogPreviewModal/BlogPreviewModal';
 // import { SEOSettings } from './_partials/SEOSettings/SEOSettings';
 import { FormData, FieldUpdate } from './BlogPostEditor.types';
 import { PostStatus } from '../BlogEditorDashboard/BlogEditorDashboard.types';
@@ -18,6 +19,7 @@ import {
   useDeleteBlogPostMutation,
 } from '../../../services/utilis/blogApiService';
 import styles from './BlogPostEditor.module.scss';
+import Loader from '../../../components/blog/SuspenseLoader/Loader';
 
 const BlogPostEditor: React.FC = () => {
   const navigate = useNavigate();
@@ -97,6 +99,7 @@ const BlogPostEditor: React.FC = () => {
   );
   const [isUploadingContentImage, setIsUploadingContentImage] = useState(false);
   const [isUploadingAuthorAvatar, setIsUploadingAuthorAvatar] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   // Calculate word count and reading time
   const calculateWordCountAndReadingTime = () => {
@@ -172,8 +175,17 @@ const BlogPostEditor: React.FC = () => {
     setIsUploadingContentImage(true);
 
     try {
-      const result = await uploadBlogImage({ image: file, type: 'content' }).unwrap();
+      console.log('Uploading content image:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
 
+      const result = await uploadBlogImage({ image: file, type: 'contentImage' }).unwrap();
+
+      console.log('Upload result:', result);
+
+      // Check multiple possible response formats
       if (result.success && result.imageUrl) {
         setContentImage(result.imageUrl);
         setFormData((prev) => ({
@@ -189,15 +201,35 @@ const BlogPostEditor: React.FC = () => {
           contentImage: result.url,
         }));
         toast.success('Content image uploaded', 'Content image uploaded successfully');
+      } else if (result.data?.imagePath) {
+        // Handle response with data.imagePath
+        setContentImage(result.data.imagePath);
+        setFormData((prev) => ({
+          ...prev,
+          contentImage: result.data.imagePath,
+        }));
+        toast.success('Content image uploaded', 'Content image uploaded successfully');
       } else {
-        throw new Error('Upload failed - no URL returned');
+        console.error('Unexpected response format:', result);
+        throw new Error('Upload failed - no valid URL returned');
       }
     } catch (error: any) {
       console.error('Content image upload error:', error);
-      toast.error(
-        'Upload failed',
-        error?.data?.message || 'Failed to upload content image. Please try again.'
-      );
+      console.error('Error details:', {
+        status: error?.status,
+        data: error?.data,
+        message: error?.message,
+      });
+
+      let errorMessage = 'Failed to upload content image. Please try again.';
+
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+
+      toast.error('Upload failed', errorMessage);
     } finally {
       setIsUploadingContentImage(false);
     }
@@ -218,8 +250,17 @@ const BlogPostEditor: React.FC = () => {
     setIsUploadingAuthorAvatar(true);
 
     try {
-      const result = await uploadBlogImage({ image: file, type: 'avatar' }).unwrap();
+      console.log('Uploading author avatar:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
 
+      const result = await uploadBlogImage({ image: file, type: 'authorAvatar' }).unwrap();
+
+      console.log('Avatar upload result:', result);
+
+      // Check multiple possible response formats
       if (result.success && result.imageUrl) {
         setAuthorAvatar(result.imageUrl);
         handleAuthorChange('avatar', result.imageUrl);
@@ -228,15 +269,31 @@ const BlogPostEditor: React.FC = () => {
         setAuthorAvatar(result.url);
         handleAuthorChange('avatar', result.url);
         toast.success('Avatar uploaded', 'Author avatar uploaded successfully');
+      } else if (result.data?.imagePath) {
+        setAuthorAvatar(result.data.imagePath);
+        handleAuthorChange('avatar', result.data.imagePath);
+        toast.success('Avatar uploaded', 'Author avatar uploaded successfully');
       } else {
-        throw new Error('Upload failed - no URL returned');
+        console.error('Unexpected response format:', result);
+        throw new Error('Upload failed - no valid URL returned');
       }
     } catch (error: any) {
       console.error('Avatar upload error:', error);
-      toast.error(
-        'Upload failed',
-        error?.data?.message || 'Failed to upload avatar. Please try again.'
-      );
+      console.error('Error details:', {
+        status: error?.status,
+        data: error?.data,
+        message: error?.message,
+      });
+
+      let errorMessage = 'Failed to upload avatar. Please try again.';
+
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+
+      toast.error('Upload failed', errorMessage);
     } finally {
       setIsUploadingAuthorAvatar(false);
     }
@@ -335,24 +392,16 @@ const BlogPostEditor: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
+    // Only validate title and author name as required
     if (!formData.title?.trim()) {
       newErrors.title = 'Title is required';
     }
 
-    // if (!formData.excerpt?.trim()) {
-    //   newErrors.excerpt = 'Excerpt/Description is required';
-    // }
-
-    // if (!formData.category?.trim()) {
-    //   newErrors.category = 'Category is required';
-    // }
-
-    // if (!featuredImage) {
-    //   newErrors.featuredImage = 'Featured image is required';
-    // }
-
-    if (paragraphs.length === 0 || !paragraphs.some((p) => p && p.content && p.content.trim())) {
-      newErrors.content = 'At least one paragraph with content is required';
+    // Check author name
+    const authorName =
+      typeof formData.author === 'object' ? formData.author?.name : formData.author;
+    if (!authorName?.trim()) {
+      newErrors.authorName = 'Author name is required';
     }
 
     setErrors(newErrors);
@@ -365,6 +414,11 @@ const BlogPostEditor: React.FC = () => {
       return;
     }
 
+    // Show preview modal instead of saving directly
+    setShowPreviewModal(true);
+  };
+
+  const handleFinalSave = async () => {
     setIsLoading(true);
     setErrors({});
 
@@ -396,49 +450,52 @@ const BlogPostEditor: React.FC = () => {
       // Calculate reading time based on content
       const { readingTime } = calculateWordCountAndReadingTime();
 
-      // Validate required fields according to backend schema
+      // Validate required fields - only title and author name
       if (!formData.title?.trim()) {
         throw new Error('Title is required');
       }
-      if (!formData.excerpt?.trim()) {
-        throw new Error('Excerpt/Description is required');
-      }
-      if (!formData.category?.trim()) {
-        throw new Error('Category is required');
-      }
-      if (!featuredImage) {
-        throw new Error('Featured image is required');
+
+      const authorName =
+        typeof formData.author === 'object' ? formData.author?.name : formData.author;
+      if (!authorName?.trim()) {
+        throw new Error('Author name is required');
       }
 
       // Prepare blog post data - map to backend expected fields
       const blogPostData: any = {
         ...(id && { id }), // Include ID only if updating
         title: formData.title.trim(),
-        description: formData.excerpt.trim(), // Backend expects 'description' not 'excerpt'
-        content: contentData,
-        category: formData.category?.trim() || 'Uncategorized',
-        isPublished: formData.status === PostStatus.PUBLISHED, // Convert status to boolean
+        description: formData.excerpt?.trim() || '', // Can be empty now
+        content: {
+          subtitle: formData.content?.subtitle || '',
+          paragraphs: paragraphs.filter((p) => p && p.content && p.content.trim()) || [],
+          highlights:
+            highlightTitle || highlights.some((h) => h.trim())
+              ? {
+                  title: highlightTitle || '',
+                  benefits: highlights.filter((h) => h && h.trim()) || [],
+                }
+              : undefined,
+        },
+        category: formData.category?.trim() || '', // Can be empty now
+        isPublished: formData.status === PostStatus.PUBLISHED,
         tags: processedTags,
         slug: slug.trim(),
         youtubeUrl: formData.youtubeUrl?.trim() || '',
         contentImageTitle: formData.contentImageTitle?.trim() || '',
         readTime: readingTime,
-        // Add author information
         author: {
           name:
             typeof formData.author === 'object'
               ? formData.author.name || 'Admin User'
               : formData.author || 'Admin User',
-          bio:
-            typeof formData.author === 'object'
-              ? formData.author.bio || 'Blog Administrator'
-              : 'Blog Administrator',
+          bio: typeof formData.author === 'object' ? formData.author.bio || '' : '',
           avatar: authorAvatar || '',
           date: new Date().toLocaleDateString(),
         },
       };
 
-      // Add image URLs only if they exist (they'll be included as strings, not files)
+      // Add images only if they exist
       if (featuredImage) {
         blogPostData.image = featuredImage;
       }
@@ -447,9 +504,6 @@ const BlogPostEditor: React.FC = () => {
       }
 
       console.log('Saving blog post data:', blogPostData);
-      console.log('Featured image URL:', featuredImage);
-      console.log('Content image URL:', contentImage);
-      console.log('Author avatar URL:', authorAvatar);
 
       // Save the blog post
       const result = await addEditBlogPost(blogPostData).unwrap();
@@ -460,6 +514,7 @@ const BlogPostEditor: React.FC = () => {
           `Your blog post "${formData.title}" has been ${id ? 'updated' : 'saved'}.`
         );
 
+        setShowPreviewModal(false);
         // Navigate back to dashboard
         navigate('/dashboard/posts');
       } else {
@@ -467,12 +522,6 @@ const BlogPostEditor: React.FC = () => {
       }
     } catch (error: any) {
       console.error('Error saving post:', error);
-      console.error('Error details:', {
-        status: error?.status,
-        data: error?.data,
-        message: error?.message,
-        originalStatus: error?.originalStatus,
-      });
 
       let errorMessage = 'Please try again.';
 
@@ -501,20 +550,15 @@ const BlogPostEditor: React.FC = () => {
 
     if (!confirmed) return;
 
-    setIsLoading(true);
-
     try {
       const result = await deleteBlogPost(id).unwrap();
-
       if (result.success) {
-        toast.success('Post deleted successfully', 'The blog post has been permanently deleted.');
+        toast.success('Post deleted successfully');
         navigate('/dashboard/posts');
       }
     } catch (error: any) {
       console.error('Error deleting post:', error);
       toast.error('Failed to delete post', error?.data?.message || 'Please try again.');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -522,27 +566,37 @@ const BlogPostEditor: React.FC = () => {
     navigate('/dashboard/posts');
   };
 
+  if (isLoadingPost) {
+    return <Loader />;
+  }
+
   return (
     <div className={styles.editor__container}>
       <header className={styles.editor__header}>
         <div className={styles.editor__header_content}>
-          <h1 className={styles.editor__title}>{isNewPost ? 'Create New Post' : 'Edit Post'}</h1>
+          <h1>{id ? 'Edit Post' : 'Create New Post'}</h1>
           <div className={styles.editor__actions}>
             <Button variant="secondary" onClick={handleCancel}>
               Cancel
             </Button>
             {id && (
-              <Button variant="danger" onClick={handleDelete} disabled={isLoading}>
+              <Button
+                variant="danger"
+                onClick={handleDelete}
+                disabled={isLoading}
+                className={styles.editor__delete_button}
+              >
                 Delete Post
               </Button>
             )}
             <Button
               variant="primary"
               onClick={handleSave}
-              disabled={!formData?.title?.trim() || isLoading}
+              disabled={isLoading}
+              className={styles.editor__save_button}
             >
               <SaveIcon />
-              {isLoading ? 'Saving...' : 'Save Post'}
+              {isLoading ? 'Saving...' : id ? 'Update Post' : 'Save Post'}
             </Button>
           </div>
         </div>
@@ -550,157 +604,79 @@ const BlogPostEditor: React.FC = () => {
 
       <main className={styles.editor__main}>
         <div className={styles.editor__content}>
-          <div className={styles.editor__card}>
+          <div className={styles.editor__form}>
             <Input
-              label="Title"
-              className={styles.editor__title_input}
-              type="text"
-              placeholder="Enter post title..."
+              label="Post Title"
+              placeholder="Enter your post title..."
               value={formData?.title || ''}
               onChange={(e: any) => handleInputChange('title', e.target.value)}
               error={errors?.title}
+              required
             />
 
             <Textarea
-              label="Excerpt"
-              placeholder="Write a brief excerpt..."
+              label="Post Excerpt/Description"
+              placeholder="Brief description of your post..."
               value={formData?.excerpt || ''}
               onChange={(e: any) => handleInputChange('excerpt', e.target.value)}
-              rows={3}
               error={errors?.excerpt}
+              rows={3}
             />
 
             <Input
-              label="Category"
-              placeholder="Enter post category..."
-              value={formData?.category || ''}
-              onChange={(e: any) => handleInputChange('category', e.target.value)}
-              error={errors?.category}
-            />
-
-            <Input
-              label="Subtitle"
-              placeholder="Enter post subtitle..."
+              label="Content Subtitle"
+              placeholder="Enter content subtitle..."
               value={formData?.content?.subtitle || ''}
-              onChange={(e: any) => {
+              onChange={(e: any) =>
                 setFormData((prev) => ({
                   ...prev,
                   content: {
                     ...prev.content,
                     subtitle: e.target.value,
                   },
-                }));
-              }}
+                }))
+              }
             />
 
-            <div className={styles.editor__content_section}>
-              <h3>Content Paragraphs</h3>
-              {paragraphs.map((paragraph, index) => (
-                <div key={index} className={styles.editor__paragraph}>
-                  <div className={styles.editor__paragraph_header}>
-                    <Select
-                      label={`Paragraph ${index + 1} Type`}
-                      value={paragraph.type}
-                      onChange={(e: any) => handleParagraphChange(index, 'type', e.target.value)}
-                      options={[
-                        { value: 'text', label: 'Text' },
-                        { value: 'quote', label: 'Quote' },
-                      ]}
-                    />
-                    <Button
-                      variant="secondary"
-                      onClick={() => removeParagraph(index)}
-                      disabled={paragraphs.length <= 1}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                  <Textarea
-                    label={paragraph.type === 'quote' ? 'Quote Content' : 'Paragraph Content'}
-                    placeholder={
-                      paragraph.type === 'quote' ? 'Enter quote...' : 'Enter paragraph content...'
-                    }
-                    value={paragraph.content}
-                    onChange={(e: any) => handleParagraphChange(index, 'content', e.target.value)}
-                    rows={4}
-                    error={index === 0 ? errors?.content : undefined}
-                  />
-                </div>
-              ))}
-              <Button variant="secondary" onClick={addParagraph}>
-                Add Paragraph
-              </Button>
-            </div>
-
-            <div className={styles.editor__content_section}>
-              <h3>Highlights</h3>
-              <Input
-                label="Highlights Title"
-                placeholder="Enter highlights section title..."
-                value={highlightTitle}
-                onChange={(e: any) => setHighlightTitle(e.target.value)}
-              />
-              {highlights.map((highlight, index) => (
-                <div key={index} className={styles.editor__highlight}>
-                  <Input
-                    label={`Highlight ${index + 1}`}
-                    placeholder="Enter highlight point..."
-                    value={highlight}
-                    onChange={(e: any) => handleHighlightChange(index, e.target.value)}
-                  />
-                  <Button variant="secondary" onClick={() => removeHighlight(index)}>
-                    Remove
-                  </Button>
-                </div>
-              ))}
-              <Button variant="secondary" onClick={addHighlight}>
-                Add Highlight
-              </Button>
-            </div>
-
             <Input
-              label="YouTube URL"
+              label="YouTube Video URL"
               placeholder="Enter YouTube video URL..."
               value={formData?.youtubeUrl || ''}
-              onChange={(e: any) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  youtubeUrl: e.target.value,
-                }));
-              }}
+              onChange={(e: any) => handleInputChange('youtubeUrl', e.target.value)}
             />
+          </div>
 
-            <Input
-              label="Content Image Title"
-              placeholder="Enter title for content image..."
-              value={formData?.contentImageTitle || ''}
-              onChange={(e: any) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  contentImageTitle: e.target.value,
-                }));
-              }}
-            />
-
-            <div className={styles.editor__content_section}>
-              <h3>Content Image</h3>
+          <div className={styles.editor__content_section}>
+            <h3>Content Image</h3>
+            <div className={styles.editor__file_upload}>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) handleContentImageUpload(file);
+                  if (file) {
+                    handleContentImageUpload(file);
+                  }
                 }}
-                style={{ marginBottom: '10px' }}
+                className={styles.editor__file_input}
                 disabled={isUploadingContentImage}
               />
               {isUploadingContentImage && <p>Uploading content image...</p>}
               {contentImage && (
-                <div style={{ marginTop: '10px' }}>
+                <div className={styles.editor__image_preview}>
                   <img
-                    src={contentImage}
-                    alt="Content preview"
-                    style={{ maxWidth: '200px', height: 'auto', borderRadius: '4px' }}
+                    src={
+                      contentImage.startsWith('http')
+                        ? contentImage
+                        : `http://localhost:10000${contentImage}`
+                    }
+                    alt="Content"
+                    style={{
+                      maxWidth: '200px',
+                      maxHeight: '150px',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
                   />
                   <button
                     type="button"
@@ -724,16 +700,100 @@ const BlogPostEditor: React.FC = () => {
                 </div>
               )}
             </div>
+
+            <Input
+              label="Content Image Title"
+              placeholder="Enter content image title..."
+              value={formData?.contentImageTitle || ''}
+              onChange={(e: any) => handleInputChange('contentImageTitle', e.target.value)}
+            />
           </div>
 
-          <ImageUploader
-            image={featuredImage}
-            onImageChange={(url) => {
-              setFeaturedImage(url);
-              handleInputChange('featuredImage', url || '');
-            }}
-            error={errors?.featuredImage}
-          />
+          <div className={styles.editor__content_section}>
+            <h3>Blog Content Paragraphs</h3>
+            {paragraphs.map((paragraph, index) => (
+              <div key={index} className={styles.editor__paragraph}>
+                <Select
+                  label={`Paragraph ${index + 1} Type`}
+                  value={paragraph?.type || 'text'}
+                  onChange={(e: any) => handleParagraphChange(index, 'type', e.target.value)}
+                  options={[
+                    { value: 'text', label: 'Text' },
+                    { value: 'quote', label: 'Quote' },
+                  ]}
+                />
+                <Textarea
+                  label={`${paragraph?.type === 'quote' ? 'Quote' : 'Paragraph'} Content`}
+                  placeholder={`Enter your ${paragraph?.type === 'quote' ? 'quote' : 'paragraph'} content...`}
+                  value={paragraph?.content || ''}
+                  onChange={(e: any) => handleParagraphChange(index, 'content', e.target.value)}
+                  rows={4}
+                />
+                {paragraphs.length > 1 && (
+                  <Button
+                    variant="danger"
+                    onClick={() => removeParagraph(index)}
+                    className={styles.editor__remove_button}
+                  >
+                    Remove Paragraph
+                  </Button>
+                )}
+              </div>
+            ))}
+            <Button
+              variant="secondary"
+              onClick={addParagraph}
+              className={styles.editor__add_button}
+            >
+              Add Paragraph
+            </Button>
+          </div>
+
+          <div className={styles.editor__content_section}>
+            <h3>Highlights Section</h3>
+            <Input
+              label="Highlights Title"
+              placeholder="Enter highlights title..."
+              value={highlightTitle}
+              onChange={(e: any) => setHighlightTitle(e.target.value)}
+            />
+            {highlights.map((highlight, index) => (
+              <div key={index} className={styles.editor__highlight}>
+                <Input
+                  label={`Highlight ${index + 1}`}
+                  placeholder="Enter highlight benefit..."
+                  value={highlight}
+                  onChange={(e: any) => handleHighlightChange(index, e.target.value)}
+                />
+                <Button
+                  variant="danger"
+                  onClick={() => removeHighlight(index)}
+                  className={styles.editor__remove_button}
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+            <Button
+              variant="secondary"
+              onClick={addHighlight}
+              className={styles.editor__add_button}
+            >
+              Add Highlight
+            </Button>
+          </div>
+
+          <div className={styles.editor__image_upload}>
+            <h3>Featured Image</h3>
+            <ImageUploader
+              image={featuredImage}
+              onImageChange={(url) => {
+                setFeaturedImage(url);
+                handleInputChange('featuredImage', url || '');
+              }}
+              error={errors?.featuredImage}
+            />
+          </div>
         </div>
 
         <aside className={styles.editor__sidebar}>
@@ -768,6 +828,8 @@ const BlogPostEditor: React.FC = () => {
                   : formData?.author?.name || ''
               }
               onChange={(e: any) => handleAuthorChange('name', e.target.value)}
+              error={errors?.authorName}
+              required
             />
             <Input
               label="Author Bio"
@@ -778,67 +840,97 @@ const BlogPostEditor: React.FC = () => {
 
             <div className={styles.editor__content_section}>
               <h3>Author Avatar Image</h3>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleAuthorAvatarUpload(file);
-                }}
-                style={{ marginBottom: '10px' }}
-                disabled={isUploadingAuthorAvatar}
-              />
-              {isUploadingAuthorAvatar && <p>Uploading avatar...</p>}
-              {authorAvatar && (
-                <div style={{ marginTop: '10px' }}>
-                  <img
-                    src={authorAvatar}
-                    alt="Author avatar preview"
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthorAvatar(null);
-                      handleAuthorChange('avatar', '');
-                      toast.info('Avatar removed');
-                    }}
-                    style={{
-                      marginLeft: '10px',
-                      padding: '5px 10px',
-                      background: '#f44336',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Remove
-                  </button>
-                </div>
-              )}
+              <div className={styles.editor__file_upload}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      handleAuthorAvatarUpload(file);
+                    }
+                  }}
+                  className={styles.editor__file_input}
+                  disabled={isUploadingAuthorAvatar}
+                />
+                {isUploadingAuthorAvatar && <p>Uploading author avatar...</p>}
+                {authorAvatar && (
+                  <div className={styles.editor__image_preview}>
+                    <img
+                      src={
+                        authorAvatar.startsWith('http')
+                          ? authorAvatar
+                          : `http://localhost:10000${authorAvatar}`
+                      }
+                      alt="Author Avatar"
+                      style={{
+                        maxWidth: '100px',
+                        maxHeight: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAuthorAvatar(null);
+                        handleAuthorChange('avatar', '');
+                        toast.info('Avatar removed');
+                      }}
+                      style={{
+                        marginLeft: '10px',
+                        padding: '5px 10px',
+                        background: '#f44336',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           <MetadataCard
-            content={formData?.content?.toString()}
+            wordCount={calculateWordCountAndReadingTime().wordCount}
+            readingTime={calculateWordCountAndReadingTime().readingTime}
             createdAt={formData?.createdAt}
             updatedAt={formData?.updatedAt}
           />
-
-          {/* <SEOSettings
-            metaTitle={formData?.metaTitle}
-            metaDescription={formData?.metaDescription}
-            onFieldChange={handleInputChange}
-            errors={errors}
-          /> */}
         </aside>
       </main>
+
+      {/* Preview Modal */}
+      <BlogPreviewModal
+        isOpen={showPreviewModal}
+        onClose={() => setShowPreviewModal(false)}
+        onSubmit={handleFinalSave}
+        formData={{
+          title: formData.title,
+          excerpt: formData.excerpt,
+          category: formData.category,
+          author: formData.author,
+          content: {
+            subtitle: formData.content?.subtitle || '',
+            paragraphs: paragraphs.filter((p) => p && p.content && p.content.trim()),
+            highlights: {
+              title: highlightTitle,
+              benefits: highlights.filter((h) => h && h.trim()),
+            },
+          },
+          youtubeUrl: formData.youtubeUrl,
+          tags: formData.tags,
+        }}
+        featuredImage={featuredImage}
+        contentImage={contentImage}
+        authorAvatar={authorAvatar}
+        readingTime={calculateWordCountAndReadingTime().readingTime}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

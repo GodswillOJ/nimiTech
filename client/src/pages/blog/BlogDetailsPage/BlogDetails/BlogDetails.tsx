@@ -6,6 +6,7 @@ import { NextIcon } from '../../../../assets/blog/icons/NextIcon';
 import { Highlights } from '../../../../components/blog/Highlights/Highlights';
 import { VideoEmbed } from '../../../../components/blog/VideoEmbed/VideoEmbed';
 import Newsletter from '../../../../components/blog/Modal/NewsLetter/Newsletter';
+import SocialMediaStack from '../../../../components/blog/SocialMediaStack/SocialMediaStack';
 import {
   shouldShowNewsletterModal,
   markNewsletterModalShown,
@@ -358,6 +359,9 @@ const BlogDetails = () => {
           </section>
         )}
       </main>
+
+      {/* Social Media Stack */}
+      <SocialMediaStack key={id} autoShowDelay={2000} position="top-right" />
     </div>
   );
 };

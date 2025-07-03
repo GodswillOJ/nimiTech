@@ -16,8 +16,21 @@ const Footer = () => {
         <div className="footer-company">
           <div className="logo" style={{ display: 'flex', alignItems: 'center', margin: '4rem 0' }}>
             <Link to="/" className="logo-link">
-              <img src={logo} alt="NimiTechIT Logo" className="logo" style={{ height: '90px' }} />
-              <img src={logo2} alt="NimiTechIT Logo2" className="logo_2" />
+              <img
+                src={logo}
+                alt="NimiTechIT Logo"
+                className="logo"
+                style={{ height: '90px' }}
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                src={logo2}
+                alt="NimiTechIT Logo2"
+                className="logo_2"
+                loading="lazy"
+                decoding="async"
+              />
             </Link>
           </div>
           <p className="footer-contact">+1 (555) 123-4567</p>

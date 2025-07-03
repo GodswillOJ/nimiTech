@@ -4,26 +4,17 @@ import styles from './blog.module.scss';
 import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
-import donationImage1 from '../../assets/blog/images/donationImage1.webp';
-import donationImage5 from '../../assets/blog/images/donationImage5.jpg';
-import donationImage4 from '../../assets/blog/images/donationImage4.jpg';
-import { Button } from '../../components/blogCMS/Button/Button';
 import {
   useGetAllBlogPostPaginatedQuery,
   useGetFeaturedPostQuery,
-  // useGetBlogCategoriesQuery,
 } from '../../services/utilis/blogApiService';
 
-const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
-const DonateSection = lazy(() => import('../../components/blog/DonateSection/DonateSection'));
 const BlogDonateSections = lazy(
   () => import('../../components/blog/BlogDonateSections/BlogDonateSections')
 );
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  // const [selectedCategory, setSelectedCategory] = useState('all');
-  // const [searchTerm, setSearchTerm] = useState('');
   const postsPerPage = 6;
 
   // API queries
@@ -35,8 +26,6 @@ const Blog = () => {
   } = useGetAllBlogPostPaginatedQuery({
     page: currentPage,
     limit: postsPerPage,
-    // category: selectedCategory !== 'all' ? selectedCategory : undefined,
-    // search: searchTerm || undefined,
   });
 
   const {
@@ -52,23 +41,10 @@ const Blog = () => {
   const hasMorePosts = blogData?.hasNextPage || false;
   const totalPages = blogData?.totalPages || Math.ceil(blogPosts.length / postsPerPage);
 
-  // useEffect(() => {
-  //   // Reset to first page when category or search changes
-  //   setCurrentPage(1);
-  // }, []);
-
   const handleLoadMore = async () => {
     if (loading || !hasMorePosts) return;
     setCurrentPage((prev) => prev + 1);
   };
-
-  // const handleCategoryChange = (category: string) => {
-  //   setSelectedCategory(category);
-  // };
-
-  // const handleSearch = (term: string) => {
-  //   setSearchTerm(term);
-  // };
 
   const renderLoadMoreButton = () => {
     if (!hasMorePosts) return null;
@@ -86,19 +62,6 @@ const Blog = () => {
         </button>
       </div>
     );
-  };
-
-  const renderViewMoreButton = () => {
-    if (hasMorePosts || displayedPosts.length < blogPosts.length) {
-      return (
-        <div className={styles.viewMoreContainer}>
-          <Link to="/blogs" className={styles.viewMoreLink}>
-            <Button title={`View all ${blogPosts.length} posts`} variant="primary" />
-          </Link>
-        </div>
-      );
-    }
-    return null;
   };
 
   return (
@@ -122,9 +85,6 @@ const Blog = () => {
         <section className={styles.recentPosts}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
-            {/* <span className={styles.postCount}>
-            Showing {displayedPosts.length} of {blogPosts.length} posts
-          </span> */}
           </div>
 
           <div className={styles.postsGrid}>
@@ -165,7 +125,7 @@ const Blog = () => {
           {/* Action Buttons */}
           <div className={styles.actionsContainer}>
             {renderLoadMoreButton()}
-            {renderViewMoreButton()}
+            {/* {renderViewMoreButton()} */}
           </div>
         </section>
       </div>
@@ -173,9 +133,6 @@ const Blog = () => {
 
       <section className={styles.donationSection}>
         <div className={styles.donation}>
-          {/* <GradientCard imageSrc={donationImage4} imagePosition="left" /> */}
-
-          {/* <DonateSection images={[donationImage1, donationImage4, donationImage5]} /> */}
           <BlogDonateSections />
         </div>
       </section>

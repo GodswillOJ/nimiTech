@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   useGetAllBlogPostPaginatedQuery,
+  useGetAllBlogPostAdminPaginatedQuery,
   useDeleteBlogPostMutation,
 } from '../../../services/utilis/blogApiService';
 import { useToast } from '../../../hooks/useToast';
@@ -21,7 +22,7 @@ const BlogListTable = () => {
     isLoading,
     error,
     refetch,
-  } = useGetAllBlogPostPaginatedQuery({
+  } = useGetAllBlogPostAdminPaginatedQuery({
     page: currentPage,
     limit: 10,
     search: searchTerm || undefined,
@@ -68,6 +69,15 @@ const BlogListTable = () => {
     if (!imagePath) return '/api/placeholder/400/300';
     if (imagePath.startsWith('http')) return imagePath;
     return `http://localhost:10000${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
+  };
+
+  const getBlogStatus = (blog: any) => {
+    // Handle both status field and isPublished boolean
+    if (blog.status) {
+      return blog.status;
+    }
+    // Convert isPublished boolean to status string
+    return blog.isPublished ? 'published' : 'draft';
   };
 
   const formatDate = (dateString: string) => {
@@ -259,8 +269,8 @@ const BlogListTable = () => {
                       </div>
                     </div>
                     <div className="blog-table__cell blog-table__cell--status">
-                      <span className={`status status--${blog.status || 'draft'}`}>
-                        {blog.status || 'draft'}
+                      <span className={`status status--${getBlogStatus(blog)}`}>
+                        {getBlogStatus(blog)}
                       </span>
                     </div>
                     <div className="blog-table__cell blog-table__cell--category">
@@ -373,8 +383,8 @@ const BlogListTable = () => {
 
                   <div className="blog-card__content">
                     <div className="blog-card__meta">
-                      <span className={`status status--${blog.status || 'draft'}`}>
-                        {blog.status || 'draft'}
+                      <span className={`status status--${getBlogStatus(blog)}`}>
+                        {getBlogStatus(blog)}
                       </span>
                       <span className="blog-card__category">{blog.category}</span>
                     </div>

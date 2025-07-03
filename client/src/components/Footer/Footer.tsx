@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
         { text: 'Services', path: '/our-services' },
         { text: 'Blog', path: '/blogs' },
         // { text: 'Case Studies', path: '/case-studies' },
-        { text: 'FAQs', path: '/#faq' }, //redirects to the faq section of the homepage
+        { text: 'FAQs', path: '/#faq' },
       ],
     },
     {
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
         // { text: 'Careers', path: '/careers' },
         { text: 'Contact', path: '/contact-us' },
         { text: 'Training', path: 'https://nimitutor.com' },
-        { text: 'Subscribe', path: '/subscribe' }, //trigger the newsletter subscription modal
+        { text: 'Subscribe', path: '/subscribe' },
       ],
     },
     {
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
       ],
     },
     {
-      title: 'Follow us on:',
+      title: 'Connect with us:',
       socialLinks: socialLinks,
     },
   ];
@@ -98,28 +98,18 @@ const Footer: React.FC = () => {
   };
 
   const handleSubscribeClick = () => {
-    // Trigger newsletter modal - you can customize this based on your modal implementation
     const event = new CustomEvent('openNewsletterModal');
     window.dispatchEvent(event);
   };
 
   const handleFAQClick = () => {
-    // Navigate to homepage and scroll to FAQ section
     if (window.location.pathname === '/') {
-      // Already on homepage, just scroll
       const faqSection = document.getElementById('faq');
       if (faqSection) {
         faqSection.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Navigate to homepage first, then scroll
-      navigate('/', { replace: true });
-      setTimeout(() => {
-        const faqSection = document.getElementById('faq');
-        if (faqSection) {
-          faqSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+      navigate('/?scrollTo=faq', { replace: true });
     }
   };
 
@@ -228,9 +218,6 @@ const Footer: React.FC = () => {
                   <Link to={link.path} className={styles.footer__link}>
                     {link.text}
                   </Link>
-                  {/* {index < footerLinks.length - 1 && (
-                    <span className={styles.footer__separator}>•</span>
-                  )} */}
                 </div>
               ))}
             </div>
