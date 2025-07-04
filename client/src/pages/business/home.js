@@ -14,6 +14,7 @@ import {
   introText,
   services,
 } from '../../components/business/business_post/buisnessData.jsx';
+import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
 import {
   BusinessPostItem,
   ClientReview,
@@ -24,10 +25,9 @@ import {
 } from '../../components/business/landing_page/BusinessItem';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
-import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
+import Faq from '../../components/Faqs/Faq';
 import Footer from '../../components/Footer/Footer';
 import { useGetBusinessPostsQuery } from '../../services/api';
-import Faq from '../../components/Faqs/Faq';
 import styles from '../blog/blog.module.scss';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
@@ -47,7 +47,7 @@ const HomePage = () => {
     ? postsToShow
     : showAllPosts
       ? postsToShow
-      : postsToShow.slice(0, 2);
+      : postsToShow.slice(0, 3);
 
   // Testimonials Carousel Settings
   const testimonialSettings = {
@@ -102,7 +102,7 @@ const HomePage = () => {
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-text">
-          <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <h1 style={{ fontFamily: 'Montserrat, sans-serif', color: '#88199a' }}>
             {' '}
             We believe in harnessing technology to drive business success.
           </h1>
@@ -442,10 +442,9 @@ const HomePage = () => {
                   ? '1fr'
                   : isMediumScreen
                     ? 'repeat(2, 2fr)'
-                    : 'repeat(2, 1fr)',
+                    : 'repeat(3, 1fr)',
                 gridAutoRows: 'minmax(200px, auto)',
                 gap: '20px',
-                alignItems: 'center',
                 justifyItems: 'center',
                 paddingTop: isSmallScreen ? '70px' : '0',
               }}
@@ -486,11 +485,11 @@ const HomePage = () => {
             )}
           </div>
           {/* 📌 Left Side: Text & List Block */}
-          <div style={{ width: '100%' }}>
+          {/* <div style={{ width: '100%' }}>
             <div style={{ padding: isSmallScreen ? '20px' : '0' }}>
               <ServiceHighlights />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -550,7 +549,7 @@ const HomePage = () => {
             >
               <h1
                 style={{
-                  color: 'white',
+                  color: '#88199a',
                   fontSize: isSmallScreen ? '1.5rem' : '2.5rem',
                   fontWeight: 'bold',
                   textShadow: '2px 2px 8px rgba(0,0,0,0.8)',

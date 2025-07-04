@@ -257,10 +257,9 @@ const PartnerWithUs = ({ services }) => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.7)), url(${businessImages.AI_image})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.7)), url(${businessImages.nimi_hero2})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'blur(10px)',
                 zIndex: 0,
                 transform: 'scale(1.1)',
               }}
@@ -274,7 +273,7 @@ const PartnerWithUs = ({ services }) => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.4)',
+                backgroundColor: 'rgba(3, 77, 77, 0.4)',
                 zIndex: 0,
               }}
             />
