@@ -19,7 +19,6 @@ import {
   BusinessPostItem,
   ClientReview,
   PartnerWithUs,
-  ServiceHighlights,
   SocialLinks,
   testimonials,
 } from '../../components/business/landing_page/BusinessItem';
@@ -550,6 +549,10 @@ const HomePage = () => {
               <h1
                 style={{
                   color: '#88199a',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  padding: '40px',
+                  borderRadius: 5,
+                  backdropFilter: 'blur(4px)',
                   fontSize: isSmallScreen ? '1.5rem' : '2.5rem',
                   fontWeight: 'bold',
                   textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
