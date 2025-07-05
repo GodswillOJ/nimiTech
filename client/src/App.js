@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, useRoutes, useLocation } from 'react-router-dom';
-import { useState, useEffect, Suspense, lazy } from 'react';
-import ScrollToTop from './components/ScrollToTop';
-import Navbar from './components/navbar';
+import { Suspense, lazy, useEffect, useState } from 'react';
+import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Newsletter from './components/blog/Modal/NewsLetter/Newsletter';
 import Loader from './components/blog/SuspenseLoader/Loader';
+import ProtectedRoute from './components/business/protectedRoute/protectedRoute';
+import Navbar from './components/navbar';
 import { ToastProvider } from './hooks/useToast';
 
 import './App.css';
@@ -18,6 +19,7 @@ const About = lazy(() => import('./pages/business/AboutPage'));
 const BusinessRegisterPage = lazy(() => import('./pages/business/RegisterBusiness'));
 const Services = lazy(() => import('./pages/business/ServicesPage'));
 const ContactUs = lazy(() => import('./pages/business/ContactUs'));
+const Success = lazy(() => import('./pages/business/success'));
 const RegisterPage = lazy(() => import('./pages/business/RegisterBusiness'));
 const AuthPage = lazy(() => import('./pages/auth/AuthPage'));
 const ForgotPassword = lazy(() => import('./components/Auth/ForgotPassword/ForgotPassword'));
@@ -40,6 +42,14 @@ const baseRoutes = [
   { path: '/privacy-policy', element: <PrivacyPolicyPage /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },
+  {
+    path: '/success',
+    element: (
+      <ProtectedRoute>
+        <Success />
+      </ProtectedRoute>
+    ),
+  },
   { path: '/register', element: <RegisterPage /> },
   { path: '/auth', element: <AuthPage /> },
   { path: '/auth/forgot-password', element: <ForgotPassword /> },

@@ -10,11 +10,12 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import { businessImages } from '../../assets/images.js';
 import { dummyBusinessPosts } from '../../components/business/business_post/buisnessData.jsx';
 import { BusinessPostItem } from '../../components/business/landing_page/BusinessItem';
+import { useFormSubmit } from '../../context/formSubmitContext';
 import { useSendContactFormMutation } from '../../services/api';
 
 const BusinessRegisterPage = () => {
@@ -29,7 +30,9 @@ const BusinessRegisterPage = () => {
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
+  const { setIsSubmitted } = useFormSubmit();
   const location = useLocation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -93,6 +96,8 @@ const BusinessRegisterPage = () => {
         location: '',
         consent: false,
       });
+      setIsSubmitted(true);
+      navigate('/success');
     } catch (err) {
       console.error(err);
       alert('Failed to send. Please try again later.');

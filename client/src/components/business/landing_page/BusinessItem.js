@@ -251,13 +251,14 @@ const PartnerWithUs = ({ services }) => {
           >
             {/* Background Image Layer */}
             <div
+              className="image-hover"
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.7)), url(${businessImages.nimi_hero2})`,
+                backgroundImage: `url(${businessImages.Partner__})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 zIndex: 0,
@@ -273,7 +274,7 @@ const PartnerWithUs = ({ services }) => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(3, 77, 77, 0.4)',
+                backgroundColor: 'none',
                 zIndex: 0,
               }}
             />
@@ -290,11 +291,14 @@ const PartnerWithUs = ({ services }) => {
             >
               <h4
                 style={{
-                  fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '1.8rem',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  padding: '40px',
+                  borderRadius: '20px',
+                  fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '2rem',
                   marginBottom: '20px',
                   marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '40px',
                   color: '#ac00d6',
-                  textShadow: '0 2px 6px rgba(0,0,0,0.6)',
+                  fontWeight: 'bold',
                 }}
               >
                 Unlock Limitless Potential
@@ -307,6 +311,7 @@ const PartnerWithUs = ({ services }) => {
                   fontStyle: 'italic',
                   marginBottom: '20px',
                   color: '#f0f0f0',
+                  fontWeight: '600',
                   textAlign: 'left',
                   textShadow: '0 1px 2px rgba(0,0,0,0.4)',
                 }}
@@ -320,6 +325,7 @@ const PartnerWithUs = ({ services }) => {
                   paddingLeft: isSmallScreen ? '16px' : '20px',
                   fontSize: isSmallScreen ? '0.95rem' : '1rem',
                   lineHeight: '1.6',
+                  fontWeight: 'bold',
                   color: '#ffffff',
                   listStyle: 'none',
                   margin: 0,
@@ -472,7 +478,7 @@ const ClientReview = ({ course, name, review }) => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        // alignItems: 'center',
         gap: 2,
         padding: '25px',
         borderRadius: '16px',

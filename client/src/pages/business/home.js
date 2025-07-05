@@ -101,7 +101,7 @@ const HomePage = () => {
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-text">
-          <h1 style={{ fontFamily: 'Montserrat, sans-serif', color: '#88199a' }}>
+          <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
             {' '}
             We believe in harnessing technology to drive business success.
           </h1>
@@ -753,28 +753,39 @@ const HomePage = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={20}
-          slidesPerView={isSmallScreen ? 1 : isMediumScreen ? 2 : 3}
-          autoplay={{ delay: 5000 }}
-          pagination={{ clickable: true }}
-          dir="rtl" // Right to left
-          loop={true}
-          style={{ paddingBottom: '40px' }}
+      <div>
+        <h1
+          style={{
+            textAlign: 'center',
+            padding: isSmallScreen ? '20px' : '20px',
+            color: '#433c4c',
+          }}
         >
-          {testimonials.map((item, index) => (
-            <SwiperSlide key={index}>
-              <ClientReview
-                image={item.image}
-                course={item.course}
-                name={item.name}
-                review={item.review}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          Client Reviews
+        </h1>
+        <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}
+            slidesPerView={isSmallScreen ? 1 : isMediumScreen ? 2 : 3}
+            autoplay={{ delay: 5000 }}
+            pagination={{ clickable: true }}
+            dir="rtl" // Right to left
+            loop={true}
+            style={{ paddingBottom: '40px' }}
+          >
+            {testimonials.map((item, index) => (
+              <SwiperSlide key={index}>
+                <ClientReview
+                  image={item.image}
+                  course={item.course}
+                  name={item.name}
+                  review={item.review}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* Footer */}
