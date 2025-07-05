@@ -198,7 +198,7 @@ h2 .my-domine1 {
 .nav-links {
   list-style: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.5rem;
   margin-top: 0 !important;
 }
@@ -307,7 +307,7 @@ h2 .my-domine1 {
 }
 
 /* Responsive below 768px */
-@media (max-width: 870px) {
+@media (max-width: 1040px) {
   .hamburger {
     display: flex;
   }

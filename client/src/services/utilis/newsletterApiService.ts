@@ -62,7 +62,14 @@ export const newsletterApi = createApi({
     }),
 
     exportNewsletterSubscriptions: builder.query({
-      query: () => '/newsletter/export',
+      query: (params?: { format?: 'csv' | 'json'; isActive?: boolean }) => {
+        const searchParams = new URLSearchParams();
+        if (params?.format) searchParams.append('format', params.format);
+        if (params?.isActive !== undefined)
+          searchParams.append('isActive', params.isActive.toString());
+
+        return `/newsletter/export?${searchParams.toString()}`;
+      },
       providesTags: ['Newsletter'],
     }),
   }),

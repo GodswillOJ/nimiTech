@@ -8,6 +8,8 @@ import {
   useGetAllBlogPostPaginatedQuery,
   useGetFeaturedPostQuery,
 } from '../../services/utilis/blogApiService';
+import { getImageUrl } from '../../utils/envUtils';
+import { formatDate } from '../../utils/dateUtils';
 
 const BlogDonateSections = lazy(
   () => import('../../components/blog/BlogDonateSections/BlogDonateSections')
@@ -15,6 +17,7 @@ const BlogDonateSections = lazy(
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [allPosts, setAllPosts] = useState<IBlogPost[]>([]);
   const postsPerPage = 6;
 
   // API queries
@@ -34,32 +37,85 @@ const Blog = () => {
     error: featuredError,
   } = useGetFeaturedPostQuery();
 
-  // Fallback to mock data if API fails
-  const displayedPosts = blogData?.posts || blogPosts.slice(0, postsPerPage);
+  // Helper function to get unique post ID (handles both _id and id)
+  const getPostId = (post: any) => post._id || post.id;
+
+  // Update all posts when new data arrives
+  useEffect(() => {
+    if (blogData?.posts) {
+      if (currentPage === 1) {
+        // First page - replace all posts
+        setAllPosts(blogData.posts);
+      } else {
+        // Subsequent pages - append only new posts (avoid duplicates)
+        setAllPosts((prev) => {
+          const existingIds = new Set(prev.map(getPostId));
+          const newPosts = blogData.posts.filter((post: any) => !existingIds.has(getPostId(post)));
+          return [...prev, ...newPosts];
+        });
+      }
+    } else if (currentPage === 1) {
+      // Fallback to mock data on first page
+      setAllPosts(blogPosts.slice(0, postsPerPage));
+    }
+  }, [blogData, currentPage]);
+
+  // Fallback data
+  const displayedPosts = allPosts.length > 0 ? allPosts : blogPosts.slice(0, postsPerPage);
   const featuredPostData = featured || featuredPost;
   const loading = blogLoading || featuredLoading;
-  const hasMorePosts = blogData?.hasNextPage || false;
-  const totalPages = blogData?.totalPages || Math.ceil(blogPosts.length / postsPerPage);
+  const hasMorePosts = blogData?.hasNextPage || currentPage * postsPerPage < blogPosts.length;
 
   const handleLoadMore = async () => {
     if (loading || !hasMorePosts) return;
     setCurrentPage((prev) => prev + 1);
   };
 
-  const renderLoadMoreButton = () => {
-    if (!hasMorePosts) return null;
+  const handleLoadLess = () => {
+    // Reset to first page and show only first page posts
+    setCurrentPage(1);
+    setAllPosts((prev) => prev.slice(0, postsPerPage));
+  };
+
+  const renderActionButtons = () => {
+    const showLoadLess = currentPage > 1 && allPosts.length > postsPerPage;
+    const showLoadMore = hasMorePosts && !loading;
+
+    // Don't show any buttons if we're loading
+    if (loading) {
+      return (
+        <div className={styles.actionsContainer}>
+          <button className={`${styles.loadMoreButton} ${styles.loading}`} disabled>
+            <span className={styles.buttonText}>Loading...</span>
+            <div className={styles.spinner} />
+          </button>
+        </div>
+      );
+    }
 
     return (
-      <div className={styles.loadMoreContainer}>
-        <button
-          className={`${styles.loadMoreButton} ${loading ? styles.loading : ''}`}
-          onClick={handleLoadMore}
-          disabled={loading}
-          aria-label={loading ? 'Loading more posts' : 'Load more posts'}
-        >
-          <span className={styles.buttonText}>{loading ? 'Loading...' : 'Load more posts'}</span>
-          {loading && <div className={styles.spinner} />}
-        </button>
+      <div className={styles.actionsContainer}>
+        {/* Load More Button */}
+        {showLoadMore && (
+          <button
+            className={styles.loadMoreButton}
+            onClick={handleLoadMore}
+            aria-label="Load more posts"
+          >
+            <span className={styles.buttonText}>Load more posts</span>
+          </button>
+        )}
+
+        {/* Load Less Button */}
+        {showLoadLess && (
+          <button
+            className={`${styles.loadLessButton} ${styles.loadMoreButton}`}
+            onClick={handleLoadLess}
+            aria-label="Show fewer posts"
+          >
+            <span className={styles.buttonText}>Load less</span>
+          </button>
+        )}
       </div>
     );
   };
@@ -70,7 +126,7 @@ const Blog = () => {
         {/* Featured Post Section */}
         <section
           className={styles.featuredPost}
-          style={{ backgroundImage: `url(${featuredPostData.image})` }}
+          style={{ backgroundImage: `url(${getImageUrl(featuredPostData.image)})` }}
         >
           <Link to={`/blogs/${featuredPostData.id || featuredPostData._id}`}>
             <div className={styles.featuredContent}>
@@ -92,7 +148,7 @@ const Blog = () => {
               const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
               return (
                 <article
-                  key={postId}
+                  key={`${postId}-${index}`} // Ensure unique keys when combining pages
                   className={styles.blogCard}
                   style={{
                     animationDelay: `${(index % postsPerPage) * 100}ms`,
@@ -100,20 +156,20 @@ const Blog = () => {
                 >
                   <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
                     <div className={styles.imageContainer}>
-                      <img src={post.image} alt={post.title} loading="lazy" />
+                      <img src={getImageUrl(post.image)} alt={post.title} loading="lazy" />
                     </div>
                     <div className={styles.contentContainer}>
                       <h3>{post.title}</h3>
                       <p>{post.description}</p>
                       <div className={styles.metaInfo}>
                         <img
-                          src={authorAvatar}
+                          src={getImageUrl(post.author.avatar) || authorAvatar}
                           alt={post.author.name}
                           className={styles.authorAvatar}
                         />
                         <span>{post.author.name}</span>
                         <span>•</span>
-                        <span>{post.author.date}</span>
+                        <span>{formatDate(post.author.date)}</span>
                       </div>
                     </div>
                   </Link>
@@ -123,10 +179,7 @@ const Blog = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className={styles.actionsContainer}>
-            {renderLoadMoreButton()}
-            {/* {renderViewMoreButton()} */}
-          </div>
+          {renderActionButtons()}
         </section>
         {/* Donation Section */}
 

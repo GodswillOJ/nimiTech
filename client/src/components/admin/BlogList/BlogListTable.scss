@@ -183,7 +183,7 @@
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #e5e7eb;
-  
+
   // Prevent table overflow
   overflow-x: auto;
   min-width: 0; // Allow flex shrinking
@@ -309,19 +309,19 @@
     align-items: center;
     justify-content: center;
     min-width: 100px;
-    
+
     // Compact table action buttons
     .btn--icon {
       min-width: 30px;
       min-height: 30px;
       padding: 8px;
       border-radius: 6px;
-      
+
       svg {
         width: 16px;
         height: 16px;
       }
-      
+
       &:hover {
         transform: translateY(-1px) scale(1.05);
       }
@@ -505,30 +505,30 @@
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-  } 
+  }
   &--icon {
     padding: 10px;
     min-width: 36px;
     min-height: 36px;
     border-radius: 8px;
     position: relative;
-    
+
     svg {
       width: 18px;
       height: 18px;
       flex-shrink: 0;
       transition: transform 0.2s ease;
     }
-    
+
     &:hover:not(:disabled) svg {
       transform: scale(1.1);
     }
-    
+
     &:focus {
       outline: 2px solid transparent;
       box-shadow: 0 0 0 2px #3b82f6;
     }
-    
+
     // Tooltip on hover
     &[title]:hover::after {
       content: attr(title);
@@ -644,6 +644,29 @@
   }
 }
 
+// Featured badge styles
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 2px 6px;
+  background: #fef3c7;
+  border-radius: 4px;
+  color: #f59e0b;
+  font-size: 12px;
+  font-weight: 500;
+
+  svg {
+    margin-right: 2px;
+  }
+}
+
+.title-text {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 // Responsive adjustments
 @media (max-width: 1200px) {
   .blog-table__row {
@@ -655,12 +678,12 @@
     padding: 12px 6px;
     font-size: 13px;
   }
-  
+
   .blog-table__actions .btn--icon {
     min-width: 30px;
     min-height: 30px;
     padding: 6px;
-    
+
     svg {
       width: 14px;
       height: 14px;
@@ -677,12 +700,12 @@
   .blog-table__cell--date {
     display: none;
   }
-  
+
   .blog-table__actions .btn--icon {
     min-width: 28px;
     min-height: 28px;
     padding: 5px;
-    
+
     svg {
       width: 12px;
       height: 12px;

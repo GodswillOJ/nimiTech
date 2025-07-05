@@ -1,6 +1,8 @@
+import { formatDate as formatDateUtil } from '../../../../utils/dateUtils';
+
 export const formatDate = (date?: string): string => {
   if (!date) return 'Not set';
-  return new Date(date).toLocaleDateString();
+  return formatDateUtil(new Date(date));
 };
 
 export const getWordCount = (content?: string): number => {

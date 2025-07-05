@@ -17,6 +17,8 @@ import {
 } from '../../../../services/utilis/blogApiService';
 import styles from './BlogDetails.module.scss';
 import Loader from '../../../../components/blog/SuspenseLoader/Loader';
+import { getImageUrl } from '../../../../utils/envUtils';
+import { formatBlogDate } from '../../../../utils/dateUtils';
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -187,7 +189,7 @@ const BlogDetails = () => {
             <div className={styles.article__meta}>
               <div className={styles.article__author}>
                 <img
-                  src={post.author.avatar}
+                  src={getImageUrl(post.author.avatar)}
                   alt={`Avatar of ${post.author.name}`}
                   className={styles.article__author_avatar}
                   width="32"
@@ -196,7 +198,7 @@ const BlogDetails = () => {
                 <span className={styles.article__author_name}>{post.author.name}</span>
               </div>
               <time className={styles.article__date}>
-                {post.author.date} • {post.readTime}
+                {formatBlogDate(post.author.date, post.readTime)}
               </time>
             </div>
 
@@ -206,7 +208,7 @@ const BlogDetails = () => {
 
           <div className={styles.article__featured_image}>
             <img
-              src={post.image}
+              src={getImageUrl(post.image)}
               alt={post.title}
               className={styles.article__image}
               loading="eager"
@@ -214,16 +216,27 @@ const BlogDetails = () => {
           </div>
 
           <div className={styles.article__content}>
-            {post?.content?.paragraphs?.map((paragraph: any, i: any) => (
-              <p key={i} className={styles.article__paragraph}>
-                {paragraph?.content}
-              </p>
-            ))}
+            {post?.content?.paragraphs?.map((paragraph: any, i: any) => {
+              if (paragraph.type === 'text') {
+                return (
+                  <p key={i} className={styles.article__paragraph}>
+                    {paragraph.content}
+                  </p>
+                );
+              } else if (paragraph.type === 'quote') {
+                return (
+                  <blockquote key={i} className={styles.article__quote}>
+                    <p>{paragraph.content}</p>
+                  </blockquote>
+                );
+              }
+              return null;
+            })}
 
             {post.contentImage && post.contentImageTitle && (
               <div className={styles.article__content_image}>
                 <img
-                  src={post.contentImage}
+                  src={getImageUrl(post.contentImage)}
                   alt={post.contentImageTitle}
                   className={styles.article__contentImage}
                   loading="lazy"
@@ -240,7 +253,7 @@ const BlogDetails = () => {
           <div className={styles.article__author_card}>
             <div className={styles.article__author_card_avatar}>
               <img
-                src={post.author.avatar}
+                src={getImageUrl(post.author.avatar)}
                 alt={`Avatar of ${post.author.name}`}
                 width="60"
                 height="60"
@@ -248,21 +261,18 @@ const BlogDetails = () => {
               />
             </div>
             <div className={styles.article__author_card_info}>
-              <h4 className={styles.article__author_card_name}>{currentPost.author.name}</h4>
+              <h4 className={styles.article__author_card_name}>{post.author.name}</h4>
               <p className={styles.article__author_card_bio}>
-                {currentPost.author.bio ||
+                {post.author.bio ||
                   'UI/UX Designer passionate about creating intuitive digital experiences'}
               </p>
             </div>
           </div>
         </article>
 
-        {currentPost.youtubeUrl && (
+        {post.youtubeUrl && (
           <div className={styles.article__video_card}>
-            <VideoEmbed
-              videoId={getYoutubeVideoId(currentPost.youtubeUrl)}
-              title={currentPost.title}
-            />
+            <VideoEmbed videoId={getYoutubeVideoId(post.youtubeUrl)} title={post.title} />
           </div>
         )}
 
@@ -301,18 +311,25 @@ const BlogDetails = () => {
                     <article key={postId} className={styles.related__card}>
                       <Link to={`/blogs/${postId}`} className={styles.related__card_link}>
                         <div className={styles.related__card_image}>
-                          <img src={post.image} alt="" loading="lazy" width="280" height="180" />
+                          <img
+                            src={getImageUrl(post.image)}
+                            alt=""
+                            loading="lazy"
+                            width="280"
+                            height="180"
+                          />
                         </div>
                         <div className={styles.related__card_content}>
                           <div className={styles.related__card_meta}>
-                            <time className={styles.related__card_date}>{post.author.date}</time>
-                            <span className={styles.related__card_read_time}>{post.readTime}</span>
+                            <time className={styles.related__card_date}>
+                              {formatBlogDate(post.author.date, post.readTime)}
+                            </time>
                           </div>
                           <h3 className={styles.related__card_title}>{post.title}</h3>
                           <p className={styles.related__card_description}>{post.description}</p>
                           <div className={styles.related__card_author}>
                             <img
-                              src={post.author.avatar}
+                              src={getImageUrl(post.author.avatar)}
                               alt={`Avatar of ${post.author.name}`}
                               width="24"
                               height="24"

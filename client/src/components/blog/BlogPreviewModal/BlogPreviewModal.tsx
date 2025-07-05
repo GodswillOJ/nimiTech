@@ -2,6 +2,8 @@ import React from 'react';
 import { IContent } from '../../../pages/blog/blog.types';
 import { VideoEmbed } from '../VideoEmbed/VideoEmbed';
 import { Highlights } from '../Highlights/Highlights';
+import { getImageUrl } from '../../../utils/envUtils';
+import { formatBlogDate } from '../../../utils/dateUtils';
 import styles from './BlogPreviewModal.module.scss';
 
 interface BlogPreviewModalProps {
@@ -16,6 +18,7 @@ interface BlogPreviewModalProps {
     content?: IContent;
     youtubeUrl?: string;
     tags?: string[] | string;
+    isFeatured?: boolean;
   };
   featuredImage?: string | null;
   contentImage?: string | null;
@@ -37,18 +40,10 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const getImageUrl = (imagePath?: string | null) => {
+  const getImageUrlForPreview = (imagePath?: string | null) => {
     if (!imagePath) return '/api/placeholder/400/300';
     if (imagePath.startsWith('http')) return imagePath;
-    return `http://localhost:10000${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
-  };
-
-  const formatDate = (date?: string) => {
-    return new Date(date || Date.now()).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return getImageUrl(imagePath);
   };
 
   const processedTags =
@@ -85,6 +80,9 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
             <div className={styles.preview__header}>
               <div className={styles.preview__breadcrumb}>
                 <span>Blog</span> → <span>{formData.category}</span>
+                {formData.isFeatured && (
+                  <span className={styles.preview__featured_badge}>★ Featured</span>
+                )}
               </div>
 
               <h1 className={styles.preview__title}>{formData.title}</h1>
@@ -96,7 +94,7 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
                 <div className={styles.preview__author}>
                   {authorAvatar && (
                     <img
-                      src={getImageUrl(authorAvatar)}
+                      src={getImageUrlForPreview(authorAvatar)}
                       alt={
                         typeof formData.author === 'object' ? formData.author.name : formData.author
                       }
@@ -116,7 +114,7 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
                 </div>
 
                 <div className={styles.preview__post_meta}>
-                  <span className={styles.preview__date}>{formatDate()}</span>
+                  <span className={styles.preview__date}>{formatBlogDate(new Date())}</span>
                   <span className={styles.preview__reading_time}>{readingTime}</span>
                   <span className={styles.preview__category}>{formData.category}</span>
                 </div>
@@ -135,14 +133,12 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
             </div>
 
             {/* Subtitle */}
-            {formData.content?.subtitle && (
-              <h2 className={styles.preview__subtitle}>{formData.content.subtitle}</h2>
-            )}
+            {formData?.excerpt && <h2 className={styles.preview__subtitle}>{formData?.excerpt}</h2>}
 
             {/* Featured Image */}
             {featuredImage && (
               <div className={styles.preview__featured_image}>
-                <img src={getImageUrl(featuredImage)} alt={formData.title} />
+                <img src={getImageUrlForPreview(featuredImage)} alt={formData.title} />
               </div>
             )}
 
@@ -151,7 +147,7 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
               {/* Content Image */}
               {contentImage && (
                 <div className={styles.preview__content_image}>
-                  <img src={getImageUrl(contentImage)} alt="Content" />
+                  <img src={getImageUrlForPreview(contentImage)} alt="Content" />
                 </div>
               )}
 

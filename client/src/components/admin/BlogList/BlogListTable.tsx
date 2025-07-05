@@ -6,6 +6,8 @@ import {
   useDeleteBlogPostMutation,
 } from '../../../services/utilis/blogApiService';
 import { useToast } from '../../../hooks/useToast';
+import { getImageUrl } from '../../../utils/envUtils';
+import { formatDate } from '../../../utils/dateUtils';
 import './BlogListTable.scss';
 import Loader from '../../../components/blog/SuspenseLoader/Loader';
 
@@ -65,10 +67,10 @@ const BlogListTable = () => {
     navigate('/dashboard/create');
   };
 
-  const getImageUrl = (imagePath: string) => {
+  const getImageUrlForTable = (imagePath: string) => {
     if (!imagePath) return '/api/placeholder/400/300';
     if (imagePath.startsWith('http')) return imagePath;
-    return `http://localhost:10000${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
+    return getImageUrl(imagePath);
   };
 
   const getBlogStatus = (blog: any) => {
@@ -78,14 +80,6 @@ const BlogListTable = () => {
     }
     // Convert isPublished boolean to status string
     return blog.isPublished ? 'published' : 'draft';
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
   };
 
   if (isLoading) {
@@ -237,7 +231,7 @@ const BlogListTable = () => {
                     <div className="blog-table__cell blog-table__cell--image">
                       {blog.image || blog.featuredImage ? (
                         <img
-                          src={getImageUrl(blog.image || blog.featuredImage)}
+                          src={getImageUrlForTable(blog.image || blog.featuredImage)}
                           alt={blog.title}
                           className="blog-table__thumbnail"
                         />
@@ -260,7 +254,23 @@ const BlogListTable = () => {
                     </div>
                     <div className="blog-table__cell blog-table__cell--title">
                       <div className="blog-table__title">
-                        <span className="title-text">{blog.title}</span>
+                        <span className="title-text">
+                          {blog.title}
+                          {blog.isFeatured && (
+                            <span className="featured-badge" title="Featured Post">
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="#fbbf24"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                              >
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                              </svg>
+                            </span>
+                          )}
+                        </span>
                         {blog.excerpt && (
                           <div className="blog-table__excerpt">
                             {blog.excerpt.substring(0, 100)}...
@@ -282,7 +292,7 @@ const BlogListTable = () => {
                           ? blog.author?.avatar
                           : blog.authorAvatar) && (
                           <img
-                            src={getImageUrl(
+                            src={getImageUrlForTable(
                               typeof blog.author === 'object'
                                 ? blog.author.avatar
                                 : blog.authorAvatar
@@ -362,7 +372,10 @@ const BlogListTable = () => {
                 <div key={blog.id || blog._id} className="blog-card">
                   <div className="blog-card__image">
                     {blog.image || blog.featuredImage ? (
-                      <img src={getImageUrl(blog.image || blog.featuredImage)} alt={blog.title} />
+                      <img
+                        src={getImageUrlForTable(blog.image || blog.featuredImage)}
+                        alt={blog.title}
+                      />
                     ) : (
                       <div className="blog-card__placeholder">
                         <svg
@@ -401,7 +414,7 @@ const BlogListTable = () => {
                           ? blog.author?.avatar
                           : blog.authorAvatar) && (
                           <img
-                            src={getImageUrl(
+                            src={getImageUrlForTable(
                               typeof blog.author === 'object'
                                 ? blog.author.avatar
                                 : blog.authorAvatar
