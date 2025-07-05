@@ -3,7 +3,7 @@ import { clearAuthStatus } from './authUtils';
 import { blogPosts, featuredPost } from '../../pages/blog/_partials/BlogPost.data';
 
 export const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api',
+  baseUrl: process.env.REACT_APP_API_BASE_URL || 'https://nimitechit.com/api',
   credentials: 'include',
   prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');
@@ -45,7 +45,7 @@ const findBlogById = (id: string) => {
 
 const handleBlogMockData = (args: any) => {
   // Parse the URL to get pathname and search params
-  const url = new URL(args, 'http://localhost'); // Base URL needed for URL constructor
+  const url = new URL(args, 'https://nimitechit.com'); // Base URL needed for URL constructor
   const pathname = url.pathname;
   const searchParams = url.searchParams;
 

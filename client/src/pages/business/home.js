@@ -103,7 +103,7 @@ const HomePage = () => {
         <div className="hero-text">
           <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
             {' '}
-            We believe in harnessing technology to drive business success.
+            We Believe in Harnessing Technology to Drive Business Success.
           </h1>
           <p
             style={{
