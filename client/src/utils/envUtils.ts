@@ -1,4 +1,3 @@
-
 const getBaseUrl = (): string => {
   const environment = process.env.REACT_APP_ENVIRONMENT || 'development';
 
@@ -13,11 +12,9 @@ export const getApiBaseUrl = (): string => {
   return `${getBaseUrl()}/api`;
 };
 
-
 export const getServerBaseUrl = (): string => {
   return getBaseUrl();
 };
-
 
 export const getImageUrl = (imagePath?: string | null): string => {
   if (!imagePath) return '';
