@@ -49,7 +49,6 @@ const newsletterSubscriptionSchema = new mongoose.Schema(
   }
 );
 
-
 // Virtual for full name
 newsletterSubscriptionSchema.virtual("fullName").get(function () {
   return this.firstName;
@@ -73,6 +72,25 @@ newsletterSubscriptionSchema.statics.getStats = async function () {
   const totalSubscriptions = await this.countDocuments();
   const activeSubscriptions = await this.countDocuments({ isActive: true });
   const unsubscribed = await this.countDocuments({ isActive: false });
+
+  // Calculate date ranges
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay()); // Start of current week (Sunday)
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  // Get this week subscriptions
+  const thisWeekSubscriptions = await this.countDocuments({
+    createdAt: { $gte: startOfWeek },
+  });
+
+  // Get this month subscriptions
+  const thisMonthSubscriptions = await this.countDocuments({
+    createdAt: { $gte: startOfMonth },
+  });
 
   // Get subscriptions by month for the last 6 months
   const sixMonthsAgo = new Date();
@@ -103,6 +121,8 @@ newsletterSubscriptionSchema.statics.getStats = async function () {
     totalSubscriptions,
     activeSubscriptions,
     unsubscribed,
+    thisWeekSubscriptions,
+    thisMonthSubscriptions,
     monthlyStats,
   };
 };

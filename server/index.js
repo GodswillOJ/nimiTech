@@ -19,6 +19,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const { handleJsonParsingError } = require("./controllers/authController");
 const connectDB = require("./config/db");
 
 connectDB();
@@ -60,7 +61,16 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 app.use(cookieParser()); // Parse cookies
-app.use(express.json({ limit: "10mb" }));
+
+// Skip JSON parsing for file upload routes
+app.use((req, res, next) => {
+  // Skip JSON parsing for file upload endpoints
+  if (req.path.includes("/upload-avatar") || req.path.includes("/upload-image")) {
+    return next();
+  }
+  express.json({ limit: "10mb" })(req, res, next);
+});
+
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // API Routes
@@ -87,6 +97,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(notFound);
+app.use(handleJsonParsingError);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 10000;

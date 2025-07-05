@@ -24,7 +24,7 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
-      select: false, 
+      select: false,
     },
     firstName: {
       type: String,
@@ -46,6 +46,11 @@ const adminSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default: null,
+    },
+    bio: {
+      type: String,
+      default: "",
+      maxlength: [500, "Bio must be less than 500 characters"],
     },
     isActive: {
       type: Boolean,

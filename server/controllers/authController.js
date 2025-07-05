@@ -5,6 +5,19 @@ const Admin = require("../models/Admin");
 // Store OTPs temporarily (in production, use Redis or database)
 const otpStore = new Map();
 
+// Simple decryption utility for development (matches frontend)
+const decryptData = encryptedData => {
+  try {
+    // Simple base64 decoding (matches frontend)
+    const decoded = Buffer.from(encryptedData, "base64").toString("utf-8");
+    const parsed = JSON.parse(decoded);
+    return parsed.data;
+  } catch (error) {
+    console.error("Decryption error:", error);
+    return null;
+  }
+};
+
 // Configure nodemailer
 const transporter = nodemailer.createTransport({
   service: "gmail", // or your email service
@@ -172,7 +185,29 @@ const verifyOTP = async (req, res) => {
 // Reset Password
 const resetPassword = async (req, res) => {
   try {
-    const { token, password } = req.body;
+    console.log("Reset Password Request Body:", req.body);
+    console.log("Reset Password Request Headers:", req.headers);
+
+    let token, password;
+
+    // Check if data is encrypted
+    if (req.body.encryptedData) {
+      console.log("Processing encrypted data...");
+      const decryptedData = decryptData(req.body.encryptedData);
+      if (!decryptedData) {
+        console.log("Failed to decrypt data");
+        return res.status(400).json({
+          success: false,
+          message: "Invalid encrypted data",
+        });
+      }
+      ({ token, password } = decryptedData);
+      console.log("Successfully decrypted data");
+    } else {
+      // Fallback for non-encrypted requests (for backward compatibility)
+      ({ token, password } = req.body);
+      console.log("Processing non-encrypted data");
+    }
 
     if (!token || !password) {
       return res.status(400).json({
@@ -236,10 +271,23 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// Middleware to handle JSON parsing errors
+const handleJsonParsingError = (err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    console.error("JSON parsing error:", err.message);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid JSON format in request body",
+    });
+  }
+  next(err);
+};
+
 module.exports = {
   registerUser,
   loginUser,
   forgotPassword,
   verifyOTP,
   resetPassword,
+  handleJsonParsingError,
 };
