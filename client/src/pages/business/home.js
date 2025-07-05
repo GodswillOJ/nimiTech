@@ -14,20 +14,19 @@ import {
   introText,
   services,
 } from '../../components/business/business_post/buisnessData.jsx';
+import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
 import {
   BusinessPostItem,
   ClientReview,
   PartnerWithUs,
-  ServiceHighlights,
   SocialLinks,
   testimonials,
 } from '../../components/business/landing_page/BusinessItem';
 import ServiceUpdateTicker from '../../components/business/landing_page/ServiceUpdateTicker';
 import YoutubeEmbed from '../../components/business/landing_page/YoutubeEmbed';
-import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
+import Faq from '../../components/Faqs/Faq';
 import Footer from '../../components/Footer/Footer';
 import { useGetBusinessPostsQuery } from '../../services/api';
-import Faq from '../../components/Faqs/Faq';
 import styles from '../blog/blog.module.scss';
 
 const GradientCard = lazy(() => import('../../components/blog/GradientCard/GradientCard'));
@@ -47,7 +46,7 @@ const HomePage = () => {
     ? postsToShow
     : showAllPosts
       ? postsToShow
-      : postsToShow.slice(0, 2);
+      : postsToShow.slice(0, 3);
 
   // Testimonials Carousel Settings
   const testimonialSettings = {
@@ -104,7 +103,7 @@ const HomePage = () => {
         <div className="hero-text">
           <h1 style={{ fontFamily: 'Montserrat, sans-serif' }}>
             {' '}
-            We believe in harnessing technology to drive business success.
+            We Believe in Harnessing Technology to Drive Business Success.
           </h1>
           <p
             style={{
@@ -442,10 +441,9 @@ const HomePage = () => {
                   ? '1fr'
                   : isMediumScreen
                     ? 'repeat(2, 2fr)'
-                    : 'repeat(2, 1fr)',
+                    : 'repeat(3, 1fr)',
                 gridAutoRows: 'minmax(200px, auto)',
                 gap: '20px',
-                alignItems: 'center',
                 justifyItems: 'center',
                 paddingTop: isSmallScreen ? '70px' : '0',
               }}
@@ -486,11 +484,11 @@ const HomePage = () => {
             )}
           </div>
           {/* 📌 Left Side: Text & List Block */}
-          <div style={{ width: '100%' }}>
+          {/* <div style={{ width: '100%' }}>
             <div style={{ padding: isSmallScreen ? '20px' : '0' }}>
               <ServiceHighlights />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -550,7 +548,11 @@ const HomePage = () => {
             >
               <h1
                 style={{
-                  color: 'white',
+                  color: '#88199a',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  padding: '40px',
+                  borderRadius: 5,
+                  backdropFilter: 'blur(4px)',
                   fontSize: isSmallScreen ? '1.5rem' : '2.5rem',
                   fontWeight: 'bold',
                   textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
@@ -751,28 +753,39 @@ const HomePage = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={20}
-          slidesPerView={isSmallScreen ? 1 : isMediumScreen ? 2 : 3}
-          autoplay={{ delay: 5000 }}
-          pagination={{ clickable: true }}
-          dir="rtl" // Right to left
-          loop={true}
-          style={{ paddingBottom: '40px' }}
+      <div>
+        <h1
+          style={{
+            textAlign: 'center',
+            padding: isSmallScreen ? '20px' : '20px',
+            color: '#433c4c',
+          }}
         >
-          {testimonials.map((item, index) => (
-            <SwiperSlide key={index}>
-              <ClientReview
-                image={item.image}
-                course={item.course}
-                name={item.name}
-                review={item.review}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          Client Reviews
+        </h1>
+        <div style={{ padding: isSmallScreen ? '50px 20px' : '70px 40px' }}>
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}
+            slidesPerView={isSmallScreen ? 1 : isMediumScreen ? 2 : 3}
+            autoplay={{ delay: 5000 }}
+            pagination={{ clickable: true }}
+            dir="rtl" // Right to left
+            loop={true}
+            style={{ paddingBottom: '40px' }}
+          >
+            {testimonials.map((item, index) => (
+              <SwiperSlide key={index}>
+                <ClientReview
+                  image={item.image}
+                  course={item.course}
+                  name={item.name}
+                  review={item.review}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* Footer */}

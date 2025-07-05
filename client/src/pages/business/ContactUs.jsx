@@ -14,7 +14,7 @@ import {
 import Fade from '@mui/material/Fade';
 import { lazy, useState } from 'react';
 import { FiClock, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import {
   FacebookIcon,
@@ -25,6 +25,7 @@ import {
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images';
+import { useFormSubmit } from '../../context/formSubmitContext';
 import { useSendServiceInquiryMutation } from '../../services/api';
 import styles from '../blog/blog.module.scss';
 
@@ -42,7 +43,9 @@ const ContactUs = () => {
     message: '',
     consent: false,
   });
+  const { setIsSubmitted } = useFormSubmit();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -102,6 +105,8 @@ const ContactUs = () => {
         message: '',
         consent: false,
       });
+      setIsSubmitted(true);
+      navigate('/success');
     } catch (err) {
       console.error(err);
       alert('Failed to send. Please try again later.');

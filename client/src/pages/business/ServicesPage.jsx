@@ -237,7 +237,7 @@ const Services = () => {
                 height="100%"
                 sx={{
                   background: 'linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.7))',
-                  color: '#fc07fb',
+                  color: '#88199a',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -246,15 +246,15 @@ const Services = () => {
                 }}
               >
                 <Typography
-                  variant="h6"
-                  fontWeight={600}
+                  variant="h5"
+                  fontWeight={'bold'}
                   sx={{
-                    background: 'rgba(255,255,255,0.1)',
+                    background: 'rgba(255, 255, 255, 0.4)',
                     px: 6,
                     py: 4,
                     borderRadius: 2,
                     backdropFilter: 'blur(4px)',
-                    fontSize: isSmallScreen ? '1rem' : '1.25rem',
+                    fontSize: isSmallScreen ? '1rem' : 'auto',
                   }}
                 >
                   {section.title}
