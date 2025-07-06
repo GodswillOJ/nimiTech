@@ -20,10 +20,12 @@ const decryptData = encryptedData => {
 
 // Configure nodemailer
 const transporter = nodemailer.createTransport({
-  service: "gmail", // or your email service
+  host: "mail.nimitechit.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EmailUser,
+    pass: process.env.EmailPassword,
   },
 });
 
@@ -75,7 +77,7 @@ const forgotPassword = async (req, res) => {
 
     // Send email
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.EmailUser,
       to: email,
       subject: "Password Reset - Verification Code",
       html: `

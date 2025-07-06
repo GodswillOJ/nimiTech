@@ -4,10 +4,12 @@ const nodemailer = require("nodemailer");
 
 // Configure nodemailer (reuse from authController)
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "mail.nimitechit.com", // ✅ your correct cPanel SMTP server
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EmailUser, // info@nimitechit.com
+    pass: process.env.EmailPassword,
   },
 });
 
@@ -15,7 +17,7 @@ const transporter = nodemailer.createTransport({
 const sendWelcomeEmail = async subscriberData => {
   try {
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.EmailUser,
       to: subscriberData.email,
       subject: "Welcome to Nimitech Newsletter!",
       html: `
@@ -79,8 +81,8 @@ const sendWelcomeEmail = async subscriberData => {
 const sendAdminNotification = async subscriberData => {
   try {
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
+      from: process.env.EmailUser,
+      to: ["busay.bright@nimitechit.com", "info@nimitechit.com"],
       subject: "New Newsletter Subscription",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">

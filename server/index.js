@@ -35,7 +35,23 @@ if (!fs.existsSync(uploadsDir)) {
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://nimitechit.com",
+      "https://www.nimitechit.com",
+      process.env.CORS_ORIGIN,
+    ].filter(Boolean);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: [
@@ -80,8 +96,43 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 
-// Uploads (static files)
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+// Heartbeat/Health check endpoint
+app.get("/api/heartbeat", (req, res) => {
+  res.status(200).json({
+    status: "alive",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || "development",
+    message: "Server is running",
+  });
+});
+
+// Uploads (static files) with CORS headers
+app.use(
+  "/uploads",
+  (req, res, next) => {
+    // Add CORS headers for static files
+    res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  },
+  express.static(path.join(__dirname, "/uploads"))
+);
+
+// Debug middleware to log missing static files
+app.use("/uploads", (req, res, next) => {
+  const filePath = path.join(__dirname, "/uploads", req.path);
+  if (!fs.existsSync(filePath)) {
+    console.log(`Static file not found: ${filePath}`);
+    console.log(`Requested URL: ${req.originalUrl}`);
+    return res.status(404).json({
+      success: false,
+      message: "File not found",
+      path: req.path,
+    });
+  }
+  next();
+});
 
 // Serve frontend (in production)
 if (process.env.NODE_ENV === "production") {
@@ -105,4 +156,33 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
   console.log(`API Base URL: http://localhost:${PORT}/api`);
+
+  // Start heartbeat pinging in production to prevent server from sleeping
+  if (process.env.NODE_ENV === "production") {
+    startHeartbeat();
+  }
 });
+
+// Heartbeat function to keep server alive
+function startHeartbeat() {
+  const HEARTBEAT_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
+  const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`;
+
+  console.log("Starting heartbeat ping every 5 minutes...");
+
+  setInterval(async () => {
+    try {
+      const fetch = (await import("node-fetch")).default;
+      const response = await fetch(`${SERVER_URL}/api/heartbeat`);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Heartbeat ping successful at ${data.timestamp}`);
+      } else {
+        console.log(`Heartbeat ping failed with status: ${response.status}`);
+      }
+    } catch (error) {
+      console.log(`Heartbeat ping error: ${error.message}`);
+    }
+  }, HEARTBEAT_INTERVAL);
+}

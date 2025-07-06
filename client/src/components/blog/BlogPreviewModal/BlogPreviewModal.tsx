@@ -144,13 +144,6 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
 
             {/* Content */}
             <div className={styles.preview__content}>
-              {/* Content Image */}
-              {contentImage && (
-                <div className={styles.preview__content_image}>
-                  <img src={getImageUrlForPreview(contentImage)} alt="Content" />
-                </div>
-              )}
-
               {/* Paragraphs */}
               {formData.content?.paragraphs && formData.content.paragraphs.length > 0 && (
                 <div className={styles.preview__paragraphs}>
@@ -165,6 +158,13 @@ export const BlogPreviewModal: React.FC<BlogPreviewModalProps> = ({
                       )}
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* Content Image */}
+              {contentImage && (
+                <div className={styles.preview__content_image}>
+                  <img src={getImageUrlForPreview(contentImage)} alt="Content" />
                 </div>
               )}
 

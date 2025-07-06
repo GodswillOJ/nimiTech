@@ -20,7 +20,7 @@
   left: 0;
   height: calc(100vh - 90px);
   overflow-y: auto;
-  z-index: 100000;
+  z-index: 100;
   transition: all 0.3s ease;
 
   &--collapsed {
