@@ -140,6 +140,7 @@ const decryptRequest = (req, res, next) => {
         if (process.env.NODE_ENV === "development") {
           try {
             const base64Decoded = Buffer.from(req.body.encryptedData, "base64").toString("utf8");
+
             const base64Parsed = JSON.parse(base64Decoded);
 
             // Extract the actual data from the wrapper object

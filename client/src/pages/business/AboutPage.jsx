@@ -262,7 +262,7 @@ const About = () => {
                         Website:{' '}
                         <Typography
                           component="a"
-                          href="https://www.nimitechit.com/"
+                          href="https://www.nimitutor.com/"
                           target="_blank"
                           rel="noopener noreferrer"
                           sx={{

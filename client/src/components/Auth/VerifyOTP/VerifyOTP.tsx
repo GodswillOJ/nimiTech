@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Lock, ArrowLeft } from '../../../assets/blogCMS/icons/AuthIcons';
+import { getApiBaseUrl } from '../../../utils/envUtils';
 import styles from '../AuthFlow.module.scss';
 import verifyStyles from './VerifyOTP.module.scss';
 
@@ -76,7 +77,7 @@ export default function VerifyOTP() {
     setError('');
 
     try {
-      const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+      const baseUrl = getApiBaseUrl();
       const response = await fetch(`${baseUrl}/auth/verify-otp`, {
         method: 'POST',
         headers: {
@@ -88,8 +89,10 @@ export default function VerifyOTP() {
       const result = await response.json();
 
       if (result.success) {
-        // Navigate to password reset with token
-        navigate(`/auth/reset-password?token=${result.resetToken}`);
+        // Store token securely in sessionStorage (temporary, more secure than URL)
+        sessionStorage.setItem('resetToken', result.resetToken);
+        // Navigate to password reset without token in URL
+        navigate('/auth/reset-password');
       } else {
         setError(result.message || 'Invalid verification code. Please try again.');
         // Clear OTP and focus first input
@@ -111,7 +114,7 @@ export default function VerifyOTP() {
     setError('');
 
     try {
-      const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+      const baseUrl = getApiBaseUrl();
       const response = await fetch(`${baseUrl}/auth/forgot-password`, {
         method: 'POST',
         headers: {

@@ -37,7 +37,7 @@ const generateSecureFilename = originalname => {
   return `${baseName}_${timestamp}_${randomString}${ext}`;
 };
 
-// Configure storage
+// Configure storage for blog uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { type } = req.body;
@@ -69,6 +69,17 @@ const storage = multer.diskStorage({
   },
 });
 
+// Configure storage specifically for avatar uploads
+const avatarStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/avatars");
+  },
+  filename: (req, file, cb) => {
+    const secureFilename = generateSecureFilename(file.originalname);
+    cb(null, secureFilename);
+  },
+});
+
 // Enhanced file filter with security checks
 const fileFilter = (req, file, cb) => {
   // Check if file is an image
@@ -85,7 +96,7 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-// Configure multer with enhanced security
+// Configure multer with enhanced security for blog uploads
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
@@ -96,8 +107,20 @@ const upload = multer({
   },
 });
 
+// Configure multer specifically for avatar uploads
+const avatarUpload = multer({
+  storage: avatarStorage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit for avatars
+    files: 1, // Only one avatar at a time
+    fields: 5, // Limit number of fields
+  },
+});
+
 // Multiple file upload configurations
 const uploadSingle = upload.single("image");
+const uploadAvatar = avatarUpload.single("avatar");
 const uploadMultiple = upload.fields([
   { name: "featuredImage", maxCount: 1 },
   { name: "contentImage", maxCount: 1 },
@@ -192,6 +215,7 @@ const cleanupOnError = (req, res, next) => {
 
 module.exports = {
   upload: uploadSingle,
+  uploadAvatar,
   uploadMultiple,
   handleMulterError,
   cleanupOnError,

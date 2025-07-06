@@ -1,13 +1,20 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import BlogPostEditor from '../blogCMS/BlogPostEditor/BlogPostEditor';
 import BlogListTable from '../../components/admin/BlogList/BlogListTable';
 import NewsletterManager from '../../components/admin/NewsletterManager/NewsletterManager';
+import { AvatarUploader } from '../../components/ui/AvatarUploader/AvatarUploader';
 import { useToast } from '../../hooks/useToast';
 import { isAuthenticated, clearAuthToken } from '../../services/utilis/authUtils';
+import { getImageUrl } from '../../utils/envUtils';
 import { useGetBlogStatsQuery } from '../../services/utilis/blogApiService';
+import {
+  useGetAdminProfileQuery,
+  useUpdateAdminProfileMutation,
+  useUploadAdminAvatarMutation,
+  useLogoutAdminMutation,
+} from '../../services/utilis/adminApiService';
 import styles from './UserDashboard.module.scss';
-import { useGetAdminProfileQuery } from '../../services/utilis/adminApiService';
 
 // Icons
 const DashboardIcon = () => (
@@ -77,24 +84,223 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
-// Dashboard Overview Component
 // Profile/Admin Header Component
 const AdminProfileHeader: React.FC = React.memo(() => {
   const { data: profile } = useGetAdminProfileQuery({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [updateAdminProfile] = useUpdateAdminProfileMutation();
+  const [uploadAdminAvatar] = useUploadAdminAvatarMutation();
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const toast = useToast();
+
+  const [editData, setEditData] = useState({
+    firstName: '',
+    lastName: '',
+    bio: '',
+    avatar: null as string | null,
+  });
+
   const adminData = useMemo(
     () => ({
       name: `${profile?.data?.admin?.firstName} ${profile?.data?.admin?.lastName}` || 'Admin',
       email: profile?.data?.admin?.email || 'admin@nimitech.com',
       avatar: profile?.data?.admin?.avatar || null,
+      firstName: profile?.data?.admin?.firstName || '',
+      lastName: profile?.data?.admin?.lastName || '',
+      bio: profile?.data?.admin?.bio || '',
     }),
     [profile]
   );
+
+  // Initialize edit data when profile loads
+  useEffect(() => {
+    if (profile?.data?.admin) {
+      const admin = profile.data.admin;
+      setEditData({
+        firstName: admin.firstName || '',
+        lastName: admin.lastName || '',
+        bio: admin.bio || '',
+        avatar: admin.avatar || null,
+      });
+    }
+  }, [profile]);
+
+  const handleAvatarUpload = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast.error('Invalid file type', 'Please select a valid image file');
+      throw new Error('Invalid file type');
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('File too large', 'Image size must be less than 5MB');
+      throw new Error('File too large');
+    }
+
+    setIsUploadingAvatar(true);
+
+    try {
+      console.log('Uploading admin avatar:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+
+      const result = await uploadAdminAvatar({ avatar: file }).unwrap();
+
+      console.log('Avatar upload result:', result);
+
+      // Check multiple possible response formats (similar to BlogPostEditor)
+      if (result.success && result.avatarUrl) {
+        setEditData((prev) => ({ ...prev, avatar: result.avatarUrl }));
+        toast.success('Avatar uploaded', 'Avatar uploaded successfully');
+        return result.avatarUrl;
+      } else if (result.url) {
+        setEditData((prev) => ({ ...prev, avatar: result.url }));
+        toast.success('Avatar uploaded', 'Avatar uploaded successfully');
+        return result.url;
+      } else if (result.data?.avatarUrl) {
+        setEditData((prev) => ({ ...prev, avatar: result.data.avatarUrl }));
+        toast.success('Avatar uploaded', 'Avatar uploaded successfully');
+        return result.data.avatarUrl;
+      } else {
+        console.error('Unexpected response format:', result);
+        throw new Error('Upload failed - no valid URL returned');
+      }
+    } catch (error: any) {
+      console.error('Avatar upload error:', error);
+      console.error('Error details:', {
+        status: error?.status,
+        data: error?.data,
+        message: error?.message,
+      });
+
+      let errorMessage = 'Failed to upload avatar. Please try again.';
+
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+
+      toast.error('Upload failed', errorMessage);
+      throw error; // Re-throw for AvatarUploader to handle
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
+
+  const handleAvatarChange = (url: string | null) => {
+    setEditData((prev) => ({ ...prev, avatar: url }));
+  };
+
+  // Handle avatar removal
+  const handleAvatarRemove = () => {
+    setEditData((prev) => ({ ...prev, avatar: null }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const result = await updateAdminProfile({
+        firstName: editData.firstName,
+        lastName: editData.lastName,
+        bio: editData.bio,
+        avatar: editData.avatar,
+      }).unwrap();
+
+      if (result.success) {
+        toast.success('Profile updated successfully');
+        setIsEditing(false);
+      }
+    } catch (error: any) {
+      console.error('Profile update error:', error);
+      toast.error('Update failed', error?.data?.message || 'Failed to update profile');
+    }
+  };
+
+  const handleCancel = () => {
+    // Reset to original data
+    setEditData({
+      firstName: adminData.firstName,
+      lastName: adminData.lastName,
+      bio: adminData.bio,
+      avatar: adminData.avatar,
+    });
+    setIsEditing(false);
+  };
+
+  if (isEditing) {
+    return (
+      <div className={styles.admin__profile_edit}>
+        <AvatarUploader
+          avatar={editData.avatar}
+          onAvatarChange={handleAvatarChange}
+          onUpload={handleAvatarUpload}
+          isUploading={isUploadingAvatar}
+          size="large"
+          className={styles.admin__avatar_uploader}
+        />
+
+        <div className={styles.admin__form}>
+          <div className={styles.admin__field}>
+            <input
+              type="text"
+              placeholder="First Name"
+              value={editData.firstName}
+              onChange={(e) => setEditData((prev) => ({ ...prev, firstName: e.target.value }))}
+              className={styles.admin__input}
+            />
+          </div>
+          <div className={styles.admin__field}>
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={editData.lastName}
+              onChange={(e) => setEditData((prev) => ({ ...prev, lastName: e.target.value }))}
+              className={styles.admin__input}
+            />
+          </div>
+          <div className={styles.admin__field}>
+            <textarea
+              placeholder="Bio"
+              value={editData.bio}
+              onChange={(e) => setEditData((prev) => ({ ...prev, bio: e.target.value }))}
+              className={styles.admin__textarea}
+              rows={3}
+            />
+          </div>
+          <div className={styles.admin__actions}>
+            <button
+              onClick={handleSave}
+              className={styles.admin__save_btn}
+              disabled={isUploadingAvatar}
+            >
+              {isUploadingAvatar ? 'Uploading...' : 'Save Changes'}
+            </button>
+            <button
+              onClick={handleCancel}
+              className={styles.admin__cancel_btn}
+              disabled={isUploadingAvatar}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.admin__profile}>
       <div className={styles.admin__avatar}>
         {adminData.avatar ? (
-          <img src={adminData.avatar} alt={adminData.name} loading="lazy" decoding="async" />
+          <img
+            src={
+              adminData.avatar.startsWith('http') ? adminData.avatar : getImageUrl(adminData.avatar)
+            }
+            alt={adminData.name}
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className={styles.admin__avatar_placeholder}>
             <svg
@@ -114,7 +320,25 @@ const AdminProfileHeader: React.FC = React.memo(() => {
       <div className={styles.admin__info}>
         <h3 className={styles.admin__name}>{adminData.name}</h3>
         <p className={styles.admin__email}>{adminData.email}</p>
+        {adminData.bio && <p className={styles.admin__bio}>{adminData.bio}</p>}
       </div>
+      {/* <button
+        onClick={() => setIsEditing(true)}
+        className={styles.admin__edit_btn}
+        title="Edit Profile"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+          <path d="m15 5 4 4" />
+        </svg>
+      </button> */}
     </div>
   );
 });
@@ -125,7 +349,7 @@ const DashboardOverview: React.FC = () => {
   const { data: blogStats, isLoading: statsLoading } = useGetBlogStatsQuery();
 
   return (
-    <div className={styles.overview}>
+    <div className={styles.overview} style={{ margin: '10px 30px' }}>
       <AdminProfileHeader />
 
       <div className={styles.overview__header}>
@@ -191,13 +415,27 @@ const DashboardOverview: React.FC = () => {
 const UserDashboard: React.FC = () => {
   const location = useLocation();
   const toast = useToast();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const [logoutAdmin] = useLogoutAdminMutation();
 
-  const handleLogout = useCallback(() => {
-    clearAuthToken();
-    toast.success('Logged out successfully');
-    window.location.href = '/auth';
-  }, [toast]);
+  const handleLogout = useCallback(async () => {
+    console.log('Logout button clicked'); // Debug log
+    try {
+      // Call the logout API endpoint
+      await logoutAdmin(undefined).unwrap();
+      // Clear local authentication status
+      clearAuthToken();
+      toast.success('Logged out successfully');
+      // Redirect to auth page
+      window.location.href = '/auth';
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if API call fails, clear local state and redirect
+      clearAuthToken();
+      toast.error('Logout completed');
+      window.location.href = '/auth';
+    }
+  }, [logoutAdmin, toast]);
 
   const toggleSidebar = useCallback(() => {
     setSidebarCollapsed((prev) => !prev);
@@ -262,7 +500,12 @@ const UserDashboard: React.FC = () => {
           </nav>
 
           <div className={styles.sidebar__footer}>
-            <button onClick={handleLogout} className={styles.logout__button} title="Logout">
+            <button
+              onClick={handleLogout}
+              className={styles.logout__button}
+              title="Logout"
+              style={{ display: 'flex' }} // Force display for debugging
+            >
               <LogoutIcon />
               <span>Logout</span>
             </button>
@@ -273,7 +516,7 @@ const UserDashboard: React.FC = () => {
         {!sidebarCollapsed && <div className={styles.sidebar__overlay} onClick={toggleSidebar} />}
 
         {/* Main Content */}
-        <main className={styles.main}>
+        <main className={`${styles.main} ${sidebarCollapsed ? styles['main--collapsed'] : ''}`}>
           <Routes>
             <Route path="/" element={<DashboardOverview />} />
             <Route path="/posts" element={<BlogListTable />} />

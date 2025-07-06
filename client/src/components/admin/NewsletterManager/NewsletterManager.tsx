@@ -5,6 +5,9 @@ import {
   useDeleteNewsletterSubscriptionMutation,
   useExportNewsletterSubscriptionsQuery,
 } from '../../../services/utilis/newsletterApiService';
+import { useToast } from '../../../hooks/useToast';
+import { getApiBaseUrl } from '../../../utils/envUtils';
+import { formatDate as formatDateUtil } from '../../../utils/dateUtils';
 import './NewsletterManager.scss';
 
 interface NewsletterManagerProps {
@@ -18,6 +21,9 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
   const [sortBy, setSortBy] = useState<'createdAt' | 'email' | 'lastActive'>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const toast = useToast();
 
   const {
     data: subscriptionsData,
@@ -33,15 +39,11 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
     sortOrder,
   });
 
-  const { data: statsData, isLoading: isLoadingStats } = useGetNewsletterStatsQuery({});
-
   const {
-    data: exportData,
-    isLoading: isExporting,
-    refetch: triggerExport,
-  } = useExportNewsletterSubscriptionsQuery(undefined, {
-    skip: true, // Don't auto-fetch
-  });
+    data: statsData,
+    isLoading: isLoadingStats,
+    refetch: refetchStats,
+  } = useGetNewsletterStatsQuery({});
 
   const [deleteSubscription, { isLoading: isDeleting }] = useDeleteNewsletterSubscriptionMutation();
 
@@ -50,12 +52,73 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
     setCurrentPage(1);
   };
 
-  const handleExport = async () => {
+  const handleRefreshData = async () => {
     try {
-      await triggerExport();
+      // Refresh both subscriptions and stats
+      await Promise.all([refetchSubscriptions(), refetchStats()]);
+      toast.success(
+        'Data refreshed successfully',
+        'Both subscriptions and stats have been updated.'
+      );
     } catch (error) {
-      console.error('Export failed:', error);
-      alert('Export failed. Please try again.');
+      console.error('Refresh failed:', error);
+      toast.error('Refresh failed', 'Please try again.');
+    }
+  };
+
+  const handleExport = async () => {
+    setIsExporting(true);
+    try {
+      // Use fetch with credentials (cookies) instead of Authorization header
+      // since authentication is handled via HttpOnly cookies
+      const response = await fetch(`${getApiBaseUrl()}/newsletter/export?format=csv`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        let errorMessage = 'Export failed';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
+      // Get the CSV content
+      const csvContent = await response.text();
+
+      // Create and trigger download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+
+      link.setAttribute('href', url);
+      link.setAttribute(
+        'download',
+        `newsletter_subscribers_${new Date().toISOString().split('T')[0]}.csv`
+      );
+      link.style.visibility = 'hidden';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clean up
+      URL.revokeObjectURL(url);
+
+      toast.success('Export completed', 'CSV file has been downloaded successfully.');
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Export failed. Please try again.';
+      toast.error('Export failed', errorMessage);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -65,9 +128,9 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
         await deleteSubscription(subscriptionId).unwrap();
         setDeleteConfirm(null);
         refetchSubscriptions();
+        toast.success('Subscription deleted', 'The subscription has been successfully removed.');
       } catch (error) {
-        console.error('Failed to delete subscription:', error);
-        alert('Failed to delete subscription. Please try again.');
+        toast.error('Delete failed', 'Failed to delete subscription. Please try again.');
       }
     } else {
       setDeleteConfirm(subscriptionId);
@@ -79,14 +142,8 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  const formatSubscriptionDate = (dateString: string) => {
+    return formatDateUtil(new Date(dateString));
   };
 
   const subscriptions = subscriptionsData?.data?.subscriptions || [];
@@ -102,13 +159,11 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
             {isExporting ? 'Exporting...' : 'Export CSV'}
           </button>
           <button
-            onClick={() => {
-              console.log('Testing API call...');
-              refetchSubscriptions();
-            }}
+            onClick={handleRefreshData}
             className="btn btn--primary"
+            disabled={isLoadingSubscriptions || isLoadingStats}
           >
-            Refresh Data
+            {isLoadingSubscriptions || isLoadingStats ? 'Refreshing...' : 'Refresh Data'}
           </button>
         </div>
       </div>
@@ -117,19 +172,19 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
       {!isLoadingStats && stats && (
         <div className="newsletter-stats">
           <div className="stat-card">
-            <div className="stat-value">{stats.totalSubscriptions || 0}</div>
+            <div className="stat-value">{stats.totalSubscriptions || '...'}</div>
             <div className="stat-label">Total Subscribers</div>
           </div>
           <div className="stat-card">
-            <div className="stat-value">{stats.activeSubscriptions || 0}</div>
+            <div className="stat-value">{stats.activeSubscriptions || '...'}</div>
             <div className="stat-label">Active Subscribers</div>
           </div>
           <div className="stat-card">
-            <div className="stat-value">{stats.thisMonthSubscriptions || 0}</div>
+            <div className="stat-value">{stats.thisMonthSubscriptions || '...'}</div>
             <div className="stat-label">This Month</div>
           </div>
           <div className="stat-card">
-            <div className="stat-value">{stats.thisWeekSubscriptions || 0}</div>
+            <div className="stat-value">{stats.thisWeekSubscriptions || '...'}</div>
             <div className="stat-label">This Week</div>
           </div>
         </div>
@@ -249,7 +304,7 @@ const NewsletterManager: React.FC<NewsletterManagerProps> = ({ className }) => {
                   </span>
                 </div>
                 <div className="table-cell">
-                  <span className="date">{formatDate(subscription.createdAt)}</span>
+                  <span className="date">{formatSubscriptionDate(subscription.createdAt)}</span>
                 </div>
                 <div className="table-cell">
                   <div className="preferences">

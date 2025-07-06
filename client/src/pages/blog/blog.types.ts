@@ -29,6 +29,7 @@ export interface IBlogPost {
   contentImage?: string;
   contentImageTitle?: string;
   status?: 'draft' | 'published' | 'archived' | 'scheduled';
+  isFeatured?: boolean;
 }
 
 export interface IFeaturedPost extends IBlogPost {}

@@ -1,9 +1,10 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { clearAuthStatus } from './authUtils';
 import { blogPosts, featuredPost } from '../../pages/blog/_partials/BlogPost.data';
+import { getApiBaseUrl } from '../../utils/envUtils';
 
 export const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_API_BASE_URL || 'https://nimitech-website.onrender.com/api',
+  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:10000/api' : getApiBaseUrl(),
   credentials: 'include',
   prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');

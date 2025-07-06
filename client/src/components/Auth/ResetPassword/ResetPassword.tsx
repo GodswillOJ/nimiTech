@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ArrowLeft } from '../../../assets/blogCMS/icons/AuthIcons';
+import { getApiBaseUrl } from '../../../utils/envUtils';
+import { encryptData } from '../../../services/utilis/authUtils';
 import styles from '../AuthFlow.module.scss';
 import ModalComp from '../../blog/Modal/Modal';
 
@@ -17,7 +19,16 @@ export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const resetToken = searchParams.get('token') || '';
+  // Get token from sessionStorage (more secure) or fallback to URL parameter
+  const resetToken = sessionStorage.getItem('resetToken') || searchParams.get('token') || '';
+
+  // Clear token from sessionStorage on component mount for security
+  useEffect(() => {
+    if (sessionStorage.getItem('resetToken')) {
+      // Token found in sessionStorage, remove it to prevent reuse
+      sessionStorage.removeItem('resetToken');
+    }
+  }, []);
 
   const validatePassword = (password: string) => {
     const minLength = 8;
@@ -69,15 +80,31 @@ export default function ResetPassword() {
     setErrors({});
 
     try {
-      const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+      const baseUrl = getApiBaseUrl();
+
+      // Encrypt the password data for security
+      const encryptedPayload = encryptData({
+        token: resetToken,
+        password: formData.password,
+      });
+
+      if (!encryptedPayload) {
+        setErrors({
+          general: 'Failed to secure data. Please try again.',
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      console.log('Sending encrypted payload:', { encryptedData: encryptedPayload });
+
       const response = await fetch(`${baseUrl}/auth/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          token: resetToken,
-          password: formData.password,
+          encryptedData: encryptedPayload,
         }),
       });
 

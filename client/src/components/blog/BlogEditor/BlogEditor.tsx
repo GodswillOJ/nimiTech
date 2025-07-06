@@ -3,6 +3,7 @@ import {
   useAddEditBlogPostMutation,
   useGetBlogPostByIdQuery,
 } from '../../../services/utilis/blogApiService';
+import { formatDate } from '../../../utils/dateUtils';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import './BlogEditor.scss';
 import Loader from '../SuspenseLoader/Loader';
@@ -22,7 +23,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ blogId, onSave, onCancel }) => 
     author: {
       name: '',
       avatar: null as File | null,
-      date: new Date().toLocaleDateString(),
+      date: formatDate(new Date()),
       bio: '',
     },
     featuredImage: null as File | null,
@@ -69,7 +70,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ blogId, onSave, onCancel }) => 
         author: {
           name: blog.author?.name || '',
           avatar: null, // Files will be handled separately
-          date: blog.author?.date || new Date().toLocaleDateString(),
+          date: blog.author?.date || formatDate(new Date()),
           bio: blog.author?.bio || '',
         },
         featuredImage: null,

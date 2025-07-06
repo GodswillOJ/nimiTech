@@ -10,7 +10,6 @@ const adminSchema = new mongoose.Schema(
       trim: true,
       minlength: [3, "Username must be at least 3 characters"],
       maxlength: [50, "Username must be less than 50 characters"],
-      match: [/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"],
     },
     email: {
       type: String,
@@ -24,7 +23,7 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
-      select: false, 
+      select: false,
     },
     firstName: {
       type: String,
@@ -46,6 +45,11 @@ const adminSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default: null,
+    },
+    bio: {
+      type: String,
+      default: "",
+      maxlength: [500, "Bio must be less than 500 characters"],
     },
     isActive: {
       type: Boolean,

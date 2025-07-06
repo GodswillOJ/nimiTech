@@ -109,11 +109,22 @@ export const blogApi = createApi({
         // Add file fields if they exist and are File objects
         if (blogData.featuredImage instanceof File) {
           formData.append('featuredImage', blogData.featuredImage);
+        } else if (blogData.featuredImage && typeof blogData.featuredImage === 'string') {
+          // Handle image URLs from individual uploads - backend expects 'image' field for featured image
+          formData.append('image', blogData.featuredImage);
         }
+
         if (blogData.contentImage instanceof File) {
           formData.append('contentImage', blogData.contentImage);
+        } else if (blogData.contentImage && typeof blogData.contentImage === 'string') {
+          // Handle image URLs from individual uploads
+          formData.append('contentImage', blogData.contentImage);
         }
+
         if (blogData.authorAvatar instanceof File) {
+          formData.append('authorAvatar', blogData.authorAvatar);
+        } else if (blogData.authorAvatar && typeof blogData.authorAvatar === 'string') {
+          // Handle image URLs from individual uploads
           formData.append('authorAvatar', blogData.authorAvatar);
         }
 

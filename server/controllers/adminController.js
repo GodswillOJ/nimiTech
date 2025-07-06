@@ -327,6 +327,7 @@ const getAdminProfile = async (req, res) => {
           email: admin.email,
           firstName: admin.firstName,
           lastName: admin.lastName,
+          bio: admin.bio,
           role: admin.role,
           avatar: admin.avatar,
           lastLogin: admin.lastLogin,
@@ -346,7 +347,7 @@ const getAdminProfile = async (req, res) => {
 // Update admin profile
 const updateAdminProfile = async (req, res) => {
   try {
-    const { firstName, lastName, username, avatar } = req.body;
+    const { firstName, lastName, username, avatar, bio } = req.body;
 
     // Sanitize inputs
     const updateData = {
@@ -354,6 +355,7 @@ const updateAdminProfile = async (req, res) => {
       ...(lastName && { lastName: sanitizeInput(lastName) }),
       ...(username && { username: sanitizeInput(username) }),
       ...(avatar && { avatar: sanitizeInput(avatar) }),
+      ...(bio !== undefined && { bio: sanitizeInput(bio) }), // Allow empty string
     };
 
     const admin = await Admin.findByIdAndUpdate(req.admin.id, updateData, {
@@ -502,6 +504,64 @@ const getAllAdmins = async (req, res) => {
   }
 };
 
+// Upload admin avatar
+const uploadAvatarController = async (req, res) => {
+  try {
+    console.log("Upload avatar request received");
+    console.log("Request body:", req.body);
+    console.log("Request file:", req.file);
+    console.log("Request files:", req.files);
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No avatar file provided",
+      });
+    }
+
+    // Construct the URL path for the uploaded avatar
+    const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+    // Update admin's avatar in database
+    const admin = await Admin.findByIdAndUpdate(
+      req.admin.id,
+      { avatar: avatarUrl },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Avatar uploaded successfully",
+      avatarUrl: avatarUrl,
+      data: { admin },
+    });
+  } catch (error) {
+    console.error("Upload avatar error:", error);
+
+    // Clean up uploaded file on error
+    if (req.file && req.file.path) {
+      try {
+        const fs = require("fs");
+        fs.unlinkSync(req.file.path);
+      } catch (cleanupError) {
+        console.error("Error cleaning up uploaded file:", cleanupError);
+      }
+    }
+
+    res.status(500).json({
+      success: false,
+      message: "Error uploading avatar",
+    });
+  }
+};
+
 // Helper function to create encrypted response for frontend
 const createEncryptedResponse = data => {
   return encryptData(data);
@@ -512,6 +572,7 @@ module.exports = {
   loginAdmin: adminLogin,
   getProfile: getAdminProfile,
   updateProfile: updateAdminProfile,
+  uploadAvatar: uploadAvatarController,
   getAllAdmins,
   toggleAdminStatus: async (req, res) => {
     try {

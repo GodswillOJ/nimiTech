@@ -11,6 +11,7 @@ const {
   changePassword,
   refreshToken,
   logoutAdmin,
+  uploadAvatar: uploadAvatarController,
 } = require("../controllers/adminController");
 const {
   protect,
@@ -19,6 +20,7 @@ const {
   rateLimit,
   securityHeaders,
 } = require("../middleware/authMiddleware");
+const { upload, uploadAvatar, handleMulterError } = require("../middleware/uploadMiddleware");
 
 // Apply security headers to all routes
 router.use(securityHeaders);
@@ -33,6 +35,18 @@ router.use(protect); // All routes below require authentication
 // Profile routes
 router.get("/profile", getProfile);
 router.put("/profile", decryptRequest, updateProfile);
+router.post(
+  "/upload-avatar",
+  (req, res, next) => {
+    console.log("Avatar upload route hit");
+    console.log("Content-Type:", req.headers["content-type"]);
+    console.log("Request body before multer:", req.body);
+    next();
+  },
+  uploadAvatar,
+  handleMulterError,
+  uploadAvatarController
+);
 router.put("/change-password", rateLimit(5, 60 * 60 * 1000), decryptRequest, changePassword);
 router.post("/refresh-token", refreshToken);
 router.post("/logout", logoutAdmin);

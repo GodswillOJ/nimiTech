@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { SaveIcon } from '../../../assets/blogCMS/icons/SaveIcon';
 import { Button } from '../../../components/blogCMS/Button/Button';
@@ -7,19 +7,26 @@ import { ImageUploader } from './_partials/ImageUploader/ImageUploader';
 import { PostSettings } from './_partials/PostSettings/PostSettings';
 import { MetadataCard } from './_partials/MetadataCard/MetadataCard';
 import { BlogPreviewModal } from '../../../components/blog/BlogPreviewModal/BlogPreviewModal';
-// import { SEOSettings } from './_partials/SEOSettings/SEOSettings';
 import { FormData, FieldUpdate } from './BlogPostEditor.types';
-import { PostStatus } from '../BlogEditorDashboard/BlogEditorDashboard.types';
 import { IContent } from '../../blog/blog.types';
 import { useToast } from '../../../hooks/useToast';
+import { getImageUrl } from '../../../utils/envUtils';
+import { formatDate } from '../../../utils/dateUtils';
 import {
   useAddEditBlogPostMutation,
   useGetBlogPostByIdQuery,
   useUploadBlogImageMutation,
   useDeleteBlogPostMutation,
 } from '../../../services/utilis/blogApiService';
+import { useGetAdminProfileQuery } from '../../../services/utilis/adminApiService';
 import styles from './BlogPostEditor.module.scss';
 import Loader from '../../../components/blog/SuspenseLoader/Loader';
+
+const PostStatus = {
+  DRAFT: 'draft',
+  PUBLISHED: 'published',
+  SCHEDULED: 'scheduled',
+};
 
 const BlogPostEditor: React.FC = () => {
   const navigate = useNavigate();
@@ -36,14 +43,18 @@ const BlogPostEditor: React.FC = () => {
   const { data: existingPost, isLoading: isLoadingPost } = useGetBlogPostByIdQuery(id || '', {
     skip: !id,
   });
+  const { data: adminProfile } = useGetAdminProfileQuery({});
 
-  // Get default admin/author data (in a real app, this would come from auth context)
-  const getDefaultAuthor = () => ({
-    name: 'Admin User', // This should come from authenticated user data
-    avatar: '',
-    date: new Date().toISOString(),
-    bio: 'Blog Administrator',
-  });
+  // Get default admin/author data from actual admin profile
+  const defaultAuthor = useMemo(() => {
+    const profile = adminProfile?.data?.admin;
+    return {
+      name: profile ? `${profile.firstName} ${profile.lastName}` : 'Admin User',
+      avatar: profile?.avatar || '',
+      date: new Date().toISOString(),
+      bio: profile?.bio || 'Blog Administrator',
+    };
+  }, [adminProfile]);
 
   // Get post data from location state or use default empty post
   const defaultPost = {
@@ -52,7 +63,7 @@ const BlogPostEditor: React.FC = () => {
     excerpt: '',
     status: PostStatus.DRAFT,
     category: 'Uncategorized',
-    author: getDefaultAuthor(),
+    author: defaultAuthor,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     tags: [],
@@ -75,6 +86,7 @@ const BlogPostEditor: React.FC = () => {
     youtubeUrl: '',
     contentImage: '',
     contentImageTitle: '',
+    isFeatured: false,
   };
 
   const postFromState = location.state?.post || defaultPost;
@@ -182,8 +194,6 @@ const BlogPostEditor: React.FC = () => {
       });
 
       const result = await uploadBlogImage({ image: file, type: 'contentImage' }).unwrap();
-
-      console.log('Upload result:', result);
 
       // Check multiple possible response formats
       if (result.success && result.imageUrl) {
@@ -332,7 +342,17 @@ const BlogPostEditor: React.FC = () => {
     }
   }, [existingPost, isLoadingPost, location.state]);
 
-  const handleInputChange = (field: keyof FieldUpdate, value: string): void => {
+  const handleInputChange = (field: keyof FieldUpdate, value: string | boolean): void => {
+    // Special handling for featured posts
+    if (field === 'isFeatured' && value === true) {
+      const confirmed = window.confirm(
+        'Featuring this post will automatically unfeature any currently featured post. Do you want to continue?'
+      );
+      if (!confirmed) {
+        return;
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -479,6 +499,7 @@ const BlogPostEditor: React.FC = () => {
         },
         category: formData.category?.trim() || '', // Can be empty now
         isPublished: formData.status === PostStatus.PUBLISHED,
+        isFeatured: formData.isFeatured || false,
         tags: processedTags,
         slug: slug.trim(),
         youtubeUrl: formData.youtubeUrl?.trim() || '',
@@ -491,16 +512,19 @@ const BlogPostEditor: React.FC = () => {
               : formData.author || 'Admin User',
           bio: typeof formData.author === 'object' ? formData.author.bio || '' : '',
           avatar: authorAvatar || '',
-          date: new Date().toLocaleDateString(),
+          date: formatDate(new Date()),
         },
       };
 
       // Add images only if they exist
       if (featuredImage) {
-        blogPostData.image = featuredImage;
+        blogPostData.featuredImage = featuredImage;
       }
       if (contentImage) {
         blogPostData.contentImage = contentImage;
+      }
+      if (authorAvatar) {
+        blogPostData.authorAvatar = authorAvatar;
       }
 
       console.log('Saving blog post data:', blogPostData);
@@ -623,7 +647,7 @@ const BlogPostEditor: React.FC = () => {
               rows={3}
             />
 
-            <Input
+            {/* <Input
               label="Content Subtitle"
               placeholder="Enter content subtitle..."
               value={formData?.content?.subtitle || ''}
@@ -636,7 +660,7 @@ const BlogPostEditor: React.FC = () => {
                   },
                 }))
               }
-            />
+            /> */}
 
             <Input
               label="YouTube Video URL"
@@ -665,11 +689,7 @@ const BlogPostEditor: React.FC = () => {
               {contentImage && (
                 <div className={styles.editor__image_preview}>
                   <img
-                    src={
-                      contentImage.startsWith('http')
-                        ? contentImage
-                        : `http://localhost:10000${contentImage}`
-                    }
+                    src={contentImage.startsWith('http') ? contentImage : getImageUrl(contentImage)}
                     alt="Content"
                     style={{
                       maxWidth: '200px',
@@ -858,9 +878,7 @@ const BlogPostEditor: React.FC = () => {
                   <div className={styles.editor__image_preview}>
                     <img
                       src={
-                        authorAvatar.startsWith('http')
-                          ? authorAvatar
-                          : `http://localhost:10000${authorAvatar}`
+                        authorAvatar.startsWith('http') ? authorAvatar : getImageUrl(authorAvatar)
                       }
                       alt="Author Avatar"
                       style={{
@@ -924,6 +942,7 @@ const BlogPostEditor: React.FC = () => {
           },
           youtubeUrl: formData.youtubeUrl,
           tags: formData.tags,
+          isFeatured: formData.isFeatured,
         }}
         featuredImage={featuredImage}
         contentImage={contentImage}
