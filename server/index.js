@@ -48,8 +48,6 @@ const corsOptions = {
       allowedOrigins.push(process.env.CORS_ORIGIN);
     }
 
-    console.log("CORS Check - Origin:", origin, "Allowed Origins:", allowedOrigins);
-
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -83,6 +81,10 @@ app.options("*", cors(corsOptions));
 
 app.use(cookieParser()); // Parse cookies
 
+// Add caching middleware
+const cacheMiddleware = require('./middleware/cacheMiddleware');
+app.use(cacheMiddleware);
+
 // Skip JSON parsing for file upload routes
 app.use((req, res, next) => {
   // Skip JSON parsing for file upload endpoints
@@ -101,7 +103,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 
-// Serve uploads under API path for consistency
+// Serve uploads under API path for consistency with optimized caching
 app.use(
   "/api/uploads",
   (req, res, next) => {
@@ -110,7 +112,20 @@ app.use(
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   },
-  express.static(path.join(__dirname, "/uploads"))
+  express.static(path.join(__dirname, "/uploads"), {
+    maxAge: '1y',
+    etag: true,
+    lastModified: true,
+    cacheControl: true,
+    setHeaders: (res, filePath) => {
+      const ext = path.extname(filePath).toLowerCase();
+      if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'].includes(ext)) {
+        res.set('Cache-Control', 'public, max-age=31536000, immutable');
+      } else {
+        res.set('Cache-Control', 'public, max-age=2592000');
+      }
+    }
+  })
 );
 
 // Heartbeat/Health check endpoint
@@ -124,7 +139,7 @@ app.get("/api/heartbeat", (req, res) => {
   });
 });
 
-// Uploads (static files) with CORS headers
+// Static file serving with optimized caching
 app.use(
   "/uploads",
   (req, res, next) => {
@@ -133,7 +148,26 @@ app.use(
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   },
-  express.static(path.join(__dirname, "/uploads"))
+  express.static(path.join(__dirname, "/uploads"), {
+    maxAge: '1y', // Cache images for 1 year
+    etag: true,
+    lastModified: true,
+    cacheControl: true,
+    setHeaders: (res, filePath) => {
+      // Different caching strategies based on file type
+      const ext = path.extname(filePath).toLowerCase();
+      if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'].includes(ext)) {
+        // Images - cache for 1 year (they rarely change)
+        res.set('Cache-Control', 'public, max-age=31536000, immutable');
+      } else if (['.css', '.js'].includes(ext)) {
+        // CSS/JS - cache for 1 month
+        res.set('Cache-Control', 'public, max-age=2592000');
+      } else {
+        // Other files - cache for 1 week
+        res.set('Cache-Control', 'public, max-age=604800');
+      }
+    }
+  })
 );
 
 // Debug middleware to log missing static files
