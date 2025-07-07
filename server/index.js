@@ -151,18 +151,11 @@ app.use("/uploads", (req, res, next) => {
   next();
 });
 
-// Serve frontend (in production)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// Root route
+app.get("/", (req, res) => {
+  res.json({ message: "NimiTech API Server is live." });
+});
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.json({ message: "NimiTech API Server is running in development mode" });
-  });
-}
 
 app.use(notFound);
 app.use(handleJsonParsingError);
