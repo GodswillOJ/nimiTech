@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft } from '../../../assets/blogCMS/icons/AuthIcons';
+import { getApiBaseUrl } from '../../../utils/envUtils';
 import styles from '../AuthFlow.module.scss';
 import ModalComp from '../../blog/Modal/Modal';
 
@@ -30,7 +31,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+      const baseUrl = getApiBaseUrl();
       const response = await fetch(`${baseUrl}/auth/forgot-password`, {
         method: 'POST',
         headers: {

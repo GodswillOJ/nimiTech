@@ -55,4 +55,5 @@ export interface FieldUpdate {
   featuredImage?: string | null;
   youtubeUrl?: string;
   contentImageTitle?: string;
+  isFeatured?: boolean;
 }

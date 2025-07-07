@@ -20,6 +20,10 @@ export const setAuthStatus = (isAuth) => {
 // Clear authentication status
 export const clearAuthStatus = () => {
   sessionStorage.removeItem('isAuthenticated');
+  localStorage.removeItem('isAuthenticated'); // Also clear localStorage if used
+  // Clear any other auth-related data
+  sessionStorage.removeItem('adminProfile');
+  localStorage.removeItem('adminProfile');
   // Dispatch logout event for other tabs
   window.dispatchEvent(new CustomEvent('auth:logout'));
 };

@@ -201,8 +201,7 @@ $breakpoint-desktop: 1024px;
   @media (min-width: $breakpoint-desktop) {
     &__main {
       flex-direction: row;
-      width: 80vw;
-      margin: 90px auto;
+      width: 100%;
       padding: 2rem;
     }
 

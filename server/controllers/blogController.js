@@ -223,7 +223,7 @@ const addEditBlogPost = async (req, res) => {
       sanitizedData.tags = tags.map(tag => sanitizeInput(tag));
     }
 
-    // Handle file uploads
+    // Handle file uploads and existing image URLs
     if (req.files) {
       // Featured image
       if (req.files.featuredImage && req.files.featuredImage[0]) {
@@ -242,6 +242,21 @@ const addEditBlogPost = async (req, res) => {
       }
     }
 
+    // Handle existing image URLs passed as strings (from individual uploads)
+    if (req.body.image && typeof req.body.image === "string") {
+      sanitizedData.image = req.body.image;
+    }
+
+    if (req.body.contentImage && typeof req.body.contentImage === "string") {
+      sanitizedData.contentImage = req.body.contentImage;
+    }
+
+    // Handle author avatar URL if passed
+    if (req.body.authorAvatar && typeof req.body.authorAvatar === "string") {
+      if (!sanitizedData.author) sanitizedData.author = {};
+      sanitizedData.author.avatar = req.body.authorAvatar;
+    }
+
     // Add admin ID for tracking
     if (req.admin) {
       sanitizedData.authorId = req.admin.id;
@@ -253,6 +268,15 @@ const addEditBlogPost = async (req, res) => {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
+    }
+
+    // Handle featured post logic - only one post can be featured at a time
+    if (sanitizedData.isFeatured === true) {
+      // Remove featured flag from all other posts
+      await Blog.updateMany(
+        { _id: { $ne: id || null }, isFeatured: true },
+        { $set: { isFeatured: false } }
+      );
     }
 
     let blog;
@@ -412,7 +436,7 @@ const uploadBlogImage = async (req, res) => {
     }
 
     // Construct the URL path for the uploaded image
-    const imagePath = `/uploads/${req.file.destination.split("/").pop()}/${req.file.filename}`;
+    const imagePath = `/${req.file.destination}/${req.file.filename}`.replace(/\\/g, "/");
 
     res.status(200).json({
       success: true,

@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const isMobile = useMediaQuery('(max-width:870px)');
+  const isMobile = useMediaQuery('(max-width:1040px)');
 
   const toggleMenu = () => setIsOpen(!isOpen);
 

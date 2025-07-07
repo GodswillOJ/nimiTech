@@ -276,7 +276,7 @@ const About = () => {
                             },
                           }}
                         >
-                          www.nimitutor.com
+                          www.nimitechit.com
                         </Typography>
                       </Typography>
 
@@ -499,7 +499,7 @@ const About = () => {
                         borderRadius: 4,
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
                         p: isSmallScreen ? 3 : 4,
-                        height: isSmallScreen ? 'auto' : isMediumScreen ? 'auto' : '500px',
+                        height: isSmallScreen ? 'auto' : isMediumScreen ? 'auto' : 'auto',
                       }}
                     >
                       <Typography
@@ -525,7 +525,7 @@ const About = () => {
                       </Typography>
 
                       {/* Animated List with Toggle */}
-                      <Box component="ul" sx={{ pl: 0, mb: 3 }}>
+                      <Box component="ul" sx={{ pl: 0, mb: 3, width: '100%' }}>
                         {(showMore ? listItems : [listItems[0]]).map((text, index) => (
                           <motion.li
                             key={index}

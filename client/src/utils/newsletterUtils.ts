@@ -40,8 +40,8 @@ export const shouldShowNewsletterModal = (): boolean => {
       const now = new Date().getTime();
       const daysElapsed = (now - lastDismissedTime) / (1000 * 60 * 60 * 24);
 
-      // Reset count after 7 days
-      if (daysElapsed >= 7) {
+      // Reset count after 3 days
+      if (daysElapsed >= 3) {
         localStorage.removeItem(NEWSLETTER_STORAGE_KEYS.DISMISSED_COUNT);
       } else if (count >= 3) {
         return false;
@@ -115,24 +115,24 @@ export const isUserSubscribed = (): boolean => {
 /**
  * Get subscribed email if available
  */
-export const getSubscribedEmail = (): string | null => {
-  try {
-    return localStorage.getItem(NEWSLETTER_STORAGE_KEYS.EMAIL);
-  } catch (error) {
-    console.error('Error getting subscribed email:', error);
-    return null;
-  }
-};
+// export const getSubscribedEmail = (): string | null => {
+//   try {
+//     return localStorage.getItem(NEWSLETTER_STORAGE_KEYS.EMAIL);
+//   } catch (error) {
+//     console.error('Error getting subscribed email:', error);
+//     return null;
+//   }
+// };
 
-/**
- * Clear all newsletter-related localStorage data (for testing/debugging)
- */
-export const clearNewsletterData = (): void => {
-  try {
-    Object.values(NEWSLETTER_STORAGE_KEYS).forEach((key) => {
-      localStorage.removeItem(key);
-    });
-  } catch (error) {
-    console.error('Error clearing newsletter data:', error);
-  }
-};
+// /**
+//  * Clear all newsletter-related localStorage data (for testing/debugging)
+//  */
+// export const clearNewsletterData = (): void => {
+//   try {
+//     Object.values(NEWSLETTER_STORAGE_KEYS).forEach((key) => {
+//       localStorage.removeItem(key);
+//     });
+//   } catch (error) {
+//     console.error('Error clearing newsletter data:', error);
+//   }
+// };

@@ -1,12 +1,10 @@
-// AuthFlow.module.scss
-
 .auth {
   min-height: 100vh;
-  // background: linear-gradient(to bottom right, #9333ea, #7e22ce, #6b21a8);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  font-family: 'Montserrat', sans-serif;
 
   &__container {
     width: 100%;

@@ -4,7 +4,7 @@ import styles from './PostSettings.module.scss';
 
 interface PostSettingsProps {
   formData: FormData;
-  onFieldChange: (field: keyof FieldUpdate, value: string) => void;
+  onFieldChange: (field: keyof FieldUpdate, value: string | boolean) => void;
   errors?: Record<string, string>;
 }
 
@@ -46,6 +46,22 @@ export const PostSettings = ({ formData, onFieldChange, errors }: PostSettingsPr
       onChange={(e: any) => onFieldChange('tags', e.target.value)}
       error={errors?.tags}
     />
+
+    {/* Featured Post Toggle */}
+    <div className={styles.settings__checkbox}>
+      <label className={styles.settings__checkbox_label}>
+        <input
+          type="checkbox"
+          checked={formData?.isFeatured || false}
+          onChange={(e) => onFieldChange('isFeatured', e.target.checked)}
+          className={styles.settings__checkbox_input}
+        />
+        <span className={styles.settings__checkbox_text}>Feature this post</span>
+      </label>
+      <p className={styles.settings__checkbox_description}>
+        Featured posts appear prominently on the blog homepage
+      </p>
+    </div>
 
     {formData?.status === 'scheduled' && (
       <Input

@@ -92,6 +92,7 @@
     line-height: 1.2;
     color: #111827;
     margin-bottom: 16px;
+    font-family: 'Montserrat', sans-serif;
   }
 
   &__subtitle {
@@ -129,6 +130,23 @@
     font-size: 16px;
     line-height: 1.7;
     color: #374151;
+  }
+  //paragraph styles for type = quote
+  &__quote {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f3f4f6;
+    border-left: 5px solid #6366f1;
+    font-style: italic;
+    color: #374151;
+    font-weight: 500;
+    border-radius: 12px;
+
+    p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
   }
 
   &__paragraph {
@@ -271,26 +289,30 @@
   }
 
   &__container {
-    overflow-x: auto;
+    overflow: visible; // Changed from overflow-x: auto for grid layout
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   &__grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 16px;
     padding: 0 16px;
-    scroll-snap-type: x mandatory;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 0 24px;
+    }
+    
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 0;
+    }
   }
 
   &__card {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
     background: white;
     border-radius: 16px;
     overflow: hidden;

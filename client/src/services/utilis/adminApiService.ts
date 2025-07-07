@@ -45,6 +45,19 @@ export const adminApi = createApi({
       invalidatesTags: ['Admin'],
     }),
 
+    uploadAdminAvatar: builder.mutation({
+      query: ({ avatar }) => {
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+        return {
+          url: '/admin/upload-avatar',
+          method: 'POST',
+          body: formData,
+        };
+      },
+      invalidatesTags: ['Admin'],
+    }),
+
     changeAdminPassword: builder.mutation({
       query: (passwordData) => ({
         url: '/admin/change-password',
@@ -77,6 +90,7 @@ export const {
   useLoginAdminMutation,
   useGetAdminProfileQuery,
   useUpdateAdminProfileMutation,
+  useUploadAdminAvatarMutation,
   useChangeAdminPasswordMutation,
   useRefreshAdminTokenMutation,
   useLogoutAdminMutation,
