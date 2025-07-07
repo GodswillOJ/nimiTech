@@ -89,9 +89,10 @@ export default function VerifyOTP() {
       const result = await response.json();
 
       if (result.success) {
-        // Store token securely in sessionStorage (temporary, more secure than URL)
+        // Store token securely in sessionStorage with timestamp for expiration
         sessionStorage.setItem('resetToken', result.resetToken);
-        // Navigate to password reset without token in URL
+        sessionStorage.setItem('resetTokenTimestamp', Date.now().toString());
+
         navigate('/auth/reset-password');
       } else {
         setError(result.message || 'Invalid verification code. Please try again.');

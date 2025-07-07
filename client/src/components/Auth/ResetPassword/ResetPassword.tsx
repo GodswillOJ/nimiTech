@@ -16,18 +16,39 @@ export default function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [resetToken, setResetToken] = useState<string>('');
   const navigate = useNavigate();
 
-  // Get token from sessionStorage (more secure) or fallback to URL parameter
-  const resetToken = sessionStorage.getItem('resetToken') || searchParams.get('token') || '';
-
-  // Clear token from sessionStorage on component mount for security
+  // Initialize token on component mount - only from sessionStorage for security
   useEffect(() => {
-    if (sessionStorage.getItem('resetToken')) {
-      // Token found in sessionStorage, remove it to prevent reuse
-      sessionStorage.removeItem('resetToken');
+    const tokenFromStorage = sessionStorage.getItem('resetToken');
+
+    if (tokenFromStorage) {
+      setResetToken(tokenFromStorage);
+      const tokenTimestamp = sessionStorage.getItem('resetTokenTimestamp');
+      if (tokenTimestamp) {
+        const tokenAge = Date.now() - parseInt(tokenTimestamp);
+        const maxAge = 15 * 60 * 1000; // 15 minutes
+
+        if (tokenAge > maxAge) {
+          console.log('Reset token has expired');
+          sessionStorage.removeItem('resetToken');
+          sessionStorage.removeItem('resetTokenTimestamp');
+          setResetToken('');
+        }
+      } else {
+        sessionStorage.setItem('resetTokenTimestamp', Date.now().toString());
+      }
+    } else {
+      // No token found - user likely accessed this page directly
+      console.log('No reset token found in sessionStorage');
     }
+  }, []);
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem('resetToken');
+      sessionStorage.removeItem('resetTokenTimestamp');
+    };
   }, []);
 
   const validatePassword = (password: string) => {
@@ -111,6 +132,9 @@ export default function ResetPassword() {
       const result = await response.json();
 
       if (result.success) {
+        // Clear the token and timestamp from sessionStorage after successful password reset
+        sessionStorage.removeItem('resetToken');
+        sessionStorage.removeItem('resetTokenTimestamp');
         setShowSuccessModal(true);
       } else {
         setErrors({
