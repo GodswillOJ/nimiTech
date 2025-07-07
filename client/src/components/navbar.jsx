@@ -63,7 +63,7 @@ const Navbar = () => {
         </div>
 
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <li style={{ paddingTop: '5px' }}>
+          <li>
             <Link to="/" onClick={() => setIsOpen(false)} className={isActive('/')}>
               Home
             </Link>
