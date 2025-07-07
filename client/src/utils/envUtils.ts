@@ -6,7 +6,7 @@ export const getApiBaseUrl = (): string => {
   const baseUrl = getBaseUrl();
   // Remove trailing slash if present to avoid double slashes
   const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  return `${cleanBaseUrl}/api`;
+  return `${cleanBaseUrl}`;
 };
 
 export const getServerBaseUrl = (): string => {
@@ -21,16 +21,7 @@ export const getImageUrl = (imagePath?: string | null): string => {
 
   const serverUrl = getServerBaseUrl();
 
-  // For development, use localhost
-  if (process.env.NODE_ENV === 'development') {
-    const localServerUrl = 'http://localhost:10000';
-    const fullUrl = `${localServerUrl}${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
-    console.log('Dev Image URL:', fullUrl);
-    return fullUrl;
-  }
-
   // For production, ensure proper URL construction
   const fullUrl = `${serverUrl}${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
-  console.log('Prod Image URL:', fullUrl);
   return fullUrl;
 };

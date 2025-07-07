@@ -4,7 +4,7 @@ import { blogPosts, featuredPost } from '../../pages/blog/_partials/BlogPost.dat
 import { getApiBaseUrl } from '../../utils/envUtils';
 
 export const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:10000/api' : getApiBaseUrl(),
+  baseUrl: getApiBaseUrl(),
   credentials: 'include',
   prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');

@@ -74,5 +74,5 @@ export class HeartbeatService {
 
 // Export a default instance for easy use
 export const heartbeat = new HeartbeatService(
-  process.env.NODE_ENV === 'development' ? 'http://localhost:10000/api' : getApiBaseUrl()
+  getApiBaseUrl()
 );
