@@ -25,9 +25,9 @@ const { upload, uploadAvatar, handleMulterError } = require("../middleware/uploa
 // Apply security headers to all routes
 router.use(securityHeaders);
 
-// Public routes with rate limiting
-router.post("/register", rateLimit(5, 15 * 60 * 1000), decryptRequest, registerAdmin);
-router.post("/login", rateLimit(10, 15 * 60 * 1000), decryptRequest, loginAdmin);
+// Public routes with rate limiting (commented out)
+router.post("/register", /* rateLimit(5, 15 * 60 * 1000), */ decryptRequest, registerAdmin);
+router.post("/login", /* rateLimit(10, 15 * 60 * 1000), */ decryptRequest, loginAdmin);
 
 // Protected routes
 router.use(protect); // All routes below require authentication
@@ -47,7 +47,7 @@ router.post(
   handleMulterError,
   uploadAvatarController
 );
-router.put("/change-password", rateLimit(5, 60 * 60 * 1000), decryptRequest, changePassword);
+router.put("/change-password", /* rateLimit(5, 60 * 60 * 1000), */ decryptRequest, changePassword);
 router.post("/refresh-token", refreshToken);
 router.post("/logout", logoutAdmin);
 
