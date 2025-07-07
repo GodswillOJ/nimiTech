@@ -198,7 +198,7 @@ h2 .my-domine1 {
 .nav-links {
   list-style: none;
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   gap: 1.5rem;
   margin-top: 0 !important;
 }

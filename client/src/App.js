@@ -10,27 +10,25 @@ import { ToastProvider } from './hooks/useToast';
 
 import './App.css';
 
-// Lazy load components to improve initial bundle size
-const HomePage = lazy(() => import('./pages/business/home'));
-const Blog = lazy(() => import('./pages/blog'));
-const BlogDetails = lazy(() => import('./pages/blog/BlogDetailsPage/BlogDetails/BlogDetails'));
-const BlogPostEditor = lazy(() => import('./pages/blogCMS/BlogPostEditor/BlogPostEditor'));
-const About = lazy(() => import('./pages/business/AboutPage'));
-const BusinessRegisterPage = lazy(() => import('./pages/business/RegisterBusiness'));
-const Services = lazy(() => import('./pages/business/ServicesPage'));
-const ContactUs = lazy(() => import('./pages/business/ContactUs'));
-const Success = lazy(() => import('./pages/business/success'));
-const RegisterPage = lazy(() => import('./pages/business/RegisterBusiness'));
-const AuthPage = lazy(() => import('./pages/auth/AuthPage'));
-const ForgotPassword = lazy(() => import('./components/Auth/ForgotPassword/ForgotPassword'));
-const VerifyOTP = lazy(() => import('./components/Auth/VerifyOTP/VerifyOTP'));
-const ResetPassword = lazy(() => import('./components/Auth/ResetPassword/ResetPassword'));
-const NotFound = lazy(() => import('./components/NotFound/NotFound'));
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
-const UserDashboard = lazy(() => import('./pages/dashboard/UserDashboard'));
-const PrivacyPolicyPage = lazy(() => import('./pages/business/PrivacyPolicy'));
+import HomePage from './pages/business/home';
+import Blog from './pages/blog';
+import BlogDetails from './pages/blog/BlogDetailsPage/BlogDetails/BlogDetails';
+import BlogPostEditor from './pages/blogCMS/BlogPostEditor/BlogPostEditor';
+import About from './pages/business/AboutPage';
+import BusinessRegisterPage from './pages/business/RegisterBusiness';
+import Services from './pages/business/ServicesPage';
+import ContactUs from './pages/business/ContactUs';
+import Success from './pages/business/success';
+import RegisterPage from './pages/business/RegisterBusiness';
+import AuthPage from './pages/auth/AuthPage';
+import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
+import VerifyOTP from './components/Auth/VerifyOTP/VerifyOTP';
+import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
+import NotFound from './components/NotFound/NotFound';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
 
-// define other static routes
+const UserDashboard = lazy(() => import('./pages/dashboard/UserDashboard'));
 const baseRoutes = [
   { path: '/', element: <HomePage /> },
   { path: '/our-services', element: <Services /> },
@@ -55,7 +53,14 @@ const baseRoutes = [
   { path: '/auth/forgot-password', element: <ForgotPassword /> },
   { path: '/auth/verify-otp', element: <VerifyOTP /> },
   { path: '/auth/reset-password', element: <ResetPassword /> },
-  { path: '/dashboard/*', element: <UserDashboard /> },
+  {
+    path: '/dashboard/*',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <UserDashboard />
+      </Suspense>
+    ),
+  },
   { path: '/admin/*', element: <AdminDashboard /> },
   { path: '*', element: <NotFound /> },
 ];
@@ -109,7 +114,7 @@ function App() {
 
 function AppRoutes() {
   const routes = useRoutes([...baseRoutes]);
-  return <Suspense fallback={<Loader />}>{routes}</Suspense>;
+  return routes;
 }
 
 function ConditionalNavbar() {

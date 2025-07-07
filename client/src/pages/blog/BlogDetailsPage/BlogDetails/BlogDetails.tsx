@@ -25,7 +25,7 @@ const BlogDetails = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showNewsletterModal, setShowNewsletterModal] = useState(false);
 
-  // API queries
+  // API queries with better error handling
   const {
     data: currentPost,
     isLoading: postLoading,
@@ -36,53 +36,63 @@ const BlogDetails = () => {
     data: relatedPostsData,
     isLoading: relatedLoading,
     error: relatedError,
-  } = useGetRelatedPostsQuery({ id: id!, limit: 6 }, { skip: !id });
+  } = useGetRelatedPostsQuery(
+    { id: id!, limit: 6 },
+    { skip: !id || !currentPost } // Don't fetch related until main post loads
+  );
 
-  // Fallback to mock data if API fails
-  const post = currentPost || blogPosts.find((post) => post.id.toString() === id);
-  const relatedPosts =
-    relatedPostsData ||
-    (post
-      ? blogPosts
-          .filter(
-            (mockPost) =>
-              mockPost.id !== post.id &&
-              mockPost.category.toLowerCase() === post.category.toLowerCase()
-          )
-          .slice(0, 6)
-      : []);
+  // Remove fallback to mock data for better performance
+  const post = currentPost;
+  const relatedPosts = relatedPostsData || [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAllRelated, setShowAllRelated] = useState(false);
   const postsPerPage = 3;
-  const totalPages = Math.ceil(relatedPosts.length / postsPerPage);
-  const displayedPosts = showAllRelated
-    ? relatedPosts
-    : relatedPosts.slice(currentIndex * postsPerPage, (currentIndex + 1) * postsPerPage);
+
+  // Memoize expensive calculations
+  const totalPages = useMemo(
+    () => Math.ceil(relatedPosts.length / postsPerPage),
+    [relatedPosts.length, postsPerPage]
+  );
+  const displayedPosts = useMemo(
+    () =>
+      showAllRelated
+        ? relatedPosts
+        : relatedPosts.slice(currentIndex * postsPerPage, (currentIndex + 1) * postsPerPage),
+    [relatedPosts, showAllRelated, currentIndex, postsPerPage]
+  );
 
   useEffect(() => {
     // Check if we should show the newsletter modal
-    if (!shouldShowNewsletterModal()) {
-      return; // Don't set up modal triggers if user shouldn't see it
+    if (!shouldShowNewsletterModal() || !currentPost) {
+      return; // Don't set up modal triggers if user shouldn't see it or post isn't loaded
     }
 
-    const timeout = setTimeout(() => {
-      const handleScroll = () => {
-        if (window.scrollY >= window.innerHeight / 4) {
-          setShowNewsletterModal(true);
-          markNewsletterModalShown();
-          window.removeEventListener('scroll', handleScroll);
-        }
-      };
-      window.addEventListener('scroll', handleScroll);
+    let isScrollHandlerActive = false;
 
-      return () => {
+    const handleScroll = () => {
+      if (window.scrollY >= window.innerHeight / 4) {
+        setShowNewsletterModal(true);
+        markNewsletterModalShown();
         window.removeEventListener('scroll', handleScroll);
-      };
+        isScrollHandlerActive = false;
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      if (!isScrollHandlerActive) {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        isScrollHandlerActive = true;
+      }
     }, 12000);
 
-    return () => clearTimeout(timeout);
-  }, []);
+    return () => {
+      clearTimeout(timeoutId);
+      if (isScrollHandlerActive) {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [currentPost]); // Add currentPost dependency
 
   const handlePageChange = (index: number) => {
     if (index >= 0 && index < totalPages) {

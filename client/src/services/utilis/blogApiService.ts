@@ -5,10 +5,14 @@ export const blogApi = createApi({
   reducerPath: 'blogApi',
   baseQuery: secureBaseQuery,
   tagTypes: ['Blogs', 'FeaturedPost', 'HomePage', 'BlogPostEditor'],
+  // Global cache settings
+  keepUnusedDataFor: 300, // Keep unused data for 5 minutes by default
+  refetchOnMountOrArgChange: 300, // Refetch if data is older than 5 minutes
   endpoints: (builder) => ({
     getBusinessPosts: builder.query<any, void>({
       query: () => '/business',
       providesTags: ['HomePage'],
+      keepUnusedDataFor: 600, // Business posts - keep for 10 minutes
     }),
 
     getAllBlogPostPaginated: builder.query<
@@ -24,6 +28,7 @@ export const blogApi = createApi({
         });
         return `/blogs?${params.toString()}`;
       },
+      keepUnusedDataFor: 300, // Blog list - keep for 5 minutes (matches server cache)
       providesTags: (result) =>
         result?.posts
           ? [
@@ -50,6 +55,7 @@ export const blogApi = createApi({
         });
         return `/blogs/admin/all?${params.toString()}`;
       },
+      keepUnusedDataFor: 60, // Admin data - shorter cache (1 minute)
       providesTags: (result) =>
         result?.posts
           ? [
@@ -65,26 +71,31 @@ export const blogApi = createApi({
     getFeaturedPost: builder.query<any, void>({
       query: () => '/blogs/featured',
       providesTags: ['FeaturedPost'],
+      keepUnusedDataFor: 1800, // Featured post - keep for 30 minutes (matches server cache)
     }),
 
     getBlogPostById: builder.query<any, string>({
       query: (id) => `/blogs/${id}`,
       providesTags: (result, error, id) => [{ type: 'Blogs', id }],
+      keepUnusedDataFor: 3600, // Individual posts - keep for 1 hour (matches server cache)
     }),
 
     getRelatedPosts: builder.query<any, { id: string; limit?: number }>({
       query: ({ id, limit = 3 }) => `/blogs/${id}/related?limit=${limit}`,
       providesTags: (result, error, { id }) => [{ type: 'Blogs', id: `related-${id}` }],
+      keepUnusedDataFor: 1800, // Related posts - keep for 30 minutes (matches server cache)
     }),
 
     getBlogCategories: builder.query<any, void>({
       query: () => '/blogs/categories',
       providesTags: ['Blogs'],
+      keepUnusedDataFor: 3600, // Categories rarely change - keep for 1 hour
     }),
 
     getBlogStats: builder.query<any, void>({
       query: () => '/blogs/stats',
       providesTags: ['Blogs'],
+      keepUnusedDataFor: 300, // Stats change frequently - keep for 5 minutes
     }),
 
     addEditBlogPost: builder.mutation<any, any>({

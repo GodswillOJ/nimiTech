@@ -1,7 +1,6 @@
-import React, { useState, useEffect, lazy } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './blog.module.scss';
-import { blogPosts, featuredPost } from './_partials/BlogPost.data';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
 import {
@@ -10,15 +9,14 @@ import {
 } from '../../services/utilis/blogApiService';
 import { getImageUrl } from '../../utils/envUtils';
 import { formatDate } from '../../utils/dateUtils';
-
-const BlogDonateSections = lazy(
-  () => import('../../components/blog/BlogDonateSections/BlogDonateSections')
-);
+import { useToast } from '../../hooks/useToast';
+import BlogDonateSections from '../../components/blog/BlogDonateSections/BlogDonateSections';
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [allPosts, setAllPosts] = useState<IBlogPost[]>([]);
   const postsPerPage = 6;
+  const toast = useToast();
 
   // API queries
   const {
@@ -35,7 +33,21 @@ const Blog = () => {
     data: featured,
     isLoading: featuredLoading,
     error: featuredError,
+    refetch: refetchFeatured,
   } = useGetFeaturedPostQuery();
+
+  // Handle errors with toast notifications
+  useEffect(() => {
+    if (blogError) {
+      toast.error('Something went wrong.');
+    }
+  }, [blogError, toast]);
+
+  useEffect(() => {
+    if (featuredError) {
+      toast.error('Something went wrong.');
+    }
+  }, [featuredError, toast]);
 
   // Helper function to get unique post ID (handles both _id and id)
   const getPostId = (post: any) => post._id || post.id;
@@ -54,17 +66,13 @@ const Blog = () => {
           return [...prev, ...newPosts];
         });
       }
-    } else if (currentPage === 1) {
-      // Fallback to mock data on first page
-      setAllPosts(blogPosts.slice(0, postsPerPage));
     }
   }, [blogData, currentPage]);
 
-  // Fallback data
-  const displayedPosts = allPosts.length > 0 ? allPosts : blogPosts.slice(0, postsPerPage);
-  const featuredPostData = featured || featuredPost;
+  // Data for rendering
   const loading = blogLoading || featuredLoading;
-  const hasMorePosts = blogData?.hasNextPage || currentPage * postsPerPage < blogPosts.length;
+  const hasMorePosts = blogData?.hasNextPage;
+  const hasData = featured && allPosts.length > 0;
 
   const handleLoadMore = async () => {
     if (loading || !hasMorePosts) return;
@@ -77,12 +85,17 @@ const Blog = () => {
     setAllPosts((prev) => prev.slice(0, postsPerPage));
   };
 
+  const handleRetry = () => {
+    refetchBlogs();
+    refetchFeatured();
+  };
+
   const renderActionButtons = () => {
     const showLoadLess = currentPage > 1 && allPosts.length > postsPerPage;
     const showLoadMore = hasMorePosts && !loading;
 
     // Don't show any buttons if we're loading
-    if (loading) {
+    if (loading && currentPage > 1) {
       return (
         <div className={styles.actionsContainer}>
           <button className={`${styles.loadMoreButton} ${styles.loading}`} disabled>
@@ -124,18 +137,20 @@ const Blog = () => {
     <>
       <div className={styles.blogContainer}>
         {/* Featured Post Section */}
-        <section
-          className={styles.featuredPost}
-          style={{ backgroundImage: `url(${getImageUrl(featuredPostData.image)})` }}
-        >
-          <Link to={`/blogs/${featuredPostData.id || featuredPostData._id}`}>
-            <div className={styles.featuredContent}>
-              <span className={styles.category}>{featuredPostData.category}</span>
-              <h1>{featuredPostData.title}</h1>
-              <p>{featuredPostData.description}</p>
-            </div>
+        {featured && (
+          <Link to={`/blogs/${featured.id || featured._id}`} className={styles.featuredPostLink}>
+            <section
+              className={styles.featuredPost}
+              style={{ backgroundImage: `url(${getImageUrl(featured.image)})` }}
+            >
+              <div className={styles.featuredContent}>
+                <span className={styles.category}>{featured.category}</span>
+                <h1>{featured.title}</h1>
+                <p>{featured.description}</p>
+              </div>
+            </section>
           </Link>
-        </section>
+        )}
 
         {/* Recent Blog Posts Section */}
         <section className={styles.recentPosts}>
@@ -144,7 +159,7 @@ const Blog = () => {
           </div>
 
           <div className={styles.postsGrid}>
-            {displayedPosts.map((post: any, index: number) => {
+            {allPosts.map((post: any, index: number) => {
               const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
               return (
                 <article
@@ -182,7 +197,6 @@ const Blog = () => {
           {renderActionButtons()}
         </section>
         {/* Donation Section */}
-
         <section className={styles.donationSection}>
           <div className={styles.donation}>
             <BlogDonateSections />
