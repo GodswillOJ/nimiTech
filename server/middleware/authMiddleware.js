@@ -133,9 +133,9 @@ const decryptRequest = (req, res, next) => {
       let decryptedData;
 
       // Try AES-GCM decryption first
-      try {
-        decryptedData = decrypt(req.body.encryptedData);
-      } catch (aesError) {
+      // try {
+      //   decryptedData = decrypt(req.body.encryptedData);
+      // } catch (aesError) {
         // Fallback to base64 decoding for frontend compatibility (development only)
         // if (process.env.NODE_ENV === "development") {
         try {
@@ -146,12 +146,12 @@ const decryptRequest = (req, res, next) => {
           // Extract the actual data from the wrapper object
           decryptedData = JSON.stringify(base64Parsed.data || base64Parsed);
         } catch (base64Error) {
-          throw new Error("Both AES and base64 decryption failed");
+          throw new Error("base64 decryption failed");
         }
         // } else {
         //   throw aesError;
         // }
-      }
+      // }
 
       // Validate JSON format
       let parsedData;
@@ -177,7 +177,7 @@ const decryptRequest = (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: "Invalid request data format",
-      error: process.env.NODE_ENV === "development" ? error.message : "Decryption failed",
+      error: error.message,
     });
   }
 };
