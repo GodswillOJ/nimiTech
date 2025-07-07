@@ -137,20 +137,20 @@ const decryptRequest = (req, res, next) => {
         decryptedData = decrypt(req.body.encryptedData);
       } catch (aesError) {
         // Fallback to base64 decoding for frontend compatibility (development only)
-        if (process.env.NODE_ENV === "development") {
-          try {
-            const base64Decoded = Buffer.from(req.body.encryptedData, "base64").toString("utf8");
+        // if (process.env.NODE_ENV === "development") {
+        try {
+          const base64Decoded = Buffer.from(req.body.encryptedData, "base64").toString("utf8");
 
-            const base64Parsed = JSON.parse(base64Decoded);
+          const base64Parsed = JSON.parse(base64Decoded);
 
-            // Extract the actual data from the wrapper object
-            decryptedData = JSON.stringify(base64Parsed.data || base64Parsed);
-          } catch (base64Error) {
-            throw new Error("Both AES and base64 decryption failed");
-          }
-        } else {
-          throw aesError;
+          // Extract the actual data from the wrapper object
+          decryptedData = JSON.stringify(base64Parsed.data || base64Parsed);
+        } catch (base64Error) {
+          throw new Error("Both AES and base64 decryption failed");
         }
+        // } else {
+        //   throw aesError;
+        // }
       }
 
       // Validate JSON format

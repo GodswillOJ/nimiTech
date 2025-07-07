@@ -43,12 +43,17 @@ const corsOptions = {
       "http://localhost:3001",
       "https://nimitechit.com",
       "https://www.nimitechit.com",
-      process.env.CORS_ORIGIN,
-    ].filter(Boolean);
+    ];
+    if (process.env.CORS_ORIGIN && !allowedOrigins.includes(process.env.CORS_ORIGIN)) {
+      allowedOrigins.push(process.env.CORS_ORIGIN);
+    }
+
+    console.log("CORS Check - Origin:", origin, "Allowed Origins:", allowedOrigins);
 
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error("CORS Error - Origin not allowed:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -166,7 +171,7 @@ app.listen(PORT, () => {
 // Heartbeat function to keep server alive
 function startHeartbeat() {
   const HEARTBEAT_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
-  const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`;
+  const SERVER_URL = 'https://nimitech-website.onrender.com' || `http://localhost:${PORT}`;
 
   console.log("Starting heartbeat ping every 5 minutes...");
 
