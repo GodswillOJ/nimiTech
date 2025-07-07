@@ -4,7 +4,10 @@ import { blogPosts, featuredPost } from '../../pages/blog/_partials/BlogPost.dat
 import { getApiBaseUrl } from '../../utils/envUtils';
 
 export const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:10000/api' : getApiBaseUrl(),
+  baseUrl:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:10000/api'
+      : 'https://nimitech-website.onrender.com/api',
   credentials: 'include',
   prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');
