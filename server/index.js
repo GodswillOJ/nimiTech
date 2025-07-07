@@ -101,6 +101,18 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 
+// Serve uploads under API path for consistency
+app.use(
+  "/api/uploads",
+  (req, res, next) => {
+    // Add CORS headers for static files
+    res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  },
+  express.static(path.join(__dirname, "/uploads"))
+);
+
 // Heartbeat/Health check endpoint
 app.get("/api/heartbeat", (req, res) => {
   res.status(200).json({
@@ -171,7 +183,7 @@ app.listen(PORT, () => {
 // Heartbeat function to keep server alive
 function startHeartbeat() {
   const HEARTBEAT_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
-  const SERVER_URL = 'https://nimitech-website.onrender.com' || `http://localhost:${PORT}`;
+  const SERVER_URL = "https://nimitech-website.onrender.com" || `http://localhost:${PORT}`;
 
   console.log("Starting heartbeat ping every 5 minutes...");
 
