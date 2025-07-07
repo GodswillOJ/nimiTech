@@ -41,13 +41,13 @@ const Blog = () => {
     if (blogError) {
       toast.error('Something went wrong.');
     }
-  }, [blogError, toast]);
+  }, [blogError]);
 
   useEffect(() => {
     if (featuredError) {
       toast.error('Something went wrong.');
     }
-  }, [featuredError, toast]);
+  }, [featuredError]);
 
   // Helper function to get unique post ID (handles both _id and id)
   const getPostId = (post: any) => post._id || post.id;
