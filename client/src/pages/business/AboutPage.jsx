@@ -216,7 +216,7 @@ const About = () => {
                       boxShadow: '0px 6px 30px rgba(0, 0, 0, 0.05)',
                       p: isSmallScreen ? 3 : 5,
                       transition: 'all 0.3s ease-in-out',
-                      height: '500px',
+                      height: isSmallScreen ? '500px' : isMediumScreen ? 'auto' : 'auto',
                     }}
                   >
                     <Typography
@@ -262,7 +262,7 @@ const About = () => {
                         Website:{' '}
                         <Typography
                           component="a"
-                          href="https://www.nimitutor.com/"
+                          href="https://www.nimitechit.com/"
                           target="_blank"
                           rel="noopener noreferrer"
                           sx={{
