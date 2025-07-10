@@ -166,7 +166,7 @@ const Blog = () => {
                   key={`${postId}-${index}`} // Ensure unique keys when combining pages
                   className={styles.blogCard}
                   style={{
-                    animationDelay: `${(index % postsPerPage) * 100}ms`,
+                    animationDelay: `${(index % postsPerPage) * 50}ms`,
                   }}
                 >
                   <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
