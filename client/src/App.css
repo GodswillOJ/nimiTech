@@ -43,11 +43,11 @@
 }
 
 h1 {
-  font-family: 'Domine', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h2 {
-  font-family: 'EB Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 p {
@@ -64,7 +64,7 @@ p {
 }
 
 h2 .my-domine1 {
-  font-family: 'Domine', serif;
+  font-family: 'Montserrat', sans-serif;
   color: #fff;
 }
 
@@ -209,15 +209,17 @@ h2 .my-domine1 {
   font-weight: 500;
   font-size: 16px;
   font-family: 'Montserrat', sans-serif;
-  transition: color 0.3s;
+  transition: color 0.2s ease; /* Faster transition for better responsiveness */
   color: rgb(47, 40, 40);
   text-wrap: nowrap;
   padding-top: 0px !important;
+  will-change: color; /* Optimize color transitions */
 }
 
 .nav-links li a.active-tab {
   font-weight: bold;
   color: #88199a;
+  contain: layout style; /* Improve rendering performance */
 }
 
 .nav-links li a:hover {
@@ -275,7 +277,7 @@ h2 .my-domine1 {
   }
 }
 
-/* Hamburger (hidden on desktop) */
+/* Hamburger (hidden on desktop) - optimized for performance */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -283,28 +285,33 @@ h2 .my-domine1 {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 8px; /* Increase touch target */
   justify-content: start;
+  will-change: transform; /* Optimize for interactions */
+  contain: layout style; /* Improve rendering performance */
 }
 
 .bar {
   width: 25px;
   height: 3px;
   background: black;
-  transition: 0.3s;
+  transition: transform 0.2s ease; /* Faster transition for better responsiveness */
+  will-change: transform; /* Optimize animations */
+  transform: translateZ(0); /* Enable hardware acceleration */
 }
 
-/* Hamburger animation (optional) */
+/* Hamburger animation (optimized) */
 .bar.open:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translate(5px, 5px) translateZ(0);
 }
 
 .bar.open:nth-child(2) {
   opacity: 0;
+  transform: translateZ(0); /* Hardware acceleration for opacity changes */
 }
 
 .bar.open:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: rotate(-45deg) translate(5px, -5px) translateZ(0);
 }
 
 /* Responsive below 768px */
@@ -377,17 +384,7 @@ h2 .my-domine1 {
   /* text-align: center; */
 }
 
-.hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 1s ease-in-out;
-  z-index: 0;
-}
+/* Removed unused .hero-bg class that was causing LCP issues */
 
 .hero-overlay {
   position: absolute;

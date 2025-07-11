@@ -1,0 +1,582 @@
+// Application Detail Styles
+.applicationDetail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.header {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+
+  a {
+    color: #e74c3c;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #c0392b;
+      text-decoration: underline;
+    }
+  }
+
+  span {
+    color: #999;
+
+    &:last-child {
+      color: #666;
+      font-weight: 500;
+    }
+  }
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 25px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    border-bottom: 2px solid #f1f3f4;
+    padding-bottom: 10px;
+  }
+}
+
+// Applicant Card
+.applicantCard {
+  .applicantHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .applicantName {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+}
+
+.applicantDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.value {
+  color: #1a1a1a;
+  font-size: 1rem;
+
+  &[href] {
+    color: #e74c3c;
+    text-decoration: none;
+
+    &:hover {
+      color: #c0392b;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Status badges
+.statusBadge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusPending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusReviewing {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.statusShortlisted {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.statusRejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.statusHired {
+  background: #d4edda;
+  color: #155724;
+}
+
+// Job Card
+.jobCard {
+  .jobHeader {
+    margin-bottom: 12px;
+  }
+
+  .jobTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e74c3c;
+    text-decoration: none;
+
+    &:hover {
+      color: #c0392b;
+      text-decoration: underline;
+    }
+  }
+}
+
+.jobMeta {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.jobDepartment,
+.jobType,
+.jobLocation {
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.jobDepartment {
+  background: #e8f5e8;
+  color: #2d7d2d;
+}
+
+.jobType {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.jobLocation {
+  background: #e8f4fd;
+  color: #1565c0;
+}
+
+// Message Card
+.messageCard {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #e74c3c;
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+  }
+}
+
+// Files Card
+.filesCard {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #666;
+
+  svg {
+    color: #e74c3c;
+  }
+
+  span {
+    font-weight: 500;
+  }
+}
+
+.downloadButton {
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+  }
+}
+
+// Notes Card
+.notesCard {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #6c757d;
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+  }
+}
+
+// Sidebar
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.statusUpdateCard,
+.quickActions {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+  }
+}
+
+.currentStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.statusActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.statusButton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+.statusButton.statusReviewing {
+  background: #cce5ff;
+  color: #004085;
+
+  &:hover:not(:disabled) {
+    background: #b3d9ff;
+  }
+}
+
+.statusButton.statusShortlisted {
+  background: #d1ecf1;
+  color: #0c5460;
+
+  &:hover:not(:disabled) {
+    background: #bee5eb;
+  }
+}
+
+.statusButton.statusHired {
+  background: #d4edda;
+  color: #155724;
+
+  &:hover:not(:disabled) {
+    background: #c3e6cb;
+  }
+}
+
+.statusButton.statusRejected {
+  background: #f8d7da;
+  color: #721c24;
+
+  &:hover:not(:disabled) {
+    background: #f5c6cb;
+  }
+}
+
+.notesSection {
+  label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #e74c3c;
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  color: #666;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+
+  &:hover {
+    background: #e9ecef;
+    color: #333;
+    transform: translateY(-1px);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Loading and Error States
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  text-align: center;
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 15px;
+  }
+}
+
+.errorContainer {
+  h2 {
+    color: #e74c3c;
+    margin-bottom: 10px;
+  }
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #e74c3c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.backButton {
+  padding: 12px 24px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+
+  &:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .applicationDetail {
+    padding: 15px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .header {
+    padding: 20px;
+
+    h1 {
+      font-size: 1.6rem;
+    }
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .applicantDetails {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .applicantHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .applicantName {
+    font-size: 1.3rem;
+  }
+
+  .jobMeta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fileItem {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .statusActions {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumb {
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .header h1 {
+    font-size: 1.4rem;
+  }
+
+  .section {
+    padding: 15px;
+
+    h2 {
+      font-size: 1.1rem;
+    }
+  }
+
+  .statusUpdateCard,
+  .quickActions {
+    padding: 20px;
+
+    h3 {
+      font-size: 1.1rem;
+    }
+  }
+}

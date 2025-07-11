@@ -3,6 +3,7 @@ import { api } from '../services/api';
 import { blogApi } from '../services/utilis/blogApiService';
 import { adminApi } from '../services/utilis/adminApiService';
 import { newsletterApi } from '../services/utilis/newsletterApiService';
+import { careerApi } from '../services/utilis/careerApiService';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [blogApi.reducerPath]: blogApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
     [newsletterApi.reducerPath]: newsletterApi.reducer,
+    [careerApi.reducerPath]: careerApi.reducer,
     // other reducers here
   },
   middleware: (getDefaultMiddleware) =>
@@ -17,5 +19,6 @@ export const store = configureStore({
       .concat(api.middleware)
       .concat(blogApi.middleware)
       .concat(adminApi.middleware)
-      .concat(newsletterApi.middleware),
+      .concat(newsletterApi.middleware)
+      .concat(careerApi.middleware),
 });

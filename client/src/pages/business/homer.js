@@ -2,6 +2,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useMediaQuery } from '@mui/material';
 import { lazy, useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
+// import 'swiper/css';
+// import 'swiper/css/pagination';
+// import { Autoplay, Pagination } from 'swiper/modules';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
 import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
 import { businessImages } from '../../assets/images.js';
@@ -48,7 +52,7 @@ const HomePage = () => {
     ? postsToShow
     : showAllPosts
       ? postsToShow
-      : postsToShow.slice(0, 6);
+      : postsToShow.slice(0, 3);
 
   // Framer Motion animation variants
   const fadeInUp = {
@@ -215,6 +219,17 @@ const HomePage = () => {
             </motion.button>
           </motion.div>
         </motion.div>{' '}
+        {/* partner with us */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
+          {/* Partner With Us Section */}
+          <PartnerWithUs services={services} />
+        </motion.div>{' '}
+        {/* Infinite Logo Slider */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -223,9 +238,64 @@ const HomePage = () => {
         >
           <LogoSlider />
         </motion.div>{' '}
-        {/* partner with us */}
         {/* Service updates */}
-       
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+          style={{
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column' : isMediumScreen ? 'row' : 'row',
+            alignItems: 'center',
+            padding: '20px',
+            borderRadius: '16px',
+            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+            margin: '20px 0',
+            gap: '20px',
+            flexWrap: 'wrap', // Ensures wrapping on small screens
+          }}
+        >
+          <motion.span
+            variants={fadeInLeft}
+            className="bounce-on-hover"
+            style={{
+              padding: '10px 20px',
+              fontSize: '0.8rem',
+              fontWeight: 'bold',
+              color: '#fff',
+              backgroundColor: 'rgb(0, 8, 10, 93%)',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              border: 'none',
+              borderRadius: '30px 30px 0 30px',
+              cursor: 'pointer',
+              fontFamily: 'Montserrat, sans-serif',
+              flexShrink: 0,
+            }}
+          >
+            Explore our IT services
+          </motion.span>
+
+          <motion.div
+            variants={fadeInRight}
+            style={{
+              flex: 1,
+              background: 'none',
+              border: '1px solid #ccc',
+              borderRadius: '12px',
+              width: '90%',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center', // Ensure content is centered
+              boxShadow: '0 8px 16px rgba(48, 48, 48, 0.1)',
+              marginTop: '10px',
+              flexWrap: 'wrap', // Allow content to adjust for mobile
+            }}
+          >
+            <ServiceUpdateTicker posts={postsToShow} />
+          </motion.div>
+        </motion.div>{' '}
         {/* Courses */}
         <motion.div
           initial="hidden"
@@ -252,6 +322,201 @@ const HomePage = () => {
           >
             Our Services
           </motion.h1>
+
+          <div
+            style={{
+              position: 'relative',
+              height: isSmallScreen ? '480px' : '580px',
+              width: '100%',
+              margin: '40px 0',
+              overflow: 'hidden',
+              borderRadius: '24px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+            }}
+          >
+            {/* Animated Background */}
+            <img
+              src={businessImages.nimi_hero1} // Replace with your image path
+              alt="Background"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                zIndex: 0,
+                animation: 'slowZoom 18s ease-in-out infinite',
+                transition: 'transform 0.8s ease-in-out',
+              }}
+              className="animated-bg-image"
+            />
+
+            {/* Hover Scale Animation */}
+            <style>
+              {`
+              .animated-bg-image:hover {
+                transform: scale(1.05);
+              }
+
+              @keyframes slowZoom {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.03); }
+              }
+
+              .diamond {
+                width: 220px;
+                height: 220px;
+                background: linear-gradient(135deg, #5e004f, #220038);
+                transform: rotate(45deg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                transition: transform 0.3s ease-in-out;
+              }
+
+              .diamond:hover {
+                transform: rotate(45deg) scale(1.05);
+              }
+
+              .diamond-text {
+                transform: rotate(-45deg);
+                color: white;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.6rem;
+                font-weight: bold;
+                text-align: center;
+                padding: 10px;
+              }
+            `}
+            </style>
+
+            {/* Foreground Content */}
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '20px',
+                backdropFilter: 'blur(2px)',
+              }}
+            >
+              <div
+                style={{
+                  margin: '40px 0',
+                  padding: isSmallScreen ? '20px' : '40px',
+                  background: 'linear-gradient(135deg, #f6f0ff,rgba(237, 226, 250, 0.17))', // A light purple/pink blend
+                  borderRadius: '24px',
+                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                  fontFamily: 'Montserrat, sans-serif',
+                  transition: 'transform 0.4s ease-in-out',
+                  cursor: 'default',
+                }}
+              >
+                {/* Expansion on hover */}
+                <style>
+                  {`
+                  .diamond-container:hover {
+                    transform: scale(1.02);
+                  }
+
+                  .diamond {
+                    width: 200px;
+                    height: 200px;
+                    background: linear-gradient(135deg, #590263, #2b0040);
+                    transform: rotate(45deg);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                    transition: transform 0.3s ease-in-out;
+                  }
+
+                  .diamond:hover {
+                    transform: rotate(45deg) scale(1.05);
+                  }
+
+                  .diamond-text {
+                    transform: rotate(-45deg);
+                    color: #fff;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    text-align: center;
+                    padding: 12px;
+                  }
+                `}
+                </style>
+
+                <div
+                  style={{
+                    margin: '40px 0',
+                    padding: isSmallScreen ? '20px' : '40px',
+                    background: 'none', // Catchy pink/purple blend
+                    borderRadius: '24px',
+                    boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                    textAlign: 'center',
+                    fontFamily: 'Montserrat, sans-serif',
+                    transition: 'transform 0.4s ease-in-out',
+                    cursor: 'default',
+                  }}
+                  className="rectangle-container"
+                >
+                  <style>
+                    {`
+                  .rectangle-container:hover {
+                    transform: scale(1.02);
+                  }
+
+                  .headline-box {
+                    background: linear-gradient(135deg,rgb(56, 5, 62),rgb(217, 0, 255));
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    color: white;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                    display: inline-block;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                    font-family: 'Montserrat', sans-serif;
+                    text-align: center;
+                    transition: transform 0.3s ease-in-out;
+                  }
+
+                  .headline-box:hover {
+                    transform: scale(1.05);
+                  }
+                `}
+                  </style>
+
+                  {/* Rectangular Styled Subtitle */}
+                  <div className="headline-box">{introSubtitle}</div>
+
+                  {/* Supporting Paragraph */}
+                  <p
+                    style={{
+                      fontSize: isSmallScreen ? '1rem' : '1.1rem',
+                      color: '#4b004e',
+                      marginTop: '30px',
+                      lineHeight: '1.8',
+                      maxWidth: '700px',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                    }}
+                  >
+                    {introText}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div
             style={{

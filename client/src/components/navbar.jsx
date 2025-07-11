@@ -1,6 +1,6 @@
 import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import { useMediaQuery } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/NimiTechLogo1.png';
 import logo2 from '../assets/NimiTechLogo2.png';
@@ -11,32 +11,48 @@ const Navbar = () => {
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width:1040px)');
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  // Optimize toggle function with useCallback to prevent unnecessary re-renders
+  const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 0);
-    window.addEventListener('scroll', handleScroll);
+    // Throttle scroll handler for better performance
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 0);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isActive = (target) => {
-    if (target.startsWith('#') || target.startsWith('/#')) {
-      const cleanTarget = target.replace('/', '');
-      return location.hash === cleanTarget ? 'active-tab' : '';
-    }
+  // Memoize isActive function to prevent recalculation on every render
+  const isActive = useMemo(
+    () => (target) => {
+      if (target.startsWith('#') || target.startsWith('/#')) {
+        const cleanTarget = target.replace('/', '');
+        return location.hash === cleanTarget ? 'active-tab' : '';
+      }
 
-    // Exact match for Home
-    if (target === '/' && location.pathname === '/') return 'active-tab';
+      // Exact match for Home
+      if (target === '/' && location.pathname === '/') return 'active-tab';
 
-    // Exact match for other internal routes
-    if (target !== '/' && location.pathname === target) return 'active-tab';
+      // Exact match for other internal routes
+      if (target !== '/' && location.pathname === target) return 'active-tab';
 
-    if (target === '/' && location.pathname !== '/') return '';
+      if (target === '/' && location.pathname !== '/') return '';
 
-    if (target !== '/' && location.pathname.startsWith(target)) return 'active-tab';
+      if (target !== '/' && location.pathname.startsWith(target)) return 'active-tab';
 
-    return '';
-  };
+      return '';
+    },
+    [location.pathname, location.hash]
+  );
 
   return (
     <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
@@ -85,6 +101,11 @@ const Navbar = () => {
           <li>
             <Link to="/blogs" onClick={() => setIsOpen(false)} className={isActive('/blogs')}>
               Blogs
+            </Link>
+          </li>
+          <li>
+            <Link to="/careers" onClick={() => setIsOpen(false)} className={isActive('/careers')}>
+              Careers
             </Link>
           </li>
           <li>

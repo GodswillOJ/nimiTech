@@ -27,6 +27,9 @@ import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
 import NotFound from './components/NotFound/NotFound';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
+import Careers from './pages/careers';
+import JobDetail from './pages/careers/JobDetail';
+import ApplicationPage from './pages/careers/ApplicationPage';
 
 const UserDashboard = lazy(() => import('./pages/dashboard/UserDashboard'));
 const baseRoutes = [
@@ -37,6 +40,9 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
+  { path: '/careers', element: <Careers /> },
+  { path: '/careers/:id', element: <JobDetail /> },
+  { path: '/careers/:id/apply', element: <ApplicationPage /> },
   { path: '/privacy-policy', element: <PrivacyPolicyPage /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },

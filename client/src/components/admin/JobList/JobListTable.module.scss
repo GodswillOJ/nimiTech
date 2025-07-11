@@ -1,0 +1,532 @@
+// Job List Table Styles - Updated to match BlogListTable theme
+.jobListContainer {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .headerContent h1 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .headerContent p {
+    color: #6b7280;
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+  }
+}
+
+.createButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+}
+
+// Filters
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+
+  label {
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+  }
+}
+
+.filterSelect {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  min-width: 160px;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+// Table
+.tableContainer {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.jobTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+
+  th {
+    background: #f9fafb;
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &:first-child {
+      padding-left: 16px;
+    }
+
+    &:last-child {
+      padding-right: 16px;
+      text-align: center;
+    }
+  }
+
+  td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #1f2937;
+
+    &:first-child {
+      padding-left: 16px;
+    }
+
+    &:last-child {
+      padding-right: 16px;
+    }
+  }
+
+  tr:hover {
+    background: #f9fafb;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.jobTitle {
+  font-weight: 600;
+}
+
+.jobTitleLink {
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.4;
+
+  &:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+}
+
+// Status badges
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.statusActive {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.statusClosed {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.statusDraft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+// Actions
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #6b7280;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    background: #e5e7eb;
+    color: #374151;
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  &:focus {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover:not(:disabled) svg {
+    transform: scale(1.1);
+  }
+
+  // Tooltip on hover
+  &[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+  }
+}
+
+// Pagination
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.paginationButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    background: #f9fafb;
+    border-color: #9ca3af;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.paginationInfo {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+// Loading and Error States
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+
+  p {
+    margin-top: 16px;
+    color: #6b7280;
+    font-size: 16px;
+  }
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+
+  h3 {
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: #6b7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 48px 24px;
+  color: #6b7280;
+
+  h2 {
+    color: #ef4444;
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+}
+
+.retryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .filters {
+    gap: 12px;
+  }
+
+  .filterGroup {
+    min-width: 120px;
+  }
+
+  .tableContainer {
+    overflow-x: auto;
+  }
+
+  .actionButton {
+    min-width: 28px;
+    min-height: 28px;
+    padding: 6px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .jobTable {
+    td {
+      padding: 12px 8px;
+      font-size: 13px;
+    }
+
+    th {
+      padding: 12px 8px;
+    }
+  }
+
+  .actionButton {
+    min-width: 26px;
+    min-height: 26px;
+    padding: 5px;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .jobListContainer {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    .headerContent h1 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filterGroup {
+    min-width: auto;
+  }
+
+  .filterSelect {
+    min-width: auto;
+  }
+
+  .tableContainer {
+    overflow-x: auto;
+  }
+
+  .jobTable {
+    min-width: 700px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .jobListContainer {
+    padding: 12px;
+  }
+
+  .header .headerContent h1 {
+    font-size: 1.125rem;
+  }
+
+  .createButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .jobTable {
+    th,
+    td {
+      padding: 8px 6px;
+      font-size: 12px;
+    }
+
+    th:first-child,
+    td:first-child {
+      padding-left: 12px;
+    }
+
+    th:last-child,
+    td:last-child {
+      padding-right: 12px;
+    }
+  }
+
+  .actionButton {
+    min-width: 24px;
+    min-height: 24px;
+    padding: 4px;
+
+    svg {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}

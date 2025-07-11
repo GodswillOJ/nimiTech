@@ -1,0 +1,229 @@
+// Mobile-first responsive logo slider styles
+.logoSliderSection {
+  width: 100%;
+  background: #f8fafc;
+  padding: 0rem;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    padding: 0rem;
+    margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.logoSliderHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    margin-bottom: 3rem;
+  }
+}
+
+.logoSliderTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 2.75rem;
+  }
+}
+
+.logoSliderSubtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.2rem;
+  }
+}
+
+// Keyframe animation for sliding - enhanced for smoothness
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+// Main logos container
+.logos {
+  overflow: hidden;
+  padding: 2rem 0;
+  background: white;
+  white-space: nowrap;
+  position: relative;
+  // border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  @media (min-width: 768px) {
+    padding: 2rem 0;
+    // border-radius: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 3rem 0;
+    // border-radius: 24px;
+  }
+}
+
+// Gradient overlays for fade effect
+.logos:before,
+.logos:after {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  content: '';
+  z-index: 2;
+  pointer-events: none;
+
+  @media (min-width: 768px) {
+    width: 150px;
+  }
+
+  @media (min-width: 1024px) {
+    width: 200px;
+  }
+}
+
+.logos:before {
+  left: 0;
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+}
+
+.logos:after {
+  right: 0;
+  background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+}
+
+// Pause animation on hover
+.logos:hover .logosSlide {
+  animation-play-state: paused;
+}
+
+// Sliding container - enhanced for seamless infinite scroll with performance optimizations
+.logosSlide {
+  display: inline-block;
+  animation: slide 35s infinite linear;
+  will-change: transform; // Optimize for animations
+  transform: translateZ(0); // Enable hardware acceleration
+
+  @media (min-width: 768px) {
+    animation: slide 40s infinite linear;
+  }
+
+  @media (min-width: 1024px) {
+    animation: slide 45s infinite linear;
+  }
+}
+
+// Individual logo styling - enhanced for better mobile display and performance
+.logoImage {
+  height: 60px;
+  width: 100px; // Fixed width to prevent layout shift
+  margin: 0 1rem;
+  max-width: 100px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.7);
+  will-change: filter; // Optimize filter changes
+  transition: all 0.3s ease;
+  vertical-align: middle;
+
+  @media (min-width: 480px) {
+    height: 35px;
+    margin: 0 1.25rem;
+    max-width: 120px;
+  }
+
+  @media (min-width: 768px) {
+    height: 40px;
+    margin: 0 1.5rem;
+    max-width: 140px;
+  }
+
+  @media (min-width: 1024px) {
+    height: 50px;
+    margin: 0 2rem;
+    max-width: 160px;
+  }
+
+  @media (min-width: 1200px) {
+    height: 60px;
+    margin: 0 2.5rem;
+    max-width: 180px;
+  }
+
+  &:hover {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.1);
+  }
+}
+
+// Alternative version with colored background
+.logoSliderSection.colored {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  .logoSliderTitle {
+    color: white;
+  }
+
+  .logoSliderSubtitle {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .logos {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+  }
+}
+
+// Dark theme variant
+.logoSliderSection.dark {
+  background: #1f2937;
+
+  .logoSliderTitle {
+    color: white;
+  }
+
+  .logoSliderSubtitle {
+    color: #d1d5db;
+  }
+
+  .logos {
+    background: #374151;
+  }
+
+  .logos:before {
+    background: linear-gradient(to right, #374151, rgba(55, 65, 81, 0));
+  }
+
+  .logos:after {
+    background: linear-gradient(to left, #374151, rgba(55, 65, 81, 0));
+  }
+}

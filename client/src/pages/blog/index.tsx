@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import styles from './blog.module.scss';
 import { IBlogPost } from './blog.types';
 import authorAvatar from '../../assets/blog/images/authorAvatar.jpg';
@@ -17,6 +20,54 @@ const Blog = () => {
   const [allPosts, setAllPosts] = useState<IBlogPost[]>([]);
   const postsPerPage = 6;
   const toast = useToast();
+
+  // Framer Motion animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const fadeInScale = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
 
   // API queries
   const {
@@ -43,11 +94,11 @@ const Blog = () => {
     }
   }, [blogError]);
 
-  useEffect(() => {
-    if (featuredError) {
-      toast.error('Something went wrong.');
-    }
-  }, [featuredError]);
+  // useEffect(() => {
+  //   if (featuredError) {
+  //     toast.error('Something went wrong.');
+  //   }
+  // }, [featuredError]);
 
   // Helper function to get unique post ID (handles both _id and id)
   const getPostId = (post: any) => post._id || post.id;
@@ -89,6 +140,33 @@ const Blog = () => {
     refetchBlogs();
     refetchFeatured();
   };
+
+  // Skeleton loader component for blog cards
+  const BlogCardSkeleton = () => (
+    <motion.article
+      className={styles.blogCard}
+      variants={cardVariants}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
+    >
+      <div className={styles.imageContainer}>
+        <Skeleton height={200} style={{ borderRadius: '8px 8px 0 0' }} />
+      </div>
+      <div className={styles.contentContainer} style={{ padding: '16px', flex: 1 }}>
+        <Skeleton height={24} style={{ marginBottom: '12px' }} />
+        <Skeleton count={3} height={16} style={{ marginBottom: '8px' }} />
+        <div className={styles.metaInfo} style={{ marginTop: 'auto', paddingTop: '16px' }}>
+          <Skeleton circle height={32} width={32} style={{ marginRight: '8px' }} />
+          <Skeleton width={80} height={16} style={{ marginRight: '8px' }} />
+          <Skeleton width={4} height={16} style={{ marginRight: '8px' }} />
+          <Skeleton width={100} height={16} />
+        </div>
+      </div>
+    </motion.article>
+  );
 
   const renderActionButtons = () => {
     const showLoadLess = currentPage > 1 && allPosts.length > postsPerPage;
@@ -135,74 +213,153 @@ const Blog = () => {
 
   return (
     <>
-      <div className={styles.blogContainer}>
+      <motion.div
+        className={styles.blogContainer}
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+      >
         {/* Featured Post Section */}
-        {featured && (
-          <Link to={`/blogs/${featured.id || featured._id}`} className={styles.featuredPostLink}>
-            <section
-              className={styles.featuredPost}
-              style={{ backgroundImage: `url(${getImageUrl(featured.image)})` }}
-            >
+        {featuredLoading ? (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInScale}
+          >
+            <section className={styles.featuredPost}>
               <div className={styles.featuredContent}>
-                <span className={styles.category}>{featured.category}</span>
-                <h1>{featured.title}</h1>
-                <p>{featured.description}</p>
+                <Skeleton width={120} height={24} style={{ marginBottom: '16px' }} />
+                <Skeleton height={48} style={{ marginBottom: '16px' }} />
+                <Skeleton count={3} height={16} style={{ marginBottom: '8px' }} />
               </div>
             </section>
-          </Link>
+          </motion.div>
+        ) : (
+          featured && (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeInScale}
+            >
+              <Link
+                to={`/blogs/${featured.id || featured._id}`}
+                className={styles.featuredPostLink}
+              >
+                <section
+                  className={styles.featuredPost}
+                  style={{ backgroundImage: `url(${getImageUrl(featured.image)})` }}
+                >
+                  <div className={styles.featuredContent}>
+                    <span className={styles.category}>{featured.category}</span>
+                    <h1>{featured.title}</h1>
+                    <p>{featured.description}</p>
+                  </div>
+                </section>
+              </Link>
+            </motion.div>
+          )
         )}
 
         {/* Recent Blog Posts Section */}
-        <section className={styles.recentPosts}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
-          </div>
+        <motion.section
+          className={styles.recentPosts}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+        >
+          <motion.div className={styles.sectionHeader} variants={fadeInUp}>
+            {loading && allPosts.length === 0 ? (
+              <Skeleton height={32} width={250} />
+            ) : (
+              <h2 className={styles.sectionHeaderTitle}>Recent blog posts</h2>
+            )}
+          </motion.div>
 
-          <div className={styles.postsGrid}>
-            {allPosts.map((post: any, index: number) => {
-              const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
-              return (
-                <article
-                  key={`${postId}-${index}`} // Ensure unique keys when combining pages
-                  className={styles.blogCard}
-                  style={{
-                    animationDelay: `${(index % postsPerPage) * 100}ms`,
-                  }}
-                >
-                  <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
-                    <div className={styles.imageContainer}>
-                      <img src={getImageUrl(post.image)} alt={post.title} loading="lazy" />
-                    </div>
-                    <div className={styles.contentContainer}>
-                      <h3>{post.title}</h3>
-                      <p>{post.description}</p>
-                      <div className={styles.metaInfo}>
-                        <img
-                          src={getImageUrl(post.author.avatar) || authorAvatar}
-                          alt={post.author.name}
-                          className={styles.authorAvatar}
-                        />
-                        <span>{post.author.name}</span>
-                        <span>•</span>
-                        <span>{formatDate(post.author.date)}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
+          <motion.div className={styles.postsGrid} variants={staggerContainer}>
+            {loading && allPosts.length === 0
+              ? // Show skeleton loaders when initially loading
+                Array.from({ length: postsPerPage }).map((_, index) => (
+                  <BlogCardSkeleton key={`skeleton-${index}`} />
+                ))
+              : // Show actual posts
+                allPosts.map((post: any, index: number) => {
+                  const postId = post._id || post.id; // Handle both MongoDB _id and mock data id
+                  return (
+                    <motion.article
+                      key={`${postId}-${index}`} // Ensure unique keys when combining pages
+                      className={styles.blogCard}
+                      variants={cardVariants}
+                      whileHover={{
+                        y: -5,
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                        transition: { duration: 0.2 },
+                      }}
+                      style={{
+                        animationDelay: `${(index % postsPerPage) * 100}ms`,
+                      }}
+                    >
+                      <Link to={`/blogs/${postId}`} className={styles.blogCardLink}>
+                        <div className={styles.imageContainer}>
+                          <img src={getImageUrl(post.image)} alt={post.title} loading="lazy" />
+                        </div>
+                        <div className={styles.contentContainer}>
+                          <h3>{post.title}</h3>
+                          <p>{post.description}</p>
+                          <div className={styles.metaInfo}>
+                            <img
+                              src={getImageUrl(post.author.avatar) || authorAvatar}
+                              alt={post.author.name}
+                              className={styles.authorAvatar}
+                            />
+                            <span>{post.author.name}</span>
+                            <span>•</span>
+                            <span>{formatDate(post.author.date)}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.article>
+                  );
+                })}
+
+            {/* Show skeleton loaders for new posts being loaded */}
+            {loading &&
+              currentPage > 1 &&
+              allPosts.length > 0 &&
+              Array.from({ length: postsPerPage }).map((_, index) => (
+                <BlogCardSkeleton key={`loading-skeleton-${index}`} />
+              ))}
+          </motion.div>
 
           {/* Action Buttons */}
-          {renderActionButtons()}
-        </section>
+          <motion.div variants={fadeInUp}>{renderActionButtons()}</motion.div>
+        </motion.section>
+
         {/* Donation Section */}
-        <section className={styles.donationSection}>
+        <motion.section
+          className={styles.donationSection}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.4,
+                ease: 'easeOut' as const,
+              },
+            },
+          }}
+        >
           <div className={styles.donation}>
             <BlogDonateSections />
           </div>
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
     </>
   );
 };

@@ -33,8 +33,8 @@ const RemoteTrainingContent = () => {
 
       {/* Training Highlights */}
       <div className="dm-flex-block">
-        <div className="dm-image-container">
-          <img src={businessImages.Training} alt="Remote Training Platform" />
+        <div className="dm-image-container" style={{ width: '100%' }}>
+          <img src={businessImages.businessRemoteIT} alt="Remote Training Platform" />
         </div>
         <div className="dm-text-content">
           <p className="dm-title">What We Offer</p>

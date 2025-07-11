@@ -1,0 +1,377 @@
+// Application Form component styles
+.applicationForm {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+
+  &__header {
+    padding: 25px 25px 20px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #666;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+  }
+
+  &__form {
+    padding: 25px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+
+    &--half {
+      grid-column: span 1;
+    }
+
+    &--full {
+      grid-column: span 2;
+    }
+
+    &--error {
+      .applicationForm__input,
+      .applicationForm__textarea {
+        border-color: #e74c3c;
+        background-color: #fef2f2;
+      }
+    }
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: white;
+
+    &:focus {
+      outline: none;
+      border-color: #e74c3c;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:disabled {
+      background: #f8f9fa;
+      color: #999;
+      cursor: not-allowed;
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #e74c3c;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  &__radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+
+    &:hover {
+      border-color: #e74c3c;
+      background: #fef7f7;
+    }
+
+    input[type='radio'] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #e74c3c;
+    }
+
+    input[type='radio']:checked + span {
+      font-weight: 600;
+      color: #e74c3c;
+    }
+
+    &:has(input[type='radio']:checked) {
+      border-color: #e74c3c;
+      background: #fef7f7;
+    }
+  }
+
+  &__error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
+
+  &__submit {
+    width: 100%;
+    padding: 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &:hover:not(:disabled) {
+      background: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+    }
+
+    &:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &--loading {
+      background: #bdc3c7;
+      cursor: not-allowed;
+    }
+  }
+
+  // Loading state
+  &--loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}
+
+// Success Modal Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalContent {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.modalContent h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.modalContent p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+
+  &:last-of-type {
+    margin-bottom: 30px;
+  }
+}
+
+.modalButton {
+  padding: 12px 30px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .applicationForm {
+    position: static;
+    margin-top: 30px;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .applicationForm {
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    &__field {
+      &--half,
+      &--full {
+        grid-column: span 1;
+      }
+    }
+
+    &__header {
+      padding: 20px;
+    }
+
+    &__form {
+      padding: 20px;
+    }
+
+    &__radioGroup {
+      gap: 10px;
+    }
+
+    &__radio {
+      padding: 12px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .modalContent {
+    padding: 30px 20px;
+  }
+
+  .successIcon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .modalContent h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .applicationForm {
+    border-radius: 8px;
+    margin: 20px 0;
+
+    &__header {
+      padding: 15px;
+    }
+
+    &__form {
+      padding: 15px;
+    }
+
+    &__input,
+    &__textarea {
+      padding: 10px 14px;
+      font-size: 0.9rem;
+    }
+
+    &__submit {
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .modalOverlay {
+    padding: 15px;
+  }
+
+  .modal {
+    border-radius: 8px;
+  }
+
+  .modalContent {
+    padding: 25px 15px;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import styles from './BlogDonateSections.module.scss';
 import { Button } from '../../../components/blogCMS/Button/Button';
 import Modal from '../Modal/Modal';
@@ -68,6 +69,91 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'confirmation' | 'success'>('confirmation');
 
+  // Optimized Framer Motion animation variants for faster loading
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+        delayChildren: 0,
+      },
+    },
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
+  const imageStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 10 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut' as const,
+      },
+    },
+  };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('donation') === 'success') {
@@ -75,7 +161,13 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
       setIsModalOpen(true);
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }, []);
+
+    // Preload critical images for better performance
+    images.slice(0, 3).forEach((imageSrc) => {
+      const img = new Image();
+      img.src = imageSrc;
+    });
+  }, [images]);
 
   const handleDonateClick = () => {
     setModalType('confirmation');
@@ -94,56 +186,100 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
     setIsModalOpen(false);
   };
   return (
-    <section className={`${styles.donationSection} ${className}`}>
-      <div className={styles.donationSection__container}>
-        <h2 className={styles.donationSection__title}>
+    <motion.section
+      className={`${styles.donationSection} ${className}`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+    >
+      <motion.div className={styles.donationSection__container} variants={fadeInUp}>
+        <motion.h2 className={styles.donationSection__title} variants={fadeInUp}>
           Help Feed Hungry Kids in Africa — Support Nimitech&apos;s Fight Against Malnutrition.
-        </h2>
+        </motion.h2>
 
-        <div className={styles.donationSection__content}>
-          <div className={styles.donationSection__info}>
-            <div className={styles.donationSection__perks}>
-              <ul className={styles.donationSection__perksList}>
+        <motion.div className={styles.donationSection__content} variants={containerVariants}>
+          <motion.div className={styles.donationSection__info} variants={fadeInLeft}>
+            <motion.div className={styles.donationSection__perks} variants={containerVariants}>
+              <motion.ul className={styles.donationSection__perksList} variants={containerVariants}>
                 {perks.map((perk, index) => (
-                  <li key={index} className={styles.donationSection__perkItem}>
+                  <motion.li
+                    key={index}
+                    className={styles.donationSection__perkItem}
+                    variants={fadeInUp}
+                    whileHover={{
+                      x: 5,
+                      transition: { duration: 0.2 },
+                    }}
+                  >
                     <span className={styles.donationSection__perkTitle}>{perk.title} –</span>
                     <span className={styles.donationSection__perkDescription}>
                       {perk.description}
                     </span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
-            </div>
+              </motion.ul>
+            </motion.div>
 
-            <div className={styles.donationSection__stats}>
+            <motion.div className={styles.donationSection__stats} variants={containerVariants}>
               {stats.map((stat, index) => (
-                <div key={index} className={styles.donationSection__statItem}>
+                <motion.div
+                  key={index}
+                  className={styles.donationSection__statItem}
+                  variants={scaleIn}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }}
+                >
                   <div className={styles.donationSection__statNumber}>{stat.number}</div>
                   <div className={styles.donationSection__statLabel}>{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className={styles.donationSection__callToAction}>
-              <Button className={styles.donationSection__donateButton} onClick={handleDonateClick}>
-                Donate Now
-              </Button>
-            </div>
-          </div>
+            <motion.div className={styles.donationSection__callToAction} variants={scaleIn}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button
+                  className={styles.donationSection__donateButton}
+                  onClick={handleDonateClick}
+                >
+                  Donate Now
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-          <div className={styles.donationSection__imageGrid}>
+          <motion.div className={styles.donationSection__imageGrid} variants={imageStagger}>
             {images.map((image, index) => (
-              <div key={index} className={styles.donationSection__imageItem}>
+              <motion.div
+                key={index}
+                className={styles.donationSection__imageItem}
+                variants={imageVariants}
+                whileHover={{
+                  scale: 1.05,
+                  zIndex: 10,
+                  transition: { duration: 0.3 },
+                }}
+              >
                 <img
                   src={image}
                   alt={`Donation impact ${index + 1}`}
                   className={styles.donationSection__image}
+                  loading="lazy"
+                  style={{
+                    willChange: 'transform',
+                  }}
                 />
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
       <Modal
         isOpen={isModalOpen}
@@ -160,7 +296,7 @@ export const BlogDonateSections: React.FC<DonationSectionProps> = ({
         onPrimaryAction={modalType === 'confirmation' ? handleConfirmDonation : undefined}
         showSecondaryButton={modalType === 'confirmation'}
       />
-    </section>
+    </motion.section>
   );
 };
 

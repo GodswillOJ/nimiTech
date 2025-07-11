@@ -70,6 +70,18 @@ import Training3 from './business/images/training___11.jpg';
 import WD_image from './business/images/Web_development.jpg';
 import client4 from './business/images/white_lady.jpg';
 import logo from './NimiTechLogo1.png';
+import businessRemoteIT from './business/images/businessRemoteIT.jpeg';
+import hero_background from './business/images/hero_background.jpg';
+import logoUlesson from './business/images/logo.ulesson.jpg';
+import logoAltSchool from './business/images/logo.altSchool.jpg';
+import logoLuminous from './business/images/logo.luminous.jpeg';
+import logoMolin from './business/images/logo.molin.svg';
+import logoShopos from './business/images/logo.shopos.png';
+import logoTracxn from './business/images/logo.tracxn.svg';
+import logoThatch from './business/images/logo.Thatch.avif';
+import logoU from './business/images/logo.u.svg';
+import logoUu from './business/images/logo.uu.svg';
+import logoCharima from './business/images/logo.charima.jpg';
 
 export const businessImages = {
   nimi_hero1,
@@ -143,4 +155,16 @@ export const businessImages = {
   heroBackImage6,
   logo,
   CEO_image,
+  businessRemoteIT,
+  hero_background,
+  logoUlesson,
+  logoAltSchool,
+  logoLuminous,
+  logoMolin,
+  logoShopos,
+  logoTracxn,
+  logoThatch,
+  logoU,
+  logoUu,
+  logoCharima,
 };

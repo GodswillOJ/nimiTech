@@ -1,0 +1,165 @@
+// FileUpload component styles
+.fileUpload {
+  margin-bottom: 20px;
+
+  &__label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+
+    .required {
+      color: #e74c3c;
+      margin-left: 2px;
+    }
+  }
+
+  &__zone {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fafafa;
+
+    &:hover {
+      border-color: #e74c3c;
+      background: #fef7f7;
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  &__text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  &__link {
+    color: #e74c3c;
+    font-weight: 600;
+    text-decoration: underline;
+
+    &:hover {
+      color: #c0392b;
+    }
+  }
+
+  &__subtext {
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  &__preview {
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 15px;
+    background: white;
+  }
+
+  &__previewItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__previewIcon {
+    font-size: 1.5rem;
+    opacity: 0.8;
+  }
+
+  &__previewDetails {
+    flex: 1;
+  }
+
+  &__previewName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+  }
+
+  &__previewSize {
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  &__previewRemove {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #e9ecef;
+      color: #e74c3c;
+    }
+  }
+
+  &__error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
+
+  // Modifiers
+  &--dragover {
+    .fileUpload__zone {
+      border-color: #e74c3c;
+      background: #fef7f7;
+      transform: scale(1.02);
+    }
+  }
+
+  &--error {
+    .fileUpload__zone {
+      border-color: #e74c3c;
+      background: #fef2f2;
+    }
+  }
+
+  &--success {
+    border-color: #10b981;
+    background: #f0fdf4;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .fileUpload {
+    &__zone {
+      padding: 20px 15px;
+    }
+
+    &__icon {
+      font-size: 2rem;
+    }
+
+    &__text {
+      font-size: 0.9rem;
+    }
+
+    &__subtext {
+      font-size: 0.8rem;
+    }
+  }
+}

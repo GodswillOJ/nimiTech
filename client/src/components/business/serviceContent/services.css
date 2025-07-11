@@ -329,6 +329,7 @@ ul li + li {
   object-fit: cover;
   border-radius: 12px;
   display: block;
+  object-fit: cover;
 }
 
 /* Responsive */

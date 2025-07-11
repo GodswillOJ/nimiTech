@@ -445,17 +445,20 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease; // Faster transition for better responsiveness
       box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+      will-change: transform, box-shadow; // Optimize for animations
+      transform: translateZ(0); // Enable hardware acceleration
+      contain: layout style; // Improve rendering performance
 
       &:hover {
-        transform: translateY(-2px);
+        transform: translateY(-2px) translateZ(0);
         box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
         background: linear-gradient(135deg, #5855e6 0%, #7c3aed 100%);
       }
 
       &:active {
-        transform: translateY(0);
+        transform: translateY(0) translateZ(0);
       }
     }
   }
