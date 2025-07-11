@@ -17,6 +17,7 @@ const businessRoutes = require("./routes/businessRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
+const careersRoutes = require("./routes/careersRoutes");
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const { handleJsonParsingError } = require("./controllers/authController");
@@ -82,13 +83,17 @@ app.options("*", cors(corsOptions));
 app.use(cookieParser()); // Parse cookies
 
 // Add caching middleware
-const cacheMiddleware = require('./middleware/cacheMiddleware');
+const cacheMiddleware = require("./middleware/cacheMiddleware");
 app.use(cacheMiddleware);
 
 // Skip JSON parsing for file upload routes
 app.use((req, res, next) => {
   // Skip JSON parsing for file upload endpoints
-  if (req.path.includes("/upload-avatar") || req.path.includes("/upload-image")) {
+  if (
+    req.path.includes("/upload-avatar") ||
+    req.path.includes("/upload-image") ||
+    req.path.includes("/apply")
+  ) {
     return next();
   }
   express.json({ limit: "10mb" })(req, res, next);
@@ -102,6 +107,7 @@ app.use("/api/business", businessRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/careers", careersRoutes);
 
 // Serve uploads under API path for consistency with optimized caching
 app.use(
@@ -113,18 +119,18 @@ app.use(
     next();
   },
   express.static(path.join(__dirname, "/uploads"), {
-    maxAge: '1y',
+    maxAge: "1y",
     etag: true,
     lastModified: true,
     cacheControl: true,
     setHeaders: (res, filePath) => {
       const ext = path.extname(filePath).toLowerCase();
-      if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'].includes(ext)) {
-        res.set('Cache-Control', 'public, max-age=31536000, immutable');
+      if ([".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"].includes(ext)) {
+        res.set("Cache-Control", "public, max-age=31536000, immutable");
       } else {
-        res.set('Cache-Control', 'public, max-age=2592000');
+        res.set("Cache-Control", "public, max-age=2592000");
       }
-    }
+    },
   })
 );
 
@@ -149,24 +155,24 @@ app.use(
     next();
   },
   express.static(path.join(__dirname, "/uploads"), {
-    maxAge: '1y', // Cache images for 1 year
+    maxAge: "1y", // Cache images for 1 year
     etag: true,
     lastModified: true,
     cacheControl: true,
     setHeaders: (res, filePath) => {
       // Different caching strategies based on file type
       const ext = path.extname(filePath).toLowerCase();
-      if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'].includes(ext)) {
+      if ([".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"].includes(ext)) {
         // Images - cache for 1 year (they rarely change)
-        res.set('Cache-Control', 'public, max-age=31536000, immutable');
-      } else if (['.css', '.js'].includes(ext)) {
+        res.set("Cache-Control", "public, max-age=31536000, immutable");
+      } else if ([".css", ".js"].includes(ext)) {
         // CSS/JS - cache for 1 month
-        res.set('Cache-Control', 'public, max-age=2592000');
+        res.set("Cache-Control", "public, max-age=2592000");
       } else {
         // Other files - cache for 1 week
-        res.set('Cache-Control', 'public, max-age=604800');
+        res.set("Cache-Control", "public, max-age=604800");
       }
-    }
+    },
   })
 );
 
@@ -189,7 +195,6 @@ app.use("/uploads", (req, res, next) => {
 app.get("/", (req, res) => {
   res.json({ message: "NimiTech API Server is live." });
 });
-
 
 app.use(notFound);
 app.use(handleJsonParsingError);
