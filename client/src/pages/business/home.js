@@ -225,7 +225,6 @@ const HomePage = () => {
         </motion.div>{' '}
         {/* partner with us */}
         {/* Service updates */}
-       
         {/* Courses */}
         <motion.div
           initial="hidden"
