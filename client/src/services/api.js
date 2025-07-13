@@ -1,25 +1,37 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { secureBaseQuery } from './utilis/baseQuery';
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:10000/api' }), // change to your backend base url
-  tagTypes: ['Business', 'Blogs', 'HomePage'],
+  baseQuery: secureBaseQuery,
+  tagTypes: ['HomePage'],
   endpoints: (builder) => ({
-
-
-    // landing page
     getBusinessPosts: builder.query({
-      query: () => '/',  // your API endpoint for business posts
+      query: () => '/business',
       providesTags: ['HomePage'],
     }),
-    
-    // blogs
-    getBlogs: builder.query({
-      query: () => '/blogs',
-      providesTags: ['Blogs'],
+
+    // 👇 Contact form mutation
+    sendContactForm: builder.mutation({
+      query: (formData) => ({
+        url: '/business/contact', // ✅ Matches backend
+        method: 'POST',
+        body: formData,
+      }),
     }),
 
+    sendServiceInquiry: builder.mutation({
+      query: (formData) => ({
+        url: '/business/inquiry',
+        method: 'POST',
+        body: formData,
+      }),
+    }),
   }),
 });
 
-export const { useGetBusinessPostsQuery } = api;
+export const {
+  useGetBusinessPostsQuery,
+  useSendContactFormMutation, // <-- export it
+  useSendServiceInquiryMutation,
+} = api;

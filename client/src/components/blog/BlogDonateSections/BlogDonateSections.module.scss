@@ -1,0 +1,332 @@
+.donationSection {
+  padding: 2rem 1.5rem;
+  // background: url('../../../assets/blog/images/fluidBackground.jpg');
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('../../../assets/blog/images/donationBg1.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  border-radius: 12px;
+
+  @media (min-width: 768px) {
+    padding: 3rem 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 4rem 4rem;
+  }
+
+  &__container {
+    max-width: 1600px;
+    width: 100%;
+    //   margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    // color: #1a1a1a;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 2rem;
+    line-height: 1.3;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      font-size: 2.25rem;
+      // margin-bottom: 3rem;
+      text-align: left;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 2.75rem;
+      // margin-bottom: 4rem;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2rem;
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      gap: 4rem;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__imageGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.75rem;
+    flex: 1;
+
+    @media (min-width: 768px) {
+      gap: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      max-width: 600px;
+    }
+  }
+
+  &__imageItem {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 4/3;
+
+    &:first-child {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+
+    &:nth-child(2) {
+      grid-row: 1 / 3;
+      grid-column: 2 / 3;
+      aspect-ratio: 3.2/5;
+    }
+
+    &:nth-child(3) {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+    }
+
+    &:nth-child(4) {
+      grid-row: 3 / 4;
+      grid-column: 1 / 2;
+    }
+
+    &:nth-child(5) {
+      grid-row: 3 / 4;
+      grid-column: 2 / 3;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media (min-width: 1024px) {
+      max-width: 500px;
+    }
+  }
+
+  &__perks {
+    margin-top: 2rem;
+    // Block: perks section
+    @media (min-width: 768px) {
+      margin-top: 3rem;
+    }
+    @media (min-width: 1024px) {
+      margin-top: 4rem;
+    }
+  }
+
+  &__perksTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #d97706;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    text-decoration-color: #d97706;
+    text-underline-offset: 4px;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__perksList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__perkItem {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.6;
+    // color: #374151;
+    color: white;
+
+    @media (min-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  &__perkTitle {
+    font-weight: 700;
+    // color: #1f2937;
+    color: white;
+  }
+
+  &__perkDescription {
+    font-weight: 400;
+    margin-left: 0.25rem;
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: 3rem;
+    }
+  }
+
+  &__statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media (min-width: 768px) {
+      align-items: center;
+    }
+  }
+
+  &__statNumber {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+
+    @media (min-width: 768px) {
+      font-size: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__statLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+    // color: #6b7280;
+    color: rgb(199, 185, 185);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    @media (min-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__donateButton {
+    font-weight: 600;
+    font-size: 'Montserrat', sans-serif;
+    background-color: #88199a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: auto;
+      padding: 1.5rem 3rem;
+      font-size: 1.4rem !important;
+    }
+
+    &:hover {
+      background-color: #6b1570;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(136, 25, 154, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(136, 25, 154, 0.2);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(136, 25, 154, 0.4);
+    }
+  }
+}
+
+// Utility modifiers
+.donationSection {
+  // Modifier: dark theme
+  &--dark {
+    background-color: #1f2937;
+
+    .donationSection__title {
+      color: #f9fafb;
+    }
+
+    .donationSection__perkItem {
+      color: #d1d5db;
+    }
+
+    .donationSection__perkTitle {
+      color: #f3f4f6;
+    }
+
+    .donationSection__statNumber {
+      color: #f9fafb;
+    }
+
+    .donationSection__statLabel {
+      color: #9ca3af;
+    }
+  }
+
+  // Modifier: compact layout
+  &--compact {
+    padding: 1.5rem 1rem;
+
+    @media (min-width: 768px) {
+      padding: 2rem;
+    }
+
+    .donationSection__title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+
+      @media (min-width: 768px) {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .donationSection__content {
+      gap: 1.5rem;
+
+      @media (min-width: 1024px) {
+        gap: 2.5rem;
+      }
+    }
+  }
+}

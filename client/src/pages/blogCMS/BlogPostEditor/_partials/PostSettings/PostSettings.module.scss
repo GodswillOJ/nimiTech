@@ -1,0 +1,57 @@
+.settings {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+
+  > * + * {
+    margin-top: 16px;
+  }
+
+  &__helper_text {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &_label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    &_input {
+      width: 16px;
+      height: 16px;
+      accent-color: #3b82f6;
+      cursor: pointer;
+    }
+
+    &_text {
+      user-select: none;
+    }
+
+    &_description {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 0;
+      margin-left: 24px;
+    }
+  }
+}

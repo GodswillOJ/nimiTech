@@ -1,0 +1,202 @@
+.social-stack {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  // Position modifiers
+  &--top-right {
+    top: -250px;
+    right: 20px;
+
+    &.social-stack--active {
+      top: 90px; // Moved down to accommodate navbar
+    }
+  }
+
+  &--top-left {
+    top: -250px;
+    left: 20px;
+
+    &.social-stack--active {
+      top: 90px; // Moved down to accommodate navbar
+    }
+  }
+
+  &--bottom-right {
+    bottom: -250px;
+    right: 20px;
+
+    &.social-stack--active {
+      bottom: 20px;
+    }
+  }
+
+  &--bottom-left {
+    bottom: -250px;
+    left: 20px;
+
+    &.social-stack--active {
+      bottom: 20px;
+    }
+  }
+
+  // Close button
+  &__close {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    color: #374151;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 1);
+      color: #000;
+      transform: scale(1.15) rotate(90deg);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      border: 2px solid rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: scale(1.05) rotate(45deg);
+      transition: all 0.15s ease;
+    }
+  }
+
+  // Social icons
+  &__icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    transform: translateY(-15px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      transform: translateY(-8px) scale(1.15) rotate(10deg);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 1);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      animation: pulse 1.5s infinite;
+    }
+
+    &:active {
+      transform: translateY(-5px) scale(1.05) rotate(5deg);
+      transition: all 0.15s ease;
+    }
+
+    // Add subtle pulse animation on hover
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      }
+      50% {
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.4),
+          0 0 0 4px rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  // Active state
+  &--active &__icon {
+    transform: translateY(0);
+    opacity: 1;
+    animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  // Add bouncy entrance animation
+  @keyframes bounceIn {
+    0% {
+      transform: translateY(-15px) scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(5px) scale(1.05);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .social-stack {
+    gap: 8px;
+
+    &--top-right,
+    &--bottom-right {
+      right: 15px;
+    }
+
+    &--top-left,
+    &--bottom-left {
+      left: 15px;
+    }
+
+    &--top-right.social-stack--active,
+    &--top-left.social-stack--active {
+      top: 85px;
+    }
+
+    &--bottom-right.social-stack--active,
+    &--bottom-left.social-stack--active {
+      bottom: 15px;
+    }
+
+    &__close {
+      width: 28px;
+      height: 28px;
+      font-size: 1rem;
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+
+      &:hover {
+        transform: translateY(-6px) scale(1.1) rotate(8deg);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+  }
+}
