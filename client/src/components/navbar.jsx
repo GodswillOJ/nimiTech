@@ -103,11 +103,11 @@ const Navbar = () => {
               Blogs
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/careers" onClick={() => setIsOpen(false)} className={isActive('/careers')}>
               Careers
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to="https://www.nimitutor.com/"

@@ -35,14 +35,14 @@ const defaultIcons: SocialIcon[] = [
   {
     id: 'twitter',
     name: 'X (formerly Twitter)',
-    url: 'https://x.com/nimi_techIT',
+    url: 'https://x.com/Nimitechitinsta',
     className: 'twitter',
     icon: <XIcon />,
   },
   {
     id: 'instagram',
     name: 'Instagram',
-    url: 'https://www.instagram.com/nimi.techit/',
+    url: 'https://www.instagram.com/nimitechit1/',
     className: 'instagram',
     icon: <InstagramIcon />,
   },

@@ -5,11 +5,11 @@ import { Button } from '../../../components/blogCMS/Button/Button';
 import Modal from '../Modal/Modal';
 
 // Import donation images from assets
-import donationImage2 from '../../../assets/blog/images/donationImage2.jpg';
+import donationImage2 from '../../../assets/blog/images/donationImage2.webp';
 import donationImage4 from '../../../assets/blog/images/donationImage4.jpg';
-import donationImage5 from '../../../assets/blog/images/donationImage5.jpg';
-import donationImage6 from '../../../assets/blog/images/donationImage6.jpg';
-import donationImage1 from '../../../assets/blog/images/donationImage1.jpg';
+import donationImage5 from '../../../assets/blog/images/donationImage5.webp';
+import donationImage6 from '../../../assets/blog/images/donationImage6.webp';
+import donationImage1 from '../../../assets/blog/images/donationImage1.webp';
 
 interface StatItem {
   number: string;

@@ -12,7 +12,7 @@ const TestimonialsSlider = ({ testimonials }) => {
   return (
     <section className={styles.testimonialsSection}>
       <div className={styles.testimonialsHeader}>
-        <span className={styles.testimonialsLabel}>Testimonials</span>
+        <span className={styles.testimonialsLabel}>Client Reviews</span>
         <h2 className={styles.testimonialsTitle}>
           Don&lsquo;t take our word for it!
           <br />

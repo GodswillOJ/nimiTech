@@ -2,8 +2,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useMediaQuery } from '@mui/material';
 import { lazy, useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import donationImage1 from '../../assets/blog/images/donationImage1.jpg';
-import donationImage2 from '../../assets/blog/images/donationImage2.jpg';
+import donationImage1 from '../../assets/blog/images/donationImage1.webp';
+import donationImage2 from '../../assets/blog/images/donationImage2.webp';
 import { businessImages } from '../../assets/images.js';
 import {
   dummyBusinessPosts,
@@ -12,6 +12,7 @@ import {
   services,
 } from '../../components/business/business_post/buisnessData.jsx';
 import CeoMessage from '../../components/business/CeoMessage/CeoMessage';
+import SEO from '../../components/SEO/SEO';
 import {
   BusinessPostItem,
   ClientReview,
@@ -39,6 +40,38 @@ const HomePage = () => {
   const [showAllPosts, setShowAllPosts] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [fade, setFade] = useState(true);
+
+  // SEO Configuration
+  const seoData = {
+    title: 'Home - Transform Your Business with Innovative IT Solutions',
+    description:
+      'Discover how Nimitech IT helps businesses thrive with digital transformation, cybersecurity, web development, and cloud solutions. Unlock innovation and efficiency with our expert IT services. Contact us today to start your journey!',
+    keywords:
+      'IT solutions, digital transformation, cybersecurity, web development, cloud solutions, digital marketing, business innovation, technology consulting, Nimi Tech, IT services',
+    canonical: 'https://nimitechit.com/',
+    ogImage: 'https://nimitechit.com/images/home-og-image.jpg',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Nimi Tech',
+      url: 'https://nimitechit.com',
+      logo: 'https://nimitechit.com/images/logo.png',
+      description:
+        'Leading IT solutions provider specializing in digital transformation, cybersecurity, and innovative technology services',
+      foundingDate: '2020',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+1-XXX-XXX-XXXX',
+        contactType: 'customer service',
+        availableLanguage: 'English',
+      },
+      sameAs: [
+        'https://www.linkedin.com/company/nimitech',
+        'https://twitter.com/nimitechit',
+        'https://www.facebook.com/nimitech',
+      ],
+    },
+  };
 
   const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
@@ -124,9 +157,17 @@ const HomePage = () => {
   };
   return (
     <>
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonical={seoData.canonical}
+        ogImage={seoData.ogImage}
+        ogUrl={seoData.canonical}
+        structuredData={seoData.structuredData}
+      />
       {/* Preload critical images for better LCP */}
       <link rel="preload" as="image" href={businessImages.hero_background} />
-      <link rel="preload" as="image" href={businessImages.nimi_hero1} />
 
       <div
         className="home-page-business"
@@ -223,8 +264,150 @@ const HomePage = () => {
         >
           <LogoSlider />
         </motion.div>{' '}
-        {/* partner with us */}
-        {/* Service updates */}
+        {/* Youtube Channel Section */}
+        <motion.div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginRight: 'calc(-50vw + 50%)',
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+        >
+          {/* Video Container - Full Width */}
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '60vh',
+              minHeight: '400px',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {/* Enhanced YouTube Embed with proper sizing and functionality */}
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+              }}
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/fWk0YKyVGBk?controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&origin=${window.location.origin}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  borderRadius: '8px',
+                  aspectRatio: '16/9',
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+              />
+            </div>
+
+            {/* Background Gradient Overlay - Behind the video */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.1) 100%)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+
+            {/* Floating Social Card */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '32px',
+                right: '32px',
+                zIndex: 3,
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '20px',
+                padding: '24px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                maxWidth: '280px',
+                // Mobile positioning
+                ...(typeof window !== 'undefined' && window.innerWidth <= 768
+                  ? {
+                      display: 'none',
+                      // position: 'static',
+                      // margin: '20px auto',
+                      // maxWidth: '100%',
+                      // width: 'calc(100% - 40px)',
+                    }
+                  : {}),
+              }}
+            >
+              <h3
+                style={{
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontWeight: '600',
+                  fontSize: '18px',
+                  marginBottom: '16px',
+                  color: '#fff',
+                  textAlign: 'center',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                Connect With Us
+              </h3>
+              <SocialLinks />
+            </div>
+          </div>
+        </motion.div>
+        {/* Enhanced Social Links Component */}
+        <style>{`
+          @media (max-width: 768px) {
+            .floating-social-card {
+              position: static !important;
+              margin: 20px auto !important;
+              bottom: auto !important;
+              right: auto !important;
+              left: 50% !important;
+              transform: translateX(-50%) !important;
+              max-width: calc(100% - 40px) !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .video-container {
+              height: 50vh !important;
+              min-height: 300px !important;
+            }
+
+            .floating-social-card {
+              padding: 16px !important;
+              border-radius: 12px !important;
+            }
+          }
+        `}</style>
         {/* Courses */}
         <motion.div
           initial="hidden"
@@ -235,7 +418,7 @@ const HomePage = () => {
             backgroundColor: 'rgba(255, 255, 255, 0.8)',
             padding: isSmallScreen ? '0' : isMediumScreen ? '10px' : '20px',
             width: '100%',
-            margin: 0,
+            marginTop: isSmallScreen ? '30px' : '60px',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             fontFamily: 'Montserrat, sans-serif',
           }}
@@ -244,7 +427,7 @@ const HomePage = () => {
             variants={fadeInUp}
             style={{
               textAlign: 'center',
-              marginBottom: isSmallScreen ? '0' : '60px',
+              marginBottom: isSmallScreen ? '0' : '10px',
               padding: isSmallScreen ? '20px' : '20px',
               color: '#433c4c',
             }}
@@ -312,12 +495,6 @@ const HomePage = () => {
                 </div>
               )}
             </div>
-            {/* 📌 Left Side: Text & List Block */}
-            {/* <div style={{ width: '100%' }}>
-            <div style={{ padding: isSmallScreen ? '20px' : '0' }}>
-              <ServiceHighlights />
-            </div>
-          </div> */}
           </div>
         </motion.div>
         {/* Services */}
@@ -340,7 +517,6 @@ const HomePage = () => {
               gap: '40px',
             }}
           >
-            {/* 📸 Right Side: Full-Size Image */}
             <div
               className="service-img-container"
               style={{
@@ -398,68 +574,24 @@ const HomePage = () => {
             </div>
           </div>
         </motion.div>
-        {/* Youtube Channel Section */}
+        {/* partner with us */}
         <motion.div
-          style={{ position: 'relative', overflow: 'hidden' }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
+          {/* Partner With Us Section */}
+          <PartnerWithUs services={services} />
+        </motion.div>{' '}
+        {/* Testimonials Infinite Slider - Lazy loaded for better performance */}
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeInUp}
         >
-          {/* Blurred Background Image */}
-          <img
-            src={businessImages.WD_image} // Replace with your image path
-            alt="background"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              filter: 'blur(8px)',
-              zIndex: 0,
-            }}
-          />
-
-          {/* Foreground Content */}
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: '40px',
-              background: 'none', // Optional: semi-transparent layer for contrast
-              padding: '40px 20px',
-              borderRadius: '16px',
-              margin: '20px auto',
-              maxWidth: '1200px',
-              textAlign: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            }}
-          >
-            <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-              <YoutubeEmbed videoId="fWk0YKyVGBk" />
-            </div>
-
-            <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
-              <h3
-                fontFamily="Montserrat, sans-serif"
-                fontWeight="400px"
-                style={{
-                  marginTop: isSmallScreen ? '10px' : isMediumScreen ? '0' : '0',
-                  marginBottom: '10px',
-                  color: '#fff',
-                }}
-              >
-                Follow us on
-              </h3>
-              <SocialLinks />
-            </div>
-          </div>
+          <LazyTestimonialsSlider testimonials={testimonials} />
         </motion.div>
         {/* CEO Message Section */}
         <motion.div
@@ -501,23 +633,6 @@ const HomePage = () => {
             onDonateClick={() => window.open('https://gofund.me/a95d2b08', '_blank')}
           />
         </motion.section>
-        {/* Testimonials Infinite Slider - Lazy loaded for better performance */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeInUp}
-        >
-          <Suspense
-            fallback={
-              <div style={{ height: '400px', backgroundColor: '#f5f5f5' }}>
-                Loading testimonials...
-              </div>
-            }
-          >
-            <LazyTestimonialsSlider testimonials={testimonials} />
-          </Suspense>
-        </motion.div>
         {/* Footer */}
         <Footer />
       </div>

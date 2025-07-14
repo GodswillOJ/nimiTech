@@ -24,9 +24,9 @@ const LogoSlider = React.memo(() => {
       name: 'logoMolin',
     },
     {
-      src: businessImages.logoShopos2,
-      alt: 'logoShopos2',
-      name: 'logoShopos2',
+      src: businessImages.logoShopos,
+      alt: 'logoShopos',
+      name: 'logoShopos',
     },
     {
       src: businessImages.logoTracxn,
@@ -74,7 +74,7 @@ const LogoSlider = React.memo(() => {
               loading="lazy" // Lazy load for better LCP
               decoding="async" // Async decoding for better performance
               width="120" // Fixed width to prevent layout shift
-              height="60" // Fixed height to prevent layout shift
+              height="70" // Fixed height to prevent layout shift
             />
           ))}
         </div>

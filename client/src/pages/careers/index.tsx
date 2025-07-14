@@ -4,6 +4,7 @@ import { useGetAllJobsQuery } from '../../services/utilis/careerApiService';
 import { businessImages } from 'assets/images';
 import { Job } from '../../types/job.types';
 import styles from './Careers.module.scss';
+import SEO from '../../components/SEO/SEO';
 
 const Careers = () => {
   const [filters, setFilters] = useState({
@@ -12,6 +13,33 @@ const Careers = () => {
     location: 'all',
     search: '',
   });
+
+  // SEO Configuration
+  const seoData = {
+    title: 'Careers - Join Our Team of IT Innovation Experts',
+    description:
+      'Explore exciting career opportunities at Nimitech IT. Join our team of technology experts and be part of driving digital transformation. Discover open positions in IT, development, marketing, and more.',
+    keywords:
+      'careers, IT jobs, technology careers, software developer jobs, digital marketing careers, cybersecurity jobs, remote work, Nimi Tech careers',
+    canonical: 'https://nimitechit.com/careers',
+    ogImage: 'https://nimitechit.com/images/careers-og-image.jpg',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      hiringOrganization: {
+        '@type': 'Organization',
+        name: 'Nimi Tech',
+        sameAs: 'https://nimitechit.com',
+      },
+      jobLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'US',
+        },
+      },
+    },
+  };
 
   // Use RTK Query to fetch jobs with filters
   const {

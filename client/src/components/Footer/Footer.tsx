@@ -34,8 +34,8 @@ const Footer: React.FC = () => {
   const navigate = useNavigate();
 
   const socialLinks: SocialLink[] = [
-    { icon: <XIcon />, href: 'https://x.com/nimi_techIT', label: 'twitter' },
-    { icon: <InstagramIcon />, href: 'https://www.instagram.com/nimi.techit/', label: 'instagram' },
+    { icon: <XIcon />, href: 'https://x.com/Nimitechitinsta', label: 'twitter' },
+    { icon: <InstagramIcon />, href: 'https://www.instagram.com/nimitechit1/', label: 'instagram' },
     {
       icon: <FacebookIcon />,
       href: 'https://www.facebook.com/profile.php?id=61577287182430',

@@ -145,7 +145,7 @@ const SocialLinks = () => {
           }}
         />
       ),
-      url: 'https://x.com/nimi_techIT',
+      url: 'https://x.com/Nimitechitinsta',
     },
     {
       icon: (
@@ -185,251 +185,215 @@ const SocialLinks = () => {
 };
 
 const PartnerWithUs = ({ services }) => {
-  const isBelow1100 = useMediaQuery('(max-width:1100px)');
   const isSmallScreen = useMediaQuery('(max-width:768px)');
   const isMediumScreen = useMediaQuery('(max-width:900px)');
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  const stepData = [
+    {
+      number: 1,
+      title: 'Unlock Limitless Potential',
+      description:
+        'Partnering with us means gaining access to a dedicated team of professionals who provide results-driven digital marketing services, tailored software development solutions, and cutting-edge technology implementations.',
+      color: '#2d5a3d',
+    },
+    {
+      number: 2,
+      title: 'Comprehensive Solutions',
+      description:
+        'We provide professional website design & development, AI & machine learning solutions for business growth, advanced cybersecurity services, and scalable cloud infrastructure to meet all your digital needs.',
+      color: '#546875',
+    },
+    {
+      number: 3,
+      title: 'Your Success is Our Mission',
+      description:
+        'We go beyond services—we build long-lasting partnerships to elevate your business. Our aim is to deliver innovative, efficient, and scalable solutions that empower our clients to thrive in an ever-evolving digital landscape.',
+      color: '#b8860b',
+    },
+  ];
+
   return (
-    <div
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={containerVariants}
       style={{
         maxWidth: '1300px',
         margin: '0 auto',
-        padding: isSmallScreen ? '0' : isMediumScreen ? '0' : '0',
+        padding: isSmallScreen ? '40px 20px' : isMediumScreen ? '60px 40px' : '80px 60px',
+        fontFamily: 'Montserrat, sans-serif',
       }}
     >
-      <h2
+      {/* Main Title */}
+      <motion.h2
+        variants={itemVariants}
         style={{
-          fontSize: isSmallScreen ? '1.6rem' : isMediumScreen ? '1.8rem' : '2.4rem',
+          fontSize: isSmallScreen ? '1.8rem' : isMediumScreen ? '2.2rem' : '2.8rem',
           fontWeight: 'bold',
           color: '#333',
           textAlign: 'center',
-          fontFamily: 'Montserrat, sans-serif',
-          padding: isSmallScreen
-            ? '40px 60px 10px 60px'
-            : isMediumScreen
-              ? '20px 10px'
-              : '40px 20px',
-          marginBottom: '40px',
+          marginBottom: isSmallScreen ? '40px' : '60px',
+          lineHeight: 1.2,
         }}
       >
         Why Partner With Us
-      </h2>
+      </motion.h2>
 
+      {/* Content Container */}
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
+          flexDirection: isSmallScreen ? 'column' : 'row',
+          gap: isSmallScreen ? '0' : '60px',
+          alignItems: 'flex-start',
         }}
       >
-        {/* Responsive row layout */}
-        <div
+        {/* Left Side - Professional Image */}
+        <motion.div
+          variants={itemVariants}
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: '20px',
-            justifyContent: 'center',
-            alignItems: 'center', // Makes children take equal height
+            flex: isSmallScreen ? 'none' : '1',
+            width: isSmallScreen ? '100%' : 'auto',
+            maxWidth: isSmallScreen ? '100%' : '500px',
+            marginBottom: isSmallScreen ? '40px' : '0',
           }}
         >
-          {/* Text container with background image and overlay */}
           <div
             style={{
-              flex: 1,
-              minWidth: '300px',
               position: 'relative',
-              borderRadius: '16px',
+              borderRadius: '20px',
               overflow: 'hidden',
-              height: isSmallScreen ? 'auto' : '500px', // Same height logic
-              fontFamily: 'Montserrat, sans-serif',
-              padding: '',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {/* Background Image Layer */}
-            <div
-              className="image-hover"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url(${businessImages.Partner__})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                zIndex: 0,
-                transform: 'scale(1.1)',
-              }}
-            />
-
-            {/* Overlay */}
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'none',
-                zIndex: 0,
-              }}
-            />
-
-            {/* Content */}
-            <div
-              style={{
-                position: 'relative',
-                zIndex: 2,
-                color: '#fff',
-                textAlign: 'normal',
-                padding: '40px',
-              }}
-            >
-              <h4
-                style={{
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  padding: '40px',
-                  borderRadius: '20px',
-                  fontSize: isSmallScreen ? '1.4rem' : isMediumScreen ? '1.6rem' : '2rem',
-                  marginBottom: '20px',
-                  marginTop: isSmallScreen ? '20px' : isMediumScreen ? '40px' : '40px',
-                  color: '#ac00d6',
-                  fontWeight: 'bold',
-                }}
-              >
-                Unlock Limitless Potential
-              </h4>
-
-              <p
-                style={{
-                  fontSize: isSmallScreen ? '1rem' : '1.1rem',
-                  lineHeight: '1.7',
-                  fontStyle: 'italic',
-                  marginBottom: '20px',
-                  color: '#f0f0f0',
-                  fontWeight: '600',
-                  textAlign: 'left',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.4)',
-                }}
-              >
-                Partnering with us means gaining access to a dedicated team of professionals who
-                provide:
-              </p>
-
-              <ul
-                style={{
-                  paddingLeft: isSmallScreen ? '16px' : '20px',
-                  fontSize: isSmallScreen ? '0.95rem' : '1rem',
-                  lineHeight: '1.6',
-                  fontWeight: 'bold',
-                  color: '#ffffff',
-                  listStyle: 'none',
-                  margin: 0,
-                }}
-              >
-                {services.slice(0, 6).map((item, index) => (
-                  <motion.li
-                    key={index}
-                    custom={index}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: (i) => ({
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          delay: i * 0.15,
-                          duration: 0.5,
-                          ease: 'easeOut',
-                        },
-                      }),
-                    }}
-                    style={{
-                      position: 'relative',
-                      paddingLeft: '28px',
-                      marginBottom: '14px',
-                    }}
-                  >
-                    <span
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: '5px',
-                        width: '8px',
-                        height: '8px',
-                        backgroundColor: '#ffffff',
-                        borderRadius: '50%',
-                      }}
-                    />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Image container with overlay text */}
-          <div
-            className="image-container"
-            style={{
-              flex: 1,
-              minWidth: '300px',
-              position: 'relative',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              height: isSmallScreen ? 'auto' : '500px', // Match height here
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+              height: isSmallScreen ? '300px' : '500px',
             }}
           >
             <img
-              src={businessImages.OurSuccess}
-              alt="Partner with us"
-              className="image-hover"
+              src={businessImages.partnerWithUs}
+              alt="Professional team collaboration"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+            />
+            {/* Subtle overlay for better text contrast if needed */}
+            <div
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(0.6)',
-                zIndex: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 100%)',
               }}
             />
+          </div>
+        </motion.div>
 
-            <div
+        {/* Right Side - Numbered Steps */}
+        <motion.div
+          variants={itemVariants}
+          style={{
+            flex: isSmallScreen ? 'none' : '1',
+            width: isSmallScreen ? '100%' : 'auto',
+            paddingLeft: isSmallScreen ? '0' : '20px',
+          }}
+        >
+          {stepData.map((step, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
               style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                marginBottom: isSmallScreen ? '35px' : '45px',
                 position: 'relative',
-                zIndex: 2,
-                color: 'white',
-                padding: isSmallScreen ? '30px' : '30px',
-                textAlign: 'left',
-                width: '90%',
-                maxWidth: '500px',
-                fontFamily: 'Montserrat, sans-serif',
               }}
             >
-              <h3 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>
-                Your Success is Our Mission
-              </h3>
-              <p style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
-                We go beyond services—we build long-lasting partnerships to elevate your business.
-                Our aim is to deliver innovative, efficient, and scalable solutions that empower our
-                clients to thrive in an ever-evolving digital landscape.
-              </p>
-            </div>
-          </div>
-        </div>
+              {/* Number Circle */}
+              <div
+                style={{
+                  minWidth: isSmallScreen ? '50px' : '60px',
+                  height: isSmallScreen ? '50px' : '60px',
+                  borderRadius: '50%',
+                  backgroundColor: step.color,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: isSmallScreen ? '16px' : '24px',
+                  marginTop: '4px',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
+                  border: '3px solid white',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'white',
+                    fontSize: isSmallScreen ? '1.4rem' : '1.6rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  {step.number}
+                </span>
+              </div>
+
+              {/* Content */}
+              <div style={{ flex: 1 }}>
+                <h3
+                  style={{
+                    fontSize: isSmallScreen ? '1.3rem' : '1.5rem',
+                    fontWeight: '600',
+                    color: '#333',
+                    marginBottom: '12px',
+                    lineHeight: 1.3,
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: isSmallScreen ? '0.95rem' : '1rem',
+                    lineHeight: 1.6,
+                    color: '#666',
+                    margin: 0,
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  {step.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -450,7 +414,7 @@ export const testimonials = [
     course: 'AI & Machine Learning – Germany',
     name: 'Lukas Fischer, Berlin, Germany',
     review:
-      '“We partnered with Nimitech IT to integrate AI and machine learning into our logistics platform, and the results have been phenomenal. Their solutions have improved our forecasting accuracy and reduced delivery times. Their technical team was collaborative, agile, and truly understood our business needs. Highly recommended for innovation-driven projects!“',
+      'We partnered with Nimitech IT to integrate AI and machine learning into our logistics platform, and the results have been phenomenal. Their solutions have improved our forecasting accuracy and reduced delivery times. Their technical team was collaborative, agile, and truly understood our business needs. Highly recommended for innovation-driven projects!',
   },
   {
     image: marketingImage,

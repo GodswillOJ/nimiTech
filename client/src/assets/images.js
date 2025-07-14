@@ -43,7 +43,7 @@ import heroBackImage2 from './business/images/heroBackImage2.jpg';
 import heroBackImage7 from './business/images/heroBackImage7.jpg';
 import heroBackImage3 from './business/images/heroBackImg5.jpg';
 import hero1 from './business/images/heroImage1.jpg';
-import hero2 from './business/images/heroImage2.jpg';
+import hero2 from './business/images/hero2.webp';
 import hero4 from './business/images/heroImage3.jpg';
 import hero3 from './business/images/heroImage4.jpg';
 import IT_2 from './business/images/IT_2.jpg';
@@ -82,6 +82,8 @@ import logoThatch from './business/images/logo.Thatch.avif';
 import logoU from './business/images/logo.u.svg';
 import logoUu from './business/images/logo.uu.svg';
 import logoCharima from './business/images/logo.charima.jpg';
+import partnerWithUs from './business/images/partnerWithUs.webp';
+import bg from './business/images/bg.webp';
 
 export const businessImages = {
   nimi_hero1,
@@ -167,4 +169,6 @@ export const businessImages = {
   logoU,
   logoUu,
   logoCharima,
+  partnerWithUs,
+  bg,
 };
