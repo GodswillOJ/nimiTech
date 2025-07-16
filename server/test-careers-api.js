@@ -1,5 +1,3 @@
-const axios = require("axios");
-
 const testCareersAPI = async () => {
   const baseURL = "http://localhost:10000/api/careers";
 
@@ -8,19 +6,23 @@ const testCareersAPI = async () => {
 
     // Test 1: Get all jobs
     console.log("1. Testing GET /api/careers/jobs");
-    const jobsResponse = await axios.get(`${baseURL}/jobs`);
-    console.log(`✅ Status: ${jobsResponse.status}`);
-    console.log(`✅ Found ${jobsResponse.data.jobs.length} jobs`);
-    console.log(`✅ Total jobs: ${jobsResponse.data.totalJobs}\n`);
+    const jobsRes = await fetch(`${baseURL}/jobs`);
+    if (!jobsRes.ok) throw new Error(`Status ${jobsRes.status}`);
+    const jobsData = await jobsRes.json();
+    console.log(`✅ Status: ${jobsRes.status}`);
+    console.log(`✅ Found ${jobsData.jobs.length} jobs`);
+    console.log(`✅ Total jobs: ${jobsData.totalJobs}\n`);
 
     // Test 2: Get specific job
-    if (jobsResponse.data.jobs.length > 0) {
-      const firstJob = jobsResponse.data.jobs[0];
+    if (jobsData.jobs.length > 0) {
+      const firstJob = jobsData.jobs[0];
       console.log(`2. Testing GET /api/careers/jobs/${firstJob._id}`);
-      const jobResponse = await axios.get(`${baseURL}/jobs/${firstJob._id}`);
-      console.log(`✅ Status: ${jobResponse.status}`);
-      console.log(`✅ Job title: ${jobResponse.data.title}`);
-      console.log(`✅ Department: ${jobResponse.data.department}\n`);
+      const jobRes = await fetch(`${baseURL}/jobs/${firstJob._id}`);
+      if (!jobRes.ok) throw new Error(`Status ${jobRes.status}`);
+      const jobData = await jobRes.json();
+      console.log(`✅ Status: ${jobRes.status}`);
+      console.log(`✅ Job title: ${jobData.title}`);
+      console.log(`✅ Department: ${jobData.department}\n`);
     }
 
     console.log("🎉 All tests passed! Careers API is working correctly.");

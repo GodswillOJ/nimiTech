@@ -35,7 +35,7 @@ const sendApplicationConfirmation = async (applicantData, jobData) => {
             .header { background-color: #2c3e50; color: white; padding: 20px; text-align: center; }
             .content { padding: 20px; background-color: #f9f9f9; }
             .footer { background-color: #34495e; color: white; padding: 15px; text-align: center; }
-            .highlight { color: #e74c3c; font-weight: bold; }
+            .highlight { color: #88199a; font-weight: bold; }
           </style>
         </head>
         <body>
