@@ -71,7 +71,7 @@ import WD_image from './business/images/Web_development.jpg';
 import client4 from './business/images/white_lady.jpg';
 import logo from './NimiTechLogo1.png';
 import businessRemoteIT from './business/images/businessRemoteIT.jpeg';
-import hero_background from './business/images/hero_background.jpg';
+import hero_background2 from './business/images/hero_background2.png';
 import logoUlesson from './business/images/logo.ulesson.jpg';
 import logoAltSchool from './business/images/logo.altSchool.jpg';
 import logoLuminous from './business/images/logo.luminous.jpeg';
@@ -158,7 +158,7 @@ export const businessImages = {
   logo,
   CEO_image,
   businessRemoteIT,
-  hero_background,
+  hero_background2,
   logoUlesson,
   logoAltSchool,
   logoLuminous,

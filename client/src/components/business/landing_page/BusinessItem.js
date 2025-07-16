@@ -217,6 +217,7 @@ const PartnerWithUs = ({ services }) => {
       title: 'Unlock Limitless Potential',
       description:
         'Partnering with us means gaining access to a dedicated team of professionals who provide results-driven digital marketing services, tailored software development solutions, and cutting-edge technology implementations.',
+      image: businessImages.branding2, // Add your preferred image
       color: '#2d5a3d',
     },
     {
@@ -224,6 +225,7 @@ const PartnerWithUs = ({ services }) => {
       title: 'Comprehensive Solutions',
       description:
         'We provide professional website design & development, AI & machine learning solutions for business growth, advanced cybersecurity services, and scalable cloud infrastructure to meet all your digital needs.',
+      image: businessImages.partnerWithUs, // Add your preferred image
       color: '#546875',
     },
     {
@@ -231,6 +233,7 @@ const PartnerWithUs = ({ services }) => {
       title: 'Your Success is Our Mission',
       description:
         'We go beyond services—we build long-lasting partnerships to elevate your business. Our aim is to deliver innovative, efficient, and scalable solutions that empower our clients to thrive in an ever-evolving digital landscape.',
+      image: businessImages.branding2, // Add your preferred image
       color: '#b8860b',
     },
   ];
@@ -242,7 +245,7 @@ const PartnerWithUs = ({ services }) => {
       viewport={{ once: true, amount: 0.3 }}
       variants={containerVariants}
       style={{
-        maxWidth: '1300px',
+        maxWidth: '1600px',
         margin: '0 auto',
         padding: isSmallScreen ? '40px 20px' : isMediumScreen ? '60px 40px' : '80px 60px',
         fontFamily: 'Montserrat, sans-serif',
@@ -258,6 +261,7 @@ const PartnerWithUs = ({ services }) => {
           textAlign: 'center',
           marginBottom: isSmallScreen ? '40px' : '60px',
           lineHeight: 1.2,
+          height: '100%',
         }}
       >
         Why Partner With Us
@@ -297,6 +301,7 @@ const PartnerWithUs = ({ services }) => {
               style={{
                 width: '100%',
                 height: '100%',
+                backgroundPosition: 'cover',
                 objectFit: 'cover',
                 objectPosition: 'center',
               }}
@@ -315,7 +320,7 @@ const PartnerWithUs = ({ services }) => {
           </div>
         </motion.div>
 
-        {/* Right Side - Numbered Steps */}
+        {/* Right Side - Card-based Steps */}
         <motion.div
           variants={itemVariants}
           style={{
@@ -331,36 +336,45 @@ const PartnerWithUs = ({ services }) => {
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
-                marginBottom: isSmallScreen ? '35px' : '45px',
+                marginBottom: isSmallScreen ? '25px' : '30px',
                 position: 'relative',
+                background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                borderRadius: '16px',
+                padding: isSmallScreen ? '20px' : '24px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+              }}
+              whileHover={{
+                scale: 1.02,
+                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1)',
               }}
             >
-              {/* Number Circle */}
+              {/* Image Container */}
               <div
                 style={{
-                  minWidth: isSmallScreen ? '50px' : '60px',
-                  height: isSmallScreen ? '50px' : '60px',
-                  borderRadius: '50%',
-                  backgroundColor: step.color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  minWidth: isSmallScreen ? '80px' : '100px',
+                  height: isSmallScreen ? '80px' : '100px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
                   marginRight: isSmallScreen ? '16px' : '24px',
                   marginTop: '4px',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
                   border: '3px solid white',
+                  background: 'linear-gradient(135deg, #f8f9fa, #e9ecef)',
                 }}
               >
-                <span
+                <img
+                  src={step.image}
+                  alt={step.title}
                   style={{
-                    color: 'white',
-                    fontSize: isSmallScreen ? '1.4rem' : '1.6rem',
-                    fontWeight: 'bold',
-                    fontFamily: 'Montserrat, sans-serif',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.3s ease',
                   }}
-                >
-                  {step.number}
-                </span>
+                />
               </div>
 
               {/* Content */}

@@ -7,6 +7,7 @@ import {
 } from '../../../services/utilis/careerApiService';
 import { useToast } from '../../../hooks/useToast';
 import styles from './JobEditor.module.scss';
+import Loader from '../../../components/blog/SuspenseLoader/Loader';
 
 interface JobFormData {
   title: string;
@@ -217,8 +218,7 @@ const JobEditor: React.FC = () => {
   if (isEditing && isLoading) {
     return (
       <div className={styles.loadingContainer}>
-        <div className={styles.loader}></div>
-        <p>Loading job details...</p>
+        <Loader />
       </div>
     );
   }

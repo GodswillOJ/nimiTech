@@ -1,4 +1,3 @@
-// Career routes configuration
 import { Routes, Route } from 'react-router-dom';
 import Careers from '../pages/careers';
 import JobDetail from '../pages/careers/JobDetail';

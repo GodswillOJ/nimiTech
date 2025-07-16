@@ -155,29 +155,16 @@ const ContactUs = () => {
       />
       <Box>
         {/* Hero Section */}
-        <Box position="relative" height={isSmallScreen ? 500 : 550} overflow="hidden">
+        <Box position="relative" height={isSmallScreen ? 600 : 700} overflow="hidden">
           <video
             src="/videos/nimiVid.mp4"
             autoPlay
             muted
             loop
             playsInline
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              marginTop: '4rem',
-            }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '6rem' }}
           />
-          <Box
-            position="absolute"
-            top={0}
-            left={0}
-            width="100%"
-            height="100%"
-            // Optional overlay:
-            // bgcolor="rgba(0, 0, 0, 0.4)"
-          />
+          <Box position="absolute" top={0} left={0} width="100%" height="100%" />
           <Box
             position="absolute"
             top="50%"
@@ -187,7 +174,6 @@ const ContactUs = () => {
               color: '#fff',
               textAlign: 'normal',
               zIndex: 2,
-              px: 2,
             }}
           >
             <Typography variant="h3" fontWeight="bold">

@@ -99,14 +99,14 @@ const About = () => {
         </style>
 
         {/* Hero Section */}
-        <Box position="relative" height={isSmallScreen ? 500 : 500} overflow="hidden">
+        <Box position="relative" height={isSmallScreen ? 600 : 700}>
           <video
             src="/videos/nimiVid.mp4"
             autoPlay
             muted
             loop
             playsInline
-            style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '4rem' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '6rem' }}
           />
           <Box position="absolute" top={0} left={0} width="100%" height="100%" />
           <Box
@@ -135,7 +135,7 @@ const About = () => {
         </Box>
 
         {/* Mission and Info */}
-        <Box py={8} px={isSmallScreen ? 0 : 0}>
+        <Box py={8} px={isSmallScreen ? 0 : 0} mt={16}>
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
               <Fade in timeout={1000}>

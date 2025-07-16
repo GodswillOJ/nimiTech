@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useGetJobByIdQuery, useGetAllJobsQuery } from '../../services/utilis/careerApiService';
 import ApplicationForm from '../../components/careers/ApplicationForm/ApplicationForm';
+import logo from '../../assets/NimiTechLogo1.png';
 import styles from './JobDetail.module.scss';
 
 const JobDetail = () => {
@@ -83,17 +84,6 @@ const JobDetail = () => {
   return (
     <div className={styles.jobDetailPage}>
       {/* Header */}
-      <section className={styles.headerSection}>
-        <div className={styles.container}>
-          <nav className={styles.breadcrumb}>
-            <Link to="/">Home</Link>
-            <span>/</span>
-            <Link to="/careers">Careers</Link>
-            <span>/</span>
-            <span>{job.title}</span>
-          </nav>
-        </div>
-      </section>
 
       <div className={styles.container}>
         <div className={styles.contentWrapper}>
@@ -102,7 +92,7 @@ const JobDetail = () => {
             <div className={styles.jobHeader}>
               <div className={styles.companyInfo}>
                 <div className={styles.companyLogo}>
-                  <span>NT</span>
+                  <img src={logo} alt="Nimtech Logo" style={{ width: '100px', height: 'auto' }} />
                 </div>
                 <div className={styles.companyDetails}>
                   <h1>{job.title}</h1>
@@ -185,7 +175,7 @@ const JobDetail = () => {
 
               <div className={styles.applySection}>
                 <h2>Ready to apply?</h2>
-                <p>Submit your application and join our team at NimiTech!</p>
+                <p>Submit your application and join our team at Nimitech!</p>
                 <button onClick={handleApplyClick} className={styles.applyButtonLarge}>
                   Apply Now
                 </button>

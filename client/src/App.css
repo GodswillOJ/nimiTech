@@ -139,7 +139,7 @@ h2 .my-domine1 {
 .navbar {
   position: fixed;
   top: 0;
-  height: 70px;
+  height: 100px;
   left: 0;
   width: 100%;
   z-index: 1000;
@@ -154,16 +154,6 @@ h2 .my-domine1 {
   box-shadow: rgba(17, 0, 0, 0.3) 0px 4px 12px;
 }
 
-/* scrolling effect */
-/* Dark background when scrolled */
-
-/* .navbar.navbar-scrolled .nav-links li a {
-  color: #fff;
-}
-
-.navbar.navbar-scrolled .harmburger {
-  color: #fff;
-} */
 
 .navbar-left {
   display: flex;
@@ -184,13 +174,13 @@ h2 .my-domine1 {
 }
 
 .logo {
-  height: 40px; /* adjust size as needed */
+  height: 45px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
   /* filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); */
 }
 .logo_2 {
-  height: 30px; /* adjust size as needed */
+  height: 35px; /* adjust size as needed */
   width: auto;
   object-fit: contain;
 }
@@ -206,8 +196,8 @@ h2 .my-domine1 {
 .nav-links li a {
   color: rgb(161, 3, 124);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 18px;
   font-family: 'Montserrat', sans-serif;
   transition: color 0.2s ease; /* Faster transition for better responsiveness */
   color: rgb(47, 40, 40);
@@ -403,7 +393,7 @@ h2 .my-domine1 {
   top: 60px;
   font-family: 'Montserrat, sans-serif';
   width: 70%;
-  padding: 130px 40px 100px 60px;
+  padding: 140px 40px 100px 60px;
   color: white;
 }
 

@@ -437,3 +437,28 @@ $breakpoint-xl: 1200px;
     transform: rotate(360deg);
   }
 }
+
+.gradientBackground {
+  background: linear-gradient(
+    315deg,
+    rgba(101, 0, 94, 0.1) 3%,
+    rgba(60, 132, 206, 0.1) 38%,
+    rgba(48, 238, 226, 0.1) 68%,
+    rgba(255, 25, 25, 0.1) 98%
+  );
+  animation: gradientShift 12s ease infinite;
+  background-size: 400% 400%;
+  background-repeat: no-repeat;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}

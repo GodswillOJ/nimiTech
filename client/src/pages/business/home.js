@@ -1,5 +1,5 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, Box } from '@mui/material';
 import { lazy, useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import donationImage1 from '../../assets/blog/images/donationImage1.webp';
@@ -167,7 +167,7 @@ const HomePage = () => {
         structuredData={seoData.structuredData}
       />
       {/* Preload critical images for better LCP */}
-      <link rel="preload" as="image" href={businessImages.hero_background} />
+      <link rel="preload" as="image" href={businessImages.hero_background2} />
 
       <div
         className="home-page-business"
@@ -186,9 +186,9 @@ const HomePage = () => {
           transition={{ duration: 1, ease: 'easeOut' }}
           style={{
             position: 'relative',
-            height: '800px',
+            height: '100vh',
             overflow: 'hidden',
-            backgroundImage: `url(${businessImages.hero_background})`,
+            backgroundImage: `url(${businessImages.hero_background2})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -264,150 +264,138 @@ const HomePage = () => {
         >
           <LogoSlider />
         </motion.div>{' '}
-        {/* Youtube Channel Section */}
         <motion.div
-          style={{
-            position: 'relative',
-            overflow: 'hidden',
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)',
-            marginRight: 'calc(-50vw + 50%)',
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeInUp}
+          style={{ position: 'relative', height: isSmallScreen ? 400 : 500 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
         >
-          {/* Video Container - Full Width */}
-          <div
+          <video
+            src="/videos/nimiVid.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '0' }}
+          />
+          <Box position="absolute" top={0} left={0} width="100%" height="100%" />
+
+          {/* Animated Text Overlay */}
+          <motion.div
             style={{
-              position: 'relative',
-              width: '100%',
-              height: '60vh',
-              minHeight: '400px',
-              overflow: 'hidden',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              position: 'absolute',
+              top: '50%',
+              left: '40%',
+              transform: 'translate(-50%, -50%)',
+              color: '#fff',
+              textAlign: 'normal',
+              zIndex: 2,
             }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            {/* Enhanced YouTube Embed with proper sizing and functionality */}
-            <div
+            <motion.h2
               style={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 1,
+                fontWeight: 'bold',
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: isSmallScreen ? '1.8rem' : '3rem',
+                marginBottom: '1rem',
+              }}
+              animate={{
+                scale: [1, 1.05, 1],
+                textShadow: [
+                  '2px 2px 8px rgba(0,0,0,0.3)',
+                  '4px 4px 16px rgba(29, 25, 154, 0.6)',
+                  '2px 2px 8px rgba(0,0,0,0.3)',
+                  '2px 2px 4px rgba(0, 0, 0, 0.7)',
+                ],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut',
               }}
             >
-              <iframe
-                src={`https://www.youtube.com/embed/fWk0YKyVGBk?controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&origin=${window.location.origin}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  border: 'none',
-                  borderRadius: '8px',
-                  aspectRatio: '16/9',
-                  position: 'relative',
-                  zIndex: 2,
-                }}
-              />
-            </div>
+              Your Success is Our Mission
+            </motion.h2>
 
-            {/* Background Gradient Overlay - Behind the video */}
-            <div
+            <motion.p
+              style={{
+                fontSize: isSmallScreen ? '1rem' : '1.25rem',
+                fontFamily: 'Montserrat, sans-serif',
+                fontWeight: 'bold',
+                marginTop: '1rem',
+                lineHeight: 1.6,
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
+              }}
+              animate={{
+                y: [0, -5, 0],
+                opacity: [0.9, 1, 0.9],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut',
+                delay: 0.5,
+              }}
+            >
+              We go beyond services-we build long-lasting partnerships to elevate your business.
+              <br />
+              Our aim is to deliver innovative, efficient, and scalable solutions that empower our
+              clients to thrive in an ever-evolving digital landscape.
+            </motion.p>
+
+            {/* Animated accent elements */}
+            <motion.div
               style={{
                 position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background:
-                  'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.1) 100%)',
-                zIndex: 0,
-                pointerEvents: 'none',
+                top: '-20px',
+                right: '-20px',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'linear-gradient(45deg, #88199a, #0e1c88ff)',
+                opacity: 0.7,
+              }}
+              animate={{
+                scale: [0.8, 1.2, 0.8],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut',
               }}
             />
 
-            {/* Floating Social Card */}
-            <div
+            <motion.div
               style={{
                 position: 'absolute',
-                bottom: '32px',
-                right: '32px',
-                zIndex: 3,
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(20px)',
-                borderRadius: '20px',
-                padding: '24px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                transform: 'translateY(0)',
-                transition: 'all 0.3s ease',
-                maxWidth: '280px',
-                // Mobile positioning
-                ...(typeof window !== 'undefined' && window.innerWidth <= 768
-                  ? {
-                      display: 'none',
-                      // position: 'static',
-                      // margin: '20px auto',
-                      // maxWidth: '100%',
-                      // width: 'calc(100% - 40px)',
-                    }
-                  : {}),
+                bottom: '-30px',
+                left: '-30px',
+                width: '60px',
+                height: '4px',
+                borderRadius: '2px',
+                background: 'linear-gradient(90deg, transparent, #fff, transparent)',
               }}
-            >
-              <h3
-                style={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: '600',
-                  fontSize: '18px',
-                  marginBottom: '16px',
-                  color: '#fff',
-                  textAlign: 'center',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                Connect With Us
-              </h3>
-              <SocialLinks />
-            </div>
-          </div>
+              animate={{
+                scaleX: [0, 1, 0],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1,
+              }}
+            />
+          </motion.div>
         </motion.div>
-        {/* Enhanced Social Links Component */}
-        <style>{`
-          @media (max-width: 768px) {
-            .floating-social-card {
-              position: static !important;
-              margin: 20px auto !important;
-              bottom: auto !important;
-              right: auto !important;
-              left: 50% !important;
-              transform: translateX(-50%) !important;
-              max-width: calc(100% - 40px) !important;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .video-container {
-              height: 50vh !important;
-              min-height: 300px !important;
-            }
-
-            .floating-social-card {
-              padding: 16px !important;
-              border-radius: 12px !important;
-            }
-          }
-        `}</style>
         {/* Courses */}
         <motion.div
           initial="hidden"
@@ -602,6 +590,150 @@ const HomePage = () => {
         >
           <CeoMessage />
         </motion.div>
+        {/* Youtube Channel Section */}
+        <motion.div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginRight: 'calc(-50vw + 50%)',
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+        >
+          {/* Video Container - Full Width */}
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '60vh',
+              minHeight: '400px',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {/* Enhanced YouTube Embed with proper sizing and functionality */}
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+              }}
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/fWk0YKyVGBk?controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&origin=${window.location.origin}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  borderRadius: '8px',
+                  aspectRatio: '16/9',
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+              />
+            </div>
+
+            {/* Background Gradient Overlay - Behind the video */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.1) 100%)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+
+            {/* Floating Social Card */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '32px',
+                right: '32px',
+                zIndex: 3,
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '20px',
+                padding: '24px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                maxWidth: '280px',
+                // Mobile positioning
+                ...(typeof window !== 'undefined' && window.innerWidth <= 768
+                  ? {
+                      display: 'none',
+                      // position: 'static',
+                      // margin: '20px auto',
+                      // maxWidth: '100%',
+                      // width: 'calc(100% - 40px)',
+                    }
+                  : {}),
+              }}
+            >
+              <h3
+                style={{
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontWeight: '600',
+                  fontSize: '18px',
+                  marginBottom: '16px',
+                  color: '#fff',
+                  textAlign: 'center',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                Connect With Us
+              </h3>
+              <SocialLinks />
+            </div>
+          </div>
+        </motion.div>
+        {/* Enhanced Social Links Component */}
+        <style>{`
+          @media (max-width: 768px) {
+            .floating-social-card {
+              position: static !important;
+              margin: 20px auto !important;
+              bottom: auto !important;
+              right: auto !important;
+              left: 50% !important;
+              transform: translateX(-50%) !important;
+              max-width: calc(100% - 40px) !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .video-container {
+              height: 50vh !important;
+              min-height: 300px !important;
+            }
+
+            .floating-social-card {
+              padding: 16px !important;
+              border-radius: 12px !important;
+            }
+          }
+        `}</style>
         <motion.section
           id="faq"
           initial="hidden"

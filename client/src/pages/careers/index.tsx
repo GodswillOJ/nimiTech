@@ -5,14 +5,19 @@ import { businessImages } from 'assets/images';
 import { Job } from '../../types/job.types';
 import styles from './Careers.module.scss';
 import SEO from '../../components/SEO/SEO';
+import Loader from '../../components/blog/SuspenseLoader/Loader';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Careers = () => {
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
   const [filters, setFilters] = useState({
     department: 'all',
     type: 'all',
     location: 'all',
     search: '',
   });
+  // Add pagination state
+  const [page, setPage] = useState(1);
 
   // SEO Configuration
   const seoData = {
@@ -41,14 +46,15 @@ const Careers = () => {
     },
   };
 
-  // Use RTK Query to fetch jobs with filters
+  // Use RTK Query to fetch jobs with filters and pagination
   const {
     data: jobsResponse,
     error,
     isLoading,
     refetch,
   } = useGetAllJobsQuery({
-    limit: 50, // Get more jobs for filtering
+    page,
+    limit: 10, // Show 10 jobs per page
     department: filters.department !== 'all' ? filters.department : undefined,
     type: filters.type !== 'all' ? filters.type : undefined,
     location: filters.location !== 'all' ? filters.location : undefined,
@@ -56,6 +62,8 @@ const Careers = () => {
   });
 
   const jobs = jobsResponse?.jobs || [];
+  const totalJobs = jobsResponse?.totalJobs || 0;
+  const totalPages = Math.ceil(totalJobs / 10);
 
   // Extract unique values for filters from all jobs (without filters applied)
   const { data: allJobsResponse } = useGetAllJobsQuery({ limit: 100 }); // Get all jobs for filter options
@@ -102,23 +110,18 @@ const Careers = () => {
     });
   };
 
+  // Pagination handler
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (isLoading) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.loader}></div>
-        <p>Loading career opportunities...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.errorContainer}>
-        <h2>Error Loading Jobs</h2>
-        <p>Failed to load career opportunities. Please try again later.</p>
-        <button onClick={() => refetch()} className={styles.retryButton}>
-          Retry
-        </button>
+        <Loader />
       </div>
     );
   }
@@ -128,13 +131,40 @@ const Careers = () => {
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-          <div className={styles.heroText}>
-            <h1>Careers | Nimitech IT</h1>
-            {/* <nav className={styles.breadcrumb}>
-              <Link to="/">Home</Link>
-              <span>/</span>
-              <span>Career</span>
-            </nav> */}
+          <video
+            src="/videos/nimiVid.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover', marginTop: '6rem' }}
+          />
+
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.4)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: '60%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              color: '#fff',
+              textAlign: 'center',
+              padding: '0 16px',
+              fontFamily: 'Montserrat, sans-serif',
+            }}
+          >
+            <h2 style={{ fontSize: isSmallScreen ? '2rem' : '3rem', marginBottom: '1rem' }}>
+              Careers | Nimitech IT
+            </h2>
           </div>
         </div>
       </section>
@@ -152,7 +182,7 @@ const Careers = () => {
               </p>
             </div>
             <div className={styles.missionImage}>
-              <img src={businessImages.hero_background} alt="Team meeting" />
+              <img src={businessImages.hero_background2} alt="Team meeting" />
             </div>
           </div>
         </section>
@@ -232,56 +262,135 @@ const Careers = () => {
           {/* Job Cards */}
           <div className={styles.jobsGrid}>
             {jobs.length > 0 ? (
-              jobs.map((job: Job) => (
-                <div key={job._id} className={styles.jobCard}>
-                  <div className={styles.jobHeader}>
-                    <div className={styles.jobTitle}>
-                      <h3>{job.title}</h3>
-                      <div className={styles.jobMeta}>
-                        <span className={styles.jobType}>{job.employmentType}</span>
-                        <span className={styles.jobLocation}>{job.location}</span>
+              <>
+                {jobs.map((job: Job) => (
+                  <div key={job._id} className={styles.jobCard}>
+                    <div className={styles.jobHeader}>
+                      <div className={styles.jobTitle}>
+                        <h3>{job.title}</h3>
+                        <div className={styles.jobMeta}>
+                          <span className={styles.jobType}>{job.employmentType}</span>
+                          <span className={styles.jobLocation}>{job.location}</span>
+                        </div>
                       </div>
+                      <div className={styles.jobDepartment}>{job.department}</div>
                     </div>
-                    <div className={styles.jobDepartment}>{job.department}</div>
-                  </div>
 
-                  <div className={styles.jobContent}>
-                    <p className={styles.jobDescription}>
-                      {job.description.length > 150
-                        ? `${job.description.substring(0, 150)}...`
-                        : job.description}
-                    </p>
+                    <div className={styles.jobContent}>
+                      <p className={styles.jobDescription}>
+                        {job.description.length > 150
+                          ? `${job.description.substring(0, 150)}...`
+                          : job.description}
+                      </p>
 
-                    <div className={styles.jobSkills}>
-                      {(job.requirements || []).slice(0, 4).map((skill: string, index: number) => (
-                        <span key={index} className={styles.skillTag}>
-                          {skill}
-                        </span>
-                      ))}
-                      {(job.requirements || []).length > 4 && (
-                        <span className={styles.skillTag}>
-                          +{(job.requirements || []).length - 4} more
-                        </span>
+                      <div className={styles.jobSkills}>
+                        {(job.requirements || [])
+                          .slice(0, 4)
+                          .map((skill: string, index: number) => (
+                            <span key={index} className={styles.skillTag}>
+                              {skill}
+                            </span>
+                          ))}
+                        {(job.requirements || []).length > 4 && (
+                          <span className={styles.skillTag}>
+                            +{(job.requirements || []).length - 4} more
+                          </span>
+                        )}
+                      </div>
+
+                      {job.salaryRange && (
+                        <div className={styles.salaryRange}>
+                          {typeof job.salaryRange === 'string'
+                            ? job.salaryRange
+                            : `${job.salaryRange.currency} ${job.salaryRange.min?.toLocaleString()} - ${job.salaryRange.max?.toLocaleString()}`}
+                        </div>
                       )}
                     </div>
 
-                    {job.salaryRange && (
-                      <div className={styles.salaryRange}>
-                        {typeof job.salaryRange === 'string'
-                          ? job.salaryRange
-                          : `${job.salaryRange.currency} ${job.salaryRange.min?.toLocaleString()} - ${job.salaryRange.max?.toLocaleString()}`}
-                      </div>
-                    )}
+                    <div className={styles.jobFooter}>
+                      <div className={styles.jobExperience}>Entry Level</div>
+                      <Link to={`/careers/${job._id}`} className={styles.applyButton}>
+                        Apply →
+                      </Link>
+                    </div>
                   </div>
-
-                  <div className={styles.jobFooter}>
-                    <div className={styles.jobExperience}>Entry Level</div>
-                    <Link to={`/careers/${job._id}`} className={styles.applyButton}>
-                      Apply →
-                    </Link>
-                  </div>
+                ))}
+                {/* Pagination Bar */}
+                <div
+                  className={styles.paginationBar}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '10px',
+                    margin: '40px 0 0 0',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <button
+                    className={styles.pageButton}
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1}
+                    style={{
+                      padding: '8px 18px',
+                      borderRadius: '20px',
+                      border: 'none',
+                      background: page === 1 ? '#eee' : 'linear-gradient(90deg,#88199a,#764ba2)',
+                      color: page === 1 ? '#aaa' : '#fff',
+                      fontWeight: 600,
+                      cursor: page === 1 ? 'not-allowed' : 'pointer',
+                      boxShadow: page === 1 ? 'none' : '0 2px 12px #764ba233',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    ← Prev
+                  </button>
+                  {/* Page numbers */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <button
+                      key={p}
+                      className={styles.pageButton}
+                      onClick={() => handlePageChange(p)}
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: '50%',
+                        border: 'none',
+                        background:
+                          p === page ? 'linear-gradient(90deg,#88199a,#764ba2)' : '#f3eaff',
+                        color: p === page ? '#fff' : '#88199a',
+                        fontWeight: p === page ? 700 : 500,
+                        boxShadow: p === page ? '0 2px 12px #764ba233' : 'none',
+                        cursor: p === page ? 'default' : 'pointer',
+                        margin: '0 2px',
+                        transition: 'all 0.2s',
+                        outline: p === page ? '2px solid #764ba2' : 'none',
+                      }}
+                      disabled={p === page}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                  <button
+                    className={styles.pageButton}
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === totalPages}
+                    style={{
+                      padding: '8px 18px',
+                      borderRadius: '20px',
+                      border: 'none',
+                      background:
+                        page === totalPages ? '#eee' : 'linear-gradient(90deg,#88199a,#764ba2)',
+                      color: page === totalPages ? '#aaa' : '#fff',
+                      fontWeight: 600,
+                      cursor: page === totalPages ? 'not-allowed' : 'pointer',
+                      boxShadow: page === totalPages ? 'none' : '0 2px 12px #764ba233',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    Next →
+                  </button>
                 </div>
-              ))
+              </>
             ) : (
               <div className={styles.noJobs}>
                 <h3>No positions found</h3>
