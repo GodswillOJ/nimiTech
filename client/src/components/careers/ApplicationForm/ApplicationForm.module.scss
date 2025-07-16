@@ -1,4 +1,3 @@
-// Application Form component styles
 .applicationForm {
   background: white;
   border-radius: 12px;
@@ -79,8 +78,8 @@
 
     &:focus {
       outline: none;
-      border-color: #e74c3c;
-      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      border-color: #88199a;
+      box-shadow: 0 0 0 3px rgba(222, 219, 222, 0.1);
     }
 
     &::placeholder {
@@ -107,8 +106,8 @@
 
     &:focus {
       outline: none;
-      border-color: #e74c3c;
-      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      border-color: #88199a;
+      box-shadow: 0 0 0 3px rgba(234, 230, 235, 0.1);
     }
 
     &::placeholder {
@@ -134,25 +133,25 @@
     font-size: 0.9rem;
 
     &:hover {
-      border-color: #e74c3c;
-      background: #fef7f7;
+      border-color: #88199a;
+      background: 764ba2;
     }
 
     input[type='radio'] {
       width: 16px;
       height: 16px;
       margin: 0;
-      accent-color: #e74c3c;
+      accent-color: #88199a;
     }
 
     input[type='radio']:checked + span {
       font-weight: 600;
-      color: #e74c3c;
+      color: #88199a;
     }
 
     &:has(input[type='radio']:checked) {
-      border-color: #e74c3c;
-      background: #fef7f7;
+      border-color: #88199a;
+      background: #f9f8fa;
     }
   }
 
@@ -165,7 +164,7 @@
   &__submit {
     width: 100%;
     padding: 15px;
-    background: #e74c3c;
+    background: #88199a;
     color: white;
     border: none;
     border-radius: 8px;
@@ -179,9 +178,9 @@
     gap: 10px;
 
     &:hover:not(:disabled) {
-      background: #c0392b;
+      background: #764ba2;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+      box-shadow: 0 8px 25px rgba(118, 75, 162, 0.3);
     }
 
     &:disabled {
@@ -267,7 +266,7 @@
 
 .modalButton {
   padding: 12px 30px;
-  background: #e74c3c;
+  background: #88199a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -277,7 +276,7 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background: #c0392b;
+    background: #764ba2;
     transform: translateY(-2px);
   }
 }

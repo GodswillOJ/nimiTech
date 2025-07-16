@@ -58,11 +58,11 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ job, onSubmit, isLoad
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^[+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'Please enter a valid phone number';
-    }
+    // if (!formData.phone.trim()) {
+    //   newErrors.phone = 'Phone number is required';
+    // } else if (!/^[+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
+    //   newErrors.phone = 'Please enter a valid phone number';
+    // }
 
     if (!formData.resume) {
       newErrors.resume = 'Resume is required';
@@ -198,7 +198,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ job, onSubmit, isLoad
         <div className={styles.applicationForm__header}>
           <h2 className={styles.applicationForm__title}>Application</h2>
           <p>
-            Apply for <strong>{job.title}</strong>
+            <strong>{job.title}</strong>
           </p>
         </div>
 

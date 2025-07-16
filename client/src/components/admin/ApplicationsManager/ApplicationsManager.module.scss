@@ -47,7 +47,7 @@
 .statNumber {
   font-size: 2rem;
   font-weight: 700;
-  color: #e74c3c;
+  color: #88199a;
   line-height: 1;
 }
 
@@ -93,7 +93,7 @@
 
   &:focus {
     outline: none;
-    border-color: #e74c3c;
+    border-color: #88199a;
   }
 }
 
@@ -162,12 +162,12 @@
 }
 
 .jobLink {
-  color: #e74c3c;
+  color: #88199a;
   text-decoration: none;
   font-weight: 600;
 
   &:hover {
-    color: #c0392b;
+    color: #764ba2;
     text-decoration: underline;
   }
 }
@@ -260,8 +260,8 @@
   transition: all 0.3s ease;
 
   &:hover:not(:disabled) {
-    border-color: #e74c3c;
-    color: #e74c3c;
+    border-color: #88199a;
+    color: #88199a;
   }
 
   &:disabled {
@@ -297,7 +297,7 @@
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #e74c3c;
+  border-top: 4px solid #88199a;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -352,7 +352,7 @@
   text-align: center;
 
   h2 {
-    color: #e74c3c;
+    color: #88199a;
     margin-bottom: 10px;
   }
 
@@ -364,7 +364,7 @@
 
 .retryButton {
   padding: 12px 24px;
-  background: #e74c3c;
+  background: #88199a;
   color: white;
   border: none;
   border-radius: 8px;

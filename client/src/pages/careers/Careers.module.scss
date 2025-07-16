@@ -4,32 +4,31 @@
   font-family: 'Montserrat', sans-serif !important;
 }
 
-.heroSection {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  color: white;
-  padding: 120px 0 80px;
-  position: relative;
-  overflow: hidden;
+// .heroSection {
+//   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+//   color: white;
+//   padding: 120px 0 80px;
+//   position: relative;
+//   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.1;
-    z-index: 0;
-  }
-}
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-size: cover;
+//     background-position: center;
+//     opacity: 0.1;
+//     z-index: 0;
+//   }
+// }
 
 .heroContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  // max-width: 1200px;
+  // margin: 0 auto;
+  // padding: 0 20px;
   position: relative;
   z-index: 1;
 }
@@ -176,7 +175,7 @@
 
   &:focus {
     outline: none;
-    border-color: #e74c3c;
+    border-color: #88199a;
   }
 
   &::placeholder {
@@ -203,14 +202,14 @@
 
   &:focus {
     outline: none;
-    border-color: #e74c3c;
+    border-color: #88199a;
   }
 }
 
 .clearFilters,
 .clearFiltersButton {
   padding: 10px 20px;
-  background: #e74c3c;
+  background: #88199a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -220,7 +219,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background: #c0392b;
+    background: #764ba2;
   }
 }
 
@@ -365,7 +364,7 @@
   gap: 5px;
 
   &:hover {
-    background: #c0392b;
+    background: #764ba2;
     transform: translateX(3px);
   }
 }
@@ -532,4 +531,19 @@
   .jobsGrid {
     gap: 20px;
   }
+}
+
+.paginationBar {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pageButton {
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s;
 }

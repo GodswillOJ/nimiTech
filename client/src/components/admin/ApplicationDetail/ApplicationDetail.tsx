@@ -6,6 +6,7 @@ import {
 } from '../../../services/utilis/careerApiService';
 import { useToast } from '../../../hooks/useToast';
 import styles from './ApplicationDetail.module.scss';
+import Loader from '../../../components/blog/SuspenseLoader/Loader';
 
 interface Application {
   _id: string;
@@ -103,8 +104,7 @@ const ApplicationDetail: React.FC = () => {
   if (isLoading) {
     return (
       <div className={styles.loadingContainer}>
-        <div className={styles.loader}></div>
-        <p>Loading application details...</p>
+        <Loader />
       </div>
     );
   }
