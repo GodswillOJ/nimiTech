@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { blogPosts } from '../../_partials/BlogPost.data';
 import { BackIcon } from '../../../../assets/blog/icons/BackIcon';
@@ -104,7 +104,7 @@ const BlogDetails = () => {
     }
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (!showAllRelated) {
       handlePageChange(currentIndex - 1);
     } else {
@@ -116,9 +116,9 @@ const BlogDetails = () => {
         });
       }
     }
-  };
+  }, [showAllRelated, currentIndex, handlePageChange]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (!showAllRelated) {
       handlePageChange(currentIndex + 1);
     } else {
@@ -130,14 +130,17 @@ const BlogDetails = () => {
         });
       }
     }
-  };
+  }, [showAllRelated, currentIndex, handlePageChange]);
 
-  const toggleViewMore = () => {
-    setShowAllRelated(!showAllRelated);
-    if (!showAllRelated) {
-      setCurrentIndex(0);
-    }
-  };
+  // Optimize toggle function with useCallback to prevent unnecessary re-renders
+  const toggleViewMore = useCallback(() => {
+    setShowAllRelated((prev) => {
+      if (!prev) {
+        setCurrentIndex(0);
+      }
+      return !prev;
+    });
+  }, []);
 
   const getYoutubeVideoId = (youtubeUrl: string) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -199,16 +202,21 @@ const BlogDetails = () => {
             <div className={styles.article__meta}>
               <div className={styles.article__author}>
                 <img
-                  src={getImageUrl(post.author.avatar)}
-                  alt={`Avatar of ${post.author.name}`}
+                  src={getImageUrl(post.author?.avatar) || '/default-avatar.png'}
+                  alt={`Avatar of ${post.author?.name || 'Author'}`}
                   className={styles.article__author_avatar}
                   width="32"
                   height="32"
+                  onError={(e) => {
+                    e.currentTarget.src = '/default-avatar.png';
+                  }}
                 />
-                <span className={styles.article__author_name}>{post.author.name}</span>
+                <span className={styles.article__author_name}>
+                  {post.author?.name || 'Unknown Author'}
+                </span>
               </div>
               <time className={styles.article__date}>
-                {formatBlogDate(post.author.date, post.readTime)}
+                {formatBlogDate(post.author?.date || post.createdAt, post.readTime)}
               </time>
             </div>
 
@@ -218,10 +226,13 @@ const BlogDetails = () => {
 
           <div className={styles.article__featured_image}>
             <img
-              src={getImageUrl(post.image)}
-              alt={post.title}
+              src={getImageUrl(post.image) || '/default-blog-image.jpg'}
+              alt={post.title || 'Blog post image'}
               className={styles.article__image}
               loading="eager"
+              onError={(e) => {
+                e.currentTarget.src = '/default-blog-image.jpg';
+              }}
             />
           </div>
 
@@ -243,11 +254,11 @@ const BlogDetails = () => {
               return null;
             })}
 
-            {post.contentImage && post.contentImageTitle && (
+            {post?.contentImage && post.contentImageTitle && (
               <div className={styles.article__content_image}>
                 <img
-                  src={getImageUrl(post.contentImage)}
-                  alt={post.contentImageTitle}
+                  src={getImageUrl(post?.contentImage)}
+                  alt={post?.contentImageTitle}
                   className={styles.article__contentImage}
                   loading="lazy"
                 />
@@ -280,7 +291,7 @@ const BlogDetails = () => {
           </div>
         </article>
 
-        {post.youtubeUrl && (
+        {post?.youtubeUrl && (
           <div className={styles.article__video_card}>
             <VideoEmbed videoId={getYoutubeVideoId(post.youtubeUrl)} title={post.title} />
           </div>

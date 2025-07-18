@@ -119,13 +119,17 @@ $breakpoint-xl: 1200px;
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr;
+  min-height: 600px;
+  contain: layout;
 
   @media (min-width: $breakpoint-sm) {
     grid-template-columns: repeat(2, 1fr);
+    min-height: 800px;
   }
 
   @media (min-width: $breakpoint-lg) {
     grid-template-columns: repeat(3, 1fr);
+    min-height: 900px;
   }
 }
 
@@ -345,11 +349,14 @@ $breakpoint-xl: 1200px;
   background: none;
   border-radius: 12px;
   width: 100%;
+  min-height: 500px; // Prevent layout shifts during loading
+  contain: layout; // Optimize rendering performance
 
   // @media (min-width: $breakpoint-md) {
   //   padding: 3rem;
   // }
 }
+
 .donation {
   width: 100%;
   display: flex;
@@ -357,6 +364,7 @@ $breakpoint-xl: 1200px;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  min-height: inherit; // Inherit minimum height to prevent jumps
 
   @media (min-width: $breakpoint-md) {
     max-width: 1600px;

@@ -6,7 +6,7 @@ interface LoaderProps {
   className?: string;
 }
 
-const Loader: React.FC<LoaderProps> = ({ fullScreen = true, className }) => {
+const Loader: React.FC<LoaderProps> = React.memo(({ fullScreen = true, className }) => {
   if (fullScreen) {
     return (
       <div className={`${style.loader} ${className || ''}`}>
@@ -16,6 +16,8 @@ const Loader: React.FC<LoaderProps> = ({ fullScreen = true, className }) => {
   }
 
   return <div className={`${style.spinner} ${className || ''}`}></div>;
-};
+});
+
+Loader.displayName = 'Loader';
 
 export default Loader;

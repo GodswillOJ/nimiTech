@@ -1,5 +1,8 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Newsletter from './components/blog/Modal/NewsLetter/Newsletter';
@@ -27,6 +30,9 @@ import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
 import NotFound from './components/NotFound/NotFound';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PrivacyPolicyPage from './pages/business/PrivacyPolicy';
+import Careers from './pages/careers';
+import JobDetail from './pages/careers/JobDetail';
+import ApplicationPage from './pages/careers/ApplicationPage';
 
 const UserDashboard = lazy(() => import('./pages/dashboard/UserDashboard'));
 const baseRoutes = [
@@ -37,6 +43,9 @@ const baseRoutes = [
   { path: '/blogs/:id', element: <BlogDetails /> },
   { path: '/blog-editor', element: <BlogPostEditor /> },
   { path: '/blog-editor/:id', element: <BlogPostEditor /> },
+  { path: '/careers', element: <Careers /> },
+  { path: '/careers/:id', element: <JobDetail /> },
+  { path: '/careers/:id/apply', element: <ApplicationPage /> },
   { path: '/privacy-policy', element: <PrivacyPolicyPage /> },
   { path: '/services', element: <BusinessRegisterPage /> },
   { path: '/contact-us', element: <ContactUs /> },
@@ -82,33 +91,37 @@ function App() {
   }, []);
 
   return (
-    <ToastProvider>
-      <div className="app-container">
-        <Router>
-          <Navbar />
-          <ScrollToTop />
-          <ConditionalNavbar />
-          <div className="app-content">
-            <AppRoutes />
-          </div>
-          <ConditionalFooter />
+    <HelmetProvider>
+      <SkeletonTheme baseColor="#f0f0f0" highlightColor="#e0e0e0">
+        <ToastProvider>
+          <div className="app-container">
+            <Router>
+              <Navbar />
+              <ScrollToTop />
+              <ConditionalNavbar />
+              <div className="app-content">
+                <AppRoutes />
+              </div>
+              <ConditionalFooter />
 
-          {/* Global Newsletter Modal */}
-          <Newsletter
-            isOpen={showNewsletterModal}
-            onClose={() => setShowNewsletterModal(false)}
-            onSuccess={() => {
-              // Optional: Handle success callback
-              console.log('Newsletter subscription successful');
-            }}
-            onDismiss={() => {
-              // Optional: Handle dismiss callback
-              console.log('Newsletter modal dismissed');
-            }}
-          />
-        </Router>
-      </div>
-    </ToastProvider>
+              {/* Global Newsletter Modal */}
+              <Newsletter
+                isOpen={showNewsletterModal}
+                onClose={() => setShowNewsletterModal(false)}
+                onSuccess={() => {
+                  // Optional: Handle success callback
+                  console.log('Newsletter subscription successful');
+                }}
+                onDismiss={() => {
+                  // Optional: Handle dismiss callback
+                  console.log('Newsletter modal dismissed');
+                }}
+              />
+            </Router>
+          </div>
+        </ToastProvider>
+      </SkeletonTheme>
+    </HelmetProvider>
   );
 }
 
