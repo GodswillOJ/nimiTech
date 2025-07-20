@@ -5,9 +5,6 @@ export const careerApi = createApi({
   reducerPath: 'careerApi',
   baseQuery: secureBaseQuery,
   tagTypes: ['Jobs', 'Applications'],
-  // Global cache settings
-  keepUnusedDataFor: 300, // Keep unused data for 5 minutes by default
-  refetchOnMountOrArgChange: 300, // Refetch if data is older than 5 minutes
   endpoints: (builder) => ({
     // Get all active jobs with pagination and filters
     getAllJobs: builder.query<
@@ -32,7 +29,6 @@ export const careerApi = createApi({
         });
         return `/careers/jobs?${params.toString()}`;
       },
-      keepUnusedDataFor: 300, // Job list - keep for 5 minutes (matches server cache)
       providesTags: (result) =>
         result?.jobs
           ? [
@@ -45,11 +41,58 @@ export const careerApi = createApi({
           : [{ type: 'Jobs', id: 'LIST' }],
     }),
 
+    // Get all jobs for admin (includes all statuses: active, draft, closed, etc.)
+    getAllJobsAdmin: builder.query<
+      any,
+      {
+        page?: number;
+        limit?: number;
+        department?: string;
+        type?: string;
+        location?: string;
+        search?: string;
+        status?: string;
+        includeInactive?: boolean;
+      }
+    >({
+      query: ({
+        page = 1,
+        limit = 10,
+        department,
+        type,
+        location,
+        search,
+        status,
+        includeInactive = true,
+      } = {}) => {
+        const params = new URLSearchParams({
+          page: page.toString(),
+          limit: limit.toString(),
+          includeInactive: includeInactive.toString(),
+          ...(department && department !== 'all' && { department }),
+          ...(type && type !== 'all' && { type }),
+          ...(location && location !== 'all' && { location }),
+          ...(search && { search }),
+          ...(status && status !== 'all' && { status }),
+        });
+        return `/careers/admin/jobs?${params.toString()}`;
+      },
+      providesTags: (result) =>
+        result?.jobs
+          ? [
+              ...result.jobs.map(({ _id }: any) => ({
+                type: 'Jobs' as const,
+                id: _id,
+              })),
+              { type: 'Jobs', id: 'ADMIN_LIST' },
+            ]
+          : [{ type: 'Jobs', id: 'ADMIN_LIST' }],
+    }),
+
     // Get single job by ID
     getJobById: builder.query<any, string>({
       query: (id) => `/careers/jobs/${id}`,
       providesTags: (result, error, id) => [{ type: 'Jobs', id }],
-      keepUnusedDataFor: 1800, // Individual jobs - keep for 30 minutes (matches server cache)
     }),
 
     // Submit job application
@@ -64,36 +107,39 @@ export const careerApi = createApi({
           phone: string;
           message?: string;
           experience: string;
-          resume: File;
-          coverLetter?: File;
+          resumeUrl: string;
+          coverLetterUrl?: string;
+          city?: string;
+          stateCountry?: string;
+          portfolio?: string;
+          workExperience?: string;
+          startDate?: string;
+          salaryExpectations?: string;
+          authorizedUS?: string;
+          sponsorship?: string;
+          contractOpen?: string;
         };
       }
     >({
       query: ({ jobId, applicationData }) => {
-        const formData = new FormData();
-
-        // Add text fields
-        formData.append('firstName', applicationData.firstName);
-        formData.append('lastName', applicationData.lastName);
-        formData.append('email', applicationData.email);
-        formData.append('phone', applicationData.phone);
-        formData.append('experience', applicationData.experience);
-
-        if (applicationData.message) {
-          formData.append('message', applicationData.message);
+        // Validate required fields
+        if (!applicationData.resumeUrl) {
+          throw new Error('Resume is required.');
         }
-
-        // Add file fields
-        formData.append('resume', applicationData.resume);
-
-        if (applicationData.coverLetter) {
-          formData.append('coverLetter', applicationData.coverLetter);
+        if (!applicationData.authorizedUS || !applicationData.authorizedUS.trim()) {
+          throw new Error('Authorization to work in US is required.');
+        }
+        if (!applicationData.city || !applicationData.city.trim()) {
+          throw new Error('City is required.');
+        }
+        if (!applicationData.stateCountry || !applicationData.stateCountry.trim()) {
+          throw new Error('State/Country is required.');
         }
 
         return {
           url: `/careers/jobs/${jobId}/apply`,
           method: 'POST',
-          body: formData,
+          body: applicationData,
         };
       },
       invalidatesTags: (result, error, { jobId }) => [
@@ -121,7 +167,6 @@ export const careerApi = createApi({
         });
         return `/careers/applications?${params.toString()}`;
       },
-      keepUnusedDataFor: 300, // Application list - keep for 5 minutes
       providesTags: (result) =>
         result?.applications
           ? [
@@ -138,7 +183,6 @@ export const careerApi = createApi({
     getApplicationById: builder.query<any, string>({
       query: (id) => `/careers/applications/${id}`,
       providesTags: (result, error, id) => [{ type: 'Applications', id }],
-      keepUnusedDataFor: 300, // Individual applications - keep for 5 minutes
     }),
 
     // Update application status (admin only)
@@ -165,7 +209,6 @@ export const careerApi = createApi({
     getJobStats: builder.query<any, void>({
       query: () => '/careers/stats',
       providesTags: ['Jobs'],
-      keepUnusedDataFor: 300, // Stats change frequently - keep for 5 minutes
     }),
 
     // Get application statistics by job (admin only)
@@ -175,7 +218,6 @@ export const careerApi = createApi({
         { type: 'Jobs', id: jobId },
         { type: 'Applications', id: `job-${jobId}` },
       ],
-      keepUnusedDataFor: 300, // Job-specific stats - keep for 5 minutes
     }),
 
     // Create new job (admin only)
@@ -203,20 +245,60 @@ export const careerApi = createApi({
 
     // Delete job (admin only)
     deleteJob: builder.mutation<any, string>({
-      query: (id) => ({
-        url: `/careers/jobs/${id}`,
+      query: (jobId) => ({
+        url: `/careers/jobs/${jobId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [
-        { type: 'Jobs', id },
-        { type: 'Jobs', id: 'LIST' },
-      ],
+      invalidatesTags: [{ type: 'Jobs', id: 'LIST' }],
+    }),
+
+    // Upload resume file
+    uploadResume: builder.mutation<any, { resume: File }>({
+      query: ({ resume }) => {
+        const formData = new FormData();
+        formData.append('resume', resume);
+        return {
+          url: '/careers/upload-resume',
+          method: 'POST',
+          body: formData,
+        };
+      },
+    }),
+
+    // Upload cover letter file
+    uploadCoverLetter: builder.mutation<any, { coverLetter: File }>({
+      query: ({ coverLetter }) => {
+        const formData = new FormData();
+        formData.append('coverLetter', coverLetter);
+        return {
+          url: '/careers/upload-cover-letter',
+          method: 'POST',
+          body: formData,
+        };
+      },
+    }),
+
+    // Delete resume file
+    deleteResume: builder.mutation<any, { filename: string }>({
+      query: ({ filename }) => ({
+        url: `/careers/delete-resume/${filename}`,
+        method: 'DELETE',
+      }),
+    }),
+
+    // Delete cover letter file
+    deleteCoverLetter: builder.mutation<any, { filename: string }>({
+      query: ({ filename }) => ({
+        url: `/careers/delete-cover-letter/${filename}`,
+        method: 'DELETE',
+      }),
     }),
   }),
 });
 
 export const {
   useGetAllJobsQuery,
+  useGetAllJobsAdminQuery,
   useGetJobByIdQuery,
   useSubmitApplicationMutation,
   useGetAllApplicationsQuery,
@@ -227,4 +309,8 @@ export const {
   useCreateJobMutation,
   useUpdateJobMutation,
   useDeleteJobMutation,
+  useUploadResumeMutation,
+  useUploadCoverLetterMutation,
+  useDeleteResumeMutation,
+  useDeleteCoverLetterMutation,
 } = careerApi;

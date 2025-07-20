@@ -166,11 +166,11 @@ const JobEditor: React.FC = () => {
       showToast('error', 'At least one responsibility is needed');
       return false;
     }
-    if (formData.salaryRange.min <= 0 || formData.salaryRange.max <= 0) {
-      showToast('error', 'Valid salary range is required');
-      return false;
-    }
-    if (formData.salaryRange.min >= formData.salaryRange.max) {
+    // Validate salary range only if provided
+    if (
+      (formData.salaryRange.min > 0 || formData.salaryRange.max > 0) &&
+      formData.salaryRange.min >= formData.salaryRange.max
+    ) {
       showToast('error', 'Maximum salary must be greater than minimum salary');
       return false;
     }
@@ -185,24 +185,42 @@ const JobEditor: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Filter out empty items from arrays
+      // Filter out empty items from arrays and ensure valid salary values
       const cleanedData = {
         ...formData,
         requirements: formData.requirements.filter((req) => req.trim()),
         responsibilities: formData.responsibilities.filter((resp) => resp.trim()),
         benefits: formData.benefits.filter((benefit) => benefit.trim()),
+        salaryRange:
+          formData.salaryRange.min > 0 || formData.salaryRange.max > 0
+            ? {
+                min: Number(formData.salaryRange.min) || 0,
+                max: Number(formData.salaryRange.max) || 0,
+                currency: formData.salaryRange.currency,
+              }
+            : null,
         applicationDeadline: formData.applicationDeadline || undefined,
       };
 
       if (isEditing) {
-        await updateJob({ id: id!, jobData: cleanedData }).unwrap();
-        showToast('success', 'Job updated successfully!');
+        const result = await updateJob({ id: id!, jobData: cleanedData }).unwrap();
+        if (result?.success) {
+          showToast('success', 'Job updated successfully!');
+          navigate('/dashboard/jobs');
+        } else {
+          console.error('Update job error:', result);
+          showToast('error', result?.message || 'Failed to update job. Please try again.');
+        }
       } else {
-        await createJob(cleanedData).unwrap();
-        showToast('success', 'Job created successfully!');
+        const result = await createJob(cleanedData).unwrap();
+        if (result?.success) {
+          showToast('success', 'Job created successfully!');
+          navigate('/dashboard/jobs');
+        } else {
+          console.error('Create job error:', result);
+          showToast('error', result?.message || 'Failed to create job. Please try again.');
+        }
       }
-
-      navigate('/dashboard/jobs');
     } catch (error) {
       console.error('Error saving job:', error);
       showToast('error', 'Failed to save job. Please try again.');
@@ -279,6 +297,11 @@ const JobEditor: React.FC = () => {
                 <option value="HR">HR</option>
                 <option value="Finance">Finance</option>
                 <option value="Operations">Operations</option>
+                <option value="Customer Support">Customer Support</option>
+                <option value="Product">Product</option>
+                <option value="Design">Design</option>
+                <option value="Legal">Legal</option>
+                <option value="Others">Others</option>
               </select>
             </div>
 
@@ -436,28 +459,32 @@ const JobEditor: React.FC = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="minSalary">Minimum Salary *</label>
+              <label htmlFor="minSalary">Minimum Salary (Optional)</label>
               <input
                 type="number"
                 id="minSalary"
-                value={formData.salaryRange.min}
-                onChange={(e) => handleSalaryChange('min', parseInt(e.target.value) || 0)}
+                value={formData.salaryRange.min || ''}
+                onChange={(e) => {
+                  const value = e.target.value === '' ? 0 : parseInt(e.target.value) || 0;
+                  handleSalaryChange('min', value);
+                }}
                 placeholder="50000"
                 min="0"
-                required
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="maxSalary">Maximum Salary *</label>
+              <label htmlFor="maxSalary">Maximum Salary (Optional)</label>
               <input
                 type="number"
                 id="maxSalary"
-                value={formData.salaryRange.max}
-                onChange={(e) => handleSalaryChange('max', parseInt(e.target.value) || 0)}
+                value={formData.salaryRange.max || ''}
+                onChange={(e) => {
+                  const value = e.target.value === '' ? 0 : parseInt(e.target.value) || 0;
+                  handleSalaryChange('max', value);
+                }}
                 placeholder="80000"
                 min="0"
-                required
               />
             </div>
           </div>

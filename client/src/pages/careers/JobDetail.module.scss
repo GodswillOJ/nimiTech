@@ -1,3 +1,7 @@
+* {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
 .jobDetailPage {
   min-height: 100vh;
   margin-top: 100px;
@@ -58,20 +62,43 @@
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  margin: 0 auto;
+  @media (max-width: 1023px) {
+    max-width: 780px;
+    margin: 0 auto;
+  }
 }
 
 .jobHeader {
-  padding: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  padding: 60px 40px;
+  background: url(../../assets/blog/images/careerApply2.jpg);
+  flex-wrap: wrap;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 30px;
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+    background-color: rgba(12, 0, 0, 0.462);
+    z-index: -1;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
-    padding: 30px 20px;
+    padding: 40px 20px;
     gap: 20px;
   }
 }
@@ -83,35 +110,40 @@
   flex: 1;
 }
 
-.companyLogo {
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+// .companyLogo {
+//   width: 80px;
+//   height: 80px;
+//   background: rgba(255, 255, 255, 0.2);
+//   border-radius: 12px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 1.5rem;
+//   font-weight: 700;
+//   color: white;
+//   backdrop-filter: blur(10px);
+//   border: 1px solid rgba(255, 255, 255, 0.1);
 
-  @media (max-width: 768px) {
-    width: 60px;
-    height: 60px;
-    font-size: 1.2rem;
-  }
-}
+//   @media (max-width: 768px) {
+//     width: 60px;
+//     height: 60px;
+//     font-size: 1.2rem;
+//   }
+// }
 
 .companyDetails {
   flex: 1;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 700;
     margin-bottom: 15px;
     line-height: 1.2;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    // background: rgba(255, 255, 255, 0.2);
+    // border: 1px solid rgba(255, 255, 255, 0.3);
+    // border-radius: 8px;
 
     @media (max-width: 768px) {
       font-size: 2rem;
@@ -150,7 +182,7 @@
 
 .applyButton {
   padding: 12px 30px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(124, 118, 118, 0.37);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;

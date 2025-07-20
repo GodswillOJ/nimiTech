@@ -5,24 +5,24 @@
 }
 
 // .heroSection {
-//   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-//   color: white;
-//   padding: 120px 0 80px;
-//   position: relative;
-//   overflow: hidden;
+//   // background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+//   // color: white;
+//   // padding-bottom: 80px;
+//   // position: relative;
+//   // overflow: hidden;
 
-//   &::before {
-//     content: '';
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     bottom: 0;
-//     background-size: cover;
-//     background-position: center;
-//     opacity: 0.1;
-//     z-index: 0;
-//   }
+//   // &::before {
+//   //   content: '';
+//   //   position: absolute;
+//   //   top: 0;
+//   //   left: 0;
+//   //   right: 0;
+//   //   bottom: 0;
+//   //   background-size: cover;
+//   //   background-position: center;
+//   //   opacity: 0.1;
+//   //   z-index: 0;
+//   // }
 // }
 
 .heroContent {
@@ -106,7 +106,7 @@
 .missionImage {
   img {
     width: 100%;
-    height: 400px;
+    height: 550px;
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -128,6 +128,7 @@
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
+    padding: 0 15px;
     gap: 10px;
   }
 
@@ -135,17 +136,32 @@
     font-size: 2.2rem;
     font-weight: 700;
     color: #1a1a1a;
+    margin-bottom: 10px;
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
   }
 }
 
 .jobCount {
-  font-size: 1.1rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: #fff;
   font-weight: 500;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 6px 12px;
+  border-radius: 8px;
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 }
 
 .filtersContainer {
-  background: white;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -283,7 +299,7 @@
 
 .jobType {
   background: #e8f5e8;
-  color: #2d7d2d;
+  color: #0a5b0a;
 }
 
 .jobLocation {
@@ -469,6 +485,10 @@
     font-size: 2.5rem;
   }
 
+  .heroContent {
+    height: 700px;
+  }
+
   .missionText h2 {
     font-size: 2rem;
   }
@@ -513,7 +533,11 @@
   }
 
   .heroSection {
-    padding: 100px 0 60px;
+    padding: 70px 0 0px;
+  }
+
+  .heroContent {
+    height: 600px;
   }
 
   .missionSection {

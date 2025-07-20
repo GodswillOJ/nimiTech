@@ -8,6 +8,7 @@
   height: fit-content;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
+  font-family: 'Montserrat', sans-serif;
 
   &__header {
     padding: 25px 25px 20px;
@@ -18,6 +19,7 @@
       font-weight: 700;
       color: #1a1a1a;
       margin-bottom: 5px;
+      font-family: 'Montserrat', sans-serif;
     }
 
     p {
@@ -65,6 +67,11 @@
     color: #333;
     margin-bottom: 8px;
     display: block;
+  }
+
+  &__required {
+    color: #e74c3c;
+    font-weight: bold;
   }
 
   &__input {
@@ -201,6 +208,69 @@
     opacity: 0.7;
     pointer-events: none;
   }
+
+  // Disabled state
+  &--disabled {
+    background: #e9ecef !important;
+    color: #6c757d !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+    
+    &:hover {
+      background: #e9ecef !important;
+      transform: none !important;
+    }
+  }
+}
+
+// Disclaimer Section Styles
+.applicationForm__disclaimer {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.applicationForm__disclaimerHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.applicationForm__disclaimerCheckbox {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #88199a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.applicationForm__disclaimerLabel {
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  
+  &:hover {
+    color: #88199a;
+  }
+}
+
+.applicationForm__disclaimerText {
+  padding-left: 30px;
+  
+  p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
 }
 
 // Success Modal Styles
@@ -281,7 +351,7 @@
   }
 }
 
-// Responsive Design
+
 @media (max-width: 1024px) {
   .applicationForm {
     position: static;

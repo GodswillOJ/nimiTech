@@ -3,6 +3,10 @@ import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import BlogPostEditor from '../blogCMS/BlogPostEditor/BlogPostEditor';
 import BlogListTable from '../../components/admin/BlogList/BlogListTable';
 import NewsletterManager from '../../components/admin/NewsletterManager/NewsletterManager';
+import JobListTable from '../../components/admin/JobList/JobListTable';
+import JobEditor from '../../components/admin/JobEditor/JobEditor';
+import ApplicationsManager from '../../components/admin/ApplicationsManager/ApplicationsManager';
+import ApplicationDetail from '../../components/admin/ApplicationDetail/ApplicationDetail';
 import { AvatarUploader } from '../../components/ui/AvatarUploader/AvatarUploader';
 import { useToast } from '../../hooks/useToast';
 import { isAuthenticated, clearAuthToken } from '../../services/utilis/authUtils';
@@ -66,6 +70,22 @@ const LogoutIcon = () => (
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
     <polyline points="16,17 21,12 16,7" />
     <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+);
+
+const JobsIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+);
+
+const ApplicationsIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14,2 14,8 20,8" />
+    <circle cx="12" cy="15" r="3" />
+    <path d="M10.5 17.5L9 19L12 22L20 14" />
   </svg>
 );
 
@@ -446,6 +466,8 @@ const UserDashboard: React.FC = () => {
       { path: '/dashboard', icon: <DashboardIcon />, label: 'Dashboard', exact: true },
       { path: '/dashboard/posts', icon: <PostsIcon />, label: 'All Posts' },
       { path: '/dashboard/create', icon: <CreateIcon />, label: 'Create Post' },
+      { path: '/dashboard/jobs', icon: <JobsIcon />, label: 'Jobs' },
+      { path: '/dashboard/applications', icon: <ApplicationsIcon />, label: 'Applications' },
       { path: '/dashboard/newsletter', icon: <NewsletterIcon />, label: 'Newsletter' },
     ],
     []
@@ -459,7 +481,7 @@ const UserDashboard: React.FC = () => {
           className={`${styles.sidebar} ${sidebarCollapsed ? styles['sidebar--collapsed'] : ''}`}
         >
           <div className={styles.sidebar__header}>
-            <h2 className={styles.sidebar__title}>Blog Dashboard</h2>
+            <h2 className={styles.sidebar__title}>Admin Dashboard</h2>
             <button
               className={styles.sidebar__toggle}
               onClick={toggleSidebar}
@@ -504,7 +526,7 @@ const UserDashboard: React.FC = () => {
               onClick={handleLogout}
               className={styles.logout__button}
               title="Logout"
-              style={{ display: 'flex' }} // Force display for debugging
+              style={{ display: 'flex' }}
             >
               <LogoutIcon />
               <span>Logout</span>
@@ -523,6 +545,11 @@ const UserDashboard: React.FC = () => {
             <Route path="/create" element={<BlogPostEditor />} />
             <Route path="/edit/:id" element={<BlogPostEditor />} />
             <Route path="/newsletter" element={<NewsletterManager />} />
+            <Route path="/jobs" element={<JobListTable />} />
+            <Route path="/jobs/create" element={<JobEditor />} />
+            <Route path="/jobs/edit/:id" element={<JobEditor />} />
+            <Route path="/applications" element={<ApplicationsManager />} />
+            <Route path="/applications/:id" element={<ApplicationDetail />} />
           </Routes>
         </main>
       </div>

@@ -8,7 +8,12 @@ export const baseQueryWithAuth = fetchBaseQuery({
   prepareHeaders: (headers, { endpoint }) => {
     headers.set('X-Requested-With', 'XMLHttpRequest');
     // Don't set Content-Type for FormData requests (let browser set it with boundary)
-    if (endpoint !== 'addEditBlogPost' && endpoint !== 'uploadBlogImage') {
+    if (
+      endpoint !== 'addEditBlogPost' &&
+      endpoint !== 'uploadBlogImage' &&
+      endpoint !== 'uploadResume' &&
+      endpoint !== 'uploadCoverLetter'
+    ) {
       headers.set('Content-Type', 'application/json');
     }
     return headers;

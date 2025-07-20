@@ -161,8 +161,53 @@ const ApplicationDetail: React.FC = () => {
                   </a>
                 </div>
                 <div className={styles.detail}>
+                  <span className={styles.label}>Location:</span>
+                  <span className={styles.value}>
+                    {application.city || '-'}, {application.stateCountry || '-'}
+                  </span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Portfolio:</span>
+                  {application.portfolio ? (
+                    <a
+                      href={application.portfolio}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.value}
+                    >
+                      {application.portfolio}
+                    </a>
+                  ) : (
+                    <span className={styles.value}>-</span>
+                  )}
+                </div>
+                <div className={styles.detail}>
                   <span className={styles.label}>Experience:</span>
                   <span className={styles.value}>{formatExperience(application.experience)}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Work Experience:</span>
+                  <span className={styles.value}>{application.workExperience || '-'}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Earliest Start Date:</span>
+                  <span className={styles.value}>{application.startDate || '-'}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Salary Expectations:</span>
+                  <span className={styles.value}>{application.salaryExpectations || '-'}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Authorized to work in US:</span>
+                  <span className={styles.value}>{application.authorizedUS || '-'}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Requires Sponsorship:</span>
+                  <span className={styles.value}>{application.sponsorship || '-'}</span>
+                </div>
+                <div className={styles.detail}>
+                  <span className={styles.label}>Open to Contract/Freelance:</span>
+                  <span className={styles.value}>{application.contractOpen || '-'}</span>
                 </div>
                 <div className={styles.detail}>
                   <span className={styles.label}>Applied:</span>

@@ -4,11 +4,14 @@ import { useGetJobByIdQuery, useGetAllJobsQuery } from '../../services/utilis/ca
 import ApplicationForm from '../../components/careers/ApplicationForm/ApplicationForm';
 import logo from '../../assets/NimiTechLogo1.png';
 import styles from './JobDetail.module.scss';
+import { useToast } from '../../hooks/useToast';
+import Loader from '../../components/blog/SuspenseLoader/Loader';
 
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const { showToast } = useToast();
 
   // Use RTK Query to fetch job data
   const {
@@ -52,21 +55,13 @@ const JobDetail = () => {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.loader}></div>
-        <p>Loading job details...</p>
+        <Loader />
       </div>
     );
   }
 
   if (error) {
-    return (
-      <div className={styles.notFoundContainer}>
-        <h2>Error Loading Job</h2>
-        <p>Failed to load job details. Please try again later.</p>
-        <Link to="/careers" className={styles.backButton}>
-          ← Back to Careers
-        </Link>
-      </div>
-    );
+    showToast('error', 'Something went wrong');
   }
 
   if (!job) {
@@ -97,7 +92,7 @@ const JobDetail = () => {
                 <div className={styles.companyDetails}>
                   <h1>{job.title}</h1>
                   <div className={styles.jobMeta}>
-                    <span className={styles.company}>NimiTech</span>
+                    <span className={styles.company}>Nimitech</span>
                     <span className={styles.location}>{job.location}</span>
                     <span className={styles.type}>{job.employmentType}</span>
                   </div>

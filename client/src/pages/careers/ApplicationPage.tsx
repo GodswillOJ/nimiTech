@@ -64,7 +64,7 @@ const ApplicationPage = () => {
             <div className={styles.jobHeader}>
               <h1>Apply for {job.title}</h1>
               <div className={styles.jobMeta}>
-                <span className={styles.company}>NimiTech</span>
+                <span className={styles.company}>Nimitech</span>
                 <span className={styles.location}>{job.location}</span>
                 <span className={styles.type}>{job.employmentType}</span>
               </div>

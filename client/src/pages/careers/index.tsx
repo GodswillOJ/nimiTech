@@ -7,6 +7,8 @@ import styles from './Careers.module.scss';
 import SEO from '../../components/SEO/SEO';
 import Loader from '../../components/blog/SuspenseLoader/Loader';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import careerImage from '../../assets/blog/images/careerImage3.jpg';
+import careerApply from '../../assets/blog/images/careerApply.jpg';
 
 const Careers = () => {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
@@ -65,10 +67,7 @@ const Careers = () => {
   const totalJobs = jobsResponse?.totalJobs || 0;
   const totalPages = Math.ceil(totalJobs / 10);
 
-  // Extract unique values for filters from all jobs (without filters applied)
-  const { data: allJobsResponse } = useGetAllJobsQuery({ limit: 100 }); // Get all jobs for filter options
-
-  const allJobs = allJobsResponse?.jobs || [];
+  const allJobs = jobs || [];
 
   // Memoized filter options
   const { departments, jobTypes, locations } = useMemo(() => {
@@ -117,29 +116,21 @@ const Careers = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (isLoading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loader}></div>
-        <Loader />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className={styles.loadingContainer}>
+  //       <div className={styles.loader}></div>
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={styles.careersPage}>
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-          <video
-            src="/videos/nimiVid.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-
+          <img src={careerApply} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div
             style={{
               position: 'absolute',
@@ -172,7 +163,7 @@ const Careers = () => {
               </p>
             </div>
             <div className={styles.missionImage}>
-              <img src={businessImages.Success__} alt="Team meeting" />
+              <img src={careerImage} alt="Team meeting" />
             </div>
           </div>
         </section>
