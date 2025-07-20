@@ -46,8 +46,6 @@ const conversationSchema = new mongoose.Schema(
   }
 );
 
-// Index for better query performance
-conversationSchema.index({ sessionId: 1 });
 conversationSchema.index({ status: 1 });
 conversationSchema.index({ startTime: -1 });
 
