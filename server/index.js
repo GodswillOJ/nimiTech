@@ -49,6 +49,7 @@ const corsOptions = {
       "https://nimitechit.com",
       "https://www.nimitechit.com",
       "https://nimitech-demo.onrender.com",
+      "https://nimitech-website-qs8l.onrender.com",
     ];
     if (process.env.CORS_ORIGIN && !allowedOrigins.includes(process.env.CORS_ORIGIN)) {
       allowedOrigins.push(process.env.CORS_ORIGIN);
