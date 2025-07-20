@@ -5,17 +5,19 @@ import { IChatMessage, IConversation, ITypingIndicator } from '../types/chat.typ
 class ChatService {
   private socket: Socket | null = null;
   private apiBaseUrl: string;
+  private socketBaseUrl: string;
   private sessionId: string | null = null;
 
-  constructor(apiBaseUrl = 'http://localhost:10000') {
+  constructor(apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000') {
     this.apiBaseUrl = apiBaseUrl;
+    this.socketBaseUrl = apiBaseUrl.replace(/\/api$/, '');
   }
 
   // Initialize Socket.IO connection
   connect(): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        this.socket = io(this.apiBaseUrl, {
+        this.socket = io(this.socketBaseUrl, {
           transports: ['websocket', 'polling'],
           withCredentials: true,
         });
@@ -25,7 +27,7 @@ class ChatService {
           resolve();
         });
 
-        this.socket.on('connect_error', (error) => {
+        this.socket.on('connect_error', (error: any) => {
           console.error('Connection error:', error);
           reject(error);
         });
@@ -50,7 +52,7 @@ class ChatService {
   // Start a new conversation
   async startConversation(): Promise<{ sessionId: string; conversationId: string }> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/chat/start`, {
+      const response = await fetch(`${this.apiBaseUrl}/chat/start`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +94,7 @@ class ChatService {
     content: string
   ): Promise<{ userMessage: IChatMessage; aiMessage: IChatMessage; handoffSuggested: boolean }> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/chat/message`, {
+      const response = await fetch(`${this.apiBaseUrl}/chat/message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +125,7 @@ class ChatService {
     sessionId: string
   ): Promise<{ conversation: IConversation; messages: IChatMessage[] }> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/chat/history/${sessionId}`, {
+      const response = await fetch(`${this.apiBaseUrl}/chat/history/${sessionId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +149,7 @@ class ChatService {
   // Request human handoff
   async requestHandoff(sessionId: string, reason?: string): Promise<void> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/chat/handoff`, {
+      const response = await fetch(`${this.apiBaseUrl}/chat/handoff`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +175,7 @@ class ChatService {
   // End conversation
   async endConversation(sessionId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/chat/end`, {
+      const response = await fetch(`${this.apiBaseUrl}/chat/end`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

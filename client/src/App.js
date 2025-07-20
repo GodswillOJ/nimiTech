@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from './components/Footer/Footer';
@@ -105,8 +105,8 @@ function App() {
               </div>
               <ConditionalFooter />
 
-          {/* AI Chat Widget - Available on all pages */}
-          <ConditionalChatWidget />
+              {/* AI Chat Widget - Available on all pages */}
+              <ConditionalChatWidget />
 
               {/* Global Newsletter Modal */}
               <Newsletter
@@ -152,10 +152,13 @@ function ConditionalChatWidget() {
     return null;
   }
 
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+  const socketBaseUrl = apiBaseUrl.replace(/\/api$/, '');
   return (
     <ChatWidget
       config={{
-        apiBaseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000',
+        apiBaseUrl,
+        socketBaseUrl,
         position: 'bottom-right',
       }}
     />

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './ChatWidget.module.scss';
 import { IChatMessage, IChatState, ITypingIndicator } from '../../types/chat.types';
 import chatService from '../../services/chatService';
+import { BotImage } from '../../assets/blog/svgComponents/BotImage';
 
 // Simple icons (you can replace with react-icons or custom SVGs)
 const ChatIcon = () => (
@@ -36,15 +37,7 @@ const SendIcon = () => (
   </svg>
 );
 
-const BotIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={styles['chat-widget__message__avatar__icon']}
-  >
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-  </svg>
-);
+const BotIcon = () => <BotImage className={styles['chat-widget__message__avatar__icon']} />;
 
 const UserIcon = () => (
   <svg
@@ -91,8 +84,60 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
   const [inputValue, setInputValue] = useState('');
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>('');
+  const [nameInput, setNameInput] = useState<string>('');
+  const [showNameInput, setShowNameInput] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  // Utility functions for user name management
+  const getUserName = (): string => {
+    const stored = localStorage.getItem('nimitech_chat_username');
+    if (stored) {
+      const data = JSON.parse(stored);
+      const oneWeek = 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
+      if (Date.now() - data.timestamp < oneWeek) {
+        return data.name;
+      } else {
+        localStorage.removeItem('nimitech_chat_username');
+      }
+    }
+    return '';
+  };
+
+  const saveUserName = (name: string) => {
+    const data = {
+      name: name.trim(),
+      timestamp: Date.now(),
+    };
+    localStorage.setItem('nimitech_chat_username', JSON.stringify(data));
+    setUserName(name.trim());
+  };
+
+  const createKenGreeting = (withName: boolean = false, customName?: string): IChatMessage => {
+    const nameToUse = customName || userName;
+    const greeting =
+      withName && nameToUse
+        ? `Hi, ${nameToUse} 👋, I'm Ken, your virtual AI assistant for Nimitech IT LLC. How can I help you today?`
+        : "Hi 👋, my name is Ken, I'm a virtual AI assistant for Nimitech IT LLC and I'm glad to help you through.\n\nYou could type in your name so I would be able to properly address you.";
+
+    return {
+      _id: `ken-greeting-${Date.now()}`,
+      conversationId: chatState.conversationId || '',
+      sender: 'ai',
+      content: greeting,
+      timestamp: new Date(),
+    };
+  };
+
+  // Initialize user name on component mount
+  useEffect(() => {
+    const storedName = getUserName();
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
 
   // Initialize chat service
   useEffect(() => {
@@ -155,15 +200,15 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
   };
 
   const toggleChat = async () => {
-    if (!chatState.isOpen) {
-      // Opening chat
+    if (!chatState.isOpen || chatState.isMinimized) {
+      // Opening chat or restoring from minimized state
       setChatState((prev) => ({ ...prev, isOpen: true, isMinimized: false, isLoading: true }));
 
       try {
         // Check for existing session
         const storedSessionId = chatService.getStoredSessionId();
 
-        if (storedSessionId) {
+        if (storedSessionId && !chatState.sessionId) {
           // Try to restore existing conversation
           try {
             const history = await chatService.getConversationHistory(storedSessionId);
@@ -175,12 +220,16 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
               isLoading: false,
             }));
           } catch (error) {
-            // If restoration fails, start new conversation
-            await startNewConversation();
+            // If restoration fails, clear session and start new conversation
+            chatService.clearStoredSession?.();
+            await startNewConversationWithGreeting();
           }
+        } else if (!chatState.sessionId) {
+          // Start new conversation with Ken's instant greeting
+          await startNewConversationWithGreeting();
         } else {
-          // Start new conversation
-          await startNewConversation();
+          // Just restore the UI state if session already exists in component state
+          setChatState((prev) => ({ ...prev, isLoading: false }));
         }
       } catch (error) {
         console.error('Error opening chat:', error);
@@ -208,6 +257,10 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     // Load initial messages (welcome message should be created by backend)
     setTimeout(async () => {
       try {
+        if (!sessionId) {
+          console.error('Session ID is required for loading initial messages');
+          return;
+        }
         const history = await chatService.getConversationHistory(sessionId);
         setChatState((prev) => ({
           ...prev,
@@ -216,13 +269,68 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
       } catch (error) {
         console.error('Failed to load initial messages:', error);
       }
-    }, 500);
+    }, 1);
     // } catch (error) {
     //   throw error;
     // }
   };
 
+  const startNewConversationWithGreeting = async () => {
+    try {
+      const { sessionId, conversationId } = await chatService.startConversation();
+      chatService.storeSessionId(sessionId);
+
+      // Create Ken's instant greeting
+      const kenGreeting = createKenGreeting(!!userName);
+
+      setChatState((prev) => ({
+        ...prev,
+        sessionId,
+        conversationId,
+        messages: [kenGreeting],
+        isLoading: false,
+      }));
+
+      // Show name input if user name is not stored
+      if (!userName) {
+        setShowNameInput(true);
+        // Focus on name input after a short delay
+        setTimeout(() => {
+          nameInputRef.current?.focus();
+        }, 100);
+      }
+    } catch (error) {
+      console.error('Error starting new conversation:', error);
+      setError('Failed to start conversation');
+      setChatState((prev) => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  const handleNameSubmit = () => {
+    if (nameInput.trim()) {
+      const submittedName = nameInput.trim();
+      saveUserName(submittedName);
+      setShowNameInput(false);
+      setNameInput('');
+
+      // Add a personalized greeting from Ken using the submitted name
+      const personalizedGreeting = createKenGreeting(true, submittedName);
+      setChatState((prev) => ({
+        ...prev,
+        messages: [...prev.messages, personalizedGreeting],
+      }));
+    }
+  };
+
+  const handleNameInputKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleNameSubmit();
+    }
+  };
+
   const closeChat = () => {
+    // When closing/minimizing, preserve session data but hide the chat
     setChatState((prev) => ({ ...prev, isOpen: false, isMinimized: true }));
   };
 
@@ -250,11 +358,11 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     try {
       const response = await chatService.sendMessage(chatState.sessionId, messageContent);
 
-      // Update messages with server response (remove the temporary user message)
+      // Only add AI response if not already handled by socket event listener
+      // The onNewMessage listener should handle adding the AI response
       setChatState((prev) => ({
         ...prev,
-        messages: [...prev.messages.slice(0, -1), response.userMessage, response.aiMessage],
-        handoffSuggested: response.aiMessage?.metadata?.handoffTrigger || false,
+        handoffSuggested: response.handoffSuggested || false,
         isLoading: false,
       }));
     } catch (error) {
@@ -364,7 +472,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
               <div
                 className={`${styles['chat-widget__header__text']} ${chatState.isTyping ? styles['chat-widget__header__text--typing'] : ''}`}
               >
-                <h3>NimiTech Assistant</h3>
+                <h3>Ken</h3>
                 <p>{chatState.isTyping ? 'Typing...' : 'Online • We reply instantly'}</p>
               </div>
             </div>
@@ -424,6 +532,31 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
                 </div>
                 <button className={styles['chat-widget__handoff__button']} onClick={requestHandoff}>
                   Connect
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Name Input */}
+          {showNameInput && (
+            <div className={styles['chat-widget__name-input']}>
+              <div className={styles['chat-widget__name-input__container']}>
+                <input
+                  ref={nameInputRef}
+                  type="text"
+                  className={styles['chat-widget__name-input__field']}
+                  placeholder="name"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  onKeyPress={handleNameInputKeyPress}
+                  maxLength={50}
+                />
+                <button
+                  className={styles['chat-widget__name-input__button']}
+                  onClick={handleNameSubmit}
+                  disabled={!nameInput.trim()}
+                >
+                  Submit
                 </button>
               </div>
             </div>

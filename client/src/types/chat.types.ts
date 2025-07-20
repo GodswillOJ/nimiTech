@@ -13,6 +13,7 @@ export interface IChatMessage {
       url: string;
       size: number;
     }>;
+    nameInput?: boolean;
   };
 }
 
@@ -43,6 +44,7 @@ export interface IChatState {
   messages: IChatMessage[];
   connectionStatus: 'connected' | 'disconnected' | 'connecting';
   handoffSuggested: boolean;
+  userName?: string | null;
 }
 
 export interface IChatConfig {
