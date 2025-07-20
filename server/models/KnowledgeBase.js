@@ -30,7 +30,7 @@ const knowledgeBaseSchema = new mongoose.Schema(
     },
     websiteId: {
       type: String,
-      default: "nimitech",
+      default: "nimitechit",
     },
     priority: {
       type: Number,

@@ -127,13 +127,12 @@ app.use(cacheMiddleware);
 
 // Skip JSON parsing for file upload routes
 app.use((req, res, next) => {
-  // Skip JSON parsing for file upload endpoints
+  // Skip JSON parsing for file upload endpoints only (not job application)
   if (
     req.path.includes("/upload-avatar") ||
     req.path.includes("/upload-image") ||
     req.path.includes("/upload-resume") ||
-    req.path.includes("/upload-cover-letter") ||
-    req.path.includes("/apply")
+    req.path.includes("/upload-cover-letter")
   ) {
     return next();
   }

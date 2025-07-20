@@ -83,7 +83,7 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Phone number is required"],
       trim: true,
-      match: [/^[\+]?[1-9][\d]{0,15}$/, "Please enter a valid phone number"],
+      match: [/^[\+]?[0-9][\d\s\-\(\)]{7,20}$/, "Please enter a valid phone number"],
     },
 
     message: {
@@ -104,15 +104,15 @@ const applicationSchema = new mongoose.Schema(
       },
       publicId: {
         type: String,
-        required: [true, "Resume public ID is required"],
+        required: false,
       },
       originalName: {
         type: String,
-        required: [true, "Original filename is required"],
+        required: false,
       },
       size: {
         type: Number,
-        required: true,
+        required: false,
       },
     },
     coverLetter: {
