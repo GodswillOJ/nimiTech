@@ -12,14 +12,65 @@ const ensureUploadDirs = () => {
     path.join(__dirname, "../uploads/blog/content"),
     path.join(__dirname, "../uploads/avatars"),
     path.join(__dirname, "../uploads/business"),
+    path.join(__dirname, "../uploads/docs/resume"),
+    path.join(__dirname, "../uploads/docs/coverLetter"),
   ];
-
   dirs.forEach(dir => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
   });
 };
+// PDF file filter for resume/coverLetter
+const pdfFileFilter = (req, file, cb) => {
+  const allowedTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+  if (!allowedTypes.includes(file.mimetype)) {
+    return cb(
+      new Error("Only PDF, DOC, and DOCX files are allowed for resume and cover letter"),
+      false
+    );
+  }
+  cb(null, true);
+};
+
+// Storage for resume uploads
+const resumeStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/docs/resume");
+  },
+  filename: (req, file, cb) => {
+    const secureFilename = generateSecureFilename(file.originalname.replace(/\s+/g, "_"));
+    cb(null, secureFilename);
+  },
+});
+
+// Storage for cover letter uploads
+const coverLetterStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/docs/coverLetter");
+  },
+  filename: (req, file, cb) => {
+    const secureFilename = generateSecureFilename(file.originalname.replace(/\s+/g, "_"));
+    cb(null, secureFilename);
+  },
+});
+
+// Multer for resume and cover letter
+const docsUpload = multer({
+  storage: resumeStorage,
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
+const coverLetterUpload = multer({
+  storage: coverLetterStorage,
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
 
 // Call this when the module is loaded
 ensureUploadDirs();
@@ -217,6 +268,8 @@ module.exports = {
   upload: uploadSingle,
   uploadAvatar,
   uploadMultiple,
+  docsUpload,
+  coverLetterUpload,
   handleMulterError,
   cleanupOnError,
   deleteFile,

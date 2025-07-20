@@ -42,15 +42,6 @@ const getAllBlogsPaginated = async (req, res) => {
     const totalPosts = await Blog.countDocuments(query);
     const totalPages = Math.ceil(totalPosts / limit);
 
-    // Add caching headers for blog list (updates frequently)
-    const cacheKey = `blogs-${page}-${limit}-${category || 'all'}-${search || 'none'}`;
-    res.set({
-      'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600', // 5 min cache, 1 hour stale
-      'ETag': `"${cacheKey}-${Date.now()}"`,
-      'Vary': 'Accept-Encoding',
-      'Last-Modified': posts.length > 0 ? posts[0].updatedAt.toUTCString() : new Date().toUTCString()
-    });
-
     res.status(200).json({
       posts,
       currentPage: page,
@@ -74,14 +65,6 @@ const getFeaturedPost = async (req, res) => {
     if (!featuredPost) {
       return res.status(404).json({ message: "No featured post found" });
     }
-
-    // Featured post caching (changes less frequently)
-    res.set({
-      'Cache-Control': 'public, max-age=1800, stale-while-revalidate=7200', // 30 min cache, 2 hour stale
-      'ETag': `"featured-${featuredPost._id}-${featuredPost.updatedAt.getTime()}"`,
-      'Vary': 'Accept-Encoding',
-      'Last-Modified': featuredPost.updatedAt.toUTCString()
-    });
 
     res.status(200).json(featuredPost);
   } catch (error) {
@@ -113,14 +96,6 @@ const getBlogById = async (req, res) => {
     // Increment view count
     blog.views += 1;
     await blog.save();
-
-    // Individual blog post caching (rarely changes after publication)
-    res.set({
-      'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400', // 1 hour cache, 24 hour stale
-      'ETag': `"blog-${blog._id}-${blog.updatedAt.getTime()}-${blog.views}"`,
-      'Vary': 'Accept-Encoding',
-      'Last-Modified': blog.updatedAt.toUTCString()
-    });
 
     res.status(200).json(blog);
   } catch (error) {
@@ -169,14 +144,6 @@ const getRelatedPosts = async (req, res) => {
 
       relatedPosts.push(...additionalPosts);
     }
-
-    // Related posts caching (depends on current post and category)
-    res.set({
-      'Cache-Control': 'public, max-age=1800, stale-while-revalidate=7200', // 30 min cache, 2 hour stale
-      'ETag': `"related-${id}-${currentPost.category}-${limit}-${Date.now()}"`,
-      'Vary': 'Accept-Encoding',
-      'Last-Modified': relatedPosts.length > 0 ? relatedPosts[0].updatedAt.toUTCString() : new Date().toUTCString()
-    });
 
     res.status(200).json(relatedPosts);
   } catch (error) {
