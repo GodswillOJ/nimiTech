@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, useLocation, useRoutes } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from './components/Footer/Footer';
@@ -10,6 +10,7 @@ import Loader from './components/blog/SuspenseLoader/Loader';
 import ProtectedRoute from './components/business/protectedRoute/protectedRoute';
 import Navbar from './components/navbar';
 import { ToastProvider } from './hooks/useToast';
+import ChatWidget from './components/Chat/ChatWidget';
 
 import './App.css';
 
@@ -104,6 +105,9 @@ function App() {
               </div>
               <ConditionalFooter />
 
+              {/* AI Chat Widget - Available on all pages */}
+              <ConditionalChatWidget />
+
               {/* Global Newsletter Modal */}
               <Newsletter
                 isOpen={showNewsletterModal}
@@ -140,6 +144,27 @@ function ConditionalNavbar() {
   return <Navbar />;
 }
 
+function ConditionalChatWidget() {
+  const location = useLocation();
+
+  // Show chat widget on all pages except admin pages
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:10000/api';
+  const socketBaseUrl = apiBaseUrl.replace(/\/api$/, '');
+  return (
+    <ChatWidget
+      config={{
+        apiBaseUrl,
+        socketBaseUrl,
+        position: 'bottom-right',
+      }}
+    />
+  );
+}
+
 function ConditionalFooter() {
   const location = useLocation();
 
@@ -155,4 +180,4 @@ function ConditionalFooter() {
   return <Footer />;
 }
 
-export { App, AppRoutes, ConditionalFooter, ConditionalNavbar };
+export { App, AppRoutes, ConditionalFooter, ConditionalNavbar, ConditionalChatWidget };
