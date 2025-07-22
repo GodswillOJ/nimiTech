@@ -261,14 +261,21 @@
   background: #88199a;
   color: white;
   text-decoration: none;
+  border: none;
   border-radius: 6px;
   font-weight: 500;
   font-size: 0.9rem;
+  cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background: #c0392b;
+    background: #764ba2;
     transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(136, 25, 154, 0.3);
   }
 }
 
@@ -435,6 +442,104 @@
   }
 }
 
+// Modal Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 800px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 95vw;
+    height: 80vh;
+    max-width: none;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+    margin-right: 16px;
+    word-break: break-word;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6c757d;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #e9ecef;
+    color: #495057;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(136, 25, 154, 0.3);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.modalBody {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+}
+
+.documentPreview {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
 // Loading and Error States
 .loadingContainer,
 .errorContainer {
@@ -460,33 +565,6 @@
   h2 {
     color: #e74c3c;
     margin-bottom: 10px;
-  }
-}
-
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.backButton {
-  padding: 12px 24px;
-  background: #88199a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 20px;
-
-  &:hover {
-    background: #c0392b;
-    transform: translateY(-2px);
   }
 }
 
@@ -569,5 +647,33 @@
     h3 {
       font-size: 1.1rem;
     }
+  }
+}
+
+// Back Button
+.backButton {
+  padding: 12px 24px;
+  background: #88199a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+
+  &:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+  }
+}
+
+// Animation
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -85,34 +85,39 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
   const [nameInput, setNameInput] = useState<string>('');
-  const [showNameInput, setShowNameInput] = useState<boolean>(false);
+  const [emailInput, setEmailInput] = useState<string>('');
+  const [showUserInfoInput, setShowUserInfoInput] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
-  // Utility functions for user name management
-  const getUserName = (): string => {
-    const stored = localStorage.getItem('nimitech_chat_username');
+  // Utility functions for user info management
+  const getUserInfo = (): { name: string; email: string } => {
+    const stored = localStorage.getItem('nimitech_chat_userinfo');
     if (stored) {
       const data = JSON.parse(stored);
       const oneWeek = 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
       if (Date.now() - data.timestamp < oneWeek) {
-        return data.name;
+        return { name: data.name || '', email: data.email || '' };
       } else {
-        localStorage.removeItem('nimitech_chat_username');
+        localStorage.removeItem('nimitech_chat_userinfo');
       }
     }
-    return '';
+    return { name: '', email: '' };
   };
 
-  const saveUserName = (name: string) => {
+  const saveUserInfo = (name: string, email: string) => {
     const data = {
       name: name.trim(),
+      email: email.trim(),
       timestamp: Date.now(),
     };
-    localStorage.setItem('nimitech_chat_username', JSON.stringify(data));
+    localStorage.setItem('nimitech_chat_userinfo', JSON.stringify(data));
     setUserName(name.trim());
+    setUserEmail(email.trim());
   };
 
   const createKenGreeting = (withName: boolean = false, customName?: string): IChatMessage => {
@@ -131,11 +136,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     };
   };
 
-  // Initialize user name on component mount
+  // Initialize user info on component mount
   useEffect(() => {
-    const storedName = getUserName();
-    if (storedName) {
-      setUserName(storedName);
+    const storedInfo = getUserInfo();
+    if (storedInfo.name) {
+      setUserName(storedInfo.name);
+    }
+    if (storedInfo.email) {
+      setUserEmail(storedInfo.email);
     }
   }, []);
 
@@ -291,9 +299,9 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
         isLoading: false,
       }));
 
-      // Show name input if user name is not stored
+      // Show user info input if user name is not stored
       if (!userName) {
-        setShowNameInput(true);
+        setShowUserInfoInput(true);
         // Focus on name input after a short delay
         setTimeout(() => {
           nameInputRef.current?.focus();
@@ -306,12 +314,23 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     }
   };
 
-  const handleNameSubmit = () => {
-    if (nameInput.trim()) {
+  const handleUserInfoSubmit = () => {
+    if (nameInput.trim() && emailInput.trim()) {
       const submittedName = nameInput.trim();
-      saveUserName(submittedName);
-      setShowNameInput(false);
+      const submittedEmail = emailInput.trim();
+
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(submittedEmail)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+
+      saveUserInfo(submittedName, submittedEmail);
+      setShowUserInfoInput(false);
       setNameInput('');
+      setEmailInput('');
+      setError(null);
 
       // Add a personalized greeting from Ken using the submitted name
       const personalizedGreeting = createKenGreeting(true, submittedName);
@@ -325,7 +344,15 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
   const handleNameInputKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleNameSubmit();
+      // Move focus to email input
+      emailInputRef.current?.focus();
+    }
+  };
+
+  const handleEmailInputKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleUserInfoSubmit();
     }
   };
 
@@ -537,24 +564,36 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
             </div>
           )}
 
-          {/* Name Input */}
-          {showNameInput && (
-            <div className={styles['chat-widget__name-input']}>
-              <div className={styles['chat-widget__name-input__container']}>
-                <input
-                  ref={nameInputRef}
-                  type="text"
-                  className={styles['chat-widget__name-input__field']}
-                  placeholder="name"
-                  value={nameInput}
-                  onChange={(e) => setNameInput(e.target.value)}
-                  onKeyPress={handleNameInputKeyPress}
-                  maxLength={50}
-                />
+          {/* User Info Input */}
+          {showUserInfoInput && (
+            <div className={styles['chat-widget__user-info-input']}>
+              <div className={styles['chat-widget__user-info-input__container']}>
+                <div className={styles['chat-widget__user-info-input__fields']}>
+                  <input
+                    ref={nameInputRef}
+                    type="text"
+                    className={styles['chat-widget__user-info-input__field']}
+                    placeholder="name"
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    onKeyPress={handleNameInputKeyPress}
+                    maxLength={50}
+                  />
+                  <input
+                    ref={emailInputRef}
+                    type="email"
+                    className={styles['chat-widget__user-info-input__field']}
+                    placeholder="email"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    onKeyPress={handleEmailInputKeyPress}
+                    maxLength={100}
+                  />
+                </div>
                 <button
-                  className={styles['chat-widget__name-input__button']}
-                  onClick={handleNameSubmit}
-                  disabled={!nameInput.trim()}
+                  className={styles['chat-widget__user-info-input__button']}
+                  onClick={handleUserInfoSubmit}
+                  disabled={!nameInput.trim() || !emailInput.trim()}
                 >
                   Submit
                 </button>

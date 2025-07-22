@@ -4,6 +4,7 @@ export interface IChatMessage {
   sender: 'user' | 'ai' | 'agent';
   content: string;
   timestamp: Date;
+  isTyping?: boolean;
   metadata?: {
     confidence?: number;
     knowledgeBaseRefs?: string[];
@@ -14,6 +15,10 @@ export interface IChatMessage {
       size: number;
     }>;
     nameInput?: boolean;
+    isLoading?: boolean;
+    isError?: boolean;
+    ticketId?: string;
+    emailSent?: boolean;
   };
 }
 

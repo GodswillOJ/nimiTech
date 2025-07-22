@@ -235,10 +235,23 @@
       word-wrap: break-word;
 
       &--handoff {
-        background: linear-gradient(to right, #f59e0b, #d97706) !important;
-        color: white !important;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border-left: 4px solid #f59e0b;
       }
+
+      &--typing {
+        position: relative;
+      }
+    }
+
+    &__cursor {
+      display: inline-block;
+      background: currentColor;
+      width: 2px;
+      height: 1.2em;
+      margin-left: 2px;
+      animation: blink 1s infinite;
+      vertical-align: text-bottom;
     }
 
     &__time {
@@ -479,6 +492,79 @@
     }
   }
 
+  &__user-info-input {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &__fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      @media (min-width: 480px) {
+        flex-direction: row;
+        gap: 8px;
+      }
+    }
+
+    &__field {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: white;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 0;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.5);
+        border-color: rgba(147, 51, 234, 0.8);
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    &__button {
+      background: linear-gradient(to right, #9333ea, #7e22ce);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4);
+        background: linear-gradient(to right, #7e22ce, #6b21a8);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+
   &__error {
     padding: 20px;
     text-align: center;
@@ -564,5 +650,14 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
   }
 }

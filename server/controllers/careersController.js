@@ -1,24 +1,82 @@
 // Serve resume PDF
 const getResumePdf = (req, res) => {
-  const { filename } = req.params;
-  const filePath = path.join(__dirname, "../uploads/docs/resume", filename);
-  if (fs.existsSync(filePath)) {
+  try {
+    const { filename } = req.params;
+
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({ message: "Invalid filename" });
+    }
+
+    const filePath = path.join(__dirname, "../uploads/docs/resume", filename);
+
+    // Check if file exists and get stats
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
+
+    const stats = fs.statSync(filePath);
+
+    // Set proper headers for PDF serving
     res.setHeader("Content-Type", "application/pdf");
-    res.sendFile(filePath);
-  } else {
-    res.status(404).json({ message: "Resume not found" });
+    res.setHeader("Content-Length", stats.size);
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.setHeader("Cache-Control", "public, max-age=3600"); // Cache for 1 hour
+    res.setHeader("Accept-Ranges", "bytes");
+
+    // Send file with proper error handling
+    res.sendFile(path.resolve(filePath), err => {
+      if (err) {
+        console.error("Error serving resume PDF:", err);
+        if (!res.headersSent) {
+          res.status(500).json({ message: "Error serving resume file" });
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Error in getResumePdf:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 // Serve cover letter PDF
 const getCoverLetterPdf = (req, res) => {
-  const { filename } = req.params;
-  const filePath = path.join(__dirname, "../uploads/docs/coverLetter", filename);
-  if (fs.existsSync(filePath)) {
+  try {
+    const { filename } = req.params;
+
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({ message: "Invalid filename" });
+    }
+
+    const filePath = path.join(__dirname, "../uploads/docs/coverLetter", filename);
+
+    // Check if file exists and get stats
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "Cover letter not found" });
+    }
+
+    const stats = fs.statSync(filePath);
+
+    // Set proper headers for PDF serving
     res.setHeader("Content-Type", "application/pdf");
-    res.sendFile(filePath);
-  } else {
-    res.status(404).json({ message: "Cover letter not found" });
+    res.setHeader("Content-Length", stats.size);
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.setHeader("Cache-Control", "public, max-age=3600"); // Cache for 1 hour
+    res.setHeader("Accept-Ranges", "bytes");
+
+    // Send file with proper error handling
+    res.sendFile(path.resolve(filePath), err => {
+      if (err) {
+        console.error("Error serving cover letter PDF:", err);
+        if (!res.headersSent) {
+          res.status(500).json({ message: "Error serving cover letter file" });
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Error in getCoverLetterPdf:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 const Job = require("../models/Job");
@@ -27,6 +85,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs");
 const { docsUpload, coverLetterUpload } = require("../middleware/uploadMiddleware");
+const cloudinaryService = require("../services/cloudinaryService");
 const { sendApplicationConfirmation, sendAdminNotification } = require("../services/emailService");
 
 // Input sanitization function
@@ -105,8 +164,8 @@ const getAllJobs = async (req, res) => {
     // Add no-cache headers for instant updates
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Pragma": "no-cache",
-      "Expires": "0",
+      Pragma: "no-cache",
+      Expires: "0",
       Vary: "Accept-Encoding",
     });
 
@@ -189,8 +248,8 @@ const getAllJobsAdmin = async (req, res) => {
     // Add no-cache headers for instant updates
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Pragma": "no-cache",
-      "Expires": "0",
+      Pragma: "no-cache",
+      Expires: "0",
       Vary: "Accept-Encoding",
     });
 
@@ -229,8 +288,8 @@ const getJobById = async (req, res) => {
     // Add no-cache headers for instant updates
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Pragma": "no-cache",
-      "Expires": "0",
+      Pragma: "no-cache",
+      Expires: "0",
       ETag: `"job-${id}-${job.updatedAt.getTime()}"`,
     });
 
@@ -248,12 +307,12 @@ const getJobById = async (req, res) => {
 const submitApplication = async (req, res) => {
   try {
     const { jobId } = req.params;
-    let { 
-      firstName, 
-      lastName, 
-      email, 
-      phone, 
-      message, 
+    let {
+      firstName,
+      lastName,
+      email,
+      phone,
+      message,
       experience,
       city,
       stateCountry,
@@ -265,7 +324,7 @@ const submitApplication = async (req, res) => {
       contractOpen,
       portfolio,
       resumeUrl,
-      coverLetterUrl
+      coverLetterUrl,
     } = req.body;
 
     // Sanitize inputs
@@ -318,7 +377,7 @@ const submitApplication = async (req, res) => {
       salaryExpectations: salaryExpectations?.trim(),
       authorizedUS: authorizedUS?.trim(),
       sponsorship: sponsorship?.trim(),
-      contractOpen: contractOpen?.trim()
+      contractOpen: contractOpen?.trim(),
     };
 
     const missingFields = [];
@@ -329,11 +388,11 @@ const submitApplication = async (req, res) => {
     });
 
     if (missingFields.length > 0) {
-      console.log('Missing required fields:', missingFields);
-      console.log('Received data:', req.body);
-      return res.status(400).json({ 
-        message: `Missing required fields: ${missingFields.join(', ')}`,
-        missingFields 
+      console.log("Missing required fields:", missingFields);
+      console.log("Received data:", req.body);
+      return res.status(400).json({
+        message: `Missing required fields: ${missingFields.join(", ")}`,
+        missingFields,
       });
     }
 
@@ -459,7 +518,7 @@ const getAllApplications = async (req, res) => {
     const applications = await Application.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit)
+      .limit(limit);
 
     const totalApplications = await Application.countDocuments(query);
     const totalPages = Math.ceil(totalApplications / limit);
@@ -522,7 +581,7 @@ const updateApplicationStatus = async (req, res) => {
     }
 
     // Check if user is authenticated since reviewedBy is required
-    if (!req.user || !req.user.id) {
+    if (!req.admin || !req.admin?.id) {
       return res.status(401).json({
         success: false,
         message: "Authentication required to update application status",
@@ -534,8 +593,8 @@ const updateApplicationStatus = async (req, res) => {
       {
         status,
         notes: sanitizeInput(notes),
-        // reviewedBy: req.user?.id, // Now safely validated
-        // reviewedAt: new Date(),
+        reviewedBy: req.admin?.id,
+        reviewedAt: new Date(),
       },
       { new: true }
     )
@@ -634,7 +693,7 @@ const createJob = async (req, res) => {
       status: status || "draft",
       applicationDeadline: applicationDeadline ? new Date(applicationDeadline) : undefined,
       isActive: status === "active",
-      postedBy: req.user?.id, // Assuming user is available from auth middleware
+      postedBy: req.admin?.id, // Assuming user is available from auth middleware
     });
 
     const savedJob = await newJob.save();
@@ -769,110 +828,202 @@ const deleteJob = async (req, res) => {
 };
 
 // Upload resume file
-const uploadResume = (req, res) => {
+const uploadResume = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: 'No resume file uploaded'
+        message: "No resume file uploaded",
       });
     }
 
-    const resumeUrl = `/api/careers/resume/${req.file.filename}`;
+    // Use Cloudinary for cloud document storage
+    const uploadOptions = {
+      storageType: 'documents',
+      subfolder: 'resume',
+      prefix: 'resume'
+    };
+
+    const result = await cloudinaryService.uploadFile(req.file, uploadOptions);
     
+    // Use direct Cloudinary URL for fast downloads
+    const resumeUrl = result.url;
+
     res.status(200).json({
       success: true,
-      message: 'Resume uploaded successfully',
+      message: "Resume uploaded successfully",
       resumeUrl,
-      filename: req.file.filename
+      filename: req.file.filename,
     });
   } catch (error) {
-    console.error('Error uploading resume:', error);
+    console.error("Error uploading resume:", error);
     res.status(500).json({
       success: false,
-      message: 'Failed to upload resume'
+      message: "Failed to upload resume",
     });
   }
 };
 
 // Upload cover letter file
-const uploadCoverLetter = (req, res) => {
+const uploadCoverLetter = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: 'No cover letter file uploaded'
+        message: "No cover letter file uploaded",
       });
     }
 
-    const coverLetterUrl = `/api/careers/cover-letter/${req.file.filename}`;
+    // Use Cloudinary for cloud document storage
+    const uploadOptions = {
+      storageType: 'documents',
+      subfolder: 'coverLetter',
+      prefix: 'cover_letter'
+    };
+
+    const result = await cloudinaryService.uploadFile(req.file, uploadOptions);
     
+    // Use direct Cloudinary URL for fast downloads
+    const coverLetterUrl = result.url;
+
     res.status(200).json({
       success: true,
-      message: 'Cover letter uploaded successfully',
+      message: "Cover letter uploaded successfully",
       coverLetterUrl,
-      filename: req.file.filename
+      filename: result.filename,
+      // Additional data from new service
+      fileInfo: {
+        url: result.url,
+        size: result.size,
+        originalName: result.originalname
+      }
     });
   } catch (error) {
-    console.error('Error uploading cover letter:', error);
+    console.error("Error uploading cover letter:", error);
     res.status(500).json({
       success: false,
-      message: 'Failed to upload cover letter'
+      message: "Failed to upload cover letter",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
 
 // Delete resume file
-const deleteResume = (req, res) => {
+const deleteResume = async (req, res) => {
   try {
     const { filename } = req.params;
-    const filePath = path.join(__dirname, "../uploads/docs/resume", filename);
     
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid filename"
+      });
+    }
+
+    // Extract public_id from filename (remove extension if present)
+    const publicId = filename.replace(/\.[^/.]+$/, '');
+    
+    // Use Cloudinary service for deletion
+    const result = await cloudinaryService.deleteFile(publicId, 'documents');
+
+    if (result.success) {
       res.status(200).json({
         success: true,
-        message: 'Resume deleted successfully'
+        message: "Resume deleted successfully",
       });
     } else {
       res.status(404).json({
         success: false,
-        message: 'Resume file not found'
+        message: "Resume file not found",
       });
     }
   } catch (error) {
-    console.error('Error deleting resume:', error);
+    console.error("Error deleting resume:", error);
     res.status(500).json({
       success: false,
-      message: 'Failed to delete resume'
+      message: "Failed to delete resume",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
 
 // Delete cover letter file
-const deleteCoverLetter = (req, res) => {
+const deleteCoverLetter = async (req, res) => {
   try {
     const { filename } = req.params;
-    const filePath = path.join(__dirname, "../uploads/docs/coverLetter", filename);
     
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid filename"
+      });
+    }
+
+    // Extract public_id from filename (remove extension if present)
+    const publicId = filename.replace(/\.[^/.]+$/, '');
+    
+    // Use Cloudinary service for deletion
+    const result = await cloudinaryService.deleteFile(publicId, 'documents');
+
+    if (result.success) {
       res.status(200).json({
         success: true,
-        message: 'Cover letter deleted successfully'
+        message: "Cover letter deleted successfully",
       });
     } else {
       res.status(404).json({
         success: false,
-        message: 'Cover letter file not found'
+        message: "Cover letter file not found",
       });
     }
   } catch (error) {
-    console.error('Error deleting cover letter:', error);
+    console.error("Error deleting cover letter:", error);
     res.status(500).json({
       success: false,
-      message: 'Failed to delete cover letter'
+      message: "Failed to delete cover letter",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
+  }
+};
+
+const downloadDocument = async (req, res) => {
+  try {
+    const fileName = req.params.filename;
+    const allowedExtensions = [".pdf", ".docx", ".doc"];
+
+    if (fileName.includes("..") || fileName.includes("/")) {
+      return res.status(400).json({ message: "Invalid filename." });
+    }
+    const fileExt = path.extname(fileName).toLowerCase();
+    if (!allowedExtensions.includes(fileExt)) {
+      return res.status(403).json({ message: "File type not allowed." });
+    }
+
+    // Extract public_id from filename (remove extension if present)
+    const publicId = fileName.replace(/\.[^/.]+$/, '');
+    
+    try {
+      // Get file info from Cloudinary
+      const fileInfo = await cloudinaryService.getFileInfo(publicId, 'documents');
+      
+      if (!fileInfo) {
+        return res.status(404).json({ message: "File not found." });
+      }
+
+      // Redirect to Cloudinary URL for download
+      res.redirect(fileInfo.url);
+      
+    } catch (error) {
+      console.error("File access error:", error);
+      return res.status(404).json({ message: "File not found." });
+    }
+  } catch (error) {
+    console.error("Error in downloadDocument:", error);
+    if (!res.headersSent) {
+      res.status(500).json({ message: "Internal server error." });
+    }
   }
 };
 
@@ -893,4 +1044,5 @@ module.exports = {
   uploadCoverLetter,
   deleteResume,
   deleteCoverLetter,
+  downloadDocument,
 };

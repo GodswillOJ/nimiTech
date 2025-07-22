@@ -16,8 +16,12 @@ interface Application {
   phone: string;
   experience: string;
   message?: string;
-  resumeUrl: string;
-  coverLetterUrl?: string;
+  resume: {
+    url: string;
+  };
+  coverLetter: {
+    url: string;
+  };
   status: 'pending' | 'reviewing' | 'shortlisted' | 'rejected' | 'hired';
   createdAt: string;
   updatedAt: string;
@@ -47,20 +51,91 @@ const ApplicationDetail: React.FC = () => {
 
     setIsUpdatingStatus(true);
     try {
-      await updateApplicationStatus({
+      console.log('Updating application status:', {
+        id: application._id,
+        status: newStatus,
+        notes: notes.trim() || undefined,
+      });
+
+      const result = await updateApplicationStatus({
         id: application._id,
         status: newStatus,
         notes: notes.trim() || undefined,
       }).unwrap();
 
+      console.log('Status update successful:', result);
       showToast('success', 'Application status updated successfully!');
       refetch();
       setNotes('');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating application status:', error);
-      showToast('error', 'Failed to update application status. Please try again.');
+
+      // Handle specific error cases
+      if (error?.status === 401) {
+        showToast('error', 'Authentication failed. Please log in again.');
+        // Don't navigate here, let the baseQuery handle it
+      } else if (error?.status === 403) {
+        showToast('error', 'You do not have permission to update application status.');
+      } else if (error?.status === 404) {
+        showToast('error', 'Application not found.');
+      } else {
+        const errorMessage =
+          error?.data?.message ||
+          error?.message ||
+          'Failed to update application status. Please try again.';
+        showToast('error', errorMessage);
+      }
     } finally {
       setIsUpdatingStatus(false);
+    }
+  };
+
+  const handleDownloadResume = () => {
+    if (!application?.resume?.url) {
+      showToast('error', 'Resume URL not available.');
+      return;
+    }
+
+    try {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = application.resume?.url;
+      link.download = `${application.firstName}_${application.lastName}_Resume.pdf`;
+      link.rel = 'noopener noreferrer';
+
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('success', 'Resume download started!');
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+      showToast('error', 'Failed to download resume. Please try again.');
+    }
+  };
+
+  const handleDownloadCoverLetter = () => {
+    if (!application?.coverLetter?.url) {
+      showToast('error', 'Cover letter URL not available.');
+      return;
+    }
+
+    try {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = application.coverLetter?.url;
+      link.rel = 'noopener noreferrer';
+
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('success', 'Cover letter download started!');
+    } catch (error) {
+      console.error('Error downloading cover letter:', error);
+      showToast('error', 'Failed to download cover letter. Please try again.');
     }
   };
 
@@ -271,17 +346,16 @@ const ApplicationDetail: React.FC = () => {
                   </svg>
                   <span>Resume</span>
                 </div>
-                <a
-                  href={application.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={handleDownloadResume}
                   className={styles.downloadButton}
+                  type="button"
                 >
                   Download
-                </a>
+                </button>
               </div>
 
-              {application.coverLetterUrl && (
+              {application.coverLetter?.url && (
                 <div className={styles.fileItem}>
                   <div className={styles.fileInfo}>
                     <svg
@@ -299,14 +373,13 @@ const ApplicationDetail: React.FC = () => {
                     </svg>
                     <span>Cover Letter</span>
                   </div>
-                  <a
-                    href={application.coverLetterUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={handleDownloadCoverLetter}
                     className={styles.downloadButton}
+                    type="button"
                   >
                     Download
-                  </a>
+                  </button>
                 </div>
               )}
             </div>

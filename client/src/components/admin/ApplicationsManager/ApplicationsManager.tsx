@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useGetAllApplicationsQuery } from '../../../services/utilis/careerApiService';
+import {
+  useGetAllApplicationsQuery,
+  useUpdateApplicationStatusMutation,
+} from '../../../services/utilis/careerApiService';
 import { useToast } from '../../../hooks/useToast';
 import styles from './ApplicationsManager.module.scss';
 
@@ -44,6 +47,8 @@ const ApplicationsManager: React.FC = () => {
     ...(filters.status !== 'all' && { status: filters.status }),
     ...(filters.jobId !== 'all' && { jobId: filters.jobId }),
   });
+
+  const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
 
   const applications = applicationsData?.applications || [];
   const totalPages = Math.ceil((applicationsData?.total || 0) / 10);
@@ -97,6 +102,83 @@ const ApplicationsManager: React.FC = () => {
       lead: '8+ years',
     };
     return expMap[experience] || experience;
+  };
+
+  const handleStatusUpdate = async (applicationId: string, newStatus: Application['status']) => {
+    try {
+      await updateApplicationStatus({
+        id: applicationId,
+        status: newStatus,
+      }).unwrap();
+
+      showToast('success', 'Application status updated successfully!');
+      refetch();
+    } catch (error) {
+      console.error('Error updating application status:', error);
+      showToast('error', 'Failed to update application status. Please try again.');
+    }
+  };
+
+  const handleDownloadResume = async (resumeUrl: string, applicantName: string) => {
+    try {
+      const response = await fetch(resumeUrl, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to download resume');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${applicantName.replace(/\s+/g, '_')}_Resume.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      showToast('success', 'Resume downloaded successfully!');
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+      showToast('error', 'Failed to download resume. Please try again.');
+    }
+  };
+
+  const handleDownloadCoverLetter = async (coverLetterUrl: string, applicantName: string) => {
+    try {
+      const response = await fetch(coverLetterUrl, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to download cover letter');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${applicantName.replace(/\s+/g, '_')}_Cover_Letter.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      showToast('success', 'Cover letter downloaded successfully!');
+    } catch (error) {
+      console.error('Error downloading cover letter:', error);
+      showToast('error', 'Failed to download cover letter. Please try again.');
+    }
   };
 
   if (error) {
@@ -236,10 +318,13 @@ const ApplicationsManager: React.FC = () => {
                       </Link>
 
                       {application.resumeUrl && (
-                        <a
-                          href={application.resumeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() =>
+                            handleDownloadResume(
+                              application.resumeUrl,
+                              `${application.firstName} ${application.lastName}`
+                            )
+                          }
                           className={styles.actionButton}
                           title="Download Resume"
                         >
@@ -255,14 +340,17 @@ const ApplicationsManager: React.FC = () => {
                             <polyline points="7,10 12,15 17,10" />
                             <line x1="12" y1="15" x2="12" y2="3" />
                           </svg>
-                        </a>
+                        </button>
                       )}
 
                       {application.coverLetterUrl && (
-                        <a
-                          href={application.coverLetterUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() =>
+                            handleDownloadCoverLetter(
+                              application.coverLetterUrl!,
+                              `${application.firstName} ${application.lastName}`
+                            )
+                          }
                           className={styles.actionButton}
                           title="Download Cover Letter"
                         >
@@ -279,7 +367,7 @@ const ApplicationsManager: React.FC = () => {
                             <line x1="16" y1="13" x2="8" y2="13" />
                             <line x1="16" y1="17" x2="8" y2="17" />
                           </svg>
-                        </a>
+                        </button>
                       )}
                     </td>
                   </tr>

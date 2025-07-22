@@ -1,3 +1,5 @@
+//chatController.js
+
 const { v4: uuidv4 } = require("uuid");
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
@@ -53,7 +55,7 @@ const startConversation = async (req, res) => {
 // Send a message
 const sendMessage = async (req, res) => {
   try {
-    const { sessionId, content, sender = "user" } = req.body;
+    const { sessionId, content, sender = "user", userInfo } = req.body;
 
     if (!sessionId || !content) {
       return res.status(400).json({
@@ -84,8 +86,20 @@ const sendMessage = async (req, res) => {
       .sort({ timestamp: -1 })
       .limit(10);
 
-    // Generate AI response
-    const aiResponse = await aiService.generateResponse(content, recentMessages.reverse());
+    // Format messages for AI context
+    const formattedMessages = recentMessages.reverse().map(msg => ({
+      sender: msg.sender,
+      content: msg.content,
+      timestamp: msg.timestamp
+    }));
+
+    // Generate AI response with enhanced parameters for handoff system
+    const aiResponse = await aiService.generateResponse(
+      content, 
+      formattedMessages, 
+      sessionId, 
+      userInfo
+    );
 
     // Save AI response
     const aiMessage = new Message({
@@ -163,26 +177,96 @@ const getConversationHistory = async (req, res) => {
 const requestHandoff = async (req, res) => {
   try {
     const { sessionId, reason } = req.body;
+    console.log(`🎫 Handoff request received for sessionId: ${sessionId}`);
 
     const conversation = await Conversation.findOne({ sessionId });
     if (!conversation) {
+      console.error(`❌ Conversation not found for sessionId: ${sessionId}`);
       return res.status(404).json({
         success: false,
         message: "Conversation not found",
       });
     }
+    
+    console.log(`✅ Conversation found:`, {
+      id: conversation._id,
+      userInfo: conversation.userInfo,
+      userName: conversation.userName,
+      userEmail: conversation.userEmail
+    });
+
+    // Generate unique ticket ID
+    const generateTicketId = () => {
+      const timestamp = Date.now().toString(36);
+      const random = Math.random().toString(36).substring(2, 8);
+      return `NIMI-${timestamp}-${random}`.toUpperCase();
+    };
+
+    const ticketId = generateTicketId();
+    console.log(`🎫 Generated ticket ID: ${ticketId}`);
+
+    // Get conversation history for context
+    const messages = await Message.find({ conversationId: conversation._id })
+      .sort({ createdAt: 1 })
+      .limit(10);
+
+    // Get user info from conversation metadata or session
+    const userInfo = conversation.userInfo || {
+      name: conversation.userName || "User",
+      email: conversation.userEmail || null
+    };
+    
+    console.log(`👤 User info:`, userInfo);
+
+    // Send emails if user info is available and await confirmation
+    let emailSent = false;
+    if (userInfo.email) {
+      console.log(`📧 Attempting to send emails to: ${userInfo.email}`);
+      const { sendHandoffAdminNotification, sendHandoffUserConfirmation } = require('../services/emailService');
+      
+      try {
+        // Send emails concurrently and wait for confirmation
+        const emailPromises = [
+          sendHandoffUserConfirmation(ticketId, userInfo.email, userInfo.name),
+          sendHandoffAdminNotification(ticketId, userInfo.email, userInfo.name, messages)
+        ];
+
+        const emailResults = await Promise.all(emailPromises);
+        emailSent = emailResults.every(result => result === true);
+        
+        if (emailSent) {
+          console.log(`✅ All handoff emails sent successfully for ticket ${ticketId}`);
+        } else {
+          console.warn(`⚠️ Some handoff emails failed for ticket ${ticketId}`);
+          console.log('Email results:', emailResults);
+        }
+      } catch (error) {
+        console.error("❌ Email sending error:", error);
+        emailSent = false;
+      }
+    } else {
+      console.log(`⚠️ No email address found for user. UserInfo:`, userInfo);
+    }
 
     // Update conversation status
     conversation.status = "transferred";
+    conversation.ticketId = ticketId;
     await conversation.save();
 
-    // Add handoff message
+    // Create the response content as requested
+    const responseContent = `Perfect! I've created a ticket ID for you and our team will get in touch with you shortly${userInfo.email ? ' via email' : ''}. Your ticket ID is: **${ticketId}**. Is there anything else I can help you with?`;
+    
+    console.log(`📝 Response content created:`, responseContent);
+    
+    // Add handoff message with ticket ID
     const handoffMessage = new Message({
       conversationId: conversation._id,
       sender: "ai",
-      content: "I'm connecting you with one of our team members. They'll be with you shortly!",
+      content: responseContent,
       metadata: {
         handoffTrigger: true,
+        ticketId: ticketId,
+        emailSent: emailSent,
       },
     });
     await handoffMessage.save();
@@ -191,18 +275,29 @@ const requestHandoff = async (req, res) => {
     const io = req.app.get("io");
     if (io) {
       io.to(sessionId).emit("handoff_initiated", {
-        message: "Connecting you with a human agent...",
-        estimatedWaitTime: "2-3 minutes",
+        message: `Ticket created: ${ticketId}. Our team will contact you shortly.`,
+        estimatedWaitTime: "Within 24 hours",
+        ticketId: ticketId
       });
     }
 
-    res.status(200).json({
+    const responseData = {
       success: true,
       data: {
         message: "Handoff request processed successfully",
         status: "transferred",
+        ticketId: ticketId,
+        emailSent: emailSent,
+        content: responseContent,
+        userInfo: {
+          name: userInfo.name,
+          email: userInfo.email
+        }
       },
-    });
+    };
+    
+    console.log(`🚀 Sending response:`, responseData);
+    res.status(200).json(responseData);
   } catch (error) {
     console.error("Request handoff error:", error);
     res.status(500).json({

@@ -37,7 +37,11 @@ const pdfFileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-// Storage for resume uploads
+// Memory storage for Cloudinary uploads (documents)
+// Files are stored in memory as buffers for direct upload to cloud
+const documentMemoryStorage = multer.memoryStorage();
+
+// Keep disk storage as backup/fallback if needed
 const resumeStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/docs/resume");
@@ -48,7 +52,6 @@ const resumeStorage = multer.diskStorage({
   },
 });
 
-// Storage for cover letter uploads
 const coverLetterStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/docs/coverLetter");
@@ -59,14 +62,27 @@ const coverLetterStorage = multer.diskStorage({
   },
 });
 
-// Multer for resume and cover letter
+// Multer for resume and cover letter (using memory storage for Cloudinary)
 const docsUpload = multer({
-  storage: resumeStorage,
+  storage: documentMemoryStorage,
   fileFilter: pdfFileFilter,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
 const coverLetterUpload = multer({
+  storage: documentMemoryStorage,
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
+// Backup disk storage configurations (if needed for fallback)
+const docsUploadDisk = multer({
+  storage: resumeStorage,
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
+const coverLetterUploadDisk = multer({
   storage: coverLetterStorage,
   fileFilter: pdfFileFilter,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
@@ -88,7 +104,10 @@ const generateSecureFilename = originalname => {
   return `${baseName}_${timestamp}_${randomString}${ext}`;
 };
 
-// Configure storage for blog uploads
+// Memory storage for blog uploads (Cloudinary)
+const blogMemoryStorage = multer.memoryStorage();
+
+// Backup disk storage for blog uploads (if needed)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { type } = req.body;
@@ -147,8 +166,19 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-// Configure multer with enhanced security for blog uploads
+// Configure multer with enhanced security for blog uploads (using memory storage for Cloudinary)
 const upload = multer({
+  storage: blogMemoryStorage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+    files: 3, // Allow multiple files for blog posts
+    fields: 20, // Limit number of fields
+  },
+});
+
+// Backup disk storage upload configuration
+const uploadDisk = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {

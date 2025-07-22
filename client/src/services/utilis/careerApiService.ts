@@ -196,7 +196,7 @@ export const careerApi = createApi({
     >({
       query: ({ id, status, notes }) => ({
         url: `/careers/applications/${id}/status`,
-        method: 'PUT',
+        method: 'PATCH',
         body: { status, notes },
       }),
       invalidatesTags: (result, error, { id }) => [

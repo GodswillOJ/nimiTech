@@ -19,12 +19,16 @@ const {
   uploadCoverLetter,
   deleteResume,
   deleteCoverLetter,
+  downloadDocument,
 } = require("../controllers/careersController");
 // Serve resume PDF
 router.get("/resume/:filename", getResumePdf);
 
 // Serve cover letter PDF
 router.get("/coverLetter/:filename", getCoverLetterPdf);
+
+// Secure document download endpoint
+router.get("/api/upload/doc/:filename", downloadDocument);
 
 // File upload endpoints
 router.post("/upload-resume", docsUpload.single('resume'), uploadResume);

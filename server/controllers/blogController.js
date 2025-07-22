@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs");
 const { deleteFile } = require("../middleware/uploadMiddleware");
+const cloudinaryService = require("../services/cloudinaryService");
 
 // Input sanitization function
 const sanitizeInput = input => {
@@ -398,12 +399,14 @@ const deleteBlogPost = async (req, res) => {
       });
     }
 
-    // Delete associated images
+    // Extract public_id from filename (remove extension if present)
     const imagePaths = [blog.image, blog.contentImage, blog.author?.avatar].filter(Boolean);
-    imagePaths.forEach(imagePath => {
+    imagePaths.forEach(async imagePath => {
       if (imagePath && imagePath.startsWith("/uploads/")) {
         const fullPath = path.join(__dirname, "..", imagePath);
-        deleteFile(fullPath);
+        const filename = path.basename(fullPath);
+        const publicId = filename.replace(/\.[^/.]+$/, '');
+        const result = await cloudinaryService.deleteFile(publicId, 'blog');
       }
     });
 
@@ -435,19 +438,32 @@ const uploadBlogImage = async (req, res) => {
       });
     }
 
-    // Construct the URL path for the uploaded image
-    const imagePath = `/${req.file.destination}/${req.file.filename}`.replace(/\\/g, "/");
+    // Use Cloudinary for cloud storage
+    const uploadOptions = {
+      storageType: 'blog',
+      subfolder: type === 'featuredImage' || type === 'image' ? 'featured' : 'content',
+      prefix: type || 'blog',
+      transformations: {
+        quality: 'auto'
+        // Note: format: 'auto' is not supported by Cloudinary
+        // Cloudinary will automatically optimize format based on browser support
+      }
+    };
+
+    const result = await cloudinaryService.uploadFile(req.file, uploadOptions);
 
     res.status(200).json({
       success: true,
       message: "Image uploaded successfully",
-      imageUrl: imagePath, // Frontend expects imageUrl
-      url: imagePath, // Alternative field name for compatibility
+      imageUrl: result.url, // Frontend expects imageUrl
+      url: result.url, // Alternative field name for compatibility
       data: {
-        imagePath,
+        imagePath: result.path,
         originalName: req.file.originalname,
         size: req.file.size,
         type: type || "image",
+        filename: result.filename,
+        public_id: result.public_id
       },
     });
   } catch (error) {
@@ -461,6 +477,89 @@ const uploadBlogImage = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error uploading image",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+// Delete blog image
+const deleteBlogImage = async (req, res) => {
+  try {
+    const { filename } = req.params;
+    const { type = 'featured' } = req.query; // Default to featured if not specified
+
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid filename"
+      });
+    }
+
+    // Extract public_id from filename (remove extension if present)
+    const publicId = filename.replace(/\.[^/.]+$/, '');
+    
+    // Delete using Cloudinary service
+    const result = await cloudinaryService.deleteFile(publicId, 'blog');
+
+    if (result.success) {
+      res.status(200).json({
+        success: true,
+        message: "Image deleted successfully"
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Image file not found"
+      });
+    }
+  } catch (error) {
+    console.error("Error deleting blog image:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete image",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+// Get image URL
+const getImageUrl = async (req, res) => {
+  try {
+    const { filename } = req.params;
+    const { type = 'featured' } = req.query; // Default to featured if not specified
+
+    // Validate filename to prevent path traversal
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid filename"
+      });
+    }
+
+    // Extract public_id from filename (remove extension if present)
+    const publicId = filename.replace(/\.[^/.]+$/, '');
+    
+    // Get file info using Cloudinary service
+    const fileInfo = await cloudinaryService.getFileInfo(publicId, 'blog');
+
+    if (fileInfo) {
+      res.status(200).json({
+        success: true,
+        url: fileInfo.url,
+        data: fileInfo
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Image not found"
+      });
+    }
+  } catch (error) {
+    console.error("Error getting image URL:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to get image URL",
       error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
@@ -564,4 +663,6 @@ module.exports = {
   getBlogCategories,
   getBlogStats,
   getAllBlogsAdmin,
+  getImageUrl,
+  deleteBlogImage,
 };
