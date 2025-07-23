@@ -147,7 +147,11 @@ class ChatService {
   }
 
   // Request human handoff
-  async requestHandoff(sessionId: string, reason?: string): Promise<void> {
+  async requestHandoff(
+    sessionId: string,
+    reason?: string,
+    userInfo?: { name: string; email: string }
+  ): Promise<void> {
     try {
       const response = await fetch(`${this.apiBaseUrl}/chat/handoff`, {
         method: 'POST',
@@ -158,6 +162,7 @@ class ChatService {
         body: JSON.stringify({
           sessionId,
           reason,
+          userInfo,
         }),
       });
 

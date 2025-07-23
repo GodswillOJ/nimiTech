@@ -410,7 +410,17 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     if (!chatState.sessionId) return;
 
     try {
-      await chatService.requestHandoff(chatState.sessionId, 'User requested human agent');
+      // Get user info from localStorage
+      const userInfo = getUserInfo();
+
+      // Validate that we have the required email
+      if (!userInfo.email || userInfo.email.trim() === '') {
+        setError('Please provide your email address before requesting human assistance.');
+        setShowUserInfoInput(true);
+        return;
+      }
+
+      await chatService.requestHandoff(chatState.sessionId, 'User requested human agent', userInfo);
       setChatState((prev) => ({ ...prev, handoffSuggested: false }));
     } catch (error) {
       console.error('Error requesting handoff:', error);

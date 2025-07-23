@@ -594,9 +594,15 @@
     right: 10px;
 
     &__window {
-      width: calc(100vw - 20px);
-      height: calc(100vh - 20px);
+      width: calc(100dvw - 20px);
+      height: calc(100dvh - 20px);
       border-radius: 16px;
+      
+      // Fallback for browsers that don't support dvh/dvw
+      @supports not (height: 100dvh) {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 20px);
+      }
     }
 
     &__bubble {

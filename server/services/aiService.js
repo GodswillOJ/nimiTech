@@ -55,6 +55,15 @@ class AIService {
       "real person",
       "human help",
       "human support",
+      "speak with a human",
+      "speak with an agent",
+      "speak with customer service",
+      "speak with support",
+      "speak with a representative",
+      "speak with a real person",
+      "speak with a live agent",
+      "speak with a real agent",
+      "speak with a human agent",
     ];
   }
 
