@@ -193,24 +193,24 @@ const requestHandoff = async (req, res) => {
       });
     }
 
-    console.log(`✅ Conversation found:`, {
-      id: conversation._id,
-      userInfo: userInfo,
-      userName: userInfo.name,
-      userEmail: userInfo.email,
-    });
-
     // Get conversation history for context
     const messages = await Message.find({ conversationId: conversation._id })
       .sort({ createdAt: 1 })
       .limit(10);
 
-    // Use userInfo from request body if available, otherwise fall back to conversation data
-    const userInfo = requestUserInfo ||
-      conversation.userInfo || {
-        name: userInfo.name || "User",
-        email: userInfo.email || null,
-      };
+    // Use userInfo from request body if available, otherwise fall back to default
+    const userInfo = requestUserInfo || {
+      name: "User",
+      email: null,
+    };
+
+    console.log(`✅ Conversation found:`, {
+      id: conversation._id,
+      userInfo: userInfo,
+      userName: userInfo.name,
+      userEmail: userInfo.email,
+      messages,
+    });
 
     // Update conversation with user info if provided in request
     if (requestUserInfo && (requestUserInfo.name || requestUserInfo.email)) {
