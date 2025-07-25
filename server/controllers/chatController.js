@@ -273,65 +273,13 @@ const requestHandoff = async (req, res) => {
       });
     }
 
-    // Send emails with validated parameters
-    let emailSent = false;
-    console.log(`📧 Attempting to send emails to: ${userInfo.email}`);
-
-    try {
-      // Send emails concurrently and wait for confirmation
-      console.log({
-        ticketId,
-        userEmail: userInfo.email,
-        userName: userInfo.name,
-        messages: messages.map(msg => ({
-          content: msg.content,
-          sender: msg.sender,
-          timestamp: msg.timestamp,
-        })),
-      });
-      const emailPromises = [
-        sendHandoffUserConfirmation(ticketId, userInfo.email, userInfo.name),
-        sendHandoffAdminNotification(ticketId, userInfo.email, userInfo.name, messages),
-      ];
-
-      const emailResults = await Promise.all(emailPromises);
-      emailSent = emailResults.every(result => result === true);
-
-      if (emailSent) {
-        console.log(`✅ All handoff emails sent successfully for ticket ${ticketId}`);
-      } else {
-        console.warn(`⚠️ Some handoff emails failed for ticket ${ticketId}`);
-        console.log("Email results:", emailResults);
-      }
-    } catch (error) {
-      console.error("❌ Email sending error:", error);
-      if (error && typeof error === "object") {
-        console.error("Error details:", {
-          message: error.message,
-          code: error.code,
-          stack: error.stack,
-          command: error.command,
-          response: error.response,
-        });
-      }
-      emailSent = false;
-      // Return error if email sending fails
-      return res.status(500).json({
-        success: false,
-        message: "Failed to send notification emails. Please try again.",
-      });
-    }
-
-    // Proceed with ticket creation and status update
-    // Update conversation status
-    conversation.status = "transferred";
+    // Update conversation status to pending initially
+    conversation.status = "pending";
     conversation.ticketId = ticketId;
     await conversation.save();
 
-    // Create the response content as requested
+    // Create the response content
     const responseContent = `Perfect! I've created a ticket ID for you and our team will get in touch with you shortly via email. Your ticket ID is: **${ticketId}**. Is there anything else I can help you with?`;
-
-    console.log(`📝 Response content created:`, responseContent);
 
     // Add handoff message with ticket ID
     const handoffMessage = new Message({
@@ -341,10 +289,81 @@ const requestHandoff = async (req, res) => {
       metadata: {
         handoffTrigger: true,
         ticketId: ticketId,
-        emailSent: emailSent,
+        emailStatus: "pending",
       },
     });
     await handoffMessage.save();
+
+    // Send emails asynchronously (don't wait for completion)
+    console.log(`📧 Initiating async email sending to: ${userInfo.email}`);
+    
+    // Send emails in background without blocking the response
+    const sendEmailsAsync = async () => {
+      try {
+        console.log({
+          ticketId,
+          userEmail: userInfo.email,
+          userName: userInfo.name,
+          messages: messages.map(msg => ({
+            content: msg.content,
+            sender: msg.sender,
+            timestamp: msg.timestamp,
+          })),
+        });
+        
+        const emailPromises = [
+          sendHandoffUserConfirmation(ticketId, userInfo.email, userInfo.name),
+          sendHandoffAdminNotification(ticketId, userInfo.email, userInfo.name, messages),
+        ];
+
+        const emailResults = await Promise.all(emailPromises);
+        const emailSent = emailResults.every(result => result === true);
+
+        // Update conversation status based on email results
+        const updatedConversation = await Conversation.findById(conversation._id);
+        if (updatedConversation) {
+          updatedConversation.status = emailSent ? "transferred" : "email_failed";
+          updatedConversation.emailStatus = emailSent ? "success" : "failed";
+          await updatedConversation.save();
+        }
+
+        if (emailSent) {
+          console.log(`✅ All handoff emails sent successfully for ticket ${ticketId}`);
+          console.log(`✅ Updated conversation status to 'transferred' for ticket ${ticketId}`);
+        } else {
+          console.warn(`⚠️ Some handoff emails failed for ticket ${ticketId}`);
+          console.log("Email results:", emailResults);
+          console.log(`⚠️ Updated conversation status to 'email_failed' for ticket ${ticketId}`);
+        }
+      } catch (error) {
+        console.error(`❌ Async email sending error for ticket ${ticketId}:`, error);
+        if (error && typeof error === "object") {
+          console.error("Error details:", {
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
+            command: error.command,
+            response: error.response,
+          });
+        }
+        
+        // Update conversation status to indicate email failure
+        try {
+          const updatedConversation = await Conversation.findById(conversation._id);
+          if (updatedConversation) {
+            updatedConversation.status = "email_failed";
+            updatedConversation.emailStatus = "failed";
+            await updatedConversation.save();
+            console.log(`❌ Updated conversation status to 'email_failed' for ticket ${ticketId}`);
+          }
+        } catch (updateError) {
+          console.error(`❌ Failed to update conversation status for ticket ${ticketId}:`, updateError);
+        }
+      }
+    };
+    
+    // Start email sending in background
+    sendEmailsAsync();
 
     // Emit handoff event
     const io = req.app.get("io");
@@ -356,13 +375,14 @@ const requestHandoff = async (req, res) => {
       });
     }
 
+    // Return immediately with pending status
     const responseData = {
       success: true,
       data: {
         message: "Handoff request processed successfully",
-        status: "transferred",
+        status: "pending", // Status starts as pending
         ticketId: ticketId,
-        emailSent: emailSent,
+        emailStatus: "pending", // Email processing status
         content: responseContent,
         userInfo: {
           name: userInfo.name,
@@ -371,7 +391,7 @@ const requestHandoff = async (req, res) => {
       },
     };
 
-    console.log(`🚀 Sending response:`, responseData);
+    console.log(`🚀 Sending immediate response with pending status:`, responseData);
     res.status(200).json(responseData);
   } catch (error) {
     console.error("Request handoff error:", error);

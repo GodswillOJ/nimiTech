@@ -1,14 +1,19 @@
 const nodemailer = require("nodemailer");
 
-// Create reusable transporter object using SMTP transport
 const createTransporter = () => {
   return nodemailer.createTransport({
     host: "mail.nimitechit.com",
     port: 465,
     secure: true,
+    connectionTimeout: 10000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000, 
     auth: {
       user: process.env.EmailUser,
       pass: process.env.EmailPassword,
+    },
+    tls: {
+      rejectUnauthorized: false, // Allow self-signed certificates
     },
   });
 };
@@ -171,9 +176,7 @@ const sendAdminNotification = async (applicantData, jobData, applicationId) => {
     throw error;
   }
 };
-
-// Send handoff notification to admin with conversation summary
-const sendHandoffAdminNotification = async (ticketId, userEmail, userName, conversationHistory) => {
+const sendHandoffAdminNotification = async (ticketId, userEmail, userName, conversationHistory, paragraph1) => {
   try {
     const transporter = createTransporter();
 
@@ -211,13 +214,15 @@ const sendHandoffAdminNotification = async (ticketId, userEmail, userName, conve
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎫 New Support Ticket Created</h1>
+              <h1>New Support Ticket Created</h1>
             </div>
+			<div class="content"> ${paragrapgh1}
+			</div>
             <div class="content">
               <div class="ticket-info">
                 <h3>Ticket Information</h3>
                 <p><strong>Ticket ID:</strong> <span class="highlight">${ticketId}</span></p>
-                <p><strong>User Name:</strong> ${userName || 'Not provided'}</p>
+                <p><strong>User Name:</strong> ${userName || "Not provided"}</p>
                 <p><strong>User Email:</strong> ${userEmail}</p>
                 <p><strong>Created:</strong> ${new Date().toLocaleString()}</p>
                 <p><strong>Status:</strong> Pending Response</p>
@@ -225,7 +230,7 @@ const sendHandoffAdminNotification = async (ticketId, userEmail, userName, conve
               
               <div class="conversation">
                 <h3>Conversation History</h3>
-                ${formattedHistory || '<p>No conversation history available.</p>'}
+                ${formattedHistory || "<p>No conversation history available.</p>"}
               </div>
               
               <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 5px;">
@@ -263,9 +268,9 @@ const sendHandoffUserConfirmation = async (ticketId, userEmail, userName) => {
     console.log(`📧 Starting sendHandoffUserConfirmation:`, {
       ticketId,
       userEmail,
-      userName
+      userName,
     });
-    
+
     const transporter = createTransporter();
 
     const mailOptions = {
@@ -275,70 +280,384 @@ const sendHandoffUserConfirmation = async (ticketId, userEmail, userName) => {
       },
       to: userEmail,
       subject: `Your Support Request - Ticket #${ticketId}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #9333ea; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-            .content { padding: 20px; background-color: #f9f9f9; }
-            .ticket-box { background: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; border: 2px solid #9333ea; }
-            .footer { background-color: #7e22ce; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
-            .highlight { color: #9333ea; font-weight: bold; font-size: 1.2em; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>🎫 Support Request Received</h1>
-            </div>
-            <div class="content">
-              <h2>Hello ${userName || 'there'}! 👋</h2>
-              
-              <p>Thank you for reaching out to NimiTech support. We've received your request and created a support ticket for you.</p>
-              
-              <div class="ticket-box">
-                <h3>Your Ticket ID</h3>
-                <div class="highlight">${ticketId}</div>
-                <p style="margin-top: 15px; color: #666;">Please save this ticket ID for your records</p>
-              </div>
-              
-              <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <h3>What happens next?</h3>
-                <ul style="text-align: left;">
-                  <li>📧 Our customer service team will review your request</li>
-                  <li>⏰ You'll receive a response within 24 hours during business days</li>
-                  <li>💬 We'll contact you via this email address</li>
-                  <li>🎯 Reference your ticket ID for faster service</li>
-                </ul>
-              </div>
-              
-              <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <p><strong>Need immediate assistance?</strong></p>
-                <p>For urgent matters, you can also reach us via WhatsApp at +1 (252) 903-9651</p>
-              </div>
-              
-              <p>Thank you for choosing NimiTech IT LLC. We appreciate your business and look forward to helping you!</p>
-            </div>
-            <div class="footer">
-              <p><strong>NimiTech IT LLC</strong></p>
-              <p>Your Trusted Technology Partner</p>
-              <p>🌐 nimitechit.com | 📱 WhatsApp: +1 (252) 903-9651</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+      html: `<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+			rel="stylesheet"
+		/>
+		<title>NimiTech IT LLC - Support Request Received</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				font-family: "Lato", sans-serif;
+				color: #191919;
+				font-weight: 400;
+			}
+
+			body {
+				background-color: #f0f0f0;
+				padding: 32px 24px;
+			}
+
+			.email-container {
+				max-width: 600px;
+				margin: 28px auto;
+				background-color: #ffffff;
+				border-radius: 8px;
+				overflow: hidden;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				border: 1px solid #ededed;
+			}
+
+			.header-table,
+			.footer-table {
+				width: 100%;
+				border-spacing: 0;
+				border-collapse: collapse;
+				background-color: #ffffff;
+			}
+
+			.header-cell {
+				/*padding: 24px;*/
+				vertical-align: middle;
+			}
+
+			.footer-cell {
+				padding: 12px 24px;
+				vertical-align: middle;
+			}
+
+			.logo img {
+				height: 120px;
+				width: 140px;
+				display: block;
+			}
+
+			.header-title {
+				color: #191919;
+				font-size: 18px;
+				font-weight: 500;
+				margin-left: 16px;
+			}
+
+			.social-icons {
+				text-align: right;
+			}
+
+			.social-icons a {
+				margin-left: 10px;
+				text-decoration: none;
+				display: inline-block;
+			}
+
+			.social-icons svg {
+				width: 24px;
+				height: 24px;
+				fill: #191919;
+				vertical-align: middle;
+			}
+
+			.content {
+				padding: 8px 24px 0px 24px;
+			}
+
+			.salutation {
+				font-weight: 500;
+				font-size: 24px;
+				margin-bottom: 20px;
+				line-height: 32px;
+				color: #191919;
+			}
+
+			.introduction {
+				margin-bottom: 15px;
+			}
+			.introduction > .introductory-text {
+				line-height: 25.35px;
+				font-size: 16px;
+				letter-spacing: -2%;
+			}
+
+			.ticket-details {
+				background-color: #f6f6f6;
+				padding: 24px;
+				border-radius: 8px;
+				margin-bottom: 20px;
+				text-align: center;
+				border: 0px solid #191919;
+			}
+
+			.ticket-details .ticket-title {
+				font-size: 18px;
+				margin-top: 0;
+				margin-bottom: 14px;
+				font-weight: 500;
+				line-height: 24px;
+				color: #191919;
+			}
+
+			.ticket-id {
+				font-weight: 700;
+				font-size: 24px;
+				color: #191919;
+				margin-bottom: 10px;
+			}
+
+			.ticket-note {
+				font-size: 14px;
+				color: #666;
+				margin-top: 10px;
+			}
+
+			.next-steps {
+				background-color: #ffffff;
+				padding: 24px;
+				border-radius: 8px;
+				margin-bottom: 20px;
+				border: 1px solid #e7e7e7;
+			}
+
+			.next-steps-title {
+				font-size: 18px;
+				margin-top: 0;
+				margin-bottom: 14px;
+				font-weight: 500;
+				line-height: 24px;
+			}
+
+			.steps-list {
+				margin: 0;
+				padding-left: 20px;
+			}
+
+			.steps-list li {
+				margin-bottom: 8px;
+				line-height: 21px;
+				font-size: 14px;
+			}
+
+			.urgent-contact {
+				background-color: #e8f5e8;
+				padding: 20px;
+				border-radius: 8px;
+				margin-bottom: 20px;
+				border-left: 4px solid #22c55e;
+			}
+
+			.urgent-contact .urgent-title {
+				font-weight: 500;
+				font-size: 16px;
+				margin-bottom: 8px;
+			}
+
+			.urgent-contact p {
+				margin: 0;
+				font-size: 14px;
+				line-height: 21px;
+			}
+
+			.whatsapp-button {
+				display: inline-block;
+				background-color: #25d366;
+				border-radius: 8px;
+				font-size: 12px;
+				font-weight: 500;
+				line-height: 16px;
+				margin-top: 12px;
+				padding: 8px 16px;
+				text-decoration: none;
+			}
+
+			.whatsapp-button .whatsapp-cta {
+				color: #ffffff;
+				text-decoration: none;
+				font-size: 12px;
+				font-weight: 500;
+				line-height: 16px;
+			}
+
+			.remark {
+				margin: 20px 0px;
+				line-height: 21px;
+				font-size: 14px;
+				font-weight: 400;
+			}
+
+			.divider {
+				margin-top: 20px;
+			}
+
+			.divider-line {
+				border: none;
+				border-top: 1px solid #e7e7e7;
+				width: 100%;
+			}
+
+			.additional-info {
+				max-width: 600px;
+				margin: 32px auto 0;
+			}
+
+			.address {
+				text-align: center;
+				margin-top: 18px;
+				font-size: 12px;
+				line-height: 14px;
+				color: #200e32;
+			}
+
+			.contact-us {
+				text-align: center;
+				margin-top: 12px;
+				font-size: 12px;
+				line-height: 14.4px;
+				color: #200e32;
+				margin-bottom: 12.66px;
+			}
+
+			.contact-us-link {
+				color: #191919;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			.unsubscribe {
+				text-align: center;
+				color: #200e32;
+				font-size: 12px;
+				line-height: 20px;
+				border-top: 2px solid #e7e7e7;
+				border-bottom: 2px solid #e7e7e7;
+				padding-top: 12px;
+				padding-bottom: 12px;
+			}
+
+			.unsubscribe-link {
+				color: #191919;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			.copyright {
+				padding-top: 18px;
+				padding-bottom: 18px;
+				font-size: 12px;
+				color: #121212;
+				line-height: 20px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="email-container">
+			<table class="header-table">
+				<tr>
+					<td class="header-cell" align="left" valign="middle">
+						<img
+							src="https://res.cloudinary.com/dkomq1g9z/image/upload/v1753203410/nimitech/blog/content/content/authorAvatar_NimiTechLogo_copy_1753203388219_c695be570ebf55b1.png"
+							alt="NimiTech IT LLC Logo"
+							class="logo"
+							style="height: 120px; width: 140px; display: block;"
+						/>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="content">
+				<h1 class="salutation">Hello ${userName}! 👋</h1>
+				<div class="email-body">
+					<div class="introduction">
+						<p class="introductory-text">
+							Thank you for reaching out to NimiTech IT LLC support. We've received your request and created a support ticket for you. Our team is committed to providing you with the best technical assistance.
+						</p>
+					</div>
+					
+					<div class="ticket-details">
+						<h2 class="ticket-title">Your Support Ticket ID</h2>
+						<div class="ticket-id">${ticketId}</div>
+						<p class="ticket-note">Please save this ticket ID for your records and future reference</p>
+					</div>
+
+					<div class="next-steps">
+						<h3 class="next-steps-title">What happens next?</h3>
+						<ul class="steps-list">
+							<li>Our customer service team will review your request thoroughly</li>
+							<li>You'll receive a response within 24 hours during business days</li>
+							<li>We'll contact you via this email address with updates</li>
+							<li>Reference your ticket ID for faster service and tracking</li>
+						</ul>
+					</div>
+
+					<div class="urgent-contact">
+						<p class="urgent-title">Need immediate assistance?</p>
+						<p>For urgent technical matters, you can also reach us directly via WhatsApp for faster response times.</p>
+						<a href="https://wa.me/12529039651" class="whatsapp-button">
+							<span class="whatsapp-cta">Contact on WhatsApp</span>
+						</a>
+					</div>
+
+					<div class="remark">
+						<p>Thank you for choosing NimiTech IT LLC. We appreciate your business and look forward to resolving your technical needs promptly!</p>
+						<br>
+						<div class="remark-thanks">Best regards,</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="divider">
+				<hr class="divider-line" />
+			</div>
+			
+			<table class="footer-table">
+				<tr>
+					<td class="footer-cell" align="right" valign="middle">
+						<div class="social-icons">
+							<a href="https://www.facebook.com/nimitechit">
+								<svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: #191919; vertical-align: middle;">
+									<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+								</svg>
+							</a>
+							<a href="https://twitter.com/nimitechit">
+								<svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: #191919; vertical-align: middle;">
+									<path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+								</svg>
+							</a>
+							<a href="https://www.linkedin.com/company/nimitechit">
+								<svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: #191919; vertical-align: middle;">
+									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+								</svg>
+							</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="additional-info">
+			<div class="address">NimiTech IT LLC - Professional Technology Solutions</div>
+			<div class="contact-us">
+				Contact Us:
+				<a class="contact-us-link" href="mailto:support@nimitechit.com">support@nimitechit.com</a>
+				| WhatsApp: <a class="contact-us-link" href="https://wa.me/12529039651">+1 (252) 903-9651</a>
+			</div>
+		</div>
+	</body>
+</html>`,
     };
 
     console.log(`📧 Attempting to send email with options:`, {
       from: mailOptions.from,
       to: mailOptions.to,
-      subject: mailOptions.subject
+      subject: mailOptions.subject,
     });
-    
+
     await transporter.sendMail(mailOptions);
     console.log(`✅ Handoff user confirmation sent successfully to: ${userEmail}`);
     return true;
@@ -347,7 +666,7 @@ const sendHandoffUserConfirmation = async (ticketId, userEmail, userName) => {
     console.error("Error details:", {
       message: error.message,
       code: error.code,
-      command: error.command
+      command: error.command,
     });
     return false;
   }

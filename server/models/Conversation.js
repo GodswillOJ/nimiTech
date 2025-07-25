@@ -18,7 +18,7 @@ const conversationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["active", "closed", "transferred"],
+      enum: ["active", "closed", "transferred", "pending", "email_failed"],
       default: "active",
     },
     assignedAgent: {
